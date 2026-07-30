@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Inquiry Router — AI automation demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1115;
+    --panel:#171A21;
+    --line:#272B33;
+    --text:#E8EAED;
+    --muted:#8B929E;
+    --lime:#B4E61D;
+    --cyan:#3FD0C9;
+    --amber:#F5A623;
+    --red:#F0553F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 28px;}
+
+  header{padding:24px 28px;display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:0 auto;border-bottom:1px solid var(--line);}
+  .brand{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;}
+  .brand span{color:var(--lime);}
+  header a{font-size:13px;color:var(--muted);text-decoration:none;}
+
+  .hero{padding:48px 28px 32px;max-width:900px;margin:0 auto;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);margin-bottom:14px;letter-spacing:0.04em;}
+  h1{font-size:32px;font-weight:700;max-width:600px;margin-bottom:14px;line-height:1.2;}
+  .hero p{color:var(--muted);max-width:560px;font-size:15px;}
+
+  .app{max-width:900px;margin:0 auto 60px;padding:0 28px;}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px;}
+  .panel-label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:12px;}
+  textarea{
+    width:100%;background:#0F1115;border:1px solid var(--line);border-radius:8px;color:var(--text);
+    padding:14px;font-size:14px;font-family:'Inter',sans-serif;resize:vertical;min-height:90px;
+  }
+  textarea:focus{outline:none;border-color:var(--cyan);}
+  .run-btn{
+    margin-top:14px;background:var(--lime);color:#0F1115;border:none;padding:12px 24px;
+    border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .run-btn:hover{opacity:0.9;}
+
+  .result{margin-top:24px;display:none;}
+  .result.show{display:block;}
+  .result-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+  .result-row:last-child{border-bottom:none;}
+  .r-label{font-size:13px;color:var(--muted);}
+  .r-val{font-weight:600;font-size:14px;}
+  .badge{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .badge.billing{background:rgba(180,230,29,0.15);color:var(--lime);}
+  .badge.technical{background:rgba(63,208,201,0.15);color:var(--cyan);}
+  .badge.urgent{background:rgba(240,85,63,0.15);color:var(--red);}
+  .badge.general{background:rgba(245,166,35,0.15);color:var(--amber);}
+
+  .bar-track{width:140px;height:6px;background:var(--line);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--lime);border-radius:4px;}
+
+  .how-it-works{margin-top:40px;}
+  .how-it-works h2{font-size:18px;margin-bottom:16px;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;}
+  .step .n{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:12px;margin-bottom:8px;}
+  .step h3{font-size:14px;margin-bottom:8px;}
+  .step p{font-size:13px;color:var(--muted);}
+
+  footer{padding:28px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--line);}
+
+  @media (max-width:700px){
+    h1{font-size:24px;}
+    .steps{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">brightstack<span>.ai</span></div>
+  <a href="index.html">← Back to portfolio</a>
+</header>
+
+<section class="hero">
+  <div class="tag">// AUTOMATION DEMO</div>
+  <h1>Smart inquiry router — auto-categorize customer messages before a human touches them</h1>
+  <p>Paste in a customer message below. This tool reads it, categorizes the type of request, flags urgency, and routes it — the kind of automation that saves support teams hours of manual sorting.</p>
+</section>
+
+<div class="app">
+  <div class="panel">
+    <div class="panel-label">$ paste a customer message</div>
+    <textarea id="inputText" placeholder="e.g. Hi, I was charged twice for my subscription this month and I need this fixed urgently, my card is being overcharged...">Hi, I was charged twice for my subscription this month and I need this fixed urgently, my card is being overcharged and I can't afford it.</textarea>
+    <button class="run-btn" onclick="classify()">Run classification</button>
+
+    <div class="result" id="resultBox">
+      <div class="result-row">
+        <span class="r-label">Category</span>
+        <span class="badge" id="catBadge">—</span>
+      </div>
+      <div class="result-row">
+        <span class="r-label">Urgency</span>
+        <span class="r-val" id="urgencyVal">—</span>
+      </div>
+      <div class="result-row">
+        <span class="r-label">Confidence</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="bar-track"><div class="bar-fill" id="confBar" style="width:0%"></div></div>
+          <span class="r-val" id="confVal">0%</span>
+        </div>
+      </div>
+      <div class="result-row">
+        <span class="r-label">Suggested routing</span>
+        <span class="r-val" id="routeVal">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2>How this fits into a real workflow</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <h3>Message comes in</h3>
+        <p>From email, a contact form, or live chat — arrives in one shared inbox.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3>Auto-classified instantly</h3>
+        <p>Category, urgency, and routing are assigned in under a second, no manual triage needed.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3>Routed to the right person</h3>
+        <p>Billing issues go to accounts, technical issues to support, urgent ones get flagged for immediate response.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Demo project by BrightStack Co. — client-side keyword classification, built to illustrate an automation workflow.</footer>
+
+<script>
+function classify(){
+  const text = document.getElementById('inputText').value.toLowerCase();
+
+  const billingWords = ['charge','charged','refund','payment','subscription','invoice','bill','overcharg','price','cost'];
+  const technicalWords = ['bug','error','crash','not working','broken','login','password','glitch','loading','fix'];
+  const urgentWords = ['urgent','asap','immediately','emergency','can\'t afford','right away','now'];
+
+  let billingScore = billingWords.filter(w => text.includes(w)).length;
+  let technicalScore = technicalWords.filter(w => text.includes(w)).length;
+  let urgentScore = urgentWords.filter(w => text.includes(w)).length;
+
+  let category = 'general';
+  let maxScore = Math.max(billingScore, technicalScore);
+  if (billingScore > 0 && billingScore >= technicalScore) category = 'billing';
+  else if (technicalScore > 0) category = 'technical';
+
+  const isUrgent = urgentScore > 0;
+  const confidence = Math.min(95, 55 + (maxScore * 12) + (isUrgent ? 8 : 0));
+
+  const catBadge = document.getElementById('catBadge');
+  catBadge.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+  catBadge.className = 'badge ' + category;
+
+  document.getElementById('urgencyVal').textContent = isUrgent ? 'High' : 'Normal';
+  document.getElementById('urgencyVal').style.color = isUrgent ? '#F0553F' : '#E8EAED';
+
+  document.getElementById('confBar').style.width = confidence + '%';
+  document.getElementById('confVal').textContent = confidence + '%';
+
+  const routing = {
+    billing: 'Accounts team',
+    technical: 'Support engineering',
+    general: 'General support queue'
+  };
+  document.getElementById('routeVal').textContent = (isUrgent ? '⚡ Priority — ' : '') + routing[category];
+
+  document.getElementById('resultBox').classList.add('show');
+}
+window.onload = classify;
+</script>
+
+</body>
+</html>

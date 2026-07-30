@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillbox — UI/UX case study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16241F;
+    --paper:#F1F0EA;
+    --teal:#2F6F5E;
+    --coral:#E4633B;
+    --card:#FFFFFF;
+    --muted:#5E6C67;
+    --line:#DAD8CE;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+
+  header{padding:28px 32px;display:flex;justify-content:space-between;align-items:center;max-width:1000px;margin:0 auto;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
+  .brand span{color:var(--teal);}
+  header a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;}
+
+  .hero{padding:50px 32px 60px;max-width:1000px;margin:0 auto;}
+  .tag{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);margin-bottom:16px;}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.15;max-width:640px;margin-bottom:20px;}
+  .hero p{max-width:520px;color:var(--muted);font-size:16px;margin-bottom:28px;}
+
+  .meta-row{display:flex;gap:40px;padding-top:28px;border-top:1px solid var(--line);flex-wrap:wrap;}
+  .meta-item .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+  .meta-item .val{font-weight:600;font-size:14px;}
+
+  .section{padding:56px 32px;max-width:1000px;margin:0 auto;}
+  .section h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;margin-bottom:14px;}
+  .section p.body{color:var(--muted);max-width:640px;margin-bottom:32px;}
+
+  .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .problem-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;}
+  .problem-card .k{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:8px;color:var(--teal);}
+  .problem-card p{font-size:14px;color:var(--muted);}
+
+  .screens-row{display:flex;gap:24px;overflow-x:auto;padding-bottom:12px;}
+  .phone{
+    flex-shrink:0;width:220px;height:440px;background:var(--card);border-radius:24px;
+    border:6px solid var(--ink);padding:16px 12px;position:relative;
+  }
+  .phone-label{position:absolute;bottom:-28px;left:0;right:0;text-align:center;font-size:12px;font-weight:600;color:var(--muted);}
+  .screen-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:12px;}
+  .pill-row{
+    display:flex;justify-content:space-between;align-items:center;background:var(--paper);
+    border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:11px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+  .dot.due{background:var(--coral);}
+  .big-btn{background:var(--teal);color:#fff;text-align:center;padding:10px;border-radius:8px;font-size:12px;font-weight:600;margin-top:16px;}
+  .progress-ring{width:90px;height:90px;border-radius:50%;border:8px solid var(--paper);border-top-color:var(--teal);border-right-color:var(--teal);margin:16px auto;}
+  .stat-line{font-size:11px;color:var(--muted);text-align:center;margin-top:4px;}
+
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .principle{border-left:2px solid var(--coral);padding-left:16px;}
+  .principle .k{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:6px;}
+  .principle p{font-size:13px;color:var(--muted);}
+
+  .outcome-band{background:var(--ink);color:var(--paper);padding:56px 32px;text-align:center;}
+  .outcome-band h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:24px;margin-bottom:24px;}
+  .outcome-stats{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;}
+  .outcome-stat .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:var(--coral);}
+  .outcome-stat .lbl{font-size:12px;color:#C7CDC9;margin-top:4px;}
+
+  footer{padding:28px;text-align:center;font-size:12px;color:var(--muted);}
+
+  @media (max-width:800px){
+    h1{font-size:30px;}
+    .problem-grid, .principles{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Pillbox <span>— case study</span></div>
+  <a href="index.html">← Back to portfolio</a>
+</header>
+
+<section class="hero">
+  <div class="tag">UI/UX design · mobile app</div>
+  <h1>Redesigning medication reminders for people managing multiple prescriptions</h1>
+  <p>A concept app that helps people track daily medications without the anxiety of "did I already take that?" — designed end to end, from problem framing to final screens.</p>
+  <div class="meta-row">
+    <div class="meta-item"><div class="label">Role</div><div class="val">UI/UX Designer</div></div>
+    <div class="meta-item"><div class="label">Scope</div><div class="val">Research → Wireframes → UI</div></div>
+    <div class="meta-item"><div class="label">Tools</div><div class="val">Figma, user interviews</div></div>
+    <div class="meta-item"><div class="label">Timeline</div><div class="val">3 weeks, concept project</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>The problem</h2>
+  <p class="body">People managing 3+ daily medications lose track of what's taken and what's due — especially older adults and caregivers managing prescriptions for family members.</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="k">Cognitive load</div>
+      <p>Existing apps show too much information at once — full schedules, dosage charts, refill dates — all competing for attention on one screen.</p>
+    </div>
+    <div class="problem-card">
+      <div class="k">No clear "right now" answer</div>
+      <p>Users couldn't quickly answer "what do I need to take right now" — the single question that mattered most in the moment.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>The screens</h2>
+  <p class="body">Three core screens: today's view, a completed state, and adherence tracking — designed so the most urgent information is always the largest thing on screen.</p>
+  <div class="screens-row">
+    <div class="phone">
+      <div class="screen-title">Today</div>
+      <div class="pill-row"><span><span class="dot due"></span> Metformin · 8am</span><span>Due</span></div>
+      <div class="pill-row"><span><span class="dot"></span> Vitamin D · 8am</span><span>Taken</span></div>
+      <div class="pill-row"><span><span class="dot due"></span> Lisinopril · 2pm</span><span>Due</span></div>
+      <div class="big-btn">Mark Metformin taken</div>
+      <div class="phone-label">01 — today's view</div>
+    </div>
+    <div class="phone">
+      <div class="screen-title">All done</div>
+      <div class="progress-ring"></div>
+      <div class="stat-line">4 of 4 doses taken today</div>
+      <div class="pill-row"><span><span class="dot"></span> Metformin · 8am</span><span>✓</span></div>
+      <div class="pill-row"><span><span class="dot"></span> Lisinopril · 2pm</span><span>✓</span></div>
+      <div class="phone-label">02 — completed state</div>
+    </div>
+    <div class="phone">
+      <div class="screen-title">This week</div>
+      <div class="pill-row"><span>Mon</span><span>4/4</span></div>
+      <div class="pill-row"><span>Tue</span><span>4/4</span></div>
+      <div class="pill-row"><span>Wed</span><span>3/4</span></div>
+      <div class="pill-row"><span>Thu</span><span>4/4</span></div>
+      <div class="big-btn">Share with caregiver</div>
+      <div class="phone-label">03 — adherence tracking</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Design principles</h2>
+  <div class="principles">
+    <div class="principle">
+      <div class="k">One question per screen</div>
+      <p>Each screen answers exactly one question: what's due, what's done, or how's the week going.</p>
+    </div>
+    <div class="principle">
+      <div class="k">Color means urgency, not decoration</div>
+      <p>Coral only appears on things still due — once taken, everything shifts to a calm neutral tone.</p>
+    </div>
+    <div class="principle">
+      <div class="k">One-tap completion</div>
+      <p>The single most common action — marking a dose taken — never takes more than one tap from the home screen.</p>
+    </div>
+  </div>
+</section>
+
+<div class="outcome-band">
+  <h2>What this project explored</h2>
+  <div class="outcome-stats">
+    <div class="outcome-stat"><div class="num">3</div><div class="lbl">core screens designed</div></div>
+    <div class="outcome-stat"><div class="num">1</div><div class="lbl">tap to complete key action</div></div>
+    <div class="outcome-stat"><div class="num">2</div><div class="lbl">user interviews informing design</div></div>
+  </div>
+</div>
+
+<footer>Concept project by BrightStack Co. — designed for portfolio purposes.</footer>
+
+</body>
+</html>
