@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledgerly — Simple budgeting for freelancers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1420;
+    --paper:#FAFBFC;
+    --indigo:#4338CA;
+    --indigo-light:#EEF0FE;
+    --mint:#0EA5A5;
+    --line:#E6E8EE;
+    --muted:#616B7A;
+    --card:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:24px 40px;max-width:1120px;margin:0 auto;}
+  .brand{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;}
+  .brand span{color:var(--indigo);}
+  nav{display:flex;gap:32px;align-items:center;}
+  nav a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;}
+  .nav-cta{background:var(--ink);color:#fff;padding:10px 20px;border-radius:8px;}
+  .back-link{font-size:13px;color:var(--muted);text-decoration:none;}
+
+  .hero{text-align:center;padding:64px 40px 40px;max-width:760px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;background:var(--indigo-light);color:var(--indigo);
+    font-size:13px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:24px;
+  }
+  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:48px;line-height:1.15;margin-bottom:20px;}
+  h1 .accent{color:var(--indigo);}
+  .hero p{color:var(--muted);font-size:17px;max-width:520px;margin:0 auto 32px;}
+  .btn-row{display:flex;gap:14px;justify-content:center;}
+  .btn-primary{background:var(--indigo);color:#fff;padding:14px 28px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;}
+  .btn-outline{border:1px solid var(--line);padding:14px 28px;border-radius:8px;font-weight:600;font-size:15px;color:var(--ink);text-decoration:none;}
+  .trust-line{margin-top:28px;font-size:13px;color:var(--muted);}
+
+  .mock-window{
+    max-width:900px;margin:48px auto 0;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 20px 60px rgba(14,20,32,0.08);overflow:hidden;
+  }
+  .mock-topbar{background:#F4F5F8;padding:12px 18px;display:flex;gap:6px;border-bottom:1px solid var(--line);}
+  .mock-dot{width:10px;height:10px;border-radius:50%;background:#D6D9E0;}
+  .mock-body{padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+  .mock-stat{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px;}
+  .mock-stat .lbl{font-size:12px;color:var(--muted);margin-bottom:8px;}
+  .mock-stat .val{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;}
+  .mock-stat .val.green{color:var(--mint);}
+
+  .section{max-width:1000px;margin:0 auto;padding:80px 40px;}
+  .section-head{text-align:center;margin-bottom:48px;}
+  .section-head .eyebrow-sm{font-size:13px;font-weight:600;color:var(--mint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+  .section-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:32px;}
+
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .feature-card{padding:8px;}
+  .feature-icon{width:44px;height:44px;background:var(--indigo-light);border-radius:10px;margin-bottom:16px;}
+  .feature-card h3{font-family:'Sora',sans-serif;font-weight:600;font-size:17px;margin-bottom:8px;}
+  .feature-card p{font-size:14px;color:var(--muted);}
+
+  .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .t-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;}
+  .t-quote{font-size:14px;color:var(--ink);margin-bottom:20px;line-height:1.6;}
+  .t-author{display:flex;align-items:center;gap:10px;}
+  .t-avatar{width:36px;height:36px;border-radius:50%;background:var(--indigo-light);}
+  .t-name{font-size:13px;font-weight:600;}
+  .t-role{font-size:12px;color:var(--muted);}
+
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .price-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px 28px;}
+  .price-card.featured{border-color:var(--indigo);position:relative;box-shadow:0 12px 32px rgba(67,56,202,0.12);}
+  .featured-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--indigo);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:12px;}
+  .price-card h3{font-family:'Sora',sans-serif;font-weight:600;font-size:17px;margin-bottom:6px;}
+  .price-card .price{font-family:'Sora',sans-serif;font-weight:700;font-size:34px;margin-bottom:4px;}
+  .price-card .price span{font-size:14px;font-weight:400;color:var(--muted);}
+  .price-card .p-desc{font-size:13px;color:var(--muted);margin-bottom:20px;}
+  .price-list{list-style:none;margin-bottom:24px;}
+  .price-list li{font-size:13px;padding:7px 0;color:var(--ink);border-top:1px solid var(--line);}
+  .price-btn{display:block;text-align:center;background:var(--ink);color:#fff;padding:11px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;}
+  .price-card.featured .price-btn{background:var(--indigo);}
+
+  .faq-list{max-width:700px;margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line);padding:20px 0;cursor:pointer;}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:15px;}
+  .faq-icon{color:var(--muted);transition:transform 0.2s;}
+  .faq-item.open .faq-icon{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 0.25s ease;font-size:14px;color:var(--muted);}
+  .faq-item.open .faq-a{max-height:200px;padding-top:12px;}
+
+  .cta-final{background:var(--ink);color:#fff;text-align:center;padding:80px 40px;}
+  .cta-final h2{font-family:'Sora',sans-serif;font-weight:700;font-size:32px;margin-bottom:16px;}
+  .cta-final p{color:#A7AEBB;margin-bottom:28px;}
+  .cta-final .btn-primary{background:var(--mint);}
+
+  footer{padding:32px;text-align:center;font-size:13px;color:var(--muted);}
+
+  @media (max-width:800px){
+    h1{font-size:32px;}
+    .mock-body, .feature-grid, .testimonial-grid, .pricing-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">ledger<span>ly</span></div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#" class="nav-cta">Start free trial</a>
+  </nav>
+  <a href="index.html" class="back-link">← Back to portfolio</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">● Now in public beta</div>
+  <h1>Budgeting that actually fits <span class="accent">freelance income.</span></h1>
+  <p>Ledgerly tracks irregular income, sets aside tax money automatically, and shows you what you can actually spend this month — built for freelancers and contractors, not 9-to-5 paychecks.</p>
+  <div class="btn-row">
+    <a href="#" class="btn-primary">Start free trial</a>
+    <a href="#" class="btn-outline">Watch demo</a>
+  </div>
+  <div class="trust-line">No credit card required · Free for 14 days</div>
+
+  <div class="mock-window">
+    <div class="mock-topbar">
+      <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-stat"><div class="lbl">This month's income</div><div class="val">$4,280</div></div>
+      <div class="mock-stat"><div class="lbl">Set aside for tax</div><div class="val green">$1,070</div></div>
+      <div class="mock-stat"><div class="lbl">Safe to spend</div><div class="val">$2,140</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-head">
+    <div class="eyebrow-sm">Features</div>
+    <h2>Built for income that isn't the same every month</h2>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon"></div>
+      <h3>Automatic tax set-asides</h3>
+      <p>Every payment you log automatically sets aside an estimated tax percentage, so there's never a surprise at filing time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"></div>
+      <h3>Income smoothing</h3>
+      <p>See an averaged "safe to spend" number instead of panicking every time a slow month hits.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"></div>
+      <h3>Client-level tracking</h3>
+      <p>Know exactly which clients are paying on time, and which invoices are still outstanding, at a glance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="eyebrow-sm">Trusted by</div>
+    <h2>Freelancers who stopped guessing their finances</h2>
+  </div>
+  <div class="testimonial-grid">
+    <div class="t-card">
+      <div class="t-quote">"First time in three years of freelancing I've felt in control of my taxes instead of scrambling every March."</div>
+      <div class="t-author"><div class="t-avatar"></div><div><div class="t-name">Sara K.</div><div class="t-role">Freelance designer</div></div></div>
+    </div>
+    <div class="t-card">
+      <div class="t-quote">"The safe-to-spend number alone is worth it. I stopped overspending in good months and regretting it in slow ones."</div>
+      <div class="t-author"><div class="t-avatar"></div><div><div class="t-name">Imran T.</div><div class="t-role">Contract developer</div></div></div>
+    </div>
+    <div class="t-card">
+      <div class="t-quote">"Switched from a spreadsheet I built myself. Ledgerly does in one screen what took me an hour every week."</div>
+      <div class="t-author"><div class="t-avatar"></div><div><div class="t-name">Nadia F.</div><div class="t-role">Copywriter</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="section-head">
+    <div class="eyebrow-sm">Pricing</div>
+    <h2>Simple pricing, cancel anytime</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Starter</h3>
+      <div class="price">$0<span>/mo</span></div>
+      <div class="p-desc">For trying things out</div>
+      <ul class="price-list">
+        <li>Manual income tracking</li>
+        <li>Basic monthly summary</li>
+        <li>1 connected account</li>
+      </ul>
+      <a href="#" class="price-btn">Get started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-tag">Most popular</div>
+      <h3>Freelancer</h3>
+      <div class="price">$9<span>/mo</span></div>
+      <div class="p-desc">For active freelancers</div>
+      <ul class="price-list">
+        <li>Everything in Starter</li>
+        <li>Automatic tax set-asides</li>
+        <li>Client-level tracking</li>
+        <li>Unlimited accounts</li>
+      </ul>
+      <a href="#" class="price-btn">Start free trial</a>
+    </div>
+    <div class="price-card">
+      <h3>Studio</h3>
+      <div class="price">$24<span>/mo</span></div>
+      <div class="p-desc">For small teams and agencies</div>
+      <ul class="price-list">
+        <li>Everything in Freelancer</li>
+        <li>Up to 5 team members</li>
+        <li>Shared client dashboard</li>
+      </ul>
+      <a href="#" class="price-btn">Contact sales</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-head">
+    <div class="eyebrow-sm">FAQ</div>
+    <h2>Common questions</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span>Does Ledgerly connect to my bank?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Yes — connect your bank account for automatic income detection, or log income manually if you prefer not to connect an account.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span>Is the tax estimate accurate for my country?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">You set your own tax percentage based on your local rate and situation — Ledgerly handles the automatic set-aside calculation from there.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q"><span>Can I cancel anytime?</span><span class="faq-icon">+</span></div>
+      <div class="faq-a">Yes, no lock-in contracts — cancel from your account settings whenever you like.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-final">
+  <h2>Stop guessing what you can spend.</h2>
+  <p>Free for 14 days, no credit card needed.</p>
+  <a href="#" class="btn-primary">Start your free trial</a>
+</div>
+
+<footer>Concept product by BrightStack Co. — designed for portfolio purposes.</footer>
+
+</body>
+</html>
