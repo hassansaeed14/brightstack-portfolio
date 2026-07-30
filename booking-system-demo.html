@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Studio — Booking system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#B8467A;
+    --rose-light:#FBEAF1;
+    --charcoal:#26222A;
+    --muted:#8A8290;
+    --bg:#FAF8F9;
+    --card:#FFFFFF;
+    --line:#EEE5EA;
+    --green:#3A9B7A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+  body{background:var(--bg);color:var(--charcoal);}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1080px;margin:0 auto;}
+  .brand{font-weight:700;font-size:18px;}
+  .brand span{color:var(--rose);}
+  .back-link{font-size:13px;color:var(--muted);text-decoration:none;}
+
+  .layout{max-width:1080px;margin:0 auto;padding:0 32px 60px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .card-title{font-weight:600;font-size:16px;margin-bottom:18px;}
+
+  /* CALENDAR */
+  .cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .cal-nav button{background:none;border:1px solid var(--line);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--charcoal);}
+  .cal-month{font-weight:600;font-size:14px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
+  .cal-dow{font-size:11px;color:var(--muted);padding:6px 0;font-weight:600;}
+  .cal-day{
+    aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;
+    font-size:13px;cursor:pointer;position:relative;
+  }
+  .cal-day.muted{color:#D8D0D5;cursor:default;}
+  .cal-day:not(.muted):hover{background:var(--rose-light);}
+  .cal-day.selected{background:var(--rose);color:#fff;font-weight:600;}
+  .cal-day.has-booking::after{
+    content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--rose);
+  }
+  .cal-day.selected.has-booking::after{background:#fff;}
+
+  .slots-title{font-size:13px;color:var(--muted);margin:18px 0 10px;}
+  .slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .slot{
+    border:1px solid var(--line);border-radius:8px;padding:9px 4px;text-align:center;font-size:12px;
+    cursor:pointer;background:var(--bg);
+  }
+  .slot.taken{color:#D8D0D5;background:#F3F0F1;cursor:not-allowed;text-decoration:line-through;}
+  .slot.selected{background:var(--rose);color:#fff;border-color:var(--rose);}
+  .slot:not(.taken):not(.selected):hover{border-color:var(--rose);}
+
+  .book-btn{
+    width:100%;margin-top:20px;background:var(--charcoal);color:#fff;border:none;padding:13px;
+    border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;
+  }
+  .book-btn:disabled{background:#D8D0D5;cursor:not-allowed;}
+
+  /* SIDEBAR */
+  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .stat-mini{background:var(--rose-light);border-radius:10px;padding:14px;}
+  .stat-mini .v{font-weight:700;font-size:20px;color:var(--rose);}
+  .stat-mini .l{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  .appt-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .appt-item:last-child{border-bottom:none;}
+  .appt-name{font-weight:600;}
+  .appt-service{font-size:11px;color:var(--muted);}
+  .appt-time{font-size:12px;color:var(--rose);font-weight:600;}
+
+  .confirm-box{
+    display:none;margin-top:16px;background:var(--rose-light);border-radius:10px;padding:16px;font-size:13px;
+  }
+  .confirm-box.show{display:block;}
+  .confirm-box .c-title{font-weight:600;color:var(--rose);margin-bottom:6px;}
+
+  footer{padding:28px;text-align:center;font-size:12px;color:var(--muted);}
+
+  @media (max-width:800px){
+    .layout{grid-template-columns:1fr;}
+    .slots-grid{grid-template-columns:repeat(3,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Glow <span>Studio</span></div>
+  <a href="index.html" class="back-link">← Back to portfolio</a>
+</header>
+
+<div class="layout">
+  <div class="card">
+    <div class="card-title">Book an appointment</div>
+
+    <div class="cal-nav">
+      <button onclick="shiftMonth(-1)">‹</button>
+      <div class="cal-month" id="calMonth">March 2026</div>
+      <button onclick="shiftMonth(1)">›</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+
+    <div class="slots-title">Available times — <span id="selectedDateLabel">select a date</span></div>
+    <div class="slots-grid" id="slotsGrid"></div>
+
+    <button class="book-btn" id="bookBtn" disabled onclick="confirmBooking()">Confirm booking</button>
+
+    <div class="confirm-box" id="confirmBox">
+      <div class="c-title">Booking confirmed</div>
+      <div id="confirmText"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Today at a glance</div>
+    <div class="stat-row">
+      <div class="stat-mini"><div class="v">6</div><div class="l">appointments today</div></div>
+      <div class="stat-mini"><div class="v">Rs 24,500</div><div class="l">expected revenue</div></div>
+    </div>
+
+    <div class="card-title" style="font-size:14px;">Upcoming appointments</div>
+    <div class="appt-item"><div><div class="appt-name">Ayesha Malik</div><div class="appt-service">Haircut & style</div></div><div class="appt-time">10:00 AM</div></div>
+    <div class="appt-item"><div><div class="appt-name">Fatima Noor</div><div class="appt-service">Facial treatment</div></div><div class="appt-time">11:30 AM</div></div>
+    <div class="appt-item"><div><div class="appt-name">Sana Raza</div><div class="appt-service">Manicure</div></div><div class="appt-time">1:00 PM</div></div>
+    <div class="appt-item"><div><div class="appt-name">Hira Ahmed</div><div class="appt-service">Hair color</div></div><div class="appt-time">2:30 PM</div></div>
+  </div>
+</div>
+
+<footer>Concept booking system by BrightStack Co. — designed for portfolio purposes.</footer>
+
+<script>
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let currentMonth = 2; // March
+let currentYear = 2026;
+let selectedDay = null;
+let selectedSlot = null;
+
+const bookedDays = [3, 8, 12, 15, 22];
+const takenSlots = {
+  8: ['9:00 AM','2:00 PM'],
+  12: ['10:30 AM','11:00 AM','3:00 PM'],
+  15: ['9:00 AM']
+};
+const allSlots = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM'];
+
+function renderCalendar(){
+  document.getElementById('calMonth').textContent = months[currentMonth] + ' ' + currentYear;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{
+    const el = document.createElement('div');
+    el.className = 'cal-dow';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+  for(let i=0;i<firstDay;i++){
+    const el = document.createElement('div');
+    el.className = 'cal-day muted';
+    grid.appendChild(el);
+  }
+  for(let d=1; d<=daysInMonth; d++){
+    const el = document.createElement('div');
+    el.className = 'cal-day' + (bookedDays.includes(d) ? ' has-booking' : '') + (d===selectedDay ? ' selected' : '');
+    el.textContent = d;
+    if(d >= 1){
+      el.onclick = () => selectDay(d);
+    }
+    grid.appendChild(el);
+  }
+}
+
+function selectDay(d){
+  selectedDay = d;
+  selectedSlot = null;
+  document.getElementById('selectedDateLabel').textContent = months[currentMonth] + ' ' + d + ', ' + currentYear;
+  renderCalendar();
+  renderSlots(d);
+  document.getElementById('bookBtn').disabled = true;
+  document.getElementById('confirmBox').classList.remove('show');
+}
+
+function renderSlots(d){
+  const grid = document.getElementById('slotsGrid');
+  grid.innerHTML = '';
+  const taken = takenSlots[d] || [];
+  allSlots.forEach(s=>{
+    const el = document.createElement('div');
+    const isTaken = taken.includes(s);
+    el.className = 'slot' + (isTaken ? ' taken' : '');
+    el.textContent = s;
+    if(!isTaken){
+      el.onclick = () => selectSlot(s, el);
+    }
+    grid.appendChild(el);
+  });
+}
+
+function selectSlot(s, el){
+  document.querySelectorAll('.slot').forEach(x => x.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSlot = s;
+  document.getElementById('bookBtn').disabled = false;
+  document.getElementById('confirmBox').classList.remove('show');
+}
+
+function confirmBooking(){
+  document.getElementById('confirmText').textContent =
+    'Appointment set for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '. A confirmation would normally be sent by email or SMS here.';
+  document.getElementById('confirmBox').classList.add('show');
+}
+
+function shiftMonth(dir){
+  currentMonth += dir;
+  if(currentMonth > 11){currentMonth = 0; currentYear++;}
+  if(currentMonth < 0){currentMonth = 11; currentYear--;}
+  selectedDay = null;
+  document.getElementById('selectedDateLabel').textContent = 'select a date';
+  document.getElementById('slotsGrid').innerHTML = '';
+  document.getElementById('bookBtn').disabled = true;
+  renderCalendar();
+}
+
+renderCalendar();
+</script>
+
+</body>
+</html>
