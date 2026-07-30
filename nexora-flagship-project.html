@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora — Client & project management for agencies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111827;
+    --paper:#F9FAFB;
+    --violet:#6D4AFF;
+    --violet-light:#EFEAFF;
+    --teal:#0EA5A5;
+    --amber:#E8A32C;
+    --red:#E5484D;
+    --line:#E5E7EB;
+    --card:#FFFFFF;
+    --muted:#6B7280;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  section{scroll-margin-top:70px;}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;background:rgba(249,250,251,0.9);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);z-index:10;
+  }
+  .nav-inner{max-width:1120px;margin:0 auto;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .brand{font-family:'Sora',sans-serif;font-weight:700;font-size:18px;}
+  .brand span{color:var(--violet);}
+  nav a{margin-left:26px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;}
+  .back-link{font-size:13px;color:var(--muted);text-decoration:none;}
+
+  /* HERO */
+  .hero{text-align:center;max-width:760px;margin:0 auto;padding:64px 32px 40px;}
+  .eyebrow{display:inline-block;background:var(--violet-light);color:var(--violet);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:22px;}
+  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:44px;line-height:1.15;margin-bottom:18px;}
+  .hero p{color:var(--muted);font-size:16px;max-width:540px;margin:0 auto 28px;}
+  .btn-row{display:flex;gap:12px;justify-content:center;}
+  .btn-primary{background:var(--violet);color:#fff;padding:13px 26px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;border:none;cursor:pointer;}
+  .btn-outline{border:1px solid var(--line);padding:13px 26px;border-radius:8px;font-weight:600;font-size:14px;color:var(--ink);text-decoration:none;background:#fff;}
+
+  .stack-note{max-width:900px;margin:0 auto;padding:0 32px 56px;text-align:center;}
+  .stack-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+  .stack-pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);}
+
+  /* SECTION SHELL */
+  .section{max-width:1080px;margin:0 auto;padding:64px 32px;}
+  .section-head{margin-bottom:32px;}
+  .section-head .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-bottom:10px;}
+  .section-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:28px;margin-bottom:10px;}
+  .section-head p{color:var(--muted);font-size:14px;max-width:600px;}
+
+  /* APP PREVIEW (full-stack + UI/UX) */
+  .app-shell{background:var(--ink);border-radius:16px;padding:0;overflow:hidden;}
+  .app-topbar{background:#1A2130;padding:12px 20px;display:flex;gap:6px;}
+  .dot{width:10px;height:10px;border-radius:50%;background:#374151;}
+  .app-body{display:flex;min-height:420px;}
+  .app-sidebar{width:180px;background:#171E2B;padding:20px 0;flex-shrink:0;}
+  .app-side-link{padding:10px 20px;font-size:13px;color:#9CA6B8;}
+  .app-side-link.active{background:#232C3E;color:#fff;border-left:3px solid var(--violet);}
+  .app-main{flex:1;background:#FAFAFB;padding:26px 28px;color:var(--ink);}
+  .app-topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .app-topline h3{font-size:16px;font-weight:700;}
+  .client-badge{font-size:12px;color:var(--muted);}
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;}
+  .kpi .kv{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;}
+  .kpi .kl{font-size:11px;color:var(--muted);margin-top:2px;}
+  .proj-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .proj-row:last-child{border-bottom:none;}
+  .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;}
+  .status-pill.active{background:#E3F5F1;color:var(--teal);}
+  .status-pill.review{background:#FCF1DE;color:var(--amber);}
+  .status-pill.done{background:#EFEAFF;color:var(--violet);}
+
+  /* API SECTION */
+  .api-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;}
+  .api-row{display:flex;gap:16px;align-items:end;flex-wrap:wrap;margin-bottom:20px;}
+  .api-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+  .api-field input, .api-field select{
+    padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;
+    background:var(--paper);width:130px;
+  }
+  .swap-btn{background:none;border:1px solid var(--line);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:14px;}
+  .convert-btn{background:var(--violet);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
+  .api-result{background:var(--violet-light);border-radius:10px;padding:18px;font-size:14px;min-height:24px;}
+  .api-result .big{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:var(--violet);}
+  .api-note{font-size:12px;color:var(--muted);margin-top:12px;}
+
+  /* AI INSIGHTS */
+  .insight-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;}
+  .insight-input-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .insight-input-row select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:var(--paper);flex:1;min-width:160px;}
+  .score-bars{display:grid;gap:12px;}
+  .score-row{display:flex;align-items:center;gap:12px;font-size:13px;}
+  .score-label{width:150px;flex-shrink:0;color:var(--muted);}
+  .score-track{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden;}
+  .score-fill{height:100%;background:var(--teal);border-radius:6px;}
+  .score-num{width:40px;text-align:right;font-weight:600;}
+  .verdict{margin-top:18px;padding:14px 16px;border-radius:10px;font-size:13px;}
+  .verdict.high{background:#E3F5F1;color:#0D7A6E;}
+  .verdict.medium{background:#FCF1DE;color:#946200;}
+  .verdict.low{background:#FBE9E7;color:#B23A2E;}
+
+  /* DESIGN SYSTEM */
+  .ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .ds-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .ds-card h3{font-size:14px;font-weight:600;margin-bottom:16px;}
+  .color-swatches{display:flex;gap:10px;flex-wrap:wrap;}
+  .swatch{width:56px;text-align:center;}
+  .swatch-box{height:44px;border-radius:8px;margin-bottom:6px;}
+  .swatch span{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+  .type-sample .t1{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px;}
+  .type-sample .t2{font-family:'Sora',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px;}
+  .type-sample .t3{font-size:13px;color:var(--muted);}
+  .btn-showcase{display:flex;gap:10px;flex-wrap:wrap;}
+  .comp-showcase{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+  footer{padding:32px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:20px;}
+
+  @media (max-width:800px){
+    h1{font-size:30px;}
+    .app-body{flex-direction:column;}
+    .app-sidebar{width:100%;display:flex;padding:10px;overflow-x:auto;}
+    .kpi-row, .ds-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand">nex<span>ora</span></div>
+    <nav>
+      <a href="#app">Platform</a>
+      <a href="#api">Live tools</a>
+      <a href="#insights">AI insights</a>
+      <a href="#design">Design system</a>
+    </nav>
+    <a href="index.html" class="back-link">← Back to portfolio</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Flagship portfolio project</div>
+  <h1>One platform. Every skill. Built to show what BrightStack Co. actually delivers.</h1>
+  <p>Nexora is a concept client & project management platform for agencies — combining a marketed product front-end, a working full-stack dashboard, a real live API integration, and a rule-based AI insights engine, all in one cohesive build.</p>
+  <div class="btn-row">
+    <a href="#app" class="btn-primary">Explore the platform</a>
+    <a href="#design" class="btn-outline">View design system</a>
+  </div>
+</section>
+
+<div class="stack-note">
+  <div class="stack-row">
+    <div class="stack-pill">Web design</div>
+    <div class="stack-pill">HTML5 / CSS3</div>
+    <div class="stack-pill">JavaScript</div>
+    <div class="stack-pill">Full-stack app structure</div>
+    <div class="stack-pill">Live API integration</div>
+    <div class="stack-pill">UI/UX design system</div>
+    <div class="stack-pill">Rule-based AI logic</div>
+    <div class="stack-pill">Responsive design</div>
+  </div>
+</div>
+
+<section class="section" id="app">
+  <div class="section-head">
+    <div class="tag">// 01 — FULL-STACK APPLICATION</div>
+    <h2>Agency dashboard</h2>
+    <p>A working admin view of the kind of internal tool most agencies eventually need: client roster, project status, and revenue at a glance.</p>
+  </div>
+  <div class="app-shell">
+    <div class="app-topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="app-body">
+      <div class="app-sidebar">
+        <div class="app-side-link active">Dashboard</div>
+        <div class="app-side-link">Clients</div>
+        <div class="app-side-link">Projects</div>
+        <div class="app-side-link">Invoices</div>
+        <div class="app-side-link">Settings</div>
+      </div>
+      <div class="app-main">
+        <div class="app-topline">
+          <h3>Agency overview</h3>
+          <div class="client-badge">BrightStack Co. · 12 active clients</div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi"><div class="kv">Rs 612,000</div><div class="kl">revenue this quarter</div></div>
+          <div class="kpi"><div class="kv">9</div><div class="kl">active projects</div></div>
+          <div class="kpi"><div class="kv">3</div><div class="kl">awaiting client review</div></div>
+        </div>
+        <div class="proj-row"><span>Noor Bakehouse — website redesign</span><span class="status-pill active">In progress</span></div>
+        <div class="proj-row"><span>Glow Studio — booking system</span><span class="status-pill review">In review</span></div>
+        <div class="proj-row"><span>Ledgerly — landing page</span><span class="status-pill done">Delivered</span></div>
+        <div class="proj-row"><span>Kamran Traders — inventory dashboard</span><span class="status-pill active">In progress</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="api">
+  <div class="section-head">
+    <div class="tag">// 02 — LIVE API INTEGRATION</div>
+    <h2>Real-time currency converter</h2>
+    <p>Agencies billing international clients need to quote in different currencies. This pulls live exchange rates from a public financial data API in real time — not mock data.</p>
+  </div>
+  <div class="api-panel">
+    <div class="api-row">
+      <div class="api-field">
+        <label>Amount</label>
+        <input type="number" id="amountInput" value="1000">
+      </div>
+      <div class="api-field">
+        <label>From</label>
+        <select id="fromCurrency">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="PKR">PKR</option>
+        </select>
+      </div>
+      <button class="swap-btn" onclick="swapCurrencies()">⇄</button>
+      <div class="api-field">
+        <label>To</label>
+        <select id="toCurrency">
+          <option value="PKR">PKR</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+        </select>
+      </div>
+      <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+    </div>
+    <div class="api-result" id="apiResult">Click convert to fetch a live exchange rate.</div>
+    <div class="api-note">Live data from frankfurter.app (European Central Bank rates), fetched directly in your browser when you click convert.</div>
+  </div>
+</section>
+
+<section class="section" id="insights">
+  <div class="section-head">
+    <div class="tag">// 03 — AI-ASSISTED INSIGHTS</div>
+    <h2>Client health scoring</h2>
+    <p>A rule-based scoring engine — the same category of logic used in the automation demo elsewhere in this portfolio — applied here to flag which clients need attention before they churn.</p>
+  </div>
+  <div class="insight-panel">
+    <div class="insight-input-row">
+      <select id="clientSelect" onchange="scoreClient()">
+        <option value="0">Noor Bakehouse</option>
+        <option value="1">Kamran Traders</option>
+        <option value="2">Sadiq Motors</option>
+      </select>
+    </div>
+    <div class="score-bars" id="scoreBars"></div>
+    <div class="verdict" id="verdictBox"></div>
+  </div>
+</section>
+
+<section class="section" id="design">
+  <div class="section-head">
+    <div class="tag">// 04 — UI/UX DESIGN SYSTEM</div>
+    <h2>Design tokens used across this project</h2>
+    <p>A consistent, documented design system — the same discipline applied on the UI/UX case study elsewhere in this portfolio — kept it visually cohesive across every screen above.</p>
+  </div>
+  <div class="ds-grid">
+    <div class="ds-card">
+      <h3>Color palette</h3>
+      <div class="color-swatches">
+        <div class="swatch"><div class="swatch-box" style="background:#6D4AFF;"></div><span>#6D4AFF</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#0EA5A5;"></div><span>#0EA5A5</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#111827;"></div><span>#111827</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#E8A32C;"></div><span>#E8A32C</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#EFEAFF;border:1px solid #E5E7EB;"></div><span>#EFEAFF</span></div>
+      </div>
+    </div>
+    <div class="ds-card">
+      <h3>Typography</h3>
+      <div class="type-sample">
+        <div class="t1">Sora — display</div>
+        <div class="t2">Sora medium — headings</div>
+        <div class="t3">Inter — body text, used for all paragraph and UI copy across the platform.</div>
+      </div>
+    </div>
+    <div class="ds-card">
+      <h3>Buttons</h3>
+      <div class="btn-showcase">
+        <button class="btn-primary">Primary action</button>
+        <a href="#" class="btn-outline">Secondary</a>
+      </div>
+    </div>
+    <div class="ds-card">
+      <h3>Status components</h3>
+      <div class="comp-showcase">
+        <span class="status-pill active">Active</span>
+        <span class="status-pill review">In review</span>
+        <span class="status-pill done">Delivered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Flagship concept project by BrightStack Co. — combines web design, full-stack structure, live API integration, rule-based AI logic, and a documented UI/UX design system in one build, for portfolio purposes.</footer>
+
+<script>
+// Live currency API integration (frankfurter.app — free, no key required)
+function swapCurrencies(){
+  const from = document.getElementById('fromCurrency');
+  const to = document.getElementById('toCurrency');
+  const temp = from.value;
+  from.value = to.value;
+  to.value = temp;
+}
+
+async function convertCurrency(){
+  const amount = document.getElementById('amountInput').value;
+  const from = document.getElementById('fromCurrency').value;
+  const to = document.getElementById('toCurrency').value;
+  const resultBox = document.getElementById('apiResult');
+  resultBox.innerHTML = 'Fetching live rate…';
+  try{
+    const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
+    const data = await res.json();
+    const converted = data.rates[to];
+    resultBox.innerHTML = `<span class="big">${amount} ${from} = ${converted.toFixed(2)} ${to}</span><br>Rate fetched live just now.`;
+  }catch(e){
+    resultBox.innerHTML = 'Could not fetch a live rate right now — the public API may be temporarily unavailable. Try again in a moment.';
+  }
+}
+
+// Rule-based client health scoring
+const clients = [
+  { name:'Noor Bakehouse', payment:90, engagement:80, satisfaction:85, responsiveness:75 },
+  { name:'Kamran Traders', payment:60, engagement:40, satisfaction:55, responsiveness:35 },
+  { name:'Sadiq Motors', payment:95, engagement:90, satisfaction:92, responsiveness:88 }
+];
+
+function scoreClient(){
+  const idx = document.getElementById('clientSelect').value;
+  const c = clients[idx];
+  const bars = document.getElementById('scoreBars');
+  bars.innerHTML = '';
+  const metrics = [
+    {label:'Payment reliability', value:c.payment},
+    {label:'Engagement', value:c.engagement},
+    {label:'Satisfaction signals', value:c.satisfaction},
+    {label:'Responsiveness', value:c.responsiveness}
+  ];
+  metrics.forEach(m=>{
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `<div class="score-label">${m.label}</div><div class="score-track"><div class="score-fill" style="width:${m.value}%"></div></div><div class="score-num">${m.value}</div>`;
+    bars.appendChild(row);
+  });
+  const avg = (c.payment + c.engagement + c.satisfaction + c.responsiveness) / 4;
+  const verdict = document.getElementById('verdictBox');
+  if(avg >= 75){
+    verdict.className = 'verdict high';
+    verdict.textContent = `Healthy account (score ${avg.toFixed(0)}/100) — no action needed, consider for case study or referral request.`;
+  } else if(avg >= 50){
+    verdict.className = 'verdict medium';
+    verdict.textContent = `Needs attention (score ${avg.toFixed(0)}/100) — engagement or responsiveness dropping, worth a check-in call.`;
+  } else {
+    verdict.className = 'verdict low';
+    verdict.textContent = `At risk (score ${avg.toFixed(0)}/100) — multiple weak signals, prioritize outreach before renewal.`;
+  }
+}
+
+scoreClient();
+</script>
+
+</body>
+</html>
