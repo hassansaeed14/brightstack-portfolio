@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor Bakehouse — Fresh baked daily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#4A1F2E;
+    --gold:#C9A227;
+    --paper:#F5EEDC;
+    --charcoal:#26201C;
+    --sage:#6E8163;
+    --paper-2:#EDE3C8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--charcoal);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:28px 32px;max-width:1100px;margin:0 auto;
+  }
+  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:var(--plum);}
+  nav a{margin-left:32px;font-size:14px;font-weight:500;color:var(--charcoal);}
+  .nav-cta{
+    background:var(--plum);color:var(--paper);padding:10px 22px;border-radius:2px;
+  }
+
+  .hero{
+    display:flex;align-items:center;gap:64px;
+    padding:60px 32px 100px;max-width:1100px;margin:0 auto;
+  }
+  .hero-text{flex:1;}
+  .eyebrow{
+    font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);
+    font-weight:600;margin-bottom:18px;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:500;font-size:56px;line-height:1.08;
+    color:var(--plum);margin-bottom:24px;
+  }
+  .hero-text p{font-size:17px;max-width:440px;color:#4a423a;margin-bottom:32px;}
+  .btn-row{display:flex;gap:16px;align-items:center;}
+  .btn-primary{
+    background:var(--plum);color:var(--paper);padding:14px 28px;border-radius:2px;
+    font-weight:500;font-size:15px;
+  }
+  .btn-secondary{font-weight:500;font-size:15px;color:var(--charcoal);border-bottom:1.5px solid var(--gold);padding-bottom:2px;}
+
+  .stamp{
+    width:150px;height:150px;border-radius:50%;border:1.5px dashed var(--gold);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    position:relative;
+  }
+  .stamp-inner{
+    width:120px;height:120px;border-radius:50%;border:1px solid var(--plum);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'Fraunces',serif;font-size:12px;color:var(--plum);
+    padding:10px;line-height:1.3;
+  }
+
+  .hero-visual{
+    flex:1;background:var(--paper-2);border-radius:4px;height:380px;
+    display:flex;align-items:center;justify-content:center;position:relative;
+    border:1px solid #e0d3ac;
+  }
+  .ticket{
+    background:var(--paper);width:240px;padding:28px 24px;box-shadow:0 8px 24px rgba(38,32,28,0.12);
+    position:relative;
+  }
+  .ticket::before, .ticket::after{
+    content:'';position:absolute;width:16px;height:16px;background:var(--paper-2);
+    border-radius:50%;top:50%;transform:translateY(-50%);
+  }
+  .ticket::before{left:-8px;}
+  .ticket::after{right:-8px;}
+  .ticket-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed #d8cca3;}
+  .ticket-row:last-child{border-bottom:none;}
+  .ticket-title{font-family:'Fraunces',serif;font-size:16px;color:var(--plum);margin-bottom:14px;text-align:center;}
+
+  .section{padding:80px 32px;max-width:1100px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:48px;}
+  .section-head .eyebrow{color:var(--sage);}
+  .section-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:36px;color:var(--plum);}
+
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .menu-card{background:var(--paper-2);padding:32px 28px;border-radius:4px;}
+  .menu-card .num{font-family:'Fraunces',serif;font-size:13px;color:var(--gold);margin-bottom:12px;}
+  .menu-card h3{font-family:'Fraunces',serif;font-weight:500;font-size:20px;color:var(--plum);margin-bottom:10px;}
+  .menu-card p{font-size:14px;color:#4a423a;}
+
+  .cta-band{
+    background:var(--plum);color:var(--paper);text-align:center;padding:70px 32px;
+  }
+  .cta-band h2{font-family:'Fraunces',serif;font-weight:500;font-size:32px;margin-bottom:20px;}
+  .cta-band .btn-primary{background:var(--gold);color:var(--charcoal);}
+
+  footer{padding:32px;text-align:center;font-size:13px;color:#8a7f6f;}
+
+  @media (max-width:800px){
+    .hero{flex-direction:column;}
+    h1{font-size:38px;}
+    .menu-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Noor Bakehouse</div>
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#about">Our story</a>
+    <a href="#" class="nav-cta">Order online</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Rawalpindi · Est. 2024</div>
+    <h1>Bread the old way, baked every morning.</h1>
+    <p>Small-batch sourdough, pastries, and cakes — made from scratch daily, no shortcuts, no preservatives.</p>
+    <div class="btn-row">
+      <a href="#" class="btn-primary">Order for pickup</a>
+      <a href="#menu" class="btn-secondary">View the menu</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="ticket">
+      <div class="ticket-title">Today's bake</div>
+      <div class="ticket-row"><span>Sourdough loaf</span><span>Rs 450</span></div>
+      <div class="ticket-row"><span>Cardamom bun</span><span>Rs 150</span></div>
+      <div class="ticket-row"><span>Almond croissant</span><span>Rs 280</span></div>
+      <div class="ticket-row"><span>Date & walnut cake</span><span>Rs 900</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="section-head">
+    <div class="eyebrow">What we make</div>
+    <h2>Baked fresh, every single day</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="num">01</div>
+      <h3>Sourdough & loaves</h3>
+      <p>72-hour fermented sourdough, whole wheat, and seeded loaves — baked in small batches each morning.</p>
+    </div>
+    <div class="menu-card">
+      <div class="num">02</div>
+      <h3>Pastries</h3>
+      <p>Butter croissants, cardamom buns, and seasonal danishes made fresh before sunrise.</p>
+    </div>
+    <div class="menu-card">
+      <div class="num">03</div>
+      <h3>Custom cakes</h3>
+      <p>Celebration cakes made to order — tell us the occasion, we'll handle the rest.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <h2>Order ahead, skip the line.</h2>
+  <a href="#" class="btn-primary">Order for pickup today</a>
+</section>
+
+<footer>
+  Noor Bakehouse · Rawalpindi, Punjab · Open daily 7am–8pm
+</footer>
+
+</body>
+</html>
