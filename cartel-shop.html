@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartel — Shopping & Checkout | BrightStack Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080;
+    --line:#e3e5ee; --indigo:#4f46e5; --indigo-dim:#eef0fd;
+    --coral:#ff5470; --coral-dim:#ffe7ec; --green:#0f9d63; --green-dim:#e7f7ef;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:64px 24px 100px;}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px;}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .lede{color:var(--muted);font-size:17px;line-height:1.6;max-width:660px;margin:0 0 36px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px;}
+  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
+  .pill strong{color:var(--ink);font-weight:600;}
+  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:0 0 6px;}
+  .section-sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:620px;line-height:1.55;}
+
+  .system{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:64px;}
+  @media(max-width:900px){.system{grid-template-columns:repeat(2,1fr);}}
+  .sys-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;}
+  .sys-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;}
+  .btn{display:inline-block;padding:9px 16px;border-radius:9px;font-size:13.5px;font-weight:600;font-family:'Inter',sans-serif;border:none;cursor:pointer;transition:transform .12s;}
+  .btn:active{transform:scale(.95);}
+  .btn-primary{background:var(--coral);color:#fff;}
+  .btn-ghost{background:var(--indigo-dim);color:var(--indigo);}
+  .size-row{display:flex;gap:8px;}
+  .size-chip{width:34px;height:34px;border-radius:8px;background:#fafafd;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
+  .size-chip.on{background:var(--coral);color:#fff;border-color:var(--coral);}
+  .cart-badge-demo{position:relative;width:40px;height:40px;border-radius:10px;background:#fafafd;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
+  .cart-badge-demo .badge{position:absolute;top:-6px;right:-6px;background:var(--coral);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .rating{display:flex;gap:3px;}
+  .star{width:14px;height:14px;background:var(--coral);clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);}
+  .star.off{background:var(--line);}
+
+  .proto-wrap{display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:flex-start;}
+  @media(max-width:820px){.proto-wrap{grid-template-columns:1fr;justify-items:center;}}
+
+  .phone{width:290px;height:600px;background:#0e0f14;border-radius:42px;padding:11px;box-shadow:0 30px 60px -20px rgba(18,19,26,.35), 0 0 0 1px rgba(18,19,26,.06);position:relative;flex-shrink:0;}
+  .phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:90px;height:20px;background:#0e0f14;border-radius:0 0 16px 16px;z-index:6;}
+  .phone-screen{width:100%;height:100%;background:#fafafd;border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
+  .app-body{flex:1;position:relative;overflow:hidden;}
+
+  .view{position:absolute;inset:0;padding:34px 18px 18px;display:flex;flex-direction:column;opacity:0;transform:translateX(28px);transition:opacity .4s cubic-bezier(.2,.8,.2,1), transform .4s cubic-bezier(.2,.8,.2,1);pointer-events:none;overflow-y:auto;}
+  .view.active{opacity:1;transform:translateX(0);pointer-events:auto;}
+  .view.leaving{opacity:0;transform:translateX(-28px);}
+
+  .v-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .v-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;}
+  .v-cart{position:relative;width:32px;height:32px;border-radius:9px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .v-cart .badge{position:absolute;top:-6px;right:-6px;background:var(--coral);color:#fff;font-size:9.5px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .25s cubic-bezier(.4,1.8,.5,1);}
+  .v-cart .badge.pop{transform:scale(1.4);}
+
+  .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .prod-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .15s;}
+  .prod-card:active{transform:scale(.96);}
+  .prod-thumb{height:80px;}
+  .prod-thumb.p1{background:linear-gradient(140deg,#ff8fa3,#ff5470);}
+  .prod-thumb.p2{background:linear-gradient(140deg,#7c8cf8,#4f46e5);}
+  .prod-thumb.p3{background:linear-gradient(140deg,#5fd6c0,#0f9d63);}
+  .prod-thumb.p4{background:linear-gradient(140deg,#ffc975,#e0a458);}
+  .prod-info{padding:9px 10px;}
+  .prod-name{font-size:11.5px;font-weight:700;}
+  .prod-price{font-size:11px;color:var(--coral);font-weight:700;margin-top:2px;}
+
+  .detail-thumb{height:180px;border-radius:14px;background:linear-gradient(150deg,#ff8fa3,#ff5470);margin-bottom:14px;}
+  .detail-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;}
+  .detail-price{font-size:14px;color:var(--coral);font-weight:700;margin:4px 0 10px;}
+  .detail-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 6px;}
+
+  .add-btn{background:var(--coral);color:#fff;text-align:center;padding:13px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;margin-top:auto;transition:all .2s;position:relative;overflow:hidden;}
+  .add-btn.added{background:var(--green);}
+  .add-btn:active{transform:scale(.97);}
+
+  .cart-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center;transition:all .3s ease;position:relative;}
+  .cart-item.removing{transform:translateX(-100%);opacity:0;max-height:0;padding:0;margin:0;overflow:hidden;}
+  .ci-thumb{width:48px;height:48px;border-radius:10px;flex-shrink:0;}
+  .ci-name{font-size:12px;font-weight:700;}
+  .ci-meta{font-size:10.5px;color:var(--muted);margin-top:1px;}
+  .ci-price{font-size:12px;font-weight:700;margin-left:auto;}
+  .ci-remove{width:22px;height:22px;border-radius:50%;background:var(--coral-dim);color:var(--coral);display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;flex-shrink:0;}
+
+  .step-progress{display:flex;align-items:center;margin-bottom:20px;}
+  .step-dot{width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--muted);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+  .step-dot.done{background:var(--coral);color:#fff;}
+  .step-bar{flex:1;height:2px;background:var(--line);margin:0 4px;position:relative;overflow:hidden;}
+  .step-bar-fill{position:absolute;inset:0;background:var(--coral);transform:scaleX(0);transform-origin:left;transition:transform .4s ease;}
+  .step-bar-fill.done{transform:scaleX(1);}
+
+  .confirm-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;}
+  .check-circle{width:64px;height:64px;border-radius:50%;background:var(--green-dim);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .check-path{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .6s ease .3s;}
+  .view.active .check-path{stroke-dashoffset:0;}
+  .confirm-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px;}
+  .confirm-sub{color:var(--muted);font-size:12px;line-height:1.6;max-width:200px;}
+
+  .tabbar{height:60px;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--line);background:#fff;flex-shrink:0;font-size:10px;color:var(--muted);}
+
+  .side-info{padding-top:12px;}
+  .side-info h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 8px;}
+  .side-info p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px;max-width:420px;}
+  .hint{font-size:12.5px;color:var(--coral);font-weight:600;margin-bottom:18px;}
+  .interactions{display:flex;flex-direction:column;gap:12px;}
+  .inter{display:flex;gap:12px;}
+  .inter .n{width:22px;height:22px;border-radius:50%;background:var(--coral-dim);color:var(--coral);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
+  .inter div p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;}
+  .inter strong{color:var(--ink);}
+
+  .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-nav a{color:var(--indigo);text-decoration:none;font-weight:600;font-size:14.5px;}
+  .brand{color:var(--muted);font-size:13.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">UI/UX — Standard package</div>
+  <h1>Cartel — Shopping & Checkout</h1>
+  <p class="lede">A mobile shopping app prototype built to sell the moment that actually loses buyers — checkout. Every tap gives feedback: the cart badge pops when an item is added, swiping a cart row removes it with a real animation, and the step tracker fills in as you move through checkout instead of just labeling the current step.</p>
+
+  <div class="meta-row">
+    <span class="pill"><strong>Deliverable</strong> — 10 clickable screens</span>
+    <span class="pill"><strong>System</strong> — reusable components</span>
+    <span class="pill"><strong>Prototype</strong> — animated cart & checkout</span>
+    <span class="pill"><strong>Timeline</strong> — 7-day delivery</span>
+  </div>
+
+  <div class="section-label">Design system</div>
+  <p class="section-sub">Component set built first, including the small motion behaviors that make an e-commerce flow feel trustworthy — a cart badge that visibly registers a change is doing more work than one that simply updates.</p>
+
+  <div class="system">
+    <div class="sys-card">
+      <div class="sys-title">Buttons</div>
+      <button class="btn btn-primary">Add to bag</button><br><br>
+      <button class="btn btn-ghost">View details</button>
+    </div>
+    <div class="sys-card">
+      <div class="sys-title">Size selector</div>
+      <div class="size-row">
+        <div class="size-chip">S</div><div class="size-chip on">M</div><div class="size-chip">L</div><div class="size-chip">XL</div>
+      </div>
+    </div>
+    <div class="sys-card">
+      <div class="sys-title">Cart badge</div>
+      <div class="cart-badge-demo">🛍<span class="badge">3</span></div>
+    </div>
+    <div class="sys-card">
+      <div class="sys-title">Rating</div>
+      <div class="rating">
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Clickable prototype</div>
+  <p class="section-sub">Browse → product detail → cart → checkout → confirmation. Tap a product to open it, add it to your bag and watch the badge react, then swipe a cart row to remove it.</p>
+
+  <div class="proto-wrap">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="app-body">
+
+          <div class="view active" id="view-0">
+            <div class="v-header"><div class="v-title">New arrivals</div><div class="v-cart" onclick="goView(2)">🛍<span class="badge" id="cartBadge">2</span></div></div>
+            <div class="prod-grid">
+              <div class="prod-card" onclick="goView(1)"><div class="prod-thumb p1"></div><div class="prod-info"><div class="prod-name">Cloud Trainer</div><div class="prod-price">$68</div></div></div>
+              <div class="prod-card" onclick="goView(1)"><div class="prod-thumb p2"></div><div class="prod-info"><div class="prod-name">Ridge Jacket</div><div class="prod-price">$124</div></div></div>
+              <div class="prod-card" onclick="goView(1)"><div class="prod-thumb p3"></div><div class="prod-info"><div class="prod-name">Trail Tee</div><div class="prod-price">$32</div></div></div>
+              <div class="prod-card" onclick="goView(1)"><div class="prod-thumb p4"></div><div class="prod-info"><div class="prod-name">Canvas Tote</div><div class="prod-price">$44</div></div></div>
+            </div>
+          </div>
+
+          <div class="view" id="view-1">
+            <div class="v-header"><div class="v-title">Product</div><div class="v-cart" onclick="goView(2)">🛍<span class="badge" id="cartBadge2">2</span></div></div>
+            <div class="detail-thumb"></div>
+            <div class="detail-name">Cloud Trainer</div>
+            <div class="detail-price">$68.00</div>
+            <div class="rating"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div></div>
+            <div class="detail-label">Size</div>
+            <div class="size-row"><div class="size-chip">7</div><div class="size-chip on">8</div><div class="size-chip">9</div><div class="size-chip">10</div></div>
+            <div class="add-btn" id="addBtn" onclick="addToCart()">Add to bag — $68</div>
+          </div>
+
+          <div class="view" id="view-2">
+            <div class="v-header"><div class="v-title">Your bag</div></div>
+            <div id="cartList">
+              <div class="cart-item" id="ci-1"><div class="ci-thumb" style="background:linear-gradient(140deg,#ff8fa3,#ff5470);"></div><div><div class="ci-name">Cloud Trainer</div><div class="ci-meta">Size 8 · Qty 1</div></div><div class="ci-price">$68</div><div class="ci-remove" onclick="removeItem('ci-1')">✕</div></div>
+              <div class="cart-item" id="ci-2"><div class="ci-thumb" style="background:linear-gradient(140deg,#5fd6c0,#0f9d63);"></div><div><div class="ci-name">Trail Tee</div><div class="ci-meta">Size M · Qty 1</div></div><div class="ci-price">$32</div><div class="ci-remove" onclick="removeItem('ci-2')">✕</div></div>
+            </div>
+            <div class="add-btn" onclick="goView(3)" style="margin-top:16px;">Checkout — $100</div>
+          </div>
+
+          <div class="view" id="view-3">
+            <div class="v-header"><div class="v-title">Checkout</div></div>
+            <div class="step-progress">
+              <div class="step-dot done">1</div>
+              <div class="step-bar"><div class="step-bar-fill done"></div></div>
+              <div class="step-dot done">2</div>
+              <div class="step-bar"><div class="step-bar-fill done"></div></div>
+              <div class="step-dot">3</div>
+            </div>
+            <div class="detail-label">Shipping to</div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12px;margin-bottom:14px;">142 Birch Lane, Unit 4<br>Austin, TX 78701</div>
+            <div class="detail-label">Payment</div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12px;margin-bottom:14px;">•••• •••• •••• 4471</div>
+            <div class="add-btn" onclick="goView(4)">Place order — $100</div>
+          </div>
+
+          <div class="view" id="view-4">
+            <div class="confirm-wrap">
+              <div class="check-circle"><svg viewBox="0 0 24 24" width="32" height="32"><path class="check-path" d="M5 12l5 5 9-10"/></svg></div>
+              <div class="confirm-title">Order placed</div>
+              <div class="confirm-sub">Your order #CT-4471 is on its way. You'll get a shipping update within 24 hours.</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="tabbar">Cartel prototype — tap through the flow above</div>
+      </div>
+    </div>
+
+    <div class="side-info">
+      <h3>The details that build checkout confidence</h3>
+      <p>Nothing here is decorative — every animation exists to answer a real question a shopper has mid-purchase: did that register? is this reversible? how much further do I have to go?</p>
+      <div class="hint">↳ tap a product, add it to the bag, then open the cart</div>
+      <div class="interactions">
+        <div class="inter"><div class="n">1</div><div><p><strong>Popping cart badge.</strong> Adding an item makes the badge visibly bounce, not just increment silently — confirming the tap actually did something.</p></div></div>
+        <div class="inter"><div class="n">2</div><div><p><strong>Swipe-out removal.</strong> Removing a cart item slides it out and collapses the space it left, rather than having it vanish and jump the layout.</p></div></div>
+        <div class="inter"><div class="n">3</div><div><p><strong>Filling step tracker.</strong> The checkout progress bar fills between steps instead of just relabeling "Step 2 of 3" — visible progress reduces the anxiety of a multi-step form.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-nav">
+    <span class="brand">BrightStack Co. — UI/UX, Standard tier</span>
+    <a href="index.html">← Back to all projects</a>
+  </div>
+
+</div>
+
+<script>
+  function goView(i){
+    const current = document.querySelector('.view.active');
+    const target = document.getElementById('view-'+i);
+    if(current === target) return;
+    current.classList.remove('active');
+    current.classList.add('leaving');
+    setTimeout(()=>current.classList.remove('leaving'), 420);
+    target.classList.add('active');
+  }
+  let added = false;
+  function addToCart(){
+    const btn = document.getElementById('addBtn');
+    if(!added){
+      btn.textContent = 'Added ✓';
+      btn.classList.add('added');
+      added = true;
+      bumpBadge();
+      setTimeout(()=>{
+        btn.textContent = 'Add to bag — $68';
+        btn.classList.remove('added');
+        added = false;
+      }, 1400);
+    }
+  }
+  function bumpBadge(){
+    ['cartBadge','cartBadge2'].forEach(id=>{
+      const b = document.getElementById(id);
+      let val = parseInt(b.textContent) + 1;
+      b.textContent = val;
+      b.classList.add('pop');
+      setTimeout(()=>b.classList.remove('pop'), 300);
+    });
+  }
+  function removeItem(id){
+    const el = document.getElementById(id);
+    el.classList.add('removing');
+    setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); }, 320);
+  }
+</script>
+</body>
+</html>

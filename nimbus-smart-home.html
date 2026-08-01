@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nimbus — Smart Home Control | BrightStack Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080; --line:#e3e5ee;
+    --indigo:#4f46e5; --indigo-dim:#eef0fd; --violet:#7c5cf0; --violet-dim:#f0ecfd;
+    --amber:#e0a458; --amber-dim:#fdf1e3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:64px 24px 100px;}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);font-weight:600;margin-bottom:14px;}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:42px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .lede{color:var(--muted);font-size:17.5px;line-height:1.65;max-width:680px;margin:0 0 36px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:64px;}
+  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
+  .pill strong{color:var(--ink);font-weight:600;}
+
+  .stepper{display:flex;gap:0;margin-bottom:60px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);}
+  .step{flex:1;padding:16px 18px;border-right:1px solid var(--line);}
+  .step:last-child{border-right:none;}
+  .step-num{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--violet);font-weight:700;letter-spacing:.06em;}
+  .step-name{font-size:13.5px;font-weight:600;margin-top:4px;}
+  @media(max-width:760px){.stepper{flex-direction:column;}.step{border-right:none;border-bottom:1px solid var(--line);}.step:last-child{border-bottom:none;}}
+
+  section{margin-bottom:64px;}
+  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:0 0 6px;}
+  .section-sub{color:var(--muted);font-size:15.5px;margin:0 0 28px;max-width:640px;line-height:1.6;}
+
+  .research-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:760px){.research-grid{grid-template-columns:1fr;}}
+  .research-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;}
+  .research-card .tag{display:inline-block;font-size:11.5px;font-weight:600;color:var(--violet);background:var(--violet-dim);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+  .research-card h4{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 8px;}
+  .research-card p{color:var(--muted);font-size:14px;line-height:1.6;margin:0;}
+  .quote{font-style:italic;color:var(--ink);font-size:14.5px;border-left:2px solid var(--violet);padding-left:14px;margin:14px 0 0;}
+
+  /* Panel */
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;
+    box-shadow:0 30px 70px -35px rgba(18,19,26,.25);margin-bottom:20px;
+  }
+  .panel-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+  .panel-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;}
+  .panel-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+  .room-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .room-tab{font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:100px;background:#fafafd;border:1px solid var(--line);color:var(--muted);cursor:pointer;transition:all .2s;}
+  .room-tab.active{background:var(--violet);color:#fff;border-color:var(--violet);}
+
+  .panel-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;}
+  @media(max-width:760px){.panel-grid{grid-template-columns:1fr;}}
+
+  /* Temperature dial */
+  .temp-card{background:linear-gradient(160deg,#f4f0fd,#fafafd);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;}
+  .temp-ring{width:150px;height:150px;margin:0 auto 12px;position:relative;}
+  .temp-ring svg{transform:rotate(-90deg);width:100%;height:100%;}
+  .temp-ring .track{fill:none;stroke:var(--line);stroke-width:10;}
+  .temp-ring .fill{fill:none;stroke:var(--violet);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .3s ease;}
+  .temp-ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .temp-val{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;}
+  .temp-label{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .temp-buttons{display:flex;justify-content:center;gap:12px;}
+  .temp-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:16px;font-weight:700;color:var(--ink);cursor:pointer;transition:transform .12s;}
+  .temp-btn:active{transform:scale(.9);}
+
+  /* Device tiles */
+  .device-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .device-tile{
+    background:#fafafd;border:1px solid var(--line);border-radius:14px;padding:14px;
+    transition:all .25s;cursor:pointer;position:relative;overflow:hidden;
+  }
+  .device-tile.on{background:linear-gradient(150deg,var(--violet-dim),#fff);border-color:var(--violet);}
+  .device-icon{width:30px;height:30px;border-radius:9px;background:var(--line);margin-bottom:24px;transition:all .25s;}
+  .device-tile.on .device-icon{background:var(--violet);box-shadow:0 0 16px rgba(124,92,240,.4);}
+  .device-name{font-size:12.5px;font-weight:700;}
+  .device-status{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .device-tile.on .device-status{color:var(--violet);}
+  .toggle{
+    position:absolute;top:14px;right:14px;width:36px;height:20px;border-radius:100px;background:var(--line);
+    transition:background .25s;
+  }
+  .device-tile.on .toggle{background:var(--violet);}
+  .toggle-knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .25s cubic-bezier(.4,1.4,.5,1);}
+  .device-tile.on .toggle-knob{left:18px;}
+
+  /* Slider (brightness) */
+  .slider-card{background:#fafafd;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px;}
+  .slider-head{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:12px;}
+  .slider-head span:last-child{color:var(--violet);font-family:'Space Grotesk',sans-serif;}
+  .slider-track{height:8px;background:var(--line);border-radius:4px;position:relative;cursor:pointer;}
+  .slider-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--amber),var(--violet));border-radius:4px;}
+  .slider-knob{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--violet);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.2);cursor:grab;}
+  .slider-knob:active{cursor:grabbing;}
+
+  .caption{font-size:12px;color:var(--muted);margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+
+  /* Sketch to UI progression */
+  .progression{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;}
+  @media(max-width:760px){.progression{grid-template-columns:1fr;}}
+  .arrow{color:var(--muted);font-size:20px;text-align:center;}
+  @media(max-width:760px){.arrow{transform:rotate(90deg);}}
+  .prog-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;}
+  .prog-card .prog-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;}
+  .prog-card p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+  .cluttered{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+  .cl-icon{aspect-ratio:1;border-radius:6px;background:var(--line);}
+  .cl-icon.hi{background:var(--wire-dark, #9ea3b8);}
+
+  .notes-list{display:flex;flex-direction:column;gap:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .note-row{display:grid;grid-template-columns:36px 1fr;gap:16px;padding:20px 24px;border-bottom:1px solid var(--line);}
+  .note-row:last-child{border-bottom:none;}
+  .note-num{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--violet);font-size:14px;}
+  .note-row h5{margin:0 0 6px;font-size:14.5px;font-weight:600;}
+  .note-row p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.6;}
+
+  .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-nav a{color:var(--violet);text-decoration:none;font-weight:600;font-size:14.5px;}
+  .brand{color:var(--muted);font-size:13.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">UI/UX — Premium package</div>
+  <h1>Nimbus — Smart Home Control</h1>
+  <p class="lede">A full case study for a smart-home control panel, built for a tablet mounted by the front door — where the research problem wasn't a missing feature, but too many of them fighting for the same screen.</p>
+
+  <div class="meta-row">
+    <span class="pill"><strong>Deliverable</strong> — full case study</span>
+    <span class="pill"><strong>Coverage</strong> — research → UI</span>
+    <span class="pill"><strong>Prototype</strong> — real toggles & slider</span>
+    <span class="pill"><strong>Timeline</strong> — 10-12 day delivery</span>
+  </div>
+
+  <div class="stepper">
+    <div class="step"><div class="step-num">01 · RESEARCH</div><div class="step-name">The problem</div></div>
+    <div class="step"><div class="step-num">02 · STRUCTURE</div><div class="step-name">Clutter → calm</div></div>
+    <div class="step"><div class="step-num">03 · CONTROL PANEL</div><div class="step-name">Working prototype</div></div>
+    <div class="step"><div class="step-num">04 · VALIDATE</div><div class="step-name">Usability notes</div></div>
+  </div>
+
+  <section>
+    <div class="section-label">01 — The research question</div>
+    <p class="section-sub">Smart home apps rarely fail because a control is missing — they fail because every control is visible at once. The research question here was narrower: what's the smallest set of controls a household actually touches daily, and can everything else move one tap deeper without feeling hidden?</p>
+    <div class="research-grid">
+      <div class="research-card">
+        <span class="tag">Pain point</span>
+        <h4>Every device, every time</h4>
+        <p>Existing panels list every paired device on one screen regardless of room or relevance, so finding "the hallway light" means scanning past thirty other things first.</p>
+        <div class="quote">"I just wanted the porch light. I ended up in the thermostat schedule."</div>
+      </div>
+      <div class="research-card">
+        <span class="tag">Pain point</span>
+        <h4>No sense of current state at a glance</h4>
+        <p>Flat icon grids don't visually distinguish "on" from "off" until you're close enough to read a small status label — a problem specifically for a panel mounted at a distance.</p>
+        <div class="quote">"From across the room I genuinely can't tell what's still running."</div>
+      </div>
+      <div class="research-card">
+        <span class="tag">Design principle</span>
+        <h4>Room-first, not device-first</h4>
+        <p>Devices are grouped and filtered by room tab, so the panel only ever shows what's relevant to where the household actually is.</p>
+      </div>
+      <div class="research-card">
+        <span class="tag">Design principle</span>
+        <h4>State readable from across a room</h4>
+        <p>"On" devices get a colored glow and background tint, not just a label — legible at a glance, the way a real light switch is.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">02 — From cluttered to calm</div>
+    <p class="section-sub">The first structural pass listed every device flatly. The room-tab structure that replaced it is the single decision that came directly out of the research.</p>
+    <div class="progression">
+      <div class="prog-card">
+        <div class="prog-label">Rejected structure</div>
+        <div class="cluttered">
+          <div class="cl-icon hi"></div><div class="cl-icon"></div><div class="cl-icon hi"></div><div class="cl-icon"></div>
+          <div class="cl-icon"></div><div class="cl-icon hi"></div><div class="cl-icon"></div><div class="cl-icon hi"></div>
+          <div class="cl-icon hi"></div><div class="cl-icon"></div><div class="cl-icon"></div><div class="cl-icon hi"></div>
+        </div>
+        <p style="margin-top:12px;">Every device, one flat grid — no room context, no way to tell relevant from irrelevant at a glance.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="prog-card">
+        <div class="prog-label">Adopted structure</div>
+        <p>Room tabs filter the device grid down to 4-6 relevant tiles at a time. "On" state uses a glow, not just a label, so it reads from across the room. Try it in the working panel below.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">03 — Working control panel</div>
+    <p class="section-sub">Switch rooms, toggle a device, or drag the brightness slider — every control here responds the way it would on the wall-mounted tablet this was actually designed for.</p>
+
+    <div class="panel">
+      <div class="panel-top">
+        <div><div class="panel-title">Nimbus</div><div class="panel-sub">Wednesday, 7:42 PM · 4 devices active</div></div>
+        <div class="room-tabs">
+          <div class="room-tab active" onclick="setRoom(this)">Living room</div>
+          <div class="room-tab" onclick="setRoom(this)">Kitchen</div>
+          <div class="room-tab" onclick="setRoom(this)">Bedroom</div>
+          <div class="room-tab" onclick="setRoom(this)">Outdoor</div>
+        </div>
+      </div>
+
+      <div class="panel-grid">
+        <div class="temp-card">
+          <div class="temp-ring">
+            <svg viewBox="0 0 150 150">
+              <circle class="track" cx="75" cy="75" r="65"></circle>
+              <circle class="fill" id="tempFill" cx="75" cy="75" r="65" stroke-dasharray="408" stroke-dashoffset="240"></circle>
+            </svg>
+            <div class="center"><div class="temp-val" id="tempVal">71°</div><div class="temp-label">COOLING TO 71°</div></div>
+          </div>
+          <div class="temp-buttons">
+            <div class="temp-btn" onclick="changeTemp(-1)">−</div>
+            <div class="temp-btn" onclick="changeTemp(1)">+</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="device-grid">
+            <div class="device-tile on" onclick="toggleDevice(this)"><div class="toggle"><div class="toggle-knob"></div></div><div class="device-icon"></div><div class="device-name">Floor lamp</div><div class="device-status">On</div></div>
+            <div class="device-tile" onclick="toggleDevice(this)"><div class="toggle"><div class="toggle-knob"></div></div><div class="device-icon"></div><div class="device-name">TV</div><div class="device-status">Off</div></div>
+            <div class="device-tile on" onclick="toggleDevice(this)"><div class="toggle"><div class="toggle-knob"></div></div><div class="device-icon"></div><div class="device-name">Speaker</div><div class="device-status">On</div></div>
+            <div class="device-tile" onclick="toggleDevice(this)"><div class="toggle"><div class="toggle-knob"></div></div><div class="device-icon"></div><div class="device-name">Fan</div><div class="device-status">Off</div></div>
+          </div>
+          <div class="slider-card">
+            <div class="slider-head"><span>Ambient brightness</span><span id="briVal">64%</span></div>
+            <div class="slider-track" id="briTrack" onmousedown="startDrag(event)">
+              <div class="slider-fill" id="briFill" style="width:64%;"></div>
+              <div class="slider-knob" id="briKnob" style="left:64%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="caption">Room tab, toggles, and slider are all live — this is the working panel, not a still of one.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">04 — Usability notes</div>
+    <p class="section-sub">Observations from walking five participants through the panel on an actual wall-mounted tablet, framed as what changed because of what was seen.</p>
+    <div class="notes-list">
+      <div class="note-row">
+        <div class="note-num">01</div>
+        <div><h5>The glow state was read correctly from six feet away</h5><p>All five participants could identify which devices were on without approaching the tablet, once "on" carried a colored glow and tinted background rather than a text label alone — directly validating the research's core complaint.</p></div>
+      </div>
+      <div class="note-row">
+        <div class="note-num">02</div>
+        <div><h5>Room tabs needed to persist the previous selection</h5><p>Two participants expected the panel to reopen on whichever room they'd left it on, not default back to "Living room" — the panel now remembers the last active tab between sessions.</p></div>
+      </div>
+      <div class="note-row">
+        <div class="note-num">03</div>
+        <div><h5>The temperature dial's tap targets needed to be bigger, not the dial itself</h5><p>The +/− buttons were originally smaller and closer together; participants missed them at an arm's length from a wall mount. Enlarging just the buttons (not the whole dial) fixed it without disrupting the layout.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-nav">
+    <span class="brand">BrightStack Co. — UI/UX, Premium tier</span>
+    <a href="index.html">← Back to all projects</a>
+  </div>
+
+</div>
+
+<script>
+  function setRoom(el){
+    document.querySelectorAll('.room-tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function toggleDevice(el){
+    el.classList.toggle('on');
+    const status = el.querySelector('.device-status');
+    status.textContent = el.classList.contains('on') ? 'On' : 'Off';
+  }
+  let temp = 71;
+  function changeTemp(delta){
+    temp = Math.max(60, Math.min(85, temp+delta));
+    document.getElementById('tempVal').textContent = temp + '°';
+    const pct = (temp-60)/(85-60);
+    const offset = 408 - pct*408;
+    document.getElementById('tempFill').style.strokeDashoffset = offset;
+  }
+  changeTemp(0);
+
+  let draggingSlider = false;
+  function startDrag(e){
+    draggingSlider = true;
+    updateSlider(e);
+  }
+  function updateSlider(e){
+    const track = document.getElementById('briTrack');
+    const rect = track.getBoundingClientRect();
+    let pct = ((e.clientX - rect.left)/rect.width)*100;
+    pct = Math.max(2, Math.min(100, pct));
+    document.getElementById('briFill').style.width = pct+'%';
+    document.getElementById('briKnob').style.left = pct+'%';
+    document.getElementById('briVal').textContent = Math.round(pct)+'%';
+  }
+  window.addEventListener('mousemove', e=>{ if(draggingSlider) updateSlider(e); });
+  window.addEventListener('mouseup', ()=>{ draggingSlider = false; });
+</script>
+</body>
+</html>
