@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — BrightStack Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430; --ink-soft:#4B5568; --paper:#EEF1F4; --paper-2:#FFFFFF;
+    --line:#D4DAE1; --signal:#FFC93C; --signal-ink:#2A2005; --indigo:#3C3EE8; --indigo-soft:#EEEEFD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;
+    min-height:100vh;display:flex;flex-direction:column;
+    background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+  }
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:26px 32px;max-width:1000px;margin:0 auto;width:100%;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
+  .logo span{color:var(--indigo);}
+  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .back-link:hover{color:var(--ink);}
+
+  .wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 32px 60px;}
+  .card{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:36px;
+    max-width:400px;width:100%;box-shadow:0 20px 50px rgba(27,36,48,0.06);
+  }
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin-bottom:8px;}
+  .card p.sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:24px;}
+
+  .oauth-row{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
+  .auth-provider-btn{
+    padding:12px 16px;border-radius:8px;border:1px solid var(--line);background:#fff;font-weight:600;
+    font-size:13.5px;cursor:pointer;text-align:center;color:var(--ink);
+  }
+  .auth-provider-btn:hover{border-color:var(--indigo);color:var(--indigo);}
+
+  .divider{display:flex;align-items:center;gap:12px;margin-bottom:22px;color:var(--ink-soft);font-size:12px;}
+  .divider::before, .divider::after{content:'';flex:1;height:1px;background:var(--line);}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+  .field input{
+    width:100%;border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:14px;font-family:inherit;
+  }
+  .field input:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo);}
+
+  .primary-btn{
+    width:100%;background:var(--indigo);color:#fff;border:none;padding:12px;border-radius:8px;
+    font-weight:600;font-size:14px;cursor:pointer;margin-top:4px;
+  }
+  .primary-btn:hover{background:#2f31c9;}
+
+  .toggle-row{text-align:center;margin-top:16px;font-size:13px;color:var(--ink-soft);}
+  .toggle-row button{background:none;border:none;color:var(--indigo);font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;}
+
+  #authStatus{font-size:12.5px;color:var(--ink-soft);margin-top:14px;text-align:center;min-height:16px;}
+  #authStatus.error{color:#C4453A;}
+
+  footer{padding:20px 32px 30px;text-align:center;font-size:12.5px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Bright<span>Stack</span> Co.</div>
+  <a href="index.html" class="back-link">← Back to portfolio</a>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <h1 id="formTitle">Sign in to BrightStack</h1>
+    <p class="sub">Access your client area — project status, messages, and complaints.</p>
+
+    <div class="oauth-row">
+      <button class="auth-provider-btn" onclick="signInOAuth('google')">Continue with Google</button>
+      <button class="auth-provider-btn" onclick="signInOAuth('facebook')">Continue with Facebook</button>
+    </div>
+
+    <div class="divider">or with email</div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="emailInput" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="passwordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter') submitEmailAuth();">
+    </div>
+    <button class="primary-btn" id="emailSubmitBtn" onclick="submitEmailAuth()">Sign in</button>
+
+    <div class="toggle-row" id="toggleRow">
+      Don't have an account? <button onclick="toggleMode()">Create one</button>
+    </div>
+
+    <div id="authStatus"></div>
+  </div>
+</div>
+
+<footer>Your password is handled directly by Firebase Authentication — BrightStack never sees or stores it in plain text.</footer>
+
+<script type="module">
+  import { auth, db, googleProvider, facebookProvider } from './firebase-config.js';
+  import {
+    signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword,
+    signInWithEmailAndPassword, updateProfile
+  } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  let isSignUp = false;
+
+  window.toggleMode = () => {
+    isSignUp = !isSignUp;
+    document.getElementById('formTitle').textContent = isSignUp ? 'Create your account' : 'Sign in to BrightStack';
+    document.getElementById('emailSubmitBtn').textContent = isSignUp ? 'Create account' : 'Sign in';
+    document.getElementById('toggleRow').innerHTML = isSignUp
+      ? `Already have an account? <button onclick="toggleMode()">Sign in</button>`
+      : `Don't have an account? <button onclick="toggleMode()">Create one</button>`;
+    document.getElementById('authStatus').textContent = '';
+  };
+
+  async function ensureClientDoc(user){
+    const ref = doc(db, 'clients', user.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()){
+      await setDoc(ref, {
+        name: user.displayName || user.email || 'New client',
+        email: user.email || '',
+        projectStatus: 'No active project yet',
+        messages: []
+      });
+    }
+  }
+
+  function redirectAfterAuth(){
+    const pending = sessionStorage.getItem('pendingProject');
+    if (pending){
+      sessionStorage.removeItem('pendingProject');
+      window.location.href = pending;
+    } else {
+      window.location.href = 'client-area.html';
+    }
+  }
+
+  window.signInOAuth = async (name) => {
+    const statusEl = document.getElementById('authStatus');
+    statusEl.className = '';
+    statusEl.textContent = 'Opening ' + name + ' sign-in…';
+    try {
+      const provider = name === 'google' ? googleProvider : facebookProvider;
+      const result = await signInWithPopup(auth, provider);
+      await ensureClientDoc(result.user);
+      redirectAfterAuth();
+    } catch (err){
+      statusEl.className = 'error';
+      statusEl.textContent = 'Sign-in failed: ' + err.message;
+    }
+  };
+
+  window.submitEmailAuth = async () => {
+    const email = document.getElementById('emailInput').value.trim();
+    const password = document.getElementById('passwordInput').value;
+    const statusEl = document.getElementById('authStatus');
+    statusEl.className = '';
+    if (!email || !password){
+      statusEl.className = 'error';
+      statusEl.textContent = 'Enter both an email and a password.';
+      return;
+    }
+    if (password.length < 6){
+      statusEl.className = 'error';
+      statusEl.textContent = 'Password must be at least 6 characters.';
+      return;
+    }
+    statusEl.textContent = isSignUp ? 'Creating your account…' : 'Signing in…';
+    try {
+      let result;
+      if (isSignUp){
+        result = await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        result = await signInWithEmailAndPassword(auth, email, password);
+      }
+      await ensureClientDoc(result.user);
+      redirectAfterAuth();
+    } catch (err){
+      statusEl.className = 'error';
+      if (err.code === 'auth/email-already-in-use'){
+        statusEl.textContent = 'That email already has an account — try signing in instead.';
+      } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password'){
+        statusEl.textContent = 'Incorrect email or password.';
+      } else if (err.code === 'auth/user-not-found'){
+        statusEl.textContent = 'No account found with that email — try creating one instead.';
+      } else {
+        statusEl.textContent = err.message;
+      }
+    }
+  };
+
+  // If already signed in, skip straight through
+  onAuthStateChanged(auth, (user) => {
+    if (user) redirectAfterAuth();
+  });
+</script>
+
+</body>
+</html>
