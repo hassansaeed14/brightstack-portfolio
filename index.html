@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightStack Co. — Web design & product studio</title>
+<meta name="description" content="BrightStack Co. designs and builds websites, dashboards, booking systems, and AI-powered tools for small businesses and startups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430;
+    --ink-soft:#4B5568;
+    --paper:#EEF1F4;
+    --paper-2:#FFFFFF;
+    --line:#D4DAE1;
+    --signal:#FFC93C;
+    --signal-ink:#2A2005;
+    --indigo:#3C3EE8;
+    --indigo-soft:#EEEEFD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    background-position:-1px -1px;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:26px 32px;max-width:1120px;margin:0 auto;
+  }
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.01em;}
+  .logo span{color:var(--indigo);}
+  nav{display:flex;align-items:center;gap:28px;}
+  nav a{font-size:14px;font-weight:500;color:var(--ink-soft);}
+  nav a:hover{color:var(--ink);}
+  .nav-cta{
+    background:var(--ink);color:var(--paper-2);padding:10px 20px;border-radius:6px;font-weight:600;font-size:14px;
+  }
+  .nav-cta:hover{background:var(--indigo);color:#fff;}
+
+  .hero{
+    display:flex;align-items:center;gap:48px;
+    padding:56px 32px 96px;max-width:1120px;margin:0 auto;
+  }
+  .hero-text{flex:1.1;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--indigo);
+    font-weight:600;margin-bottom:20px;font-family:'JetBrains Mono',monospace;
+    background:var(--indigo-soft);padding:6px 12px;border-radius:20px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--indigo);display:inline-block;}
+  h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:52px;line-height:1.08;
+    letter-spacing:-0.015em;margin-bottom:22px;
+  }
+  h1 em{font-style:normal;color:var(--indigo);}
+  .hero-text p{font-size:17px;max-width:460px;color:var(--ink-soft);margin-bottom:32px;}
+  .btn-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--signal);color:var(--signal-ink);padding:14px 26px;border-radius:6px;
+    font-weight:600;font-size:15px;border:1px solid var(--signal);
+  }
+  .btn-primary:hover{background:#ffbb0f;}
+  .btn-secondary{
+    font-weight:600;font-size:15px;color:var(--ink);padding:14px 22px;border-radius:6px;border:1px solid var(--line);
+    background:var(--paper-2);
+  }
+  .btn-secondary:hover{border-color:var(--ink);}
+
+  /* Signature stack graphic */
+  .hero-visual{
+    flex:1;height:380px;position:relative;display:flex;align-items:center;justify-content:center;
+  }
+  .stack-card{
+    position:absolute;width:230px;padding:22px;background:var(--paper-2);
+    border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 30px rgba(27,36,48,0.08);
+    font-family:'JetBrains Mono',monospace;
+    opacity:0;transform:translateY(18px);
+    animation:rise 0.7s ease forwards;
+  }
+  .stack-card .tag{font-size:11px;color:var(--indigo);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;}
+  .stack-card .label{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--ink);}
+  .stack-card .dot-row{display:flex;gap:5px;margin-bottom:14px;}
+  .stack-card .dot{width:7px;height:7px;border-radius:50%;background:var(--line);}
+  .c1{top:8px;left:14px;transform:rotate(-6deg) translateY(18px);z-index:1;animation-delay:0.05s;}
+  .c2{top:88px;left:130px;transform:rotate(4deg) translateY(18px);z-index:2;animation-delay:0.22s;}
+  .c3{top:190px;left:38px;transform:rotate(-2deg) translateY(18px);z-index:3;animation-delay:0.4s;background:var(--ink);border-color:var(--ink);}
+  .c3 .label{color:var(--paper-2);}
+  .c3 .tag{color:var(--signal);}
+  @keyframes rise{to{opacity:1;transform:translateY(0) rotate(var(--r,0deg));}}
+  .c1{--r:-6deg;} .c2{--r:4deg;} .c3{--r:-2deg;}
+  @media (prefers-reduced-motion:reduce){
+    .stack-card{animation:none;opacity:1;transform:none;}
+  }
+
+  .section{padding:70px 32px;max-width:1120px;margin:0 auto;}
+  .section-head{margin-bottom:44px;max-width:560px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:32px;letter-spacing:-0.01em;margin-bottom:12px;}
+  .section-head p{color:var(--ink-soft);font-size:15px;}
+
+  /* Work grid — browser-chrome catalog cards */
+  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .work-grid .work-card:last-child:nth-child(odd){grid-column:1 / -1;}
+  .work-card{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+    transition:transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .work-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(27,36,48,0.1);}
+  .chrome{
+    display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:#F7F8FA;
+  }
+  .chrome .dots{display:flex;gap:6px;}
+  .chrome .dots span{width:8px;height:8px;border-radius:50%;background:var(--line);}
+  .chrome .url{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);
+    background:#fff;border:1px solid var(--line);border-radius:5px;padding:4px 10px;flex:1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .work-body{padding:22px 22px 24px;}
+  .work-tags{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+  .work-tag{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.04em;text-transform:uppercase;
+    background:var(--indigo-soft);color:var(--indigo);padding:4px 9px;border-radius:4px;
+  }
+  .work-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;margin-bottom:8px;}
+  .work-card p{font-size:14px;color:var(--ink-soft);margin-bottom:16px;}
+  .work-link{font-size:13.5px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:6px;}
+  .work-link:hover{color:var(--indigo);}
+  .work-link .arrow{transition:transform 0.15s ease;}
+  .work-link:hover .arrow{transform:translateX(3px);}
+
+  /* Capabilities */
+  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .cap-cell{background:var(--paper-2);padding:26px 22px;}
+  .cap-cell .mono{font-size:11px;color:var(--indigo);margin-bottom:10px;display:block;}
+  .cap-cell h4{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin-bottom:8px;}
+  .cap-cell p{font-size:13.5px;color:var(--ink-soft);}
+
+  .cta-band{
+    background:var(--ink);color:var(--paper);text-align:left;padding:64px 32px;border-radius:16px;
+    max-width:1056px;margin:0 auto 70px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;
+  }
+  .cta-band h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;margin-bottom:10px;letter-spacing:-0.01em;}
+  .cta-band p{color:#B7BFCB;font-size:14.5px;max-width:420px;}
+  .cta-band .btn-primary{white-space:nowrap;}
+
+  footer{padding:36px 32px 48px;text-align:center;font-size:13px;color:var(--ink-soft);}
+  footer .mono{color:#8993A3;}
+
+  @media (max-width:860px){
+    .hero{flex-direction:column;}
+    .hero-visual{width:100%;height:300px;margin-top:24px;}
+    h1{font-size:36px;}
+    .work-grid{grid-template-columns:1fr;}
+    .cap-grid{grid-template-columns:repeat(2,1fr);}
+    nav a:not(.nav-cta){display:none;}
+    .cta-band{flex-direction:column;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Bright<span>Stack</span> Co.</div>
+  <nav>
+    <a href="ask-brightstack.html">Ask BrightStack</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <span id="adminNavSlot"></span>
+    <span id="authNavSlot"><a href="#" onclick="openAuthModal();return false;">Sign in</a></span>
+    <a href="#contact" class="nav-cta">Start a project</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Web & app development, built solo</div>
+    <h1>Full-stack builds, backed by an AI engineering background.</h1>
+    <p>I'm Hassan Saeed — a full-stack developer and BS Artificial Intelligence student running BrightStack Co., an independent practice building responsive websites, full-stack apps, and API-integrated products end to end, from scoping through delivery.</p>
+    <div class="btn-row">
+      <a href="#projects" class="btn-primary">See the projects</a>
+      <a href="#contact" class="btn-secondary">Book a call</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stack-card c1">
+      <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="tag">Websites</div>
+      <div class="label">Storefronts & landing pages</div>
+    </div>
+    <div class="stack-card c2">
+      <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="tag">Products</div>
+      <div class="label">Dashboards & booking systems</div>
+    </div>
+    <div class="stack-card c3">
+      <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="tag">Automation</div>
+      <div class="label">AI-powered tools</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="section-head">
+    <div class="eyebrow">Selected work</div>
+    <h2>Every project I've shipped.</h2>
+    <p>Live, working builds — click through to open and use each one, not just a screenshot. New projects get added here as they're finished.</p>
+  </div>
+  <div class="work-grid">
+
+    <div class="work-card" style="border-color:var(--indigo);">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">churn-risk-model.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag" style="background:var(--signal);color:#2A2005;">New</span><span class="work-tag">Machine learning</span><span class="work-tag">From scratch</span></div>
+        <h3>Churn Risk Model</h3>
+        <p>A logistic regression classifier trained live in the browser via gradient descent — no ML library, no backend. Watch the loss drop, the decision boundary shift, and score your own hypothetical client in real time.</p>
+        <a href="churn-risk-model.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card" style="border-color:var(--indigo);">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">wander-trail-companion.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag" style="background:var(--signal);color:#2A2005;">New</span><span class="work-tag">UI/UX</span><span class="work-tag">Interactive prototype</span></div>
+        <h3>Wander — Trail Companion</h3>
+        <p>A fully clickable mobile app prototype — onboarding, live trail tracking with a running timer and animated route, badge unlocks, and a flow-map view showing how all seven screens connect.</p>
+        <a href="wander-trail-companion.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">nexora-flagship-project.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Flagship</span><span class="work-tag">Full-stack</span></div>
+        <h3>Nexora — Agency Platform</h3>
+        <p>A client & project management platform for agencies — a live currency-conversion API (real rates from frankfurter.app), a rule-based client health-scoring engine, and a documented design system, all in one build.</p>
+        <a href="nexora-flagship-project.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">ai-inquiry-router.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">AI tool</span><span class="work-tag">Automation</span></div>
+        <h3>Smart Inquiry Router</h3>
+        <p>Paste a customer message in and watch it get categorized, scored for urgency, and routed live. Evaluated at 88% accuracy against a manually labeled test set, with the confusion matrix and known limitations shown openly.</p>
+        <a href="ai-inquiry-router.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">webapp-dashboard-demo.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Web app</span><span class="work-tag">Dashboard</span></div>
+        <h3>Flowdesk — Order & Invoice Management</h3>
+        <p>A sign-in-gated operations dashboard — revenue and order KPIs, a recent-orders table with paid/pending/overdue status, and sidebar navigation built for a small business running daily invoicing.</p>
+        <a href="webapp-dashboard-demo.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">booking-system-demo.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Web app</span><span class="work-tag">Scheduling</span></div>
+        <h3>Glow Studio — Salon Booking</h3>
+        <p>A working calendar with real availability logic — pick a date, see which slots are already taken, book a time, and get a live confirmation — next to a day-at-a-glance view of appointments and revenue.</p>
+        <a href="booking-system-demo.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">saas-landing-demo.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Marketing site</span><span class="work-tag">SaaS</span></div>
+        <h3>Ledgerly — Budgeting for Freelancers</h3>
+        <p>A conversion-focused product site for a budgeting app — automatic tax set-asides, income smoothing, tiered pricing, testimonials, and an interactive FAQ, all built to sell irregular-income tracking.</p>
+        <a href="saas-landing-demo.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">uiux-case-study.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">UI/UX</span><span class="work-tag">Case study</span></div>
+        <h3>Pillbox — Medication Reminders</h3>
+        <p>A mobile design case study for people managing multiple prescriptions — framed around one problem (cognitive overload), three core screens, and a one-tap-to-complete design principle.</p>
+        <a href="uiux-case-study.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">noor-bakehouse.html</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Business site</span><span class="work-tag">Local</span></div>
+        <h3>Noor Bakehouse</h3>
+        <p>A local bakery's storefront — daily menu, online ordering CTA, and a brand identity built around small-batch sourdough.</p>
+        <a href="noor-bakehouse.html" class="work-link">View demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">github.com/hassansaeed14/VORIS</div></div>
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Final year project</span><span class="work-tag">External · GitHub</span></div>
+        <h3>VORIS — AI Assistant</h3>
+        <p>A local-first, JARVIS-style AI assistant with a Python FastAPI backend — a tiered safe/private/sensitive/critical trust model, document generation straight through chat, a lightweight in-browser RAG pipeline, and 290+ passing automated tests.</p>
+        <a href="https://github.com/hassansaeed14/VORIS" target="_blank" rel="noopener" class="work-link">View on GitHub <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap" style="padding:0 32px 64px;">
+  <div class="cta-band" style="margin:0;max-width:none;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);">
+    <div>
+      <div class="eyebrow" style="margin-bottom:14px;">New · interactive</div>
+      <h2 style="color:var(--ink);">Don't just read about the work — ask about it.</h2>
+      <p style="color:var(--ink-soft);">A small local assistant indexed on this portfolio. Ask it what Nexora is built with, what my skills are, or how to reach me — it answers from what's actually here, and says so honestly when it doesn't know.</p>
+    </div>
+    <a href="ask-brightstack.html" class="btn-primary">Ask BrightStack →</a>
+  </div>
+</section>
+
+<section class="section" id="capabilities">
+  <div class="section-head">
+    <div class="eyebrow">What we do</div>
+    <h2>Four ways we get hired.</h2>
+  </div>
+  <div class="cap-grid">
+    <div class="cap-cell">
+      <span class="mono">Web</span>
+      <h4>Business websites</h4>
+      <p>Marketing and storefront sites for local and small businesses.</p>
+    </div>
+    <div class="cap-cell">
+      <span class="mono">App</span>
+      <h4>Dashboards & tools</h4>
+      <p>Internal and customer-facing web apps for running day-to-day operations.</p>
+    </div>
+    <div class="cap-cell">
+      <span class="mono">Auto</span>
+      <h4>Booking & scheduling</h4>
+      <p>Reservation and appointment flows that fit an existing service business.</p>
+    </div>
+    <div class="cap-cell">
+      <span class="mono">AI</span>
+      <h4>AI-powered tools</h4>
+      <p>Focused automation — inquiry routing, triage, and small AI features that remove manual work.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="section-head">
+    <div class="eyebrow">About</div>
+    <h2>The person behind BrightStack.</h2>
+    <p>7th-semester BS Artificial Intelligence student at Hazara University, Mansehra — building BrightStack as an independent practice alongside the degree.</p>
+  </div>
+  <div class="work-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="work-card">
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Dec 2025 – Mar 2026</span></div>
+        <h3>ML Engineer Intern</h3>
+        <p>novaXccelerate — a hybrid, mentored internship applying machine learning to real, industry-led projects rather than theory alone.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-body">
+        <div class="work-tags"><span class="work-tag">Jul 2024 – Oct 2024</span></div>
+        <h3>UI/UX Design Intern</h3>
+        <p>novaXccelerate — user-centered interfaces and wireframes; a practical foundation in user flows and information hierarchy.</p>
+      </div>
+    </div>
+  </div>
+  <div class="btn-row" style="margin-top:24px;flex-wrap:wrap;gap:10px;">
+    <span class="work-tag">JavaScript</span>
+    <span class="work-tag">HTML5 / CSS3</span>
+    <span class="work-tag">Python</span>
+    <span class="work-tag">WordPress</span>
+    <span class="work-tag">API Integration</span>
+    <span class="work-tag">Machine Learning</span>
+    <span class="work-tag">UI/UX Design</span>
+  </div>
+</section>
+
+<div class="cta-band" id="contact" style="flex-direction:column;align-items:stretch;gap:28px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
+    <div>
+      <h2>Have a project in mind?</h2>
+      <p>Message us on Fiverr to talk through scope and timeline. Email is reserved for support complaints, not new project inquiries.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn-primary" style="background:#1DBF73;color:#04341F;">Message us on Fiverr →</a>
+      <a href="mailto:19hsnkhan@gmail.com?subject=Complaint" class="btn-secondary" style="background:transparent;border:1px solid #3A4557;color:var(--paper);">File a complaint by email</a>
+    </div>
+  </div>
+
+  <div style="background:rgba(255,255,255,0.04);border:1px solid #2D3646;border-radius:10px;padding:20px 22px;">
+    <div class="mono" style="font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Or send a quick message</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+      <input type="text" id="leadName" placeholder="Your name" style="padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;">
+      <input type="email" id="leadEmail" placeholder="Your email" style="padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;">
+    </div>
+    <textarea id="leadMessage" placeholder="What are you building?" rows="3" style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;font-family:inherit;margin-bottom:10px;resize:vertical;"></textarea>
+    <button id="leadSubmitBtn" class="btn-primary" style="border:none;cursor:pointer;">Send message</button>
+    <div id="leadStatus" class="mono" style="font-size:12px;color:#9AA4B2;margin-top:10px;"></div>
+  </div>
+</div>
+
+<footer>
+  BrightStack Co. · Hassan Saeed · Mansehra, Pakistan · <span class="mono">est. 2024</span>
+</footer>
+
+<div id="authModal" class="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(27,36,48,0.55);z-index:100;align-items:center;justify-content:center;">
+  <div class="modal-card" style="background:#fff;border-radius:14px;padding:30px;max-width:360px;width:90%;position:relative;">
+    <button onclick="closeAuthModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#4B5568;">×</button>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:19px;margin-bottom:8px;">Sign in to BrightStack</h3>
+    <p style="font-size:13.5px;color:#4B5568;margin-bottom:20px;">Access your client area — project status and messages.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button onclick="signIn('google')" class="auth-provider-btn">Continue with Google</button>
+      <button onclick="signIn('facebook')" class="auth-provider-btn">Continue with Facebook</button>
+      <!-- GitHub and LinkedIn temporarily hidden until enabled in Firebase — restore these two lines once ready:
+      <button onclick="signIn('github')" class="auth-provider-btn">Continue with GitHub</button>
+      <button onclick="signIn('linkedin')" class="auth-provider-btn">Continue with LinkedIn</button>
+      -->
+    </div>
+    <div id="authStatus" class="mono" style="font-size:12px;color:#4B5568;margin-top:14px;"></div>
+  </div>
+</div>
+
+<style>
+  .auth-provider-btn{
+    padding:11px 16px;border-radius:8px;border:1px solid #D4DAE1;background:#fff;font-weight:600;
+    font-size:13.5px;cursor:pointer;text-align:left;color:#1B2430;
+  }
+  .auth-provider-btn:hover{border-color:#3C3EE8;color:#3C3EE8;}
+</style>
+
+<script type="module">
+  import { auth, db, googleProvider, githubProvider, facebookProvider, linkedinProvider, ADMIN_UID } from './firebase-config.js';
+  import { signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  window.openAuthModal = () => { document.getElementById('authModal').style.display = 'flex'; };
+  window.closeAuthModal = () => { document.getElementById('authModal').style.display = 'none'; };
+
+  const providers = { google: googleProvider, github: githubProvider, facebook: facebookProvider, linkedin: linkedinProvider };
+
+  window.signIn = async (name) => {
+    const statusEl = document.getElementById('authStatus');
+    statusEl.textContent = 'Opening ' + name + ' sign-in…';
+    try {
+      const result = await signInWithPopup(auth, providers[name]);
+      const user = result.user;
+      const ref = doc(db, 'clients', user.uid);
+      const snap = await getDoc(ref);
+      if (!snap.exists()){
+        await setDoc(ref, {
+          name: user.displayName || 'New client',
+          email: user.email || '',
+          projectStatus: 'No active project yet',
+          messages: []
+        });
+      }
+      window.location.href = 'client-area.html';
+    } catch (err){
+      statusEl.textContent = 'Sign-in failed: ' + err.message;
+    }
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    const slot = document.getElementById('authNavSlot');
+    const adminSlot = document.getElementById('adminNavSlot');
+    if (slot){
+      slot.innerHTML = user
+        ? `<a href="client-area.html">My Client Area</a>`
+        : `<a href="#" onclick="openAuthModal();return false;">Sign in</a>`;
+    }
+    if (adminSlot){
+      adminSlot.innerHTML = (user && user.uid === ADMIN_UID)
+        ? `<a href="admin.html" style="color:var(--indigo);">Admin</a>`
+        : '';
+    }
+  });
+
+  document.getElementById('leadSubmitBtn').addEventListener('click', async () => {
+    const name = document.getElementById('leadName').value.trim();
+    const email = document.getElementById('leadEmail').value.trim();
+    const message = document.getElementById('leadMessage').value.trim();
+    const statusEl = document.getElementById('leadStatus');
+    if (!name || !email || !message){
+      statusEl.textContent = 'Fill in your name, email, and a message first.';
+      return;
+    }
+    statusEl.textContent = 'Sending…';
+    try {
+      await addDoc(collection(db, 'leads'), {
+        name, email, message, source: 'website', status: 'new', createdAt: serverTimestamp()
+      });
+      document.getElementById('leadName').value = '';
+      document.getElementById('leadEmail').value = '';
+      document.getElementById('leadMessage').value = '';
+      statusEl.textContent = "Sent — we'll get back to you soon.";
+    } catch(err){
+      statusEl.textContent = 'Something went wrong: ' + err.message;
+    }
+  });
+</script>
+
+</body>
+</html>
