@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask BrightStack — an assistant that knows this portfolio</title>
+<meta name="description" content="Ask questions about Hassan Saeed's projects, skills, and experience — answered by a transparent, local keyword-matching assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430;
+    --ink-soft:#4B5568;
+    --paper:#EEF1F4;
+    --paper-2:#FFFFFF;
+    --line:#D4DAE1;
+    --signal:#FFC93C;
+    --indigo:#3C3EE8;
+    --indigo-soft:#EEEEFD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;
+    min-height:100vh;display:flex;flex-direction:column;
+  }
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 32px;max-width:820px;margin:0 auto;width:100%;
+  }
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
+  .logo span{color:var(--indigo);}
+  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .back-link:hover{color:var(--ink);}
+
+  .hero{max-width:820px;margin:0 auto;padding:12px 32px 28px;width:100%;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--indigo);font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;
+    background:var(--indigo-soft);padding:6px 12px;border-radius:20px;
+  }
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--indigo);display:inline-block;}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.01em;margin-bottom:10px;}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:560px;}
+
+  .chat-wrap{max-width:820px;margin:0 auto;padding:0 32px 24px;width:100%;flex:1;display:flex;flex-direction:column;}
+  .chat-panel{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:14px;
+    display:flex;flex-direction:column;flex:1;min-height:420px;overflow:hidden;
+  }
+  .chat-log{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;}
+  .msg{max-width:78%;padding:12px 16px;border-radius:12px;font-size:14.5px;line-height:1.55;}
+  .msg.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px;}
+  .msg.user{background:var(--ink);color:var(--paper-2);align-self:flex-end;border-bottom-right-radius:4px;}
+  .msg .src{
+    display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);
+  }
+  .msg .src a{text-decoration:underline;}
+  .typing{align-self:flex-start;display:flex;gap:4px;padding:12px 16px;}
+  .typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-soft);opacity:0.4;animation:blink 1.1s infinite;}
+  .typing span:nth-child(2){animation-delay:0.15s;}
+  .typing span:nth-child(3){animation-delay:0.3s;}
+  @keyframes blink{0%,80%,100%{opacity:0.25;}40%{opacity:0.9;}}
+
+  .chips-row{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 16px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--paper);border:1px solid var(--line);
+    padding:7px 12px;border-radius:20px;cursor:pointer;color:var(--ink-soft);
+  }
+  .chip:hover{border-color:var(--indigo);color:var(--indigo);}
+
+  .input-row{
+    display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--line);background:var(--paper);
+  }
+  .input-row input{
+    flex:1;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px;
+    font-family:'Inter',sans-serif;background:var(--paper-2);color:var(--ink);
+  }
+  .input-row input:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo);}
+  .input-row button{
+    background:var(--signal);border:none;color:#2A2005;font-weight:600;font-size:14px;
+    padding:0 20px;border-radius:8px;cursor:pointer;
+  }
+  .input-row button:hover{background:#ffbb0f;}
+
+  .how-it-works{
+    max-width:820px;margin:0 auto;padding:0 32px 40px;width:100%;font-size:13px;color:var(--ink-soft);
+  }
+  .how-it-works summary{cursor:pointer;font-weight:600;color:var(--ink);}
+  .how-it-works p{margin-top:10px;max-width:600px;}
+
+  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--ink-soft);}
+
+  @media (max-width:600px){
+    .msg{max-width:88%;}
+    h1{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Ask Bright<span>Stack</span></div>
+  <a href="index.html" class="back-link">← Back to portfolio</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Interactive · local keyword matching</div>
+  <h1>Ask about my projects, stack, or background.</h1>
+  <p>This is a small retrieval assistant built into the portfolio itself — ask it about Nexora, the AI inquiry router, my skills, or how to get in touch, and it'll answer from what's actually in this site and my resume.</p>
+</section>
+
+<div class="chat-wrap">
+  <div class="chat-panel">
+    <div class="chat-log" id="chatLog"></div>
+    <div class="chips-row" id="chipsRow"></div>
+    <div class="input-row">
+      <input type="text" id="userInput" placeholder="e.g. What's Nexora built with?" onkeydown="if(event.key==='Enter') sendMessage();">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<details class="how-it-works">
+  <summary>How this actually works</summary>
+  <p>No external API calls and no language model here — every answer below comes from a small local knowledge base about this portfolio, matched against your question by keyword overlap (the same category of technique used in the Smart Inquiry Router demo). If it can't find a confident match, it says so honestly instead of guessing.</p>
+</details>
+
+<footer>Built by BrightStack Co. · a transparent, local retrieval demo — not connected to any external AI service.</footer>
+
+<script>
+const KB = [
+  {
+    tags: ['churn risk model','churn model','logistic regression','gradient descent','pyodide','webassembly','ml lab','python model','from scratch'],
+    title: 'Churn Risk Model',
+    link: 'churn-risk-model.html',
+    answer: "The Churn Risk Model runs real Python — via Pyodide (WebAssembly) — training a logistic regression classifier live in your browser with gradient descent written from scratch. No ML library, no server. It's the same client-health idea from Nexora, rebuilt as an actual trained model instead of hand-written rules."
+  },
+  {
+    tags: ['wander','trail companion','hiking app','prototype','clickable prototype','mobile app design','onboarding','flow map'],
+    title: 'Wander — Trail Companion',
+    link: 'wander-trail-companion.html',
+    answer: "Wander is a fully clickable mobile app prototype for a hiking/trail-tracking app — onboarding, live trail tracking with a running timer and animated route, badge unlocks, and a flow-map view showing exactly how all seven screens connect to each other."
+  },
+  {
+    tags: ['nexora','agency','platform','currency','api','frankfurter','health score','client health','flagship','full stack','fullstack'],
+    title: 'Nexora',
+    link: 'nexora-flagship-project.html',
+    answer: "Nexora is my flagship project — a client & project management platform for agencies. It has a live currency-conversion API (real rates fetched from frankfurter.app when you click convert), a rule-based client health-scoring engine that flags accounts at risk of churn, and its own documented design system."
+  },
+  {
+    tags: ['inquiry router','smart inquiry','classifier','classification','ai automation','support ticket','routing','accuracy','confusion matrix'],
+    title: 'Smart Inquiry Router',
+    link: 'ai-inquiry-router.html',
+    answer: "The Smart Inquiry Router is a live, interactive classifier — paste in a support message and it categorizes it, flags urgency, and routes it, all client-side. I evaluated it at 88% accuracy against a manually labeled 60-message test set, and the demo shows the full confusion matrix and an honest list of its limitations."
+  },
+  {
+    tags: ['flowdesk','dashboard','invoice','order management','operations','kpi'],
+    title: 'Flowdesk',
+    link: 'webapp-dashboard-demo.html',
+    answer: "Flowdesk is a sign-in-gated operations dashboard for order and invoice management — revenue and order KPIs, a recent-orders table with paid/pending/overdue status badges, and sidebar navigation, built for a small business running day-to-day invoicing."
+  },
+  {
+    tags: ['glow studio','booking','salon','appointment','calendar','scheduling'],
+    title: 'Glow Studio',
+    link: 'booking-system-demo.html',
+    answer: "Glow Studio is a working salon booking system — pick a date on the calendar, see which time slots are already taken, choose an open one, and get a live booking confirmation, alongside a day-at-a-glance view of appointments and revenue."
+  },
+  {
+    tags: ['ledgerly','saas','landing page','budgeting','freelancer','pricing','tax'],
+    title: 'Ledgerly',
+    link: 'saas-landing-demo.html',
+    answer: "Ledgerly is a SaaS marketing site for a budgeting app aimed at freelancers — automatic tax set-asides, income smoothing, tiered pricing, testimonials, and an interactive FAQ, all built to sell the idea of tracking irregular income."
+  },
+  {
+    tags: ['pillbox','uiux','ui/ux','medication','case study','design process','wireframe'],
+    title: 'Pillbox',
+    link: 'uiux-case-study.html',
+    answer: "Pillbox is a UI/UX case study for a medication-reminder app, aimed at people managing multiple prescriptions. It's framed around one core problem — cognitive overload — with three screens and a design principle that the most common action should never take more than one tap."
+  },
+  {
+    tags: ['noor bakehouse','bakery','business site','local website'],
+    title: 'Noor Bakehouse',
+    link: 'noor-bakehouse.html',
+    answer: "Noor Bakehouse is a local bakery's storefront site — a daily menu, an online-ordering call to action, and a brand identity built around small-batch sourdough."
+  },
+  {
+    tags: ['voris','jarvis','ai assistant','fastapi','rag','trust model','test suite'],
+    title: 'VORIS',
+    link: 'https://github.com/hassansaeed14/VORIS',
+    answer: "VORIS is an in-progress AI assistant system I'm building — a local-first, JARVIS-style assistant with a Python FastAPI backend and a browser-based interface. It has a tiered safe/private/sensitive/critical trust model to gate automation, generates documents (PDF, DOCX, PPTX) straight through chat, runs a lightweight in-browser RAG pipeline for CSV/TXT files, and has 290+ passing automated tests."
+  },
+  {
+    tags: ['skill','skills','javascript','python','html','css','wordpress','api integration','tech stack','tools','technolog'],
+    title: 'Skills',
+    link: null,
+    answer: "My core stack: JavaScript, HTML5/CSS3, and Python, plus WordPress, API integration, responsive web design, UI/UX design, and applied machine learning. Every project in this portfolio is built with plain HTML/CSS/JS — no framework required to view any of them."
+  },
+  {
+    tags: ['experience','background','internship','novaxccelerate','ml engineer','machine learning intern','uiux intern','ui/ux intern'],
+    title: 'Experience',
+    link: null,
+    answer: "Two internships at novaXccelerate: an ML Engineer internship (Dec 2025 – Mar 2026) applying machine learning to real industry-led projects, and a UI/UX Design internship (Jul – Oct 2024) building wireframes and user flows. Both were structured, mentored programs rather than self-study."
+  },
+  {
+    tags: ['contact','hire','email','reach','get in touch','work together','project','available','freelance','fiverr'],
+    title: 'Contact',
+    link: 'index.html#contact',
+    answer: "For a new project, message BrightStack directly on Fiverr — that's the fastest way to talk through scope and timeline. Email (19hsnkhan@gmail.com) is reserved for complaints and support issues, not new project inquiries. There's also a quick-message form on the homepage if you'd rather not use Fiverr."
+  },
+  {
+    tags: ['client area','client login','sign in','my account','project status','client portal'],
+    title: 'Client Area',
+    link: 'index.html#contact',
+    answer: "Existing clients can sign in from the homepage (Google, GitHub, Facebook, or LinkedIn) to see their project status and message BrightStack directly through a private client area."
+  },
+  {
+    tags: ['who are you','about you','hassan','brightstack','background','who is this'],
+    title: 'About',
+    link: 'index.html#about',
+    answer: "I'm Hassan Saeed — a full-stack developer running BrightStack Co. as an independent practice. I build responsive websites, full-stack apps, and API-integrated products end to end, backed by hands-on ML experience from an industry internship and VORIS, an AI assistant system I'm building."
+  }
+];
+
+const FALLBACK = "I don't have a confident answer for that from what's indexed here — try asking about a specific project (Nexora, Flowdesk, Glow Studio, Ledgerly, Pillbox, Noor Bakehouse, VORIS), my skills, experience, education, or how to get in touch.";
+
+const SUGGESTED = [
+  "What's Nexora built with?",
+  "Tell me about VORIS",
+  "What are your skills?",
+  "How do I contact you?"
+];
+
+function score(input, entry){
+  const words = input.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  let s = 0;
+  entry.tags.forEach(tag => {
+    const tagWords = tag.split(' ');
+    if (input.toLowerCase().includes(tag)) s += tagWords.length * 2;
+    else tagWords.forEach(tw => { if (words.includes(tw)) s += 1; });
+  });
+  if (input.toLowerCase().includes(entry.title.toLowerCase())) s += 3;
+  return s;
+}
+
+function bestMatch(input){
+  let best = null, bestScore = 0;
+  KB.forEach(entry => {
+    const s = score(input, entry);
+    if (s > bestScore){ bestScore = s; best = entry; }
+  });
+  return bestScore > 0 ? best : null;
+}
+
+function addMessage(role, html){
+  const log = document.getElementById('chatLog');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = html;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+  return div;
+}
+
+function addTyping(){
+  const log = document.getElementById('chatLog');
+  const div = document.createElement('div');
+  div.className = 'typing';
+  div.id = 'typingIndicator';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function removeTyping(){
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function respond(input){
+  addTyping();
+  setTimeout(() => {
+    removeTyping();
+    const match = bestMatch(input);
+    if (match){
+      let html = match.answer;
+      if (match.link){
+        const isExternal = match.link.startsWith('http');
+        html += `<span class="src">Source: <a href="${match.link}" ${isExternal ? 'target="_blank" rel="noopener"' : ''}>${match.title} →</a></span>`;
+      }
+      addMessage('bot', html);
+    } else {
+      addMessage('bot', FALLBACK);
+    }
+  }, 500 + Math.random() * 400);
+}
+
+function sendMessage(){
+  const inputEl = document.getElementById('userInput');
+  const text = inputEl.value.trim();
+  if (!text) return;
+  addMessage('user', escapeHtml(text));
+  inputEl.value = '';
+  respond(text);
+}
+
+function askSuggested(text){
+  document.getElementById('userInput').value = text;
+  sendMessage();
+}
+
+function renderChips(){
+  const row = document.getElementById('chipsRow');
+  row.innerHTML = '';
+  SUGGESTED.forEach(q => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = q;
+    chip.onclick = () => askSuggested(q);
+    row.appendChild(chip);
+  });
+}
+
+renderChips();
+addMessage('bot', "Hi — I'm a small local assistant indexed on this portfolio. Ask me about any project, my skills, experience, or how to get in touch.");
+</script>
+
+</body>
+</html>
