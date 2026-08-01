@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas — AI Knowledge Copilot (RAG)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFAF7;
+    --surface:#FFFFFF;
+    --surface-sunken:#F1EFE9;
+    --line:#E4E0D6;
+    --ink:#232420;
+    --ink-muted:#6B6A5E;
+    --ink-faint:#A19E90;
+    --accent:#2F6B4F;
+    --accent-soft:#E4EFE8;
+    --warn:#B87F1F;
+    --warn-soft:#FBF1DF;
+    --error:#B0453A;
+    --error-soft:#FBEAE7;
+    --radius:14px;
+    --shadow:0 16px 40px -18px rgba(35,36,32,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh;}
+
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--line); background:var(--surface);}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .brand-mark{width:32px; height:32px; border-radius:8px; background:var(--accent); position:relative; flex-shrink:0;}
+  .brand-mark::before{content:''; position:absolute; inset:9px; border:2px solid #fff; border-radius:50%;}
+  .brand-mark::after{content:''; position:absolute; width:2px; height:8px; background:#fff; bottom:5px; right:9px; transform:rotate(45deg);}
+  .brand-name{font-family:'Lora',serif; font-size:19px; font-weight:700;}
+  .brand-sub{font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:1.5px; margin-top:1px;}
+
+  .view-toggle{display:flex; background:var(--surface-sunken); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
+  .view-toggle button{border:none; background:transparent; color:var(--ink-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
+  .view-toggle button.active{background:var(--accent); color:#fff;}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ---------- COPILOT VIEW ---------- */
+  .copilot-layout{display:grid; grid-template-columns:280px 1fr; min-height:calc(100vh - 73px);}
+  @media (max-width:880px){.copilot-layout{grid-template-columns:1fr;}}
+
+  .lib{background:var(--surface); border-right:1px solid var(--line); padding:20px 16px;}
+  .lib-title{font-size:11px; text-transform:uppercase; letter-spacing:1.2px; color:var(--ink-faint); font-weight:700; margin-bottom:12px; padding:0 4px;}
+  .doc-card{background:var(--surface-sunken); border:1px solid var(--line); border-radius:10px; padding:11px 12px; margin-bottom:9px;}
+  .doc-title{font-size:12.5px; font-weight:700;}
+  .doc-meta{font-size:11px; color:var(--ink-faint); margin-top:3px;}
+  .add-doc-btn{width:100%; background:none; border:1px dashed var(--line); border-radius:10px; padding:11px; color:var(--ink-muted); font-size:12.5px; font-weight:600; cursor:pointer; margin-top:6px;}
+  .add-doc-form{display:none; margin-top:10px; background:var(--surface-sunken); border:1px solid var(--line); border-radius:10px; padding:12px;}
+  .add-doc-form.show{display:block;}
+  .add-doc-form input, .add-doc-form textarea{width:100%; border:1px solid var(--line); border-radius:7px; padding:8px; font-family:'Inter',sans-serif; font-size:12px; margin-bottom:8px; background:var(--surface);}
+  .add-doc-form button{background:var(--accent); color:#fff; border:none; border-radius:7px; padding:8px 12px; font-size:12px; font-weight:700; cursor:pointer;}
+
+  .qa-area{padding:32px; max-width:760px;}
+  .hero-eyebrow{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:700;}
+  .hero-title{font-family:'Lora',serif; font-size:30px; line-height:1.3; margin:12px 0 12px; font-weight:700;}
+  .hero-desc{color:var(--ink-muted); font-size:14.5px; line-height:1.7; margin-bottom:22px;}
+
+  .ask-box{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:6px; box-shadow:var(--shadow); display:flex; gap:6px;}
+  .ask-box input{flex:1; border:none; background:transparent; padding:13px 12px; font-size:14.5px; font-family:'Inter',sans-serif; color:var(--ink);}
+  .ask-box input:focus{outline:none;}
+  .ask-box button{background:var(--ink); color:#fff; border:none; border-radius:9px; padding:0 20px; font-weight:700; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:8px;}
+  .ask-box button:disabled{opacity:.5; cursor:not-allowed;}
+  .spinner{width:12px; height:12px; border:2px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner.show{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .example-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .example-chip{border:1px solid var(--line); background:var(--surface); color:var(--ink-muted); font-size:12px; padding:7px 12px; border-radius:8px; cursor:pointer; transition:.15s;}
+  .example-chip:hover{border-color:var(--accent); color:var(--ink);}
+
+  .answer-block{margin-top:26px;}
+  .answer-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);}
+  .answer-q{font-family:'Lora',serif; font-size:17px; font-weight:600; margin-bottom:12px;}
+  .confidence-pill{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:4px 10px; border-radius:999px; margin-bottom:14px;}
+  .confidence-pill.high{background:var(--accent-soft); color:var(--accent);}
+  .confidence-pill.medium{background:var(--warn-soft); color:var(--warn);}
+  .confidence-pill.low{background:var(--error-soft); color:var(--error);}
+  .answer-body{font-size:14.5px; line-height:1.8; color:var(--ink); white-space:pre-wrap;}
+
+  .sources-toggle{margin-top:16px; background:none; border:none; color:var(--accent); font-size:12.5px; font-weight:700; cursor:pointer; padding:0;}
+  .sources-list{display:none; margin-top:12px; display:flex; flex-direction:column; gap:8px;}
+  .sources-list.show{display:flex;}
+  .source-card{background:var(--surface-sunken); border:1px solid var(--line); border-radius:9px; padding:11px 13px;}
+  .source-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;}
+  .source-doc{font-size:12px; font-weight:700; color:var(--accent);}
+  .source-score{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink-faint);}
+  .source-excerpt{font-size:12.5px; color:var(--ink-muted); line-height:1.6;}
+  mark{background:#DDEEDD; color:var(--ink); padding:0 1px; border-radius:2px;}
+
+  /* ---------- ANALYTICS VIEW ---------- */
+  .an-wrap{max-width:1180px; margin:0 auto; padding:32px;}
+  .cal-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .cal-title{font-family:'Lora',serif; font-size:26px; font-weight:700;}
+  .cal-sub{color:var(--ink-faint); font-size:13px; margin-top:4px;}
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;}
+  @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px;}
+  .stat-num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600;}
+  .stat-label{color:var(--ink-faint); font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:1px;}
+
+  .two-col{display:grid; grid-template-columns:1.4fr 1fr; gap:18px;}
+  @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
+  .panel-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .panel-head{padding:16px 20px; border-bottom:1px solid var(--line); font-weight:700; font-size:13.5px;}
+  table{width:100%; border-collapse:collapse;}
+  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-faint); padding:10px 20px; border-bottom:1px solid var(--line); font-weight:700;}
+  td{padding:12px 20px; border-bottom:1px solid var(--line); font-size:12.5px; vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  .q-text{max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600;}
+  .empty-state{padding:40px 20px; text-align:center; color:var(--ink-faint); font-size:13px;}
+
+  .doc-usage{padding:16px 20px;}
+  .du-row{display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:12px;}
+  .du-row:last-child{margin-bottom:0;}
+  .du-label{width:120px; flex-shrink:0; color:var(--ink-muted); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .du-bar-bg{flex:1; height:7px; background:var(--surface-sunken); border-radius:4px; overflow:hidden;}
+  .du-bar-fill{height:100%; background:var(--accent); border-radius:4px;}
+  .du-count{width:20px; text-align:right; font-family:'JetBrains Mono',monospace; color:var(--ink-faint); font-size:11px;}
+
+  .gap-item{padding:11px 20px; border-bottom:1px solid var(--line); font-size:12.5px;}
+  .gap-item:last-child{border-bottom:none;}
+  .gap-q{font-weight:600; color:var(--error);}
+
+  .footnote{max-width:1180px; margin:20px auto 0; padding:16px 32px 40px; border-top:1px solid var(--line); color:var(--ink-faint); font-size:12px; line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <div class="brand-name">Atlas</div>
+      <div class="brand-sub">AI Knowledge Copilot</div>
+    </div>
+  </div>
+  <div class="view-toggle">
+    <button class="active" onclick="switchView('copilot')" id="btn-copilot">Copilot</button>
+    <button onclick="switchView('an')" id="btn-an">Knowledge Analytics</button>
+  </div>
+</div>
+
+<!-- COPILOT -->
+<div class="view active" id="view-copilot">
+  <div class="copilot-layout">
+    <div class="lib">
+      <div class="lib-title">Knowledge base — 5 docs</div>
+      <div id="docList"></div>
+      <button class="add-doc-btn" onclick="toggleAddForm()">+ Add document</button>
+      <div class="add-doc-form" id="addDocForm">
+        <input type="text" id="newDocTitle" placeholder="Document title">
+        <textarea id="newDocText" rows="5" placeholder="Paste the document text (paragraphs become searchable chunks)"></textarea>
+        <button onclick="addDocument()">Add to knowledge base</button>
+      </div>
+    </div>
+
+    <div class="qa-area">
+      <div class="hero-eyebrow">AI Automation Case Study</div>
+      <h1 class="hero-title">Ask anything. It only answers from what's actually documented — and shows its work.</h1>
+      <p class="hero-desc">This is a real retrieval-augmented copilot for Ember & Oak's internal team. Every answer is grounded in the knowledge base on the left: it retrieves the most relevant passages, cites them, scores its own confidence, and says so honestly when the answer isn't in the docs — instead of guessing.</p>
+
+      <div class="ask-box">
+        <input type="text" id="questionInput" placeholder="Ask about policies, SOPs, or benefits..." onkeydown="if(event.key==='Enter') askQuestion()">
+        <button id="askBtn" onclick="askQuestion()">
+          <span class="spinner" id="spinner"></span>
+          <span id="askLabel">Ask</span>
+        </button>
+      </div>
+      <div class="example-row">
+        <div class="example-chip" onclick="setQ(1)">Refund window for damaged items?</div>
+        <div class="example-chip" onclick="setQ(2)">PTO days for new hires?</div>
+        <div class="example-chip" onclick="setQ(3)">Do we accept crypto payments?</div>
+      </div>
+
+      <div class="answer-block" id="answerBlock"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ANALYTICS -->
+<div class="view" id="view-an">
+  <div class="an-wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Knowledge Analytics</div>
+        <div class="cal-sub">Every question asked, and where the documentation has gaps</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num" id="statQ">0</div><div class="stat-label">Questions asked</div></div>
+      <div class="stat-card"><div class="stat-num" id="statConf">—</div><div class="stat-label">Avg. confidence</div></div>
+      <div class="stat-card"><div class="stat-num" id="statDocs">5</div><div class="stat-label">Documents indexed</div></div>
+      <div class="stat-card"><div class="stat-num" id="statGaps">0</div><div class="stat-label">Knowledge gaps flagged</div></div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel-card">
+        <div class="panel-head">Recent questions</div>
+        <table>
+          <thead><tr><th>Question</th><th>Confidence</th></tr></thead>
+          <tbody id="qTable"></tbody>
+        </table>
+        <div class="empty-state" id="qEmpty" style="display:none;">No questions yet — ask something in the Copilot tab.</div>
+      </div>
+      <div>
+        <div class="panel-card" style="margin-bottom:18px;">
+          <div class="panel-head">Most-cited documents</div>
+          <div class="doc-usage" id="docUsage"></div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-head" style="color:var(--error)">Knowledge gaps</div>
+          <div id="gapsList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footnote">
+  Portfolio demo — built by Hassan. Retrieval here runs a lightweight local relevance scoring pass over the knowledge base, then Claude answers strictly from the top-matching passages with citations. In a client deployment this scales to thousands of documents with a real vector database (Pinecone, Weaviate, or pgvector) instead of in-browser scoring — the grounding and citation behavior stays exactly the same.
+</div>
+
+<script>
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+
+/* ---------- KNOWLEDGE BASE ---------- */
+let docs = [
+  {id:'d1', title:'Roasting SOP', text:"Light roasts are pulled at an internal bean temperature of 196-201C and are used for single-origin, fruit-forward beans. Medium roasts are pulled at 210-214C and make up roughly 60% of retail volume. Dark roasts are pulled at 221-225C and are reserved for espresso blends and wholesale espresso accounts.\n\nEvery batch is cupped by two roasters before it is approved for sale. A batch that fails cupping is discarded, not blended into other batches, and the reason is logged in the roast log.\n\nRoasting equipment is cleaned after every 6 batches, and a full deep-clean happens every Sunday when the roastery is closed to the public."},
+  {id:'d2', title:'Wholesale Contract Terms', text:"Wholesale accounts require a minimum order of 5 bags per month to maintain wholesale pricing. Standard wholesale discount is 30% off retail, rising to 35% for accounts ordering 20+ bags per month.\n\nPayment terms are net-15 for new accounts and net-30 for accounts in good standing for over 6 months. Accounts more than 30 days late are moved back to net-15 terms.\n\nWholesale contracts do not include exclusivity by default — a cafe can carry other roasters unless an exclusivity addendum is separately negotiated and signed."},
+  {id:'d3', title:'Shipping & Fulfillment Policy', text:"Domestic orders ship within 5-7 business days via USPS or UPS depending on weight. Orders over $75 ship free; orders under that have a flat $6 shipping fee.\n\nEmber and Oak does not currently ship internationally. International customers can join a waitlist on the website, and the team reviews expansion quarterly based on waitlist volume by country.\n\nIf an order is delayed more than 3 business days past its estimated ship date, the fulfillment team proactively emails the customer with an updated timeline and a 10% discount code for the inconvenience."},
+  {id:'d4', title:'Employee Handbook — PTO & Benefits', text:"Full-time employees accrue 15 PTO days per year in their first two years, increasing to 20 days starting year three. PTO accrues monthly and can roll over up to 5 unused days into the next year.\n\nHealth insurance coverage begins on the first day of the month following 30 days of employment. Ember and Oak covers 80% of the employee premium and 50% of dependent premiums.\n\nRemote work is permitted up to 2 days per week for roles not tied to the retail floor or roastery, subject to manager approval."},
+  {id:'d5', title:'Customer Refund Policy', text:"Damaged or defective items are eligible for a full refund or replacement within 30 days of delivery, no questions asked — a photo of the damage is requested but not required to process the refund.\n\nSubscription orders can be paused, skipped, or cancelled at any time from the account portal, effective on the next billing cycle. There are no cancellation fees.\n\nOpened bags of coffee that are simply not to a customer's taste are eligible for store credit, not a cash refund, within 14 days of delivery."}
+];
+
+/* chunk documents into paragraphs */
+function buildChunks(){
+  let chunks = [];
+  docs.forEach(d => {
+    d.text.split(/\n\n+/).forEach((p, i) => {
+      chunks.push({id: d.id + '-' + i, docId: d.id, docTitle: d.title, text: p.trim()});
+    });
+  });
+  return chunks;
+}
+let chunks = buildChunks();
+
+function renderDocList(){
+  const el = document.getElementById('docList');
+  el.innerHTML = '';
+  docs.forEach(d => {
+    const chunkCount = chunks.filter(c => c.docId === d.id).length;
+    const card = document.createElement('div');
+    card.className = 'doc-card';
+    card.innerHTML = `<div class="doc-title">${escapeHtml(d.title)}</div><div class="doc-meta">${chunkCount} indexed passages</div>`;
+    el.appendChild(card);
+  });
+  document.querySelector('.lib-title').textContent = 'Knowledge base — ' + docs.length + ' docs';
+}
+
+function toggleAddForm(){
+  document.getElementById('addDocForm').classList.toggle('show');
+}
+function addDocument(){
+  const title = document.getElementById('newDocTitle').value.trim();
+  const text = document.getElementById('newDocText').value.trim();
+  if(!title || !text) return;
+  const id = 'd' + (docs.length + 1) + '-' + Date.now();
+  docs.push({id, title, text});
+  chunks = buildChunks();
+  renderDocList();
+  document.getElementById('newDocTitle').value = '';
+  document.getElementById('newDocText').value = '';
+  document.getElementById('addDocForm').classList.remove('show');
+}
+
+/* ---------- RETRIEVAL (lightweight local scoring) ---------- */
+function tokenize(str){
+  return (str.toLowerCase().match(/[a-z0-9']+/g) || []).filter(w => w.length > 2);
+}
+const STOPWORDS = new Set(['the','and','for','are','our','with','that','this','from','have','does','what','who','can','how','you','your','into']);
+
+function scoreChunks(query){
+  const qWords = tokenize(query).filter(w => !STOPWORDS.has(w));
+  const scored = chunks.map(c => {
+    const cWords = tokenize(c.text);
+    let score = 0;
+    qWords.forEach(qw => { if(cWords.includes(qw)) score += 1; });
+    // phrase bonus
+    if(qWords.length > 1){
+      const phrase = qWords.join(' ');
+      if(c.text.toLowerCase().includes(phrase)) score += 2;
+    }
+    return {chunk: c, score, qWordCount: qWords.length};
+  });
+  scored.sort((a,b) => b.score - a.score);
+  return scored;
+}
+
+function highlightTerms(text, query){
+  const qWords = tokenize(query).filter(w => !STOPWORDS.has(w));
+  let out = escapeHtml(text);
+  qWords.forEach(w => {
+    const re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+    out = out.replace(re, '<mark>$1</mark>');
+  });
+  return out;
+}
+
+/* ---------- Q&A ---------- */
+let queryLog = [];
+
+const qExamples = {
+  1: "What's our refund window for damaged items?",
+  2: "How many PTO days do new employees get?",
+  3: "Do we accept cryptocurrency payments?"
+};
+function setQ(n){ document.getElementById('questionInput').value = qExamples[n]; }
+
+async function callClaude(prompt){
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({model:'claude-sonnet-4-6', max_tokens:500, messages:[{role:'user', content:prompt}]})
+  });
+  const data = await res.json();
+  const block = (data.content || []).find(b => b.type === 'text');
+  return block ? block.text : '';
+}
+
+async function askQuestion(){
+  const question = document.getElementById('questionInput').value.trim();
+  if(!question) return;
+
+  const btn = document.getElementById('askBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').classList.add('show');
+  document.getElementById('askLabel').textContent = 'Searching...';
+
+  const scored = scoreChunks(question);
+  const top = scored.slice(0, 4).filter(s => s.score > 0);
+  const topScore = scored[0] ? scored[0].score : 0;
+  const qWordCount = scored[0] ? Math.max(1, scored[0].qWordCount) : 1;
+  const confidencePct = Math.min(100, Math.round((topScore / qWordCount) * 100));
+  let confLabel = 'low';
+  if(confidencePct >= 60) confLabel = 'high';
+  else if(confidencePct >= 25) confLabel = 'medium';
+
+  let answer = '';
+  if(top.length === 0){
+    answer = "I don't have information about that in the current knowledge base. You may want to check with the team directly, or add a document that covers this topic.";
+  } else {
+    const context = top.map(t => '[' + t.chunk.docTitle + ']: ' + t.chunk.text).join('\n\n');
+    const prompt = `Answer the question using ONLY the excerpts below. Cite the source document in brackets after each claim, like [Roasting SOP]. If the excerpts don't fully answer the question, say so honestly rather than guessing.\n\nExcerpts:\n${context}\n\nQuestion: ${question}\n\nAnswer in 2-4 sentences, plain text, no markdown.`;
+    try{
+      answer = await callClaude(prompt);
+    }catch(e){
+      answer = 'Something went wrong retrieving an answer — please try again.';
+    }
+  }
+
+  queryLog.unshift({question, confLabel, confidencePct, sources: top.map(t => t.chunk.docTitle)});
+
+  const block = document.getElementById('answerBlock');
+  const sourcesHtml = top.map(t => `
+    <div class="source-card">
+      <div class="source-head"><span class="source-doc">${escapeHtml(t.chunk.docTitle)}</span><span class="source-score">match score: ${t.score}</span></div>
+      <div class="source-excerpt">${highlightTerms(t.chunk.text, question)}</div>
+    </div>
+  `).join('');
+
+  block.innerHTML = `
+    <div class="answer-card">
+      <div class="answer-q">${escapeHtml(question)}</div>
+      <div class="confidence-pill ${confLabel}">${confLabel} confidence — ${confidencePct}%</div>
+      <div class="answer-body">${escapeHtml(answer)}</div>
+      ${top.length ? `<button class="sources-toggle" onclick="this.nextElementSibling.classList.toggle('show')">View ${top.length} source${top.length>1?'s':''} used ▾</button><div class="sources-list">${sourcesHtml}</div>` : ''}
+    </div>
+  `;
+
+  btn.disabled = false;
+  document.getElementById('spinner').classList.remove('show');
+  document.getElementById('askLabel').textContent = 'Ask';
+}
+
+/* ---------- ANALYTICS ---------- */
+function switchView(v){
+  document.getElementById('view-copilot').classList.toggle('active', v==='copilot');
+  document.getElementById('view-an').classList.toggle('active', v==='an');
+  document.getElementById('btn-copilot').classList.toggle('active', v==='copilot');
+  document.getElementById('btn-an').classList.toggle('active', v==='an');
+  if(v==='an') renderAnalytics();
+}
+
+function seedLog(){
+  queryLog = [
+    {question:'What is the wholesale minimum order?', confLabel:'high', confidencePct:80, sources:['Wholesale Contract Terms']},
+    {question:'How long until health insurance kicks in?', confLabel:'high', confidencePct:75, sources:['Employee Handbook — PTO & Benefits']},
+    {question:'Can customers get a cash refund for taste preference?', confLabel:'medium', confidencePct:45, sources:['Customer Refund Policy']},
+    {question:'Do we offer a loyalty rewards program?', confLabel:'low', confidencePct:0, sources:[]}
+  ];
+}
+
+function renderAnalytics(){
+  const total = queryLog.length;
+  const avgConf = total ? Math.round(queryLog.reduce((a,q)=>a+q.confidencePct,0)/total) : null;
+  const gaps = queryLog.filter(q => q.confLabel === 'low');
+
+  document.getElementById('statQ').textContent = total;
+  document.getElementById('statConf').textContent = avgConf !== null ? avgConf + '%' : '—';
+  document.getElementById('statDocs').textContent = docs.length;
+  document.getElementById('statGaps').textContent = gaps.length;
+
+  const tbody = document.getElementById('qTable');
+  tbody.innerHTML = '';
+  document.getElementById('qEmpty').style.display = total ? 'none' : 'block';
+  queryLog.forEach(q => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="q-text">${escapeHtml(q.question)}</td><td><span class="confidence-pill ${q.confLabel}">${q.confLabel}</span></td>`;
+    tbody.appendChild(tr);
+  });
+
+  const docCounts = {};
+  docs.forEach(d => docCounts[d.title] = 0);
+  queryLog.forEach(q => q.sources.forEach(s => { docCounts[s] = (docCounts[s]||0) + 1; }));
+  const maxCount = Math.max(1, ...Object.values(docCounts));
+  const du = document.getElementById('docUsage');
+  du.innerHTML = '';
+  Object.keys(docCounts).forEach(title => {
+    const row = document.createElement('div');
+    row.className = 'du-row';
+    row.innerHTML = `<div class="du-label">${escapeHtml(title)}</div><div class="du-bar-bg"><div class="du-bar-fill" style="width:${(docCounts[title]/maxCount)*100}%"></div></div><div class="du-count">${docCounts[title]}</div>`;
+    du.appendChild(row);
+  });
+
+  const gapsEl = document.getElementById('gapsList');
+  gapsEl.innerHTML = gaps.length ? gaps.map(g => `<div class="gap-item"><div class="gap-q">${escapeHtml(g.question)}</div><div style="color:var(--ink-faint); margin-top:2px;">No matching documentation found</div></div>`).join('') : '<div class="gap-item" style="color:var(--ink-faint)">No gaps flagged yet.</div>';
+}
+
+renderDocList();
+seedLog();
+</script>
+
+</body>
+</html>
