@@ -28,4 +28,4 @@ export const linkedinProvider = new OAuthProvider('oidc.linkedin');
 // TEMPORARY — replace with your real Firebase UID (Authentication → Users tab)
 // once you've signed in once. This same string must also be pasted into your
 // Firestore security rules wherever you see the same placeholder.
-export const ADMIN_UID = "REPLACE_WITH_YOUR_UID";
+export const ADMIN_UID = "9pzEI4cfAyPBH0M51QU3McDMqfP2";
