@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Larkspur — Portrait & Wedding Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#211D1A; --ink-soft:#6E665C; --paper:#F6F3EC; --card:#FFFFFF;
+    --line:#E4DDCC; --rust:#A3491F; --rust-soft:#F1E1D5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:26px 32px;max-width:1000px;margin:0 auto;}
+  .logo{font-family:'Cormorant',serif;font-style:italic;font-weight:600;font-size:22px;}
+  .back-link{font-size:12.5px;font-weight:500;color:var(--ink-soft);}
+  .back-link:hover{color:var(--ink);}
+
+  /* Contact-sheet filmstrip */
+  .filmstrip{
+    display:flex;overflow-x:auto;gap:0;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
+    background:var(--ink);padding:6px 0;
+  }
+  .frame{
+    flex-shrink:0;width:150px;height:190px;margin:0 2px;position:relative;
+    display:flex;align-items:flex-end;padding:10px;
+  }
+  .frame .cap{color:#fff;font-size:10.5px;opacity:0.85;}
+  .frame::before, .frame::after{
+    content:'';position:absolute;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,#000 0 4px,transparent 4px 10px);
+  }
+  .frame::before{top:0;} .frame::after{bottom:0;}
+  .f1{background:linear-gradient(155deg,#C9A98C,#8A6F53);}
+  .f2{background:linear-gradient(155deg,#9E8B79,#4A3F35);}
+  .f3{background:linear-gradient(155deg,#D8C3A5,#A3491F);}
+  .f4{background:linear-gradient(155deg,#B7A18C,#5C4E3F);}
+  .f5{background:linear-gradient(155deg,#E3D2B8,#7A6650);}
+  .f6{background:linear-gradient(155deg,#C4A57E,#3D3229);}
+
+  .hero{padding:70px 32px 60px;max-width:760px;margin:0 auto;text-align:center;}
+  .eyebrow{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);margin-bottom:20px;font-weight:600;}
+  h1{font-family:'Cormorant',serif;font-weight:600;font-size:56px;line-height:1.1;margin-bottom:20px;}
+  h1 em{font-style:italic;color:var(--rust);}
+  .hero p{color:var(--ink-soft);font-size:16.5px;max-width:520px;margin:0 auto 32px;}
+  .btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{background:var(--ink);color:var(--paper);padding:14px 30px;border-radius:2px;font-weight:600;font-size:14.5px;}
+  .btn-secondary{padding:14px 26px;border:1px solid var(--ink);border-radius:2px;font-weight:600;font-size:14.5px;}
+
+  .section{padding:50px 32px;max-width:760px;margin:0 auto;}
+  .about-row{display:flex;gap:36px;align-items:center;flex-wrap:wrap;}
+  .about-frame{width:150px;height:190px;flex-shrink:0;background:linear-gradient(155deg,#C9A98C,#5C4E3F);border-radius:2px;}
+  .about-text h2{font-family:'Cormorant',serif;font-weight:600;font-size:26px;margin-bottom:10px;}
+  .about-text p{color:var(--ink-soft);font-size:14.5px;}
+
+  .contact-card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:32px;}
+  .contact-card h2{font-family:'Cormorant',serif;font-weight:600;font-size:26px;margin-bottom:6px;}
+  .contact-card p.sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:24px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .field label{display:block;font-size:11.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;}
+  .field input, .field textarea{width:100%;border:1px solid var(--line);border-radius:3px;padding:10px 12px;font-size:14px;font-family:inherit;background:var(--paper);}
+  .field textarea{resize:vertical;}
+  .full{grid-column:1/-1;}
+  #sendStatus{font-size:13px;color:var(--rust);margin-top:14px;display:none;}
+
+  footer{padding:30px 32px;text-align:center;font-size:12.5px;color:var(--ink-soft);}
+
+  @media (max-width:700px){
+    h1{font-size:38px;}
+    .field-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Larkspur</div>
+  <a href="index.html" class="back-link">← Back to portfolio</a>
+</header>
+
+<div class="filmstrip">
+  <div class="frame f1"><span class="cap mono">24A · portrait</span></div>
+  <div class="frame f2"><span class="cap mono">24B · candid</span></div>
+  <div class="frame f3"><span class="cap mono">25A · golden hour</span></div>
+  <div class="frame f4"><span class="cap mono">25B · editorial</span></div>
+  <div class="frame f5"><span class="cap mono">26A · detail</span></div>
+  <div class="frame f6"><span class="cap mono">26B · portrait</span></div>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">Portrait & wedding photography</div>
+  <h1>Photographs that hold <em>still</em>, even years later.</h1>
+  <p>Natural light portraits and quiet wedding coverage — no forced poses, no rushed timelines. Based in Mansehra, available for travel.</p>
+  <div class="btn-row">
+    <a href="#contact" class="btn-primary">Book a session</a>
+    <a href="#about" class="btn-secondary">About Larkspur</a>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="about-row">
+    <div class="about-frame"></div>
+    <div class="about-text">
+      <h2>One photographer, one camera, no crew.</h2>
+      <p>Sessions are unhurried on purpose — usually 90 minutes, shot mostly in natural light, with a contact sheet like the one above delivered within a week so you can pick favorites before the full edit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="contact-card">
+    <h2>Book a session</h2>
+    <p class="sub">Tell me the date and what you have in mind — I'll reply within a day.</p>
+    <div class="field-row">
+      <div class="field"><label>Name</label><input type="text" placeholder="Your name"></div>
+      <div class="field"><label>Preferred date</label><input type="text" placeholder="e.g. Second week of March"></div>
+    </div>
+    <div class="field full" style="margin-bottom:14px;">
+      <label>What kind of session?</label>
+      <input type="text" placeholder="Portrait, engagement, wedding, editorial…">
+    </div>
+    <div class="field full" style="margin-bottom:18px;">
+      <label>A few details</label>
+      <textarea rows="3" placeholder="Location, number of people, anything else worth knowing…"></textarea>
+    </div>
+    <button class="btn-primary" style="border:none;cursor:pointer;" onclick="sendRequest()">Send request</button>
+    <div id="sendStatus">Request sent — Larkspur will reply within a day. (Demo only — no message actually sends.)</div>
+  </div>
+</section>
+
+<footer>Concept one-page site by BrightStack Co. — the Basic web design tier, shown in full.</footer>
+
+<script>
+function sendRequest(){
+  document.getElementById('sendStatus').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
