@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Area — BrightStack Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430; --ink-soft:#4B5568; --paper:#EEF1F4; --paper-2:#FFFFFF;
+    --line:#D4DAE1; --signal:#FFC93C; --signal-ink:#2A2005; --indigo:#3C3EE8; --indigo-soft:#EEEEFD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:820px;margin:0 auto;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
+  .logo span{color:var(--indigo);}
+  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .back-link:hover{color:var(--ink);}
+
+  .wrap{max-width:820px;margin:0 auto;padding:12px 32px 60px;}
+
+  #signedOutState, #loadingState{
+    text-align:center;padding:80px 20px;color:var(--ink-soft);
+  }
+  #signedOutState .btn-primary{
+    display:inline-block;margin-top:18px;background:var(--signal);color:var(--signal-ink);
+    padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer;border:none;font-size:14px;
+  }
+
+  #clientState{display:none;}
+  .profile-row{display:flex;align-items:center;gap:16px;margin-bottom:28px;}
+  .avatar{width:52px;height:52px;border-radius:50%;background:var(--indigo-soft);object-fit:cover;}
+  .profile-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;}
+  .profile-email{font-size:13px;color:var(--ink-soft);}
+  .sign-out{margin-left:auto;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer;background:none;border:none;}
+  .sign-out:hover{color:var(--ink);}
+
+  .card{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;}
+  .card h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:14px;}
+  .status-badge{
+    display:inline-block;background:var(--indigo-soft);color:var(--indigo);font-weight:600;
+    font-size:13px;padding:8px 16px;border-radius:20px;
+  }
+
+  .msg-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:360px;overflow-y:auto;}
+  .msg{max-width:80%;padding:11px 15px;border-radius:10px;font-size:14px;}
+  .msg.admin{background:var(--paper);border:1px solid var(--line);align-self:flex-start;}
+  .msg.client{background:var(--ink);color:var(--paper-2);align-self:flex-end;}
+  .msg .meta{display:block;font-size:11px;opacity:0.6;margin-top:5px;}
+  .empty-msg{font-size:13px;color:var(--ink-soft);text-align:center;padding:20px 0;}
+
+  .msg-input-row{display:flex;gap:10px;}
+  .msg-input-row input{
+    flex:1;border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:14px;font-family:'Inter',sans-serif;
+  }
+  .msg-input-row input:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo);}
+  .msg-input-row button{
+    background:var(--indigo);color:#fff;border:none;padding:0 18px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;
+  }
+
+  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Bright<span>Stack</span></div>
+  <a href="index.html" class="back-link">← Back to portfolio</a>
+</header>
+
+<div class="wrap">
+
+  <div id="loadingState"><p class="mono">Checking your sign-in…</p></div>
+
+  <div id="signedOutState" style="display:none;">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;margin-bottom:10px;">You're not signed in</h2>
+    <p>Sign in from the homepage to view your project status and messages.</p>
+    <a href="index.html" class="btn-primary">Go to homepage →</a>
+  </div>
+
+  <div id="clientState">
+    <div class="profile-row">
+      <img class="avatar" id="clientAvatar" src="" alt="">
+      <div>
+        <div class="profile-name" id="clientName">–</div>
+        <div class="profile-email" id="clientEmail">–</div>
+      </div>
+      <button class="sign-out" id="signOutBtn">Sign out</button>
+    </div>
+
+    <div class="card">
+      <h2>Project status</h2>
+      <span class="status-badge" id="statusBadge">Loading…</span>
+    </div>
+
+    <div class="card">
+      <h2>Your project</h2>
+      <div id="briefDisplay" style="display:none;margin-bottom:14px;font-size:14px;color:var(--ink-soft);">
+        <p><strong id="briefTitleView"></strong></p>
+        <p id="briefDescView" style="margin-top:4px;"></p>
+        <p style="margin-top:8px;font-size:13px;">Budget: <span id="briefBudgetView"></span> · Timeline: <span id="briefTimelineView"></span></p>
+      </div>
+      <div id="briefForm">
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;">Project title</label>
+          <input type="text" id="briefTitle" placeholder="e.g. A booking site for my salon" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;">What are you building?</label>
+          <textarea id="briefDesc" rows="3" placeholder="A short description of the project…" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div>
+            <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;">Budget</label>
+            <input type="text" id="briefBudget" placeholder="e.g. $200–500" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;">
+          </div>
+          <div>
+            <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;">Timeline</label>
+            <input type="text" id="briefTimeline" placeholder="e.g. 2–3 weeks" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;">
+          </div>
+        </div>
+        <button id="briefSaveBtn" style="background:var(--indigo);color:#fff;border:none;padding:11px 20px;border-radius:8px;font-weight:600;font-size:13.5px;cursor:pointer;">Save project details</button>
+        <span id="briefStatus" class="mono" style="font-size:12px;color:var(--ink-soft);margin-left:10px;"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Messages</h2>
+      <div class="msg-list" id="msgList"></div>
+      <div class="msg-input-row">
+        <input type="text" id="msgInput" placeholder="Send a message to BrightStack…" onkeydown="if(event.key==='Enter') sendClientMessage();">
+        <button onclick="sendClientMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>BrightStack Co. · your client area, signed in via Google, GitHub, Facebook, or LinkedIn.</footer>
+
+<script type="module">
+  import { auth, db } from './firebase-config.js';
+  import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  let currentUid = null;
+
+  function renderMessages(messages){
+    const list = document.getElementById('msgList');
+    list.innerHTML = '';
+    if (!messages || messages.length === 0){
+      list.innerHTML = '<div class="empty-msg">No messages yet — send one below, or wait for a project update.</div>';
+      return;
+    }
+    messages.forEach(m => {
+      const div = document.createElement('div');
+      div.className = 'msg ' + (m.from === 'admin' ? 'admin' : 'client');
+      const when = m.timestamp ? new Date(m.timestamp).toLocaleString() : '';
+      div.innerHTML = `${escapeHtml(m.text)}<span class="meta">${m.from === 'admin' ? 'BrightStack' : 'You'} · ${when}</span>`;
+      list.appendChild(div);
+    });
+    list.scrollTop = list.scrollHeight;
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  window.sendClientMessage = async () => {
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text || !currentUid) return;
+    input.value = '';
+    const ref = doc(db, 'clients', currentUid);
+    await updateDoc(ref, {
+      messages: arrayUnion({ from: 'client', text, timestamp: Date.now() })
+    });
+    const snap = await getDoc(ref);
+    renderMessages(snap.data().messages);
+  };
+
+  document.getElementById('signOutBtn').addEventListener('click', () => signOut(auth));
+
+  onAuthStateChanged(auth, async (user) => {
+    document.getElementById('loadingState').style.display = 'none';
+    if (!user){
+      document.getElementById('signedOutState').style.display = 'block';
+      document.getElementById('clientState').style.display = 'none';
+      return;
+    }
+    currentUid = user.uid;
+    document.getElementById('signedOutState').style.display = 'none';
+    document.getElementById('clientState').style.display = 'block';
+    document.getElementById('clientAvatar').src = user.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(user.displayName || 'C');
+    document.getElementById('clientName').textContent = user.displayName || 'Client';
+    document.getElementById('clientEmail').textContent = user.email || '';
+
+    const ref = doc(db, 'clients', user.uid);
+    try {
+      let snap = await getDoc(ref);
+      if (!snap.exists()){
+        await setDoc(ref, {
+          name: user.displayName || 'New client',
+          email: user.email || '',
+          projectStatus: 'No active project yet',
+          messages: []
+        });
+        snap = await getDoc(ref);
+      }
+      const data = snap.data();
+      document.getElementById('statusBadge').textContent = data.projectStatus || 'No active project yet';
+      renderMessages(data.messages);
+      renderBrief(data.projectBrief);
+    } catch (err){
+      console.error('Client area load failed:', err);
+      document.getElementById('statusBadge').textContent = 'Couldn\'t load — ' + err.code || err.message;
+      document.getElementById('statusBadge').style.background = '#FBE9E7';
+      document.getElementById('statusBadge').style.color = '#C4453A';
+    }
+  });
+
+  function renderBrief(brief){
+    if (brief && brief.title){
+      document.getElementById('briefDisplay').style.display = 'block';
+      document.getElementById('briefTitleView').textContent = brief.title;
+      document.getElementById('briefDescView').textContent = brief.description || '';
+      document.getElementById('briefBudgetView').textContent = brief.budget || '—';
+      document.getElementById('briefTimelineView').textContent = brief.timeline || '—';
+      document.getElementById('briefTitle').value = brief.title || '';
+      document.getElementById('briefDesc').value = brief.description || '';
+      document.getElementById('briefBudget').value = brief.budget || '';
+      document.getElementById('briefTimeline').value = brief.timeline || '';
+    }
+  }
+
+  document.getElementById('briefSaveBtn').addEventListener('click', async () => {
+    const title = document.getElementById('briefTitle').value.trim();
+    const description = document.getElementById('briefDesc').value.trim();
+    const budget = document.getElementById('briefBudget').value.trim();
+    const timeline = document.getElementById('briefTimeline').value.trim();
+    const statusEl = document.getElementById('briefStatus');
+    if (!title || !description){
+      statusEl.textContent = 'Add at least a title and description.';
+      return;
+    }
+    statusEl.textContent = 'Saving…';
+    const ref = doc(db, 'clients', currentUid);
+    await updateDoc(ref, {
+      projectBrief: { title, description, budget, timeline, submittedAt: Date.now() }
+    });
+    renderBrief({ title, description, budget, timeline });
+    statusEl.textContent = 'Saved.';
+    setTimeout(() => { statusEl.textContent = ''; }, 2500);
+  });
+</script>
+
+</body>
+</html>
