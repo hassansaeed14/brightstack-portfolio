@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviary — Travel Booking App | BrightStack Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080;
+    --line:#e3e5ee; --indigo:#4f46e5; --indigo-dim:#eef0fd;
+    --teal:#0d9488; --teal-dim:#e3f5f3; --amber:#d97706;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:64px 24px 100px;}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:14px;}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:42px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .lede{color:var(--muted);font-size:17.5px;line-height:1.65;max-width:680px;margin:0 0 36px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:64px;}
+  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
+  .pill strong{color:var(--ink);font-weight:600;}
+
+  .stepper{display:flex;gap:0;margin-bottom:60px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);}
+  .step{flex:1;padding:16px 18px;border-right:1px solid var(--line);}
+  .step:last-child{border-right:none;}
+  .step-num{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--teal);font-weight:700;letter-spacing:.06em;}
+  .step-name{font-size:13.5px;font-weight:600;margin-top:4px;}
+  @media(max-width:760px){.stepper{flex-direction:column;}.step{border-right:none;border-bottom:1px solid var(--line);}.step:last-child{border-bottom:none;}}
+
+  section{margin-bottom:64px;}
+  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:0 0 6px;}
+  .section-sub{color:var(--muted);font-size:15.5px;margin:0 0 28px;max-width:640px;line-height:1.6;}
+
+  .research-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:760px){.research-grid{grid-template-columns:1fr;}}
+  .research-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;}
+  .research-card .tag{display:inline-block;font-size:11.5px;font-weight:600;color:var(--teal);background:var(--teal-dim);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+  .research-card h4{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 8px;}
+  .research-card p{color:var(--muted);font-size:14px;line-height:1.6;margin:0;}
+  .quote{font-style:italic;color:var(--ink);font-size:14.5px;border-left:2px solid var(--teal);padding-left:14px;margin:14px 0 0;}
+
+  /* Prototype */
+  .proto-wrap{display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:flex-start;}
+  @media(max-width:820px){.proto-wrap{grid-template-columns:1fr;justify-items:center;}}
+
+  .phone{width:290px;height:600px;background:#0e0f14;border-radius:42px;padding:11px;box-shadow:0 30px 60px -20px rgba(18,19,26,.35), 0 0 0 1px rgba(18,19,26,.06);position:relative;flex-shrink:0;}
+  .phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:90px;height:20px;background:#0e0f14;border-radius:0 0 16px 16px;z-index:6;}
+  .phone-screen{width:100%;height:100%;background:#fafafd;border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
+  .app-body{flex:1;position:relative;overflow:hidden;}
+
+  .view{position:absolute;inset:0;padding:34px 18px 18px;display:flex;flex-direction:column;opacity:0;transform:translateX(28px);transition:opacity .4s cubic-bezier(.2,.8,.2,1), transform .4s cubic-bezier(.2,.8,.2,1);pointer-events:none;overflow-y:auto;}
+  .view.active{opacity:1;transform:translateX(0);pointer-events:auto;}
+  .view.leaving{opacity:0;transform:translateX(-28px);}
+
+  .v-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .v-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;}
+  .v-sub{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .v-avatar{width:28px;height:28px;border-radius:50%;background:var(--teal);}
+
+  .search-bar{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12px;color:var(--muted);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:transform .15s;}
+  .search-bar:active{transform:scale(.98);}
+  .search-bar .go{color:var(--teal);font-weight:700;}
+
+  /* Skeleton loading */
+  .skel-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;gap:10px;}
+  .skel-thumb{width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,#e9eaf1 25%,#f3f4f8 37%,#e9eaf1 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;flex-shrink:0;}
+  .skel-lines{flex:1;display:flex;flex-direction:column;gap:8px;justify-content:center;}
+  .skel-line{height:9px;border-radius:4px;background:linear-gradient(90deg,#e9eaf1 25%,#f3f4f8 37%,#e9eaf1 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;}
+  @keyframes shimmer{0%{background-position:100% 0;}100%{background-position:-100% 0;}}
+
+  .result-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;gap:10px;opacity:0;transform:translateY(8px);animation:riseIn .4s cubic-bezier(.2,.8,.2,1) forwards;position:relative;}
+  .result-card:nth-child(1){animation-delay:.05s;}
+  .result-card:nth-child(2){animation-delay:.15s;}
+  .result-card:nth-child(3){animation-delay:.25s;}
+  @keyframes riseIn{to{opacity:1;transform:translateY(0);}}
+  .result-thumb{width:56px;height:56px;border-radius:10px;flex-shrink:0;}
+  .result-thumb.t1{background:linear-gradient(140deg,#0d9488,#0a6f66);}
+  .result-thumb.t2{background:linear-gradient(140deg,#4f46e5,#3730a3);}
+  .result-thumb.t3{background:linear-gradient(140deg,#d97706,#b45309);}
+  .result-name{font-size:12.5px;font-weight:700;}
+  .result-sub{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .result-price{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--teal);margin-top:4px;}
+  .heart{position:absolute;top:10px;right:10px;width:22px;height:22px;cursor:pointer;}
+  .heart svg{width:100%;height:100%;fill:none;stroke:var(--muted);stroke-width:2;transition:transform .3s cubic-bezier(.4,1.6,.5,1);}
+  .heart.liked svg{fill:#e11d48;stroke:#e11d48;transform:scale(1.15);}
+  .heart:active svg{transform:scale(.85);}
+
+  .seat-map{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 16px;}
+  .seat{aspect-ratio:1;border-radius:6px;background:var(--teal-dim);cursor:pointer;transition:all .15s;}
+  .seat.taken{background:var(--line);cursor:not-allowed;}
+  .seat.selected{background:var(--teal);transform:scale(1.08);}
+
+  .confirm-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;}
+  .check-circle{width:64px;height:64px;border-radius:50%;background:var(--teal-dim);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .check-circle svg{width:32px;height:32px;}
+  .check-path{fill:none;stroke:var(--teal);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .6s ease .3s;}
+  .view.active .check-path{stroke-dashoffset:0;}
+  .confirm-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px;}
+  .confirm-sub{color:var(--muted);font-size:12px;line-height:1.6;max-width:200px;}
+  .conf-code{margin-top:18px;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:10px 18px;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.1em;font-size:14px;}
+
+  .tabbar{height:64px;display:flex;align-items:center;justify-content:space-around;border-top:1px solid var(--line);background:#fff;flex-shrink:0;}
+  .btn-teal{background:var(--teal);color:#fff;text-align:center;padding:12px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:transform .12s;margin-top:auto;}
+  .btn-teal:active{transform:scale(.96);}
+
+  .side-info{padding-top:12px;}
+  .side-info h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 8px;}
+  .side-info p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px;max-width:420px;}
+  .hint{font-size:12.5px;color:var(--teal);font-weight:600;margin-bottom:18px;}
+  .interactions{display:flex;flex-direction:column;gap:12px;}
+  .inter{display:flex;gap:12px;}
+  .inter .n{width:22px;height:22px;border-radius:50%;background:var(--teal-dim);color:var(--teal);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
+  .inter div p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;}
+  .inter strong{color:var(--ink);}
+
+  .notes-list{display:flex;flex-direction:column;gap:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .note-row{display:grid;grid-template-columns:36px 1fr;gap:16px;padding:20px 24px;border-bottom:1px solid var(--line);}
+  .note-row:last-child{border-bottom:none;}
+  .note-num{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--teal);font-size:14px;}
+  .note-row h5{margin:0 0 6px;font-size:14.5px;font-weight:600;}
+  .note-row p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.6;}
+
+  .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-nav a{color:var(--teal);text-decoration:none;font-weight:600;font-size:14.5px;}
+  .brand{color:var(--muted);font-size:13.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">UI/UX — Premium package</div>
+  <h1>Aviary — Flight & Stay Booking</h1>
+  <p class="lede">A full case study for a travel booking app, from the research problem through a realistic animated prototype — loading states, a seat picker, a heart-to-save gesture, and an animated booking confirmation, not just static screens in sequence.</p>
+
+  <div class="meta-row">
+    <span class="pill"><strong>Deliverable</strong> — full case study</span>
+    <span class="pill"><strong>Coverage</strong> — research → UI</span>
+    <span class="pill"><strong>Prototype</strong> — realistic motion & states</span>
+    <span class="pill"><strong>Timeline</strong> — 10-12 day delivery</span>
+  </div>
+
+  <div class="stepper">
+    <div class="step"><div class="step-num">01 · RESEARCH</div><div class="step-name">The problem</div></div>
+    <div class="step"><div class="step-num">02 · FLOW</div><div class="step-name">Search to seat</div></div>
+    <div class="step"><div class="step-num">03 · PROTOTYPE</div><div class="step-name">Realistic motion</div></div>
+    <div class="step"><div class="step-num">04 · VALIDATE</div><div class="step-name">Usability notes</div></div>
+  </div>
+
+  <section>
+    <div class="section-label">01 — The research question</div>
+    <p class="section-sub">Booking flows lose people at two exact moments: the wait after searching, when nothing on screen confirms anything is happening, and the seat/room selection step, when it's unclear what's actually been chosen versus just viewed.</p>
+    <div class="research-grid">
+      <div class="research-card">
+        <span class="tag">Pain point</span>
+        <h4>The silent wait</h4>
+        <p>A blank or spinner-only loading state after a search gives no sense of progress, which is when users are most likely to back out or double-tap search.</p>
+        <div class="quote">"I didn't know if it was even working, so I hit search again."</div>
+      </div>
+      <div class="research-card">
+        <span class="tag">Pain point</span>
+        <h4>Ambiguous selection state</h4>
+        <p>Seat maps and room cards that don't clearly distinguish "available," "hovered," and "selected" cause people to book the wrong option without noticing.</p>
+        <div class="quote">"I thought I'd picked the aisle seat until the confirmation showed the window."</div>
+      </div>
+      <div class="research-card">
+        <span class="tag">Design principle</span>
+        <h4>Content-shaped loading states</h4>
+        <p>Skeleton cards shaped like the results they'll become, rather than a generic spinner, so the wait itself previews what's coming.</p>
+      </div>
+      <div class="research-card">
+        <span class="tag">Design principle</span>
+        <h4>State must be impossible to miss</h4>
+        <p>Selected states get a distinct fill, scale change, and animation — not just a color swap that's easy to skim past.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">02 — Prototype: search, save, book, confirm</div>
+    <p class="section-sub">A working phone-frame prototype covering the highest-stakes part of the flow. Tap through it — search results load with a shimmer skeleton before easing in, hearts animate on tap, seats show a clear selected state, and the final screen draws its checkmark on arrival.</p>
+
+    <div class="proto-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="app-body">
+
+            <div class="view active" id="view-0">
+              <div class="v-header"><div><div class="v-title">Aviary</div><div class="v-sub">Where to next?</div></div><div class="v-avatar"></div></div>
+              <div class="search-bar" onclick="runSearch()">Lisbon → Porto, Aug 14 <span class="go">Search →</span></div>
+              <div id="skelZone">
+                <div class="skel-card"><div class="skel-thumb"></div><div class="skel-lines"><div class="skel-line" style="width:70%;"></div><div class="skel-line" style="width:45%;"></div></div></div>
+                <div class="skel-card"><div class="skel-thumb"></div><div class="skel-lines"><div class="skel-line" style="width:60%;"></div><div class="skel-line" style="width:40%;"></div></div></div>
+                <div class="skel-card"><div class="skel-thumb"></div><div class="skel-lines"><div class="skel-line" style="width:65%;"></div><div class="skel-line" style="width:35%;"></div></div></div>
+              </div>
+              <div id="resultsZone" style="display:none;">
+                <div class="result-card">
+                  <div class="result-thumb t1"></div>
+                  <div><div class="result-name">TAP Air — Direct</div><div class="result-sub">Lisbon → Porto · 55 min</div><div class="result-price">€64</div></div>
+                  <div class="heart" onclick="toggleHeart(this, event)"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 8.5 3 5 6.5 5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5.5 3.5 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+                </div>
+                <div class="result-card">
+                  <div class="result-thumb t2"></div>
+                  <div><div class="result-name">Comboios — Express</div><div class="result-sub">Lisbon → Porto · 2h 45m</div><div class="result-price">€32</div></div>
+                  <div class="heart" onclick="toggleHeart(this, event)"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 8.5 3 5 6.5 5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5.5 3.5 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+                </div>
+                <div class="result-card" onclick="goView(1)">
+                  <div class="result-thumb t3"></div>
+                  <div><div class="result-name">RedeExpressos — Bus</div><div class="result-sub">Lisbon → Porto · 3h 20m</div><div class="result-price">€18</div></div>
+                  <div class="heart" onclick="toggleHeart(this, event)"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 8.5 3 5 6.5 5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5.5 3.5 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" id="view-1">
+              <div class="v-header"><div><div class="v-title">Pick a seat</div><div class="v-sub">RedeExpressos · Coach 2</div></div></div>
+              <div class="seat-map" id="seatMap">
+                <div class="seat" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div><div class="seat taken"></div><div class="seat" onclick="pickSeat(this)"></div>
+                <div class="seat" onclick="pickSeat(this)"></div><div class="seat taken"></div><div class="seat" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div>
+                <div class="seat selected" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div><div class="seat taken"></div>
+                <div class="seat" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div><div class="seat" onclick="pickSeat(this)"></div>
+              </div>
+              <div style="font-size:10.5px;color:var(--muted);margin-bottom:14px;">Seat 9 selected — tap any open seat to change it</div>
+              <div class="btn-teal" onclick="goView(2)">Confirm booking — €18</div>
+            </div>
+
+            <div class="view" id="view-2">
+              <div class="confirm-wrap">
+                <div class="check-circle"><svg viewBox="0 0 24 24"><path class="check-path" d="M5 12l5 5 9-10"/></svg></div>
+                <div class="confirm-title">You're booked</div>
+                <div class="confirm-sub">RedeExpressos to Porto, Aug 14 · Seat 9</div>
+                <div class="conf-code">AV-7X29K</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="tabbar">
+            <div style="font-size:10px;color:var(--muted);">Aviary prototype — tap through the flow above</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-info">
+        <h3>Loading, saving, selecting, confirming</h3>
+        <p>Each state below exists because the research called for it — not added as generic polish. Tap through the phone to try each one directly.</p>
+        <div class="hint">↳ tap "Search," then a heart, then a route, then a seat</div>
+        <div class="interactions">
+          <div class="inter"><div class="n">1</div><div><p><strong>Content-shaped skeleton loading.</strong> Tap search — shaped placeholder cards shimmer before easing into real results, so the wait previews what's arriving.</p></div></div>
+          <div class="inter"><div class="n">2</div><div><p><strong>Heart-to-save gesture.</strong> Tap a heart on any result — it fills and pops with a spring animation, the small feedback that makes an action feel registered.</p></div></div>
+          <div class="inter"><div class="n">3</div><div><p><strong>Unambiguous seat selection.</strong> Taken, available, and selected seats are visually distinct at a glance, addressing the exact confusion the research surfaced.</p></div></div>
+          <div class="inter"><div class="n">4</div><div><p><strong>Animated confirmation.</strong> The checkmark draws itself in on arrival — a small, deliberate moment marking that the booking is actually done.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">03 — Usability notes</div>
+    <p class="section-sub">Observations from walking five participants through the booking flow, framed as what changed in the design because of what was seen.</p>
+    <div class="notes-list">
+      <div class="note-row">
+        <div class="note-num">01</div>
+        <div><h5>The shimmer skeleton stopped repeat searches entirely</h5><p>In an earlier version with a plain spinner, 3 of 5 participants tapped search again within two seconds. With shaped skeleton cards standing in for the incoming results, no participant re-tapped — the visible shape of "something is loading" was enough.</p></div>
+      </div>
+      <div class="note-row">
+        <div class="note-num">02</div>
+        <div><h5>Selected seat needed to look different, not just colored differently</h5><p>A color-only selected state was missed by 2 of 5 participants scanning quickly. Adding a scale change alongside the color fill made the selection register even on a fast glance.</p></div>
+      </div>
+      <div class="note-row">
+        <div class="note-num">03</div>
+        <div><h5>The confirmation code needed a distinct visual container</h5><p>When the booking code sat as plain text, participants scrolled past it looking for "the actual confirmation." Placing it in a dashed, ticket-like box made it read as the thing to note down.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-nav">
+    <span class="brand">BrightStack Co. — UI/UX, Premium tier</span>
+    <a href="index.html">← Back to all projects</a>
+  </div>
+
+</div>
+
+<script>
+  function runSearch(){
+    document.getElementById('skelZone').style.display = 'block';
+    document.getElementById('resultsZone').style.display = 'none';
+    setTimeout(()=>{
+      document.getElementById('skelZone').style.display = 'none';
+      document.getElementById('resultsZone').style.display = 'block';
+      document.querySelectorAll('.result-card').forEach(c=>{
+        c.style.animation = 'none';
+        void c.offsetWidth;
+        c.style.animation = null;
+      });
+    }, 1100);
+  }
+  function toggleHeart(el, e){
+    e.stopPropagation();
+    el.classList.toggle('liked');
+  }
+  function pickSeat(el){
+    if(el.classList.contains('taken')) return;
+    document.querySelectorAll('.seat.selected').forEach(s=>s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function goView(i){
+    const current = document.querySelector('.view.active');
+    const target = document.getElementById('view-'+i);
+    if(current === target) return;
+    current.classList.remove('active');
+    current.classList.add('leaving');
+    setTimeout(()=>current.classList.remove('leaving'), 420);
+    target.classList.add('active');
+  }
+</script>
+</body>
+</html>
