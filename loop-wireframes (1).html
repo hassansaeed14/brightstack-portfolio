@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop — Habit Tracker Wireframes | BrightStack Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f1f2f7;
+    --card:#ffffff;
+    --ink:#12131a;
+    --muted:#6b7080;
+    --line:#e3e5ee;
+    --indigo:#4f46e5;
+    --indigo-dim:#eef0fd;
+    --wire:#cfd2df;
+    --wire-dark:#9ea3b8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:64px 24px 100px;}
+  .eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--indigo);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:40px;
+    line-height:1.1;
+    margin:0 0 16px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .lede{
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.6;
+    max-width:640px;
+    margin:0 0 36px;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:56px;
+  }
+  .pill{
+    font-size:13px;
+    font-weight:500;
+    padding:6px 14px;
+    border-radius:100px;
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--muted);
+  }
+  .pill strong{color:var(--ink);font-weight:600;}
+
+  .section-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--ink);
+    margin:0 0 6px;
+  }
+  .section-sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:600px;line-height:1.55;}
+
+  .screens{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+    margin-bottom:64px;
+  }
+  @media(max-width:900px){.screens{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.screens{grid-template-columns:1fr;}}
+
+  .frame{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px;
+  }
+  .frame-label{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:2px;
+  }
+  .frame-num{
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:12px;
+    font-family:'Space Grotesk',sans-serif;
+    letter-spacing:.05em;
+  }
+  .screen{
+    background:#fafafd;
+    border:1px dashed var(--wire);
+    border-radius:10px;
+    aspect-ratio:9/17.5;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .wb{background:var(--wire);border-radius:4px;}
+  .wb.dark{background:var(--wire-dark);}
+  .wb-statusbar{height:8px;width:40%;border-radius:3px;margin-bottom:2px;}
+  .wb-title{height:14px;width:60%;}
+  .wb-sub{height:8px;width:40%;}
+  .wb-block{height:46px;border-radius:8px;}
+  .wb-row{display:flex;gap:6px;}
+  .wb-row .wb{flex:1;height:34px;border-radius:8px;}
+  .wb-line{height:7px;}
+  .wb-line.w80{width:80%;}
+  .wb-line.w60{width:60%;}
+  .wb-line.w40{width:40%;}
+  .wb-circle{width:46px;height:46px;border-radius:50%;margin:0 auto;}
+  .wb-nav{display:flex;justify-content:space-between;margin-top:auto;padding-top:6px;border-top:1px solid var(--line);}
+  .wb-nav .wb{width:16px;height:16px;border-radius:4px;}
+  .wb-fab{width:38px;height:38px;border-radius:50%;margin-left:auto;}
+  .wb-tag{height:20px;width:56px;border-radius:6px;}
+
+  .annotation{
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.5;
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+
+  .concept{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:36px;
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:36px;
+    align-items:start;
+  }
+  @media(max-width:800px){.concept{grid-template-columns:1fr;}}
+  .concept h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:20px;
+    margin:0 0 12px;
+  }
+  .concept p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 14px;}
+  .swatches{display:flex;gap:10px;margin-top:16px;}
+  .sw{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);}
+  .concept-notes{display:flex;flex-direction:column;gap:14px;}
+  .note{display:flex;gap:12px;}
+  .note .dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);margin-top:7px;flex-shrink:0;}
+  .note div{color:var(--muted);font-size:14px;line-height:1.6;}
+  .note strong{color:var(--ink);font-weight:600;}
+
+  .footer-nav{
+    margin-top:72px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-nav a{
+    color:var(--indigo);
+    text-decoration:none;
+    font-weight:600;
+    font-size:14.5px;
+  }
+  .brand{color:var(--muted);font-size:13.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">UI/UX — Basic package</div>
+  <h1>Loop — Habit Tracker</h1>
+  <p class="lede">A low-fidelity wireframe pass for a daily habit-tracking app — scoped to answer one question fast: does the core flow (see today's habits, log one, check your streak) hold up before any visual design work begins.</p>
+
+  <div class="meta-row">
+    <span class="pill"><strong>Deliverable</strong> — 4 wireframe screens</span>
+    <span class="pill"><strong>Fidelity</strong> — low-fi, grayscale</span>
+    <span class="pill"><strong>Concept</strong> — one direction</span>
+    <span class="pill"><strong>Timeline</strong> — 3-day delivery</span>
+  </div>
+
+  <div class="section-label">The four screens</div>
+  <p class="section-sub">Onboarding through to a logged habit. Kept intentionally rough — boxes and bars stand in for content so the layout logic can be judged on its own, before type or color enter the picture.</p>
+
+  <div class="screens">
+    <div class="frame">
+      <div class="frame-label">Onboarding</div>
+      <div class="frame-num">01</div>
+      <div class="screen">
+        <div class="wb wb-statusbar"></div>
+        <div class="wb wb-circle dark"></div>
+        <div class="wb wb-line w60" style="margin:0 auto;width:70%;"></div>
+        <div class="wb wb-line w40" style="margin:0 auto;width:50%;"></div>
+        <div style="flex:1;"></div>
+        <div class="wb wb-block dark"></div>
+        <div class="wb-nav"><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+      </div>
+      <div class="annotation">Single CTA, no competing actions — the only decision is "continue."</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-label">Today (dashboard)</div>
+      <div class="frame-num">02</div>
+      <div class="screen">
+        <div class="wb wb-statusbar"></div>
+        <div class="wb wb-title"></div>
+        <div class="wb wb-line w40"></div>
+        <div class="wb-row" style="margin-top:4px;">
+          <div class="wb dark"></div>
+          <div class="wb"></div>
+          <div class="wb"></div>
+        </div>
+        <div class="wb-row"><div class="wb"></div><div class="wb dark"></div></div>
+        <div class="wb-row"><div class="wb"></div><div class="wb"></div></div>
+        <div style="flex:1;"></div>
+        <div class="wb-nav"><div class="wb dark"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+      </div>
+      <div class="annotation">Today's habits as a checklist grid — completed state uses fill, not color, to stay legible in grayscale.</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-label">Add habit</div>
+      <div class="frame-num">03</div>
+      <div class="screen">
+        <div class="wb wb-statusbar"></div>
+        <div class="wb wb-title" style="width:50%;"></div>
+        <div class="wb wb-line w80" style="height:32px;border-radius:8px;"></div>
+        <div class="wb wb-line w80" style="height:32px;border-radius:8px;"></div>
+        <div class="wb-row">
+          <div class="wb wb-tag"></div>
+          <div class="wb wb-tag"></div>
+          <div class="wb wb-tag dark"></div>
+        </div>
+        <div style="flex:1;"></div>
+        <div class="wb wb-block dark"></div>
+      </div>
+      <div class="annotation">Frequency picker as tags rather than a dropdown — fewer taps to set "3x a week."</div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-label">Streak detail</div>
+      <div class="frame-num">04</div>
+      <div class="screen">
+        <div class="wb wb-statusbar"></div>
+        <div class="wb wb-title" style="width:55%;"></div>
+        <div class="wb wb-circle dark" style="width:64px;height:64px;"></div>
+        <div class="wb wb-line w40" style="margin:0 auto;width:35%;"></div>
+        <div class="wb-row" style="margin-top:6px;">
+          <div class="wb" style="height:26px;"></div>
+          <div class="wb dark" style="height:26px;"></div>
+          <div class="wb dark" style="height:26px;"></div>
+          <div class="wb" style="height:26px;"></div>
+          <div class="wb dark" style="height:26px;"></div>
+        </div>
+        <div style="flex:1;"></div>
+        <div class="wb-nav"><div class="wb"></div><div class="wb"></div><div class="wb dark"></div><div class="wb"></div></div>
+      </div>
+      <div class="annotation">Week strip makes the streak scannable at a glance instead of buried in a number.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Design concept</div>
+  <p class="section-sub">A short note on the single direction this wireframe set is built toward — the concept a Basic-tier client walks away with, ready to hand to a visual designer or build on directly.</p>
+
+  <div class="concept">
+    <div>
+      <h3>Direction: "one glance, one tap"</h3>
+      <p>Every screen answers a single question without scrolling: what's due, what's done, what's next. No secondary navigation competes with the primary action on any screen.</p>
+      <div class="swatches">
+        <div class="sw" style="background:#12131a;"></div>
+        <div class="sw" style="background:#4f46e5;"></div>
+        <div class="sw" style="background:#e3e5ee;"></div>
+        <div class="sw" style="background:#fafafd;border:1px solid #e3e5ee;"></div>
+      </div>
+      <p style="font-size:12.5px;margin-top:10px;">Placeholder palette — color direction only, applied at the next fidelity pass.</p>
+    </div>
+    <div class="concept-notes">
+      <div class="note"><div class="dot"></div><div><strong>Grid.</strong> 8pt spacing system carried across all four screens so nothing feels hand-placed.</div></div>
+      <div class="note"><div class="dot"></div><div><strong>Hierarchy.</strong> One dark block per screen marks the primary action — everything else recedes to a lighter fill.</div></div>
+      <div class="note"><div class="dot"></div><div><strong>Handoff-ready.</strong> Structured as named, numbered frames so a developer or designer can pick this up without a walkthrough call.</div></div>
+      <div class="note"><div class="dot"></div><div><strong>Figma file.</strong> Delivered as an editable file, not flattened images — every box is a real frame.</div></div>
+    </div>
+  </div>
+
+  <div class="footer-nav">
+    <span class="brand">BrightStack Co. — UI/UX, Basic tier</span>
+    <a href="index.html">← Back to all projects</a>
+  </div>
+
+</div>
+</body>
+</html>

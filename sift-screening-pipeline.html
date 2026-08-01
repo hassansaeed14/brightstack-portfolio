@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sift — AI Candidate Screening Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F4F7;
+    --surface:#FFFFFF;
+    --surface-sunken:#EBEDF1;
+    --line:#DEE1E7;
+    --ink:#1A1D24;
+    --ink-muted:#5C616C;
+    --ink-faint:#9498A2;
+    --accent:#4F46E5;
+    --accent-soft:#EEECFD;
+    --strong:#12805C;
+    --strong-soft:#E3F5EE;
+    --consider:#B5860C;
+    --consider-soft:#FBF2DD;
+    --weak:#B0433A;
+    --weak-soft:#FBEAE8;
+    --radius:14px;
+    --shadow:0 16px 40px -18px rgba(20,22,30,0.16);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+  }
+
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--line); background:var(--surface);}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .brand-mark{width:32px; height:32px; border-radius:9px; background:var(--accent); position:relative; flex-shrink:0;}
+  .brand-mark::after{content:''; position:absolute; inset:9px; border:2px solid #fff; border-radius:50%; border-right-color:transparent; border-bottom-color:transparent; transform:rotate(45deg);}
+  .brand-name{font-family:'Manrope',sans-serif; font-size:19px; font-weight:800; letter-spacing:-0.3px;}
+  .brand-sub{font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:1.5px; margin-top:1px;}
+
+  .view-toggle{display:flex; background:var(--surface-sunken); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
+  .view-toggle button{border:none; background:transparent; color:var(--ink-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
+  .view-toggle button.active{background:var(--accent); color:#fff;}
+
+  .view{display:none; padding:36px 32px 64px;}
+  .view.active{display:block;}
+  .wrap{max-width:1220px; margin:0 auto;}
+
+  .hero-eyebrow{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:700;}
+  .hero-title{font-family:'Manrope',sans-serif; font-size:34px; line-height:1.18; margin:12px 0 12px; font-weight:800; letter-spacing:-0.5px; max-width:680px;}
+  .hero-desc{color:var(--ink-muted); font-size:15px; line-height:1.7; max-width:640px; margin-bottom:30px;}
+
+  /* ---------- STUDIO ---------- */
+  .studio-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;}
+  @media (max-width:900px){.studio-grid{grid-template-columns:1fr;}}
+
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);}
+  .panel-title{font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin-bottom:4px;}
+  .panel-hint{font-size:12.5px; color:var(--ink-faint); margin-bottom:16px;}
+  .panel textarea{
+    width:100%; min-height:130px; background:var(--surface-sunken); border:1px solid var(--line); border-radius:9px;
+    color:var(--ink); font-family:'Inter',sans-serif; font-size:13.5px; padding:12px; resize:vertical; line-height:1.6;
+  }
+  .panel textarea:focus{outline:none; border-color:var(--accent);}
+
+  .example-row{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 4px;}
+  .example-chip{border:1px solid var(--line); background:var(--surface-sunken); color:var(--ink-muted); font-size:12px; padding:7px 12px; border-radius:8px; cursor:pointer; transition:.15s;}
+  .example-chip:hover{border-color:var(--accent); color:var(--ink);}
+
+  .add-row{display:flex; gap:8px; margin-top:12px;}
+  .add-row button{background:var(--ink); color:#fff; border:none; border-radius:9px; padding:0 16px; font-weight:700; font-size:12.5px; cursor:pointer;}
+
+  .candidate-list{margin-top:16px; display:flex; flex-direction:column; gap:8px; max-height:220px; overflow-y:auto;}
+  .candidate-chip{
+    display:flex; align-items:center; justify-content:space-between; background:var(--surface-sunken);
+    border:1px solid var(--line); border-radius:9px; padding:9px 12px; font-size:12.5px;
+  }
+  .candidate-chip .snippet{color:var(--ink-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:280px;}
+  .candidate-chip button{background:none; border:none; color:var(--weak); cursor:pointer; font-size:12px; font-weight:700;}
+
+  .run-btn{
+    width:100%; margin-top:18px; background:var(--accent); color:#fff; border:none; border-radius:10px;
+    padding:14px; font-weight:700; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif;
+    display:flex; align-items:center; justify-content:center; gap:9px;
+  }
+  .run-btn:disabled{opacity:.55; cursor:not-allowed;}
+  .spinner{width:13px; height:13px; border:2px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner.show{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .status-banner{margin-top:14px; padding:11px 14px; border-radius:9px; font-size:12.5px; display:none; background:var(--strong-soft); color:var(--strong); font-weight:600;}
+  .status-banner.show{display:block;}
+
+  /* ---------- PIPELINE ---------- */
+  .cal-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .cal-title{font-family:'Manrope',sans-serif; font-size:26px; font-weight:800; letter-spacing:-0.4px;}
+  .cal-sub{color:var(--ink-faint); font-size:13px; margin-top:4px;}
+
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);}
+  .stat-num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600;}
+  .stat-label{color:var(--ink-faint); font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:1px;}
+
+  .kanban{display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px;}
+  @media (max-width:900px){.kanban{grid-template-columns:1fr;}}
+  .kb-col{background:var(--surface-sunken); border-radius:var(--radius); padding:14px; min-height:120px;}
+  .kb-col-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; padding:0 2px;}
+  .kb-col-title{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;}
+  .kb-count{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-faint); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:2px 7px;}
+
+  .cand-card{background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:13px 14px; margin-bottom:10px; cursor:pointer; box-shadow:var(--shadow); transition:transform .12s ease;}
+  .cand-card:hover{transform:translateY(-2px);}
+  .cand-top{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .cand-name{font-weight:700; font-size:13.5px;}
+  .ring{position:relative; width:36px; height:36px; flex-shrink:0;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring-score{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600;}
+  .cand-verdict{font-size:12px; color:var(--ink-muted); margin-top:7px; line-height:1.5;}
+  .kb-empty{color:var(--ink-faint); font-size:12px; padding:14px 4px;}
+
+  /* modal */
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(20,22,30,0.45); z-index:50; align-items:center; justify-content:center; padding:24px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--surface); border-radius:var(--radius); max-width:560px; width:100%; max-height:82vh; overflow-y:auto; padding:26px; box-shadow:0 30px 70px -20px rgba(0,0,0,0.4);}
+  .modal-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px;}
+  .modal-name{font-family:'Manrope',sans-serif; font-size:20px; font-weight:800;}
+  .modal-close{background:var(--surface-sunken); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--ink-muted);}
+  .modal-section{margin-bottom:16px;}
+  .modal-section-title{font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--ink-faint); font-weight:700; margin-bottom:8px;}
+  .modal-section ul{margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; color:var(--ink);}
+
+  .footnote{max-width:1220px; margin:40px auto 0; padding:16px 32px 0; border-top:1px solid var(--line); color:var(--ink-faint); font-size:12px; line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <div class="brand-name">Sift</div>
+      <div class="brand-sub">AI Screening Pipeline</div>
+    </div>
+  </div>
+  <div class="view-toggle">
+    <button class="active" onclick="switchView('studio')" id="btn-studio">Screening Studio</button>
+    <button onclick="switchView('pipe')" id="btn-pipe">Pipeline</button>
+  </div>
+</div>
+
+<!-- STUDIO -->
+<div class="view active" id="view-studio">
+  <div class="wrap">
+    <div class="hero-eyebrow">AI Automation Case Study</div>
+    <h1 class="hero-title">Screen a stack of resumes against a role in one pass — with reasoning, not just a score.</h1>
+    <p class="hero-desc">Paste a job description, drop in candidate resumes one at a time, and run a real batch screening. Each candidate gets a fit score, strengths, gaps, and ready-to-ask interview questions — then lands automatically on the pipeline board.</p>
+
+    <div class="studio-grid">
+      <div class="panel">
+        <div class="panel-title">1. Role requirements</div>
+        <div class="panel-hint">Paste the job description or a short list of must-haves.</div>
+        <textarea id="roleInput">Senior Backend Engineer — remote.
+Must-haves: 5+ years building production APIs, strong with Node.js or Python, experience with distributed systems and message queues, comfortable owning on-call for a service. Nice to have: previous fintech or payments experience, mentorship of junior engineers.</textarea>
+        <div class="example-row">
+          <div class="example-chip" onclick="loadRole(1)">Backend engineer</div>
+          <div class="example-chip" onclick="loadRole(2)">Customer success manager</div>
+          <div class="example-chip" onclick="loadRole(3)">Marketing lead</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">2. Add candidates</div>
+        <div class="panel-hint">Paste one resume or bio at a time, then click add.</div>
+        <textarea id="candidateInput" placeholder="Paste a candidate's resume or bio here..."></textarea>
+        <div class="add-row">
+          <button onclick="loadCandidateExample()" style="background:var(--surface-sunken); color:var(--ink-muted); border:1px solid var(--line);">Use example</button>
+          <button onclick="addCandidate()">Add candidate</button>
+        </div>
+        <div class="candidate-list" id="candidateList"></div>
+
+        <button class="run-btn" id="runBtn" onclick="runScreening()">
+          <span class="spinner" id="spinner"></span>
+          <span id="runLabel">Run screening</span>
+        </button>
+        <div class="status-banner" id="statusBanner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div class="view" id="view-pipe">
+  <div class="wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Candidate Pipeline</div>
+        <div class="cal-sub">Auto-sorted by fit score the moment screening completes</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Candidates screened</div></div>
+      <div class="stat-card"><div class="stat-num" id="statStrong">0</div><div class="stat-label">Strong fits</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAvg">—</div><div class="stat-label">Average fit score</div></div>
+      <div class="stat-card"><div class="stat-num">~18min</div><div class="stat-label">Time saved per resume</div></div>
+    </div>
+
+    <div class="kanban">
+      <div class="kb-col">
+        <div class="kb-col-head"><span class="kb-col-title" style="color:var(--strong)">Strong fit</span><span class="kb-count" id="countStrong">0</span></div>
+        <div id="colStrong"></div>
+      </div>
+      <div class="kb-col">
+        <div class="kb-col-head"><span class="kb-col-title" style="color:var(--consider)">Worth a look</span><span class="kb-count" id="countConsider">0</span></div>
+        <div id="colConsider"></div>
+      </div>
+      <div class="kb-col">
+        <div class="kb-col-head"><span class="kb-col-title" style="color:var(--weak)">Not a fit</span><span class="kb-count" id="countWeak">0</span></div>
+        <div id="colWeak"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<div class="footnote wrap">
+  Portfolio demo — built by Hassan. Screening logic runs on Claude, prompted with the role requirements and each resume to produce structured, defensible scoring — not a black-box number. In a client deployment this connects to a real ATS (Greenhouse, Lever, or a Google Sheet of applicants) so resumes flow in and shortlists flow out automatically.
+</div>
+
+<script>
+let candidates = []; // {id, text}
+let screened = []; // {id, name, score, verdict, strengths, gaps, questions, tier}
+
+function switchView(v){
+  document.getElementById('view-studio').classList.toggle('active', v==='studio');
+  document.getElementById('view-pipe').classList.toggle('active', v==='pipe');
+  document.getElementById('btn-studio').classList.toggle('active', v==='studio');
+  document.getElementById('btn-pipe').classList.toggle('active', v==='pipe');
+  if(v==='pipe') renderPipeline();
+}
+
+const roleExamples = {
+  1: "Senior Backend Engineer — remote.\nMust-haves: 5+ years building production APIs, strong with Node.js or Python, experience with distributed systems and message queues, comfortable owning on-call for a service. Nice to have: previous fintech or payments experience, mentorship of junior engineers.",
+  2: "Customer Success Manager — hybrid, 2 days in office.\nMust-haves: 3+ years in a client-facing SaaS role, experience owning renewals and reducing churn, comfortable presenting to executives. Nice to have: experience with a CRM like HubSpot or Salesforce, a second language.",
+  3: "Marketing Lead — early-stage startup.\nMust-haves: has run marketing end-to-end at a startup before (not just one channel), comfortable with a small budget, strong writer. Nice to have: performance marketing background, experience in B2B SaaS."
+};
+function loadRole(n){ document.getElementById('roleInput').value = roleExamples[n]; }
+
+const candidateExamples = [
+  "Amara Chen — 6 years as a backend engineer, last 3 at a payments startup building REST and gRPC APIs in Node.js. Owned the team's on-call rotation for 18 months, led migration to Kafka for event processing. Mentored two junior engineers.",
+  "David Osei — 2 years as a full-stack developer, mostly React with light Node.js API work. No distributed systems experience. Comfortable with SQL and REST APIs. Currently a bootcamp mentor on the side.",
+  "Lena Vogel — 7 years backend, Python-heavy, built a message-queue-based order system at a logistics company handling 2M events/day. No fintech background but has done production on-call for 4 years straight."
+];
+let exampleIdx = 0;
+function loadCandidateExample(){
+  document.getElementById('candidateInput').value = candidateExamples[exampleIdx % candidateExamples.length];
+  exampleIdx++;
+}
+
+function addCandidate(){
+  const text = document.getElementById('candidateInput').value.trim();
+  if(!text) return;
+  candidates.push({id: 'c-' + Date.now() + Math.random().toString(36).slice(2,6), text});
+  document.getElementById('candidateInput').value = '';
+  renderCandidateList();
+}
+
+function removeCandidate(id){
+  candidates = candidates.filter(c => c.id !== id);
+  renderCandidateList();
+}
+
+function renderCandidateList(){
+  const list = document.getElementById('candidateList');
+  list.innerHTML = '';
+  candidates.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'candidate-chip';
+    el.innerHTML = `<span class="snippet">${escapeHtml(c.text.slice(0,60))}${c.text.length>60?'…':''}</span><button onclick="removeCandidate('${c.id}')">Remove</button>`;
+    list.appendChild(el);
+  });
+}
+
+async function callClaude(msgList, system, maxTokens){
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      model:'claude-sonnet-4-6',
+      max_tokens: maxTokens || 2000,
+      system: system,
+      messages: msgList
+    })
+  });
+  const data = await res.json();
+  const textBlock = (data.content || []).find(b => b.type === 'text');
+  return textBlock ? textBlock.text : '';
+}
+
+async function runScreening(){
+  const role = document.getElementById('roleInput').value.trim();
+  if(!role || candidates.length === 0){
+    showStatus('Add the role requirements and at least one candidate first.', 'weak');
+    return;
+  }
+
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').classList.add('show');
+  document.getElementById('runLabel').textContent = 'Screening ' + candidates.length + ' candidate' + (candidates.length>1?'s':'') + '...';
+
+  const candidateBlock = candidates.map((c,i) => `CANDIDATE ${i+1}:\n${c.text}`).join('\n\n');
+  const prompt = `You are screening candidates against this role:
+
+${role}
+
+Candidates:
+${candidateBlock}
+
+For EACH candidate, evaluate fit honestly and specifically. Return ONLY raw JSON, no markdown fences, no preamble, as an array in this exact shape:
+[
+  {
+    "name": "candidate's name if stated, otherwise 'Candidate 1' style label",
+    "fit_score": integer 0-100,
+    "verdict": "one sentence, direct, specific to this candidate",
+    "strengths": ["short bullet", "short bullet"],
+    "gaps": ["short bullet", "short bullet"],
+    "interview_questions": ["one targeted question", "one targeted question"]
+  }
+]
+Order the array the same as the candidates were given.`;
+
+  try{
+    const raw = await callClaude(
+      [{role:'user', content: prompt}],
+      'You are a precise, fair technical/professional recruiter. Output only valid JSON, nothing else.',
+      2200
+    );
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+
+    const newlyScreened = parsed.map((p, i) => ({
+      id: 's-' + Date.now() + '-' + i,
+      name: p.name || ('Candidate ' + (i+1)),
+      score: typeof p.fit_score === 'number' ? p.fit_score : 0,
+      verdict: p.verdict || '',
+      strengths: p.strengths || [],
+      gaps: p.gaps || [],
+      questions: p.interview_questions || [],
+      tier: tierFor(p.fit_score)
+    }));
+
+    screened = newlyScreened.concat(screened);
+    candidates = [];
+    renderCandidateList();
+    showStatus(newlyScreened.length + ' candidate' + (newlyScreened.length>1?'s':'') + ' screened — view them in the Pipeline tab.', 'strong');
+  }catch(e){
+    showStatus('Something went wrong screening that batch — please try again.', 'weak');
+  }
+
+  btn.disabled = false;
+  document.getElementById('spinner').classList.remove('show');
+  document.getElementById('runLabel').textContent = 'Run screening';
+}
+
+function tierFor(score){
+  if(score >= 75) return 'strong';
+  if(score >= 45) return 'consider';
+  return 'weak';
+}
+
+function showStatus(msg, tier){
+  const el = document.getElementById('statusBanner');
+  const colors = {strong:['var(--strong-soft)','var(--strong)'], weak:['var(--weak-soft)','var(--weak)'], consider:['var(--consider-soft)','var(--consider)']};
+  el.style.background = colors[tier][0];
+  el.style.color = colors[tier][1];
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function seedPipeline(){
+  screened = [
+    {id:'seed1', name:'Priya Anand', score:91, verdict:'Excellent fit — direct experience in every must-have, including production on-call and mentorship.', strengths:['6 years relevant backend experience','Owned on-call rotation','Mentored junior engineers'], gaps:['No fintech-specific experience'], questions:['Walk me through a production incident you owned end-to-end.','How do you approach mentoring someone less experienced?'], tier:'strong'},
+    {id:'seed2', name:'Marcus Deel', score:58, verdict:"Reasonable generalist but light on distributed systems, the role's core requirement.", strengths:['Solid API fundamentals','Fast learner based on trajectory'], gaps:['No distributed systems or queue experience','Never owned on-call'], questions:['How would you approach learning a message-queue-based system quickly?'], tier:'consider'},
+    {id:'seed3', name:'Jordan Blake', score:29, verdict:'Frontend-leaning profile; core backend and systems requirements are largely unmet.', strengths:['Strong communicator per resume'], gaps:['Minimal backend depth','No systems-at-scale experience'], questions:['What backend work have you done outside of your primary frontend role?'], tier:'weak'}
+  ];
+}
+
+function renderPipeline(){
+  const total = screened.length;
+  const strong = screened.filter(s => s.tier === 'strong').length;
+  const consider = screened.filter(s => s.tier === 'consider').length;
+  const weak = screened.filter(s => s.tier === 'weak').length;
+  const avg = total ? Math.round(screened.reduce((a,s)=>a+s.score,0)/total) : null;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statStrong').textContent = strong;
+  document.getElementById('statAvg').textContent = avg !== null ? avg : '—';
+  document.getElementById('countStrong').textContent = strong;
+  document.getElementById('countConsider').textContent = consider;
+  document.getElementById('countWeak').textContent = weak;
+
+  fillCol('colStrong', screened.filter(s => s.tier === 'strong'), 'var(--strong)');
+  fillCol('colConsider', screened.filter(s => s.tier === 'consider'), 'var(--consider)');
+  fillCol('colWeak', screened.filter(s => s.tier === 'weak'), 'var(--weak)');
+}
+
+function ringSvg(score, color){
+  const r = 15, c = 2*Math.PI*r;
+  const offset = c - (score/100)*c;
+  return `<div class="ring"><svg width="36" height="36"><circle cx="18" cy="18" r="${r}" fill="none" stroke="var(--line)" stroke-width="3"/><circle cx="18" cy="18" r="${r}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${c}" stroke-dashoffset="${offset}" stroke-linecap="round"/></svg><div class="ring-score">${score}</div></div>`;
+}
+
+function fillCol(colId, items, color){
+  const col = document.getElementById(colId);
+  col.innerHTML = '';
+  if(items.length === 0){
+    col.innerHTML = '<div class="kb-empty">No candidates in this tier yet.</div>';
+    return;
+  }
+  items.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'cand-card';
+    el.onclick = () => openModal(s.id);
+    el.innerHTML = `
+      <div class="cand-top">
+        <div class="cand-name">${escapeHtml(s.name)}</div>
+        ${ringSvg(s.score, color)}
+      </div>
+      <div class="cand-verdict">${escapeHtml(s.verdict)}</div>
+    `;
+    col.appendChild(el);
+  });
+}
+
+function openModal(id){
+  const s = screened.find(x => x.id === id);
+  if(!s) return;
+  const color = s.tier === 'strong' ? 'var(--strong)' : s.tier === 'consider' ? 'var(--consider)' : 'var(--weak)';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-head">
+      <div>
+        <div class="modal-name">${escapeHtml(s.name)}</div>
+        <div style="color:${color}; font-weight:700; font-size:13px; margin-top:4px;">Fit score: ${s.score}/100</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Verdict</div>
+      <div style="font-size:13.5px; line-height:1.6;">${escapeHtml(s.verdict)}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Strengths</div>
+      <ul>${s.strengths.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Gaps to probe</div>
+      <ul>${s.gaps.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Suggested interview questions</div>
+      <ul>${s.questions.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+seedPipeline();
+</script>
+
+</body>
+</html>
