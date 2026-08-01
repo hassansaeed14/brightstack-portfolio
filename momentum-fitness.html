@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentum Studio — Strength & Conditioning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15181C; --paper:#F7F6F3; --card:#FFFFFF; --line:#E4E1DA;
+    --coral:#FF4B3E; --coral-soft:#FFE3E0; --muted:#6B6F76;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:24px 32px;max-width:1120px;margin:0 auto;}
+  .logo{font-family:'Archivo Black',sans-serif;font-size:18px;text-transform:uppercase;}
+  .logo span{color:var(--coral);}
+  nav{display:flex;gap:28px;align-items:center;}
+  nav a{font-size:13.5px;font-weight:600;}
+  .nav-cta{background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:2px;}
+  .back-link{font-size:12.5px;color:var(--muted);}
+
+  .hero{display:flex;gap:48px;align-items:center;padding:50px 32px 80px;max-width:1120px;margin:0 auto;}
+  .hero-text{flex:1.1;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);margin-bottom:18px;font-weight:600;}
+  h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:52px;line-height:1.02;margin-bottom:22px;}
+  .hero-text p{color:var(--muted);font-size:16px;max-width:440px;margin-bottom:30px;}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{background:var(--coral);color:#fff;padding:15px 28px;border-radius:2px;font-weight:700;font-size:14.5px;}
+  .btn-secondary{border:1.5px solid var(--ink);padding:15px 26px;border-radius:2px;font-weight:700;font-size:14.5px;}
+
+  /* Signature: whiteboard schedule preview in hero */
+  .schedule-preview{
+    flex:1;background:var(--ink);border-radius:10px;padding:22px;color:var(--paper);
+  }
+  .sp-title{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);margin-bottom:14px;}
+  .sp-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #2A2E33;font-size:13px;}
+  .sp-row:last-child{border-bottom:none;}
+  .sp-day{font-weight:700;width:40px;flex-shrink:0;}
+  .sp-class{flex:1;color:#C7CBD1;}
+  .sp-intensity{width:44px;height:6px;border-radius:3px;flex-shrink:0;}
+  .i-low{background:rgba(255,75,62,0.3);}
+  .i-mid{background:rgba(255,75,62,0.6);}
+  .i-high{background:var(--coral);}
+
+  .section{padding:70px 32px;max-width:1120px;margin:0 auto;}
+  .section-head{max-width:560px;margin-bottom:44px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:32px;margin-bottom:10px;}
+  .section-head p{color:var(--muted);font-size:14.5px;}
+
+  /* Full weekly schedule — the signature element in full */
+  .schedule-board{background:var(--ink);border-radius:14px;padding:30px;color:var(--paper);overflow-x:auto;}
+  .schedule-grid{display:grid;grid-template-columns:70px repeat(7,1fr);gap:1px;background:#2A2E33;min-width:760px;}
+  .sched-cell{background:var(--ink);padding:12px 10px;font-size:12px;}
+  .sched-head{font-family:'IBM Plex Mono',monospace;font-weight:700;text-align:center;font-size:11px;color:var(--coral);text-transform:uppercase;}
+  .sched-time{font-family:'IBM Plex Mono',monospace;color:#8A8F96;font-size:11px;}
+  .sched-class{border-radius:5px;padding:8px 6px;font-size:11px;text-align:center;font-weight:600;}
+  .legend{display:flex;gap:18px;margin-top:18px;font-size:11.5px;color:#9BA0A7;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .trainer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .trainer-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;}
+  .trainer-avatar{width:56px;height:56px;border-radius:50%;background:var(--coral-soft);margin-bottom:16px;}
+  .trainer-card h3{font-size:16px;font-weight:700;margin-bottom:4px;}
+  .trainer-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--coral);text-transform:uppercase;margin-bottom:10px;display:block;}
+  .trainer-card p{font-size:13.5px;color:var(--muted);}
+
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .price-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px;}
+  .price-card.featured{border-color:var(--coral);box-shadow:0 14px 30px rgba(255,75,62,0.12);}
+  .price-name{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;color:var(--coral);margin-bottom:10px;}
+  .price-val{font-family:'Archivo Black',sans-serif;font-size:34px;margin-bottom:4px;}
+  .price-val span{font-size:14px;font-family:'Inter',sans-serif;color:var(--muted);}
+  .price-desc{font-size:13px;color:var(--muted);margin-bottom:18px;}
+  .price-list{list-style:none;margin-bottom:22px;}
+  .price-list li{font-size:13px;padding:7px 0;border-top:1px solid var(--line);}
+  .price-btn{display:block;text-align:center;background:var(--ink);color:#fff;padding:11px;border-radius:2px;font-weight:700;font-size:13px;}
+  .price-card.featured .price-btn{background:var(--coral);}
+
+  .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .t-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;}
+  .t-card p{font-size:13.5px;margin-bottom:14px;}
+  .t-name{font-size:12.5px;font-weight:700;}
+  .t-role{font-size:11.5px;color:var(--muted);}
+
+  .cta-band{background:var(--ink);color:var(--paper);text-align:center;padding:70px 32px;}
+  .cta-band h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:30px;margin-bottom:20px;}
+  .cta-band .btn-primary{display:inline-block;}
+
+  footer{padding:28px 32px;text-align:center;font-size:12.5px;color:var(--muted);}
+
+  @media (max-width:900px){
+    .hero{flex-direction:column;}
+    h1{font-size:36px;}
+    .trainer-grid, .price-grid, .testimonial-grid{grid-template-columns:1fr;}
+    nav a:not(.nav-cta){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Momentum <span>Studio</span></div>
+  <nav>
+    <a href="#schedule">Schedule</a>
+    <a href="#trainers">Trainers</a>
+    <a href="#pricing">Membership</a>
+    <a href="#" class="nav-cta">Book a free class</a>
+  </nav>
+  <a href="index.html" class="back-link">← Portfolio</a>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Mansehra · Strength & conditioning</div>
+    <h1>Train different.</h1>
+    <p>Small-group strength and conditioning classes, built around real coaching — not a treadmill row and a mirror. First class is free.</p>
+    <div class="btn-row">
+      <a href="#" class="btn-primary">Book a free class</a>
+      <a href="#schedule" class="btn-secondary">See this week's schedule</a>
+    </div>
+  </div>
+  <div class="schedule-preview">
+    <div class="sp-title">This week</div>
+    <div class="sp-row"><span class="sp-day">Mon</span><span class="sp-class">Strength Foundations</span><span class="sp-intensity i-mid"></span></div>
+    <div class="sp-row"><span class="sp-day">Tue</span><span class="sp-class">Conditioning Circuit</span><span class="sp-intensity i-high"></span></div>
+    <div class="sp-row"><span class="sp-day">Wed</span><span class="sp-class">Mobility & Recovery</span><span class="sp-intensity i-low"></span></div>
+    <div class="sp-row"><span class="sp-day">Thu</span><span class="sp-class">Olympic Lifting</span><span class="sp-intensity i-high"></span></div>
+    <div class="sp-row"><span class="sp-day">Fri</span><span class="sp-class">Strength Foundations</span><span class="sp-intensity i-mid"></span></div>
+  </div>
+</section>
+
+<section class="section" id="schedule">
+  <div class="section-head">
+    <div class="eyebrow">Weekly schedule</div>
+    <h2>Every class, every day.</h2>
+    <p>Color shows intensity, not difficulty — every class is coached and scaled to whoever's in the room that day.</p>
+  </div>
+  <div class="schedule-board">
+    <div class="schedule-grid">
+      <div class="sched-cell"></div>
+      <div class="sched-cell sched-head">Mon</div><div class="sched-cell sched-head">Tue</div><div class="sched-cell sched-head">Wed</div>
+      <div class="sched-cell sched-head">Thu</div><div class="sched-cell sched-head">Fri</div><div class="sched-cell sched-head">Sat</div><div class="sched-cell sched-head">Sun</div>
+
+      <div class="sched-cell sched-time">6:00 AM</div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Mobility</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Olympic Lift</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Open Gym</div></div>
+      <div class="sched-cell"></div>
+
+      <div class="sched-cell sched-time">5:30 PM</div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Olympic Lift</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Mobility</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
+      <div class="sched-cell"></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Community WOD</div></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:rgba(255,75,62,0.3);"></i>Low intensity</span>
+      <span><i style="background:rgba(255,75,62,0.6);"></i>Moderate</span>
+      <span><i style="background:var(--coral);"></i>High intensity</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="trainers">
+  <div class="section-head">
+    <div class="eyebrow">Coaching staff</div>
+    <h2>Three coaches, one standard.</h2>
+  </div>
+  <div class="trainer-grid">
+    <div class="trainer-card">
+      <div class="trainer-avatar"></div>
+      <h3>Bilal Ahmed</h3>
+      <span class="trainer-tag">Strength & Olympic Lifting</span>
+      <p>Runs the Monday/Thursday strength blocks — big on technique before load.</p>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-avatar"></div>
+      <h3>Sara Khalid</h3>
+      <span class="trainer-tag">Conditioning</span>
+      <p>Builds every conditioning circuit around what the room can actually sustain that day.</p>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-avatar"></div>
+      <h3>Usman Tariq</h3>
+      <span class="trainer-tag">Mobility & Recovery</span>
+      <p>The Wednesday reset — mobility work scaled for anyone nursing something.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="section-head">
+    <div class="eyebrow">Membership</div>
+    <h2>Simple pricing, no lock-in.</h2>
+  </div>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-name">Drop-in</div>
+      <div class="price-val">Rs 1,200<span>/class</span></div>
+      <div class="price-desc">For visitors and one-off sessions</div>
+      <ul class="price-list"><li>Any single class</li><li>No commitment</li></ul>
+      <a href="#" class="price-btn">Book a class</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-name">Monthly</div>
+      <div class="price-val">Rs 9,500<span>/mo</span></div>
+      <div class="price-desc">Unlimited classes, most popular</div>
+      <ul class="price-list"><li>Unlimited classes</li><li>Priority booking</li><li>Monthly progress check-in</li></ul>
+      <a href="#" class="price-btn">Join Momentum</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Annual</div>
+      <div class="price-val">Rs 95,000<span>/yr</span></div>
+      <div class="price-desc">Two months free vs. monthly</div>
+      <ul class="price-list"><li>Everything in Monthly</li><li>Locked-in rate</li><li>1 free guest pass/month</li></ul>
+      <a href="#" class="price-btn">Join annually</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="eyebrow">Members</div>
+    <h2>What training here actually feels like.</h2>
+  </div>
+  <div class="testimonial-grid">
+    <div class="t-card"><p>"First gym where a coach has actually corrected my form without me asking."</p><div class="t-name">Ayesha R.</div><div class="t-role">Member since 2024</div></div>
+    <div class="t-card"><p>"The schedule board on the site matches exactly what's on the wall — no surprises showing up."</p><div class="t-name">Hamza K.</div><div class="t-role">Monthly member</div></div>
+    <div class="t-card"><p>"Switched from a big-box gym. Smaller classes, way more attention."</p><div class="t-name">Nida F.</div><div class="t-role">Member since 2025</div></div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>First class is free.</h2>
+  <a href="#" class="btn-primary">Book your free class</a>
+</div>
+
+<footer>Concept site by BrightStack Co. — Web Design, Premium tier. Built as a static page composed in WordPress-style content blocks (hero, schedule, pricing, testimonials) — not hosted on WordPress itself.</footer>
+
+</body>
+</html>
