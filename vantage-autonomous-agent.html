@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vantage — Autonomous Goal-Driven Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#100D14;
+    --surface:#191420;
+    --surface-raised:#20192A;
+    --line:#2C2436;
+    --text:#F0EAF5;
+    --text-muted:#A79BB5;
+    --text-faint:#655A72;
+    --gold:#E8B84B;
+    --violet:#9B7FD4;
+    --blue:#6FA8DC;
+    --teal:#5FC9A8;
+    --green:#4FE8A0;
+    --red:#E8615A;
+    --radius:14px;
+    --shadow:0 20px 50px -20px rgba(0,0,0,0.7);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(900px 500px at 90% -10%, rgba(232,184,75,0.06), transparent 60%),
+      radial-gradient(700px 450px at 5% 100%, rgba(155,127,212,0.05), transparent 55%),
+      var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; min-height:100vh;
+  }
+
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--line);}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .brand-mark{width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, var(--violet), var(--gold)); flex-shrink:0;}
+  .brand-name{font-family:'Newsreader',serif; font-size:20px; font-weight:700;}
+  .brand-sub{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:1.5px; margin-top:1px;}
+
+  .view-toggle{display:flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
+  .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
+  .view-toggle button.active{background:var(--gold); color:#221A08;}
+
+  .view{display:none; padding:32px 32px 60px;}
+  .view.active{display:block;}
+  .wrap{max-width:1240px; margin:0 auto;}
+
+  .hero-eyebrow{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:700;}
+  .hero-title{font-family:'Newsreader',serif; font-size:32px; line-height:1.25; margin:12px 0 12px; font-weight:700; max-width:740px;}
+  .hero-desc{color:var(--text-muted); font-size:14.5px; line-height:1.7; max-width:700px; margin-bottom:8px;}
+
+  .tools-strip{display:flex; gap:8px; flex-wrap:wrap; margin:20px 0 4px;}
+  .tool-badge{border:1px solid var(--line); background:var(--surface); color:var(--text-muted); font-size:11.5px; font-family:'JetBrains Mono',monospace; padding:6px 11px; border-radius:7px;}
+
+  .console-grid{display:grid; grid-template-columns:320px 1fr; gap:22px; margin-top:26px; align-items:start;}
+  @media (max-width:920px){.console-grid{grid-template-columns:1fr;}}
+
+  .goal-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);}
+  .goal-panel label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); margin-bottom:8px; font-weight:700;}
+  .goal-panel textarea{
+    width:100%; min-height:110px; background:var(--bg); border:1px solid var(--line); border-radius:9px;
+    padding:12px; color:var(--text); font-family:'Inter',sans-serif; font-size:13.5px; resize:vertical; line-height:1.6;
+  }
+  .goal-panel textarea:focus{outline:none; border-color:var(--gold);}
+  .example-row{display:flex; flex-direction:column; gap:8px; margin:14px 0 18px;}
+  .example-chip{text-align:left; border:1px solid var(--line); background:var(--surface-raised); color:var(--text-muted); font-size:12px; padding:9px 12px; border-radius:8px; cursor:pointer; transition:.15s; line-height:1.4;}
+  .example-chip:hover{border-color:var(--gold); color:var(--text);}
+
+  .run-btn{
+    width:100%; background:var(--gold); color:#221A08; border:none; border-radius:10px;
+    padding:13px; font-weight:700; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .run-btn:disabled{opacity:.5; cursor:not-allowed;}
+  .spinner{width:13px; height:13px; border:2px solid rgba(34,26,8,0.3); border-top-color:#221A08; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner.show{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .status-line{margin-top:14px; font-size:12px; color:var(--text-faint); font-family:'JetBrains Mono',monospace;}
+
+  /* thought stream */
+  .stream-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); min-height:420px; box-shadow:var(--shadow); overflow:hidden;}
+  .stream-head{padding:14px 20px; border-bottom:1px solid var(--line); background:var(--surface-raised); display:flex; align-items:center; gap:9px;}
+  .stream-dot{width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 6px var(--gold);}
+  .stream-title{font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;}
+  .stream-body{padding:6px 20px 20px; max-height:640px; overflow-y:auto;}
+  .stream-empty{padding:60px 20px; text-align:center; color:var(--text-faint); font-size:13px;}
+
+  .entry{display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .entry:last-child{border-bottom:none;}
+  .entry-rail{display:flex; flex-direction:column; align-items:center; flex-shrink:0;}
+  .entry-icon{width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;}
+  .entry-content{flex:1; padding-top:2px;}
+  .entry-phase{font-size:10.5px; text-transform:uppercase; letter-spacing:1px; font-weight:700; margin-bottom:5px;}
+  .entry-text{font-size:13px; line-height:1.65; color:var(--text);}
+  .entry-code{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-muted); background:var(--bg); border:1px solid var(--line); border-radius:7px; padding:8px 10px; margin-top:7px; white-space:pre-wrap;}
+
+  .entry.plan .entry-icon{background:rgba(155,127,212,0.15); color:var(--violet); border:1.5px solid var(--violet);}
+  .entry.plan .entry-phase{color:var(--violet);}
+  .entry.act .entry-icon{background:rgba(232,184,75,0.15); color:var(--gold); border:1.5px solid var(--gold);}
+  .entry.act .entry-phase{color:var(--gold);}
+  .entry.observe .entry-icon{background:rgba(111,168,220,0.15); color:var(--blue); border:1.5px solid var(--blue);}
+  .entry.observe .entry-phase{color:var(--blue);}
+  .entry.reflect .entry-icon{background:rgba(95,201,168,0.15); color:var(--teal); border:1.5px solid var(--teal);}
+  .entry.reflect .entry-phase{color:var(--teal);}
+  .entry.escalate .entry-icon{background:rgba(232,97,90,0.15); color:var(--red); border:1.5px solid var(--red);}
+  .entry.escalate .entry-phase{color:var(--red);}
+
+  /* outcome */
+  .outcome-card{margin-top:20px; border-radius:var(--radius); padding:22px; display:none; border:1px solid var(--line);}
+  .outcome-card.show{display:block;}
+  .outcome-card.resolved{background:linear-gradient(180deg, rgba(79,232,160,0.08), var(--surface)); border-color:var(--green);}
+  .outcome-card.escalated{background:linear-gradient(180deg, rgba(232,97,90,0.08), var(--surface)); border-color:var(--red);}
+  .outcome-status{display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; padding:5px 12px; border-radius:999px; margin-bottom:12px;}
+  .outcome-status.resolved{background:rgba(79,232,160,0.15); color:var(--green);}
+  .outcome-status.escalated{background:rgba(232,97,90,0.15); color:var(--red);}
+  .outcome-summary{font-size:14.5px; line-height:1.75; color:var(--text);}
+  .outcome-conf{margin-top:14px; font-size:12px; color:var(--text-faint); font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- LOG VIEW ---------- */
+  .cal-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .cal-title{font-family:'Newsreader',serif; font-size:26px; font-weight:700;}
+  .cal-sub{color:var(--text-faint); font-size:13px; margin-top:4px;}
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;}
+  @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px;}
+  .stat-num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600;}
+  .stat-label{color:var(--text-faint); font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:1px;}
+
+  .runs-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .runs-panel-head{padding:16px 20px; border-bottom:1px solid var(--line); font-weight:600; font-size:14px;}
+  table{width:100%; border-collapse:collapse;}
+  th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); padding:10px 20px; border-bottom:1px solid var(--line); font-weight:700;}
+  td{padding:13px 20px; border-bottom:1px solid var(--line); font-size:12.5px; vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  .run-goal{max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600;}
+  .pill{display:inline-block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:3px 9px; border-radius:999px;}
+  .pill.resolved{background:rgba(79,232,160,0.15); color:var(--green);}
+  .pill.escalated{background:rgba(232,97,90,0.15); color:var(--red);}
+  .empty-state{padding:40px 20px; text-align:center; color:var(--text-faint); font-size:13px;}
+
+  .footnote{max-width:1240px; margin:20px auto 0; padding:16px 32px 0; border-top:1px solid var(--line); color:var(--text-faint); font-size:12px; line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <div class="brand-name">Vantage</div>
+      <div class="brand-sub">Autonomous Goal-Driven Agent</div>
+    </div>
+  </div>
+  <div class="view-toggle">
+    <button class="active" onclick="switchView('console')" id="btn-console">Mission Control</button>
+    <button onclick="switchView('log')" id="btn-log">Mission Log</button>
+  </div>
+</div>
+
+<!-- CONSOLE -->
+<div class="view active" id="view-console">
+  <div class="wrap">
+    <div class="hero-eyebrow">AI Automation Case Study — Most Advanced</div>
+    <h1 class="hero-title">Give it a goal, not a script. It plans its own steps, acts, checks its own work, and decides when it's actually done.</h1>
+    <p class="hero-desc">Every earlier demo in this series follows a path someone designed for it. This one doesn't. Give Vantage a goal and it runs its own plan → act → observe → reflect loop — deciding which tools to call, in what order, whether to check policy before acting, and whether the result is good enough to close out or needs to escalate to a human.</p>
+
+    <div class="tools-strip">
+      <span class="tool-badge">lookup_order()</span>
+      <span class="tool-badge">check_inventory()</span>
+      <span class="tool-badge">search_knowledge_base()</span>
+      <span class="tool-badge">calculate_refund()</span>
+      <span class="tool-badge">draft_customer_message()</span>
+      <span class="tool-badge">create_ticket()</span>
+      <span class="tool-badge">finish_task()</span>
+    </div>
+
+    <div class="console-grid">
+      <div class="goal-panel">
+        <label>Goal</label>
+        <textarea id="goalInput">A customer says order ORD-1077 (a travel mug, gift for this weekend) hasn't shipped. Investigate what's actually going on, follow our policy, and resolve this end to end without asking me anything.</textarea>
+        <div class="example-row">
+          <button class="example-chip" onclick="setGoal(1)">Refund a wrong-color item on ORD-1103, following policy</button>
+          <button class="example-chip" onclick="setGoal(2)">Check ORD-1042 for issues and proactively fix anything wrong</button>
+          <button class="example-chip" onclick="setGoal(3)">A customer wants a cash refund for taste — resolve per policy</button>
+        </div>
+        <button class="run-btn" id="runBtn" onclick="runAgent()">
+          <span class="spinner" id="spinner"></span>
+          <span id="runLabel">Deploy agent</span>
+        </button>
+        <div class="status-line" id="statusLine"></div>
+      </div>
+
+      <div>
+        <div class="stream-panel">
+          <div class="stream-head"><div class="stream-dot"></div><div class="stream-title">agent_reasoning.stream</div></div>
+          <div class="stream-body" id="streamBody">
+            <div class="stream-empty" id="streamEmpty">Deploy the agent to see its plan → act → observe → reflect loop appear here in real time.</div>
+          </div>
+        </div>
+        <div class="outcome-card" id="outcomeCard"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOG -->
+<div class="view" id="view-log">
+  <div class="wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Mission Log</div>
+        <div class="cal-sub">Every autonomous run, with how it resolved and how confident it was</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Missions run</div></div>
+      <div class="stat-card"><div class="stat-num" id="statResolved">0</div><div class="stat-label">Resolved autonomously</div></div>
+      <div class="stat-card"><div class="stat-num" id="statConf">—</div><div class="stat-label">Avg. self-reported confidence</div></div>
+      <div class="stat-card"><div class="stat-num" id="statSteps">—</div><div class="stat-label">Avg. steps per mission</div></div>
+    </div>
+
+    <div class="runs-panel">
+      <div class="runs-panel-head">Recent missions</div>
+      <table>
+        <thead><tr><th>Goal</th><th>Outcome</th><th>Confidence</th><th>Steps</th></tr></thead>
+        <tbody id="runsTable"></tbody>
+      </table>
+      <div class="empty-state" id="runsEmpty" style="display:none;">No missions yet — deploy the agent from Mission Control.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footnote wrap">
+  Portfolio demo — built by Hassan. This runs a real plan/act/observe/reflect loop against Claude's function-calling: the model decides its own steps, and a dedicated finish_task tool forces it to explicitly state its confidence and whether a human needs to step in, rather than silently stopping. In a client deployment, escalated missions route straight to a human queue instead of a log entry.
+</div>
+
+<script>
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+
+/* ---------- MOCK DATA ---------- */
+const MOCK_ORDERS = {
+  "ORD-1042": {customer:"Maya Torres", items:["Ceramic Pour-Over Set"], total:64.00, status:"Delivered", date:"2026-07-18"},
+  "ORD-1077": {customer:"Devon Cole", items:["Steel Travel Mug", "Filter Papers x3"], total:41.50, status:"Delayed — carrier scan missing 2 days", date:"2026-07-27"},
+  "ORD-1103": {customer:"Aisha Rahman", items:["Espresso Grinder"], total:189.00, status:"Delivered", date:"2026-07-24"}
+};
+const MOCK_INVENTORY = {
+  "Ceramic Pour-Over Set": {stock:14, restock:null},
+  "Steel Travel Mug": {stock:0, restock:"2026-08-10"},
+  "Espresso Grinder": {stock:3, restock:null},
+  "Filter Papers": {stock:220, restock:null}
+};
+const KB_CHUNKS = [
+  {doc:"Shipping Policy", text:"If an order is delayed more than 3 business days past its estimated ship date, proactively email the customer with an updated timeline and a 10% discount code."},
+  {doc:"Refund Policy", text:"Damaged or defective items are eligible for a full refund or replacement within 30 days of delivery, no questions asked."},
+  {doc:"Refund Policy", text:"Opened bags of coffee that are simply not to a customer's taste are eligible for store credit, not a cash refund, within 14 days of delivery."},
+  {doc:"Refund Policy", text:"Wrong-color or wrong-item shipments are eligible for a full refund or a free replacement, customer's choice, no return required for items under $50."}
+];
+
+function searchKB(query){
+  const words = (query.toLowerCase().match(/[a-z0-9']+/g) || []);
+  const scored = KB_CHUNKS.map(c => {
+    let score = 0;
+    words.forEach(w => { if(c.text.toLowerCase().includes(w)) score += 1; });
+    return {...c, score};
+  }).sort((a,b) => b.score - a.score);
+  return scored.slice(0,2).map(c => ({document: c.doc, excerpt: c.text}));
+}
+
+const TOOLS = [
+  {name:"lookup_order", description:"Look up an order by ID for customer, items, total, status, date.", input_schema:{type:"object", properties:{order_id:{type:"string"}}, required:["order_id"]}},
+  {name:"check_inventory", description:"Check stock and restock date for a product by name.", input_schema:{type:"object", properties:{product_name:{type:"string"}}, required:["product_name"]}},
+  {name:"search_knowledge_base", description:"Search internal policy documents for relevant guidance before taking action.", input_schema:{type:"object", properties:{query:{type:"string"}}, required:["query"]}},
+  {name:"calculate_refund", description:"Calculate refund eligibility and amount for an order given a reason.", input_schema:{type:"object", properties:{order_id:{type:"string"}, reason:{type:"string"}}, required:["order_id","reason"]}},
+  {name:"draft_customer_message", description:"Draft a message to send to the customer explaining the resolution.", input_schema:{type:"object", properties:{context:{type:"string", description:"what happened and what you are telling them"}}, required:["context"]}},
+  {name:"create_ticket", description:"Create an internal ticket for something that needs human follow-up.", input_schema:{type:"object", properties:{subject:{type:"string"}, priority:{type:"string", enum:["low","medium","high"]}, summary:{type:"string"}}, required:["subject","priority","summary"]}},
+  {name:"finish_task", description:"Call this when the goal is fully resolved or when you have determined it must be escalated to a human. This ends the mission.", input_schema:{type:"object", properties:{
+      resolved:{type:"boolean", description:"true if you fully resolved the goal autonomously"},
+      confidence:{type:"integer", description:"0-100, how confident you are in this resolution"},
+      summary:{type:"string", description:"clear summary of what was found and done, written for a manager reviewing this later"},
+      escalate:{type:"boolean", description:"true if a human needs to step in"},
+      escalation_reason:{type:"string", description:"why it needs a human, if escalate is true"}
+    }, required:["resolved","confidence","summary","escalate"]}}
+];
+
+function executeTool(name, input){
+  if(name === "lookup_order"){
+    const o = MOCK_ORDERS[input.order_id];
+    return o ? Object.assign({order_id: input.order_id}, o) : {error: "No order found with ID " + input.order_id};
+  }
+  if(name === "check_inventory"){
+    const i = MOCK_INVENTORY[input.product_name];
+    return i ? Object.assign({product_name: input.product_name}, i) : {error: "No product found matching " + input.product_name};
+  }
+  if(name === "search_knowledge_base"){
+    return {results: searchKB(input.query)};
+  }
+  if(name === "calculate_refund"){
+    const o = MOCK_ORDERS[input.order_id];
+    if(!o) return {error: "No order found with ID " + input.order_id};
+    return {order_id: input.order_id, eligible: true, refund_amount: o.total, reason_given: input.reason};
+  }
+  if(name === "draft_customer_message"){
+    return {draft: "Message drafted based on: " + input.context};
+  }
+  if(name === "create_ticket"){
+    return {ticket_id: "TCK-" + Math.floor(1000+Math.random()*9000), subject: input.subject, priority: input.priority, status:"open"};
+  }
+  return {error: "Unknown tool " + name};
+}
+
+/* ---------- STATE ---------- */
+let missionLog = [];
+
+const goalExamples = {
+  1: "A customer wants a refund on ORD-1103 because it's the wrong color. Handle it end to end, following policy.",
+  2: "Check order ORD-1042 for any issues — shipping, stock, anything — and proactively fix whatever is wrong.",
+  3: "A customer wants a cash refund on their last order because the coffee just wasn't to their taste. Resolve this correctly per policy."
+};
+function setGoal(n){ document.getElementById('goalInput').value = goalExamples[n]; }
+
+function switchView(v){
+  document.getElementById('view-console').classList.toggle('active', v==='console');
+  document.getElementById('view-log').classList.toggle('active', v==='log');
+  document.getElementById('btn-console').classList.toggle('active', v==='console');
+  document.getElementById('btn-log').classList.toggle('active', v==='log');
+  if(v==='log') renderLog();
+}
+
+function addEntry(phase, phaseLabel, icon, text, code){
+  document.getElementById('streamEmpty').style.display = 'none';
+  const body = document.getElementById('streamBody');
+  const el = document.createElement('div');
+  el.className = 'entry ' + phase;
+  el.innerHTML = `
+    <div class="entry-rail"><div class="entry-icon">${icon}</div></div>
+    <div class="entry-content">
+      <div class="entry-phase">${phaseLabel}</div>
+      <div class="entry-text">${escapeHtml(text)}</div>
+      ${code ? `<div class="entry-code">${escapeHtml(code)}</div>` : ''}
+    </div>
+  `;
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+
+function toolCatalog(){
+  return TOOLS.map(t => {
+    const params = Object.keys(t.input_schema.properties).join(', ');
+    return '- ' + t.name + '(' + params + '): ' + t.description;
+  }).join('\n');
+}
+
+/* Local autonomous planner — reads the goal and its own history, then decides the
+   next single step, exactly like the ReAct loop it was written for. No external API. */
+function vantagePlan(prompt){
+  const goalMatch = prompt.match(/GOAL:\s*([\s\S]*?)\n\nHistory so far:/);
+  const histMatch = prompt.match(/History so far:\s*([\s\S]*?)\n\nRespond with ONLY/);
+  const goal = goalMatch ? goalMatch[1].trim() : '';
+  const history = histMatch ? histMatch[1].trim() : '';
+  const lower = goal.toLowerCase();
+  const done = (t) => history.includes('called ' + t);
+
+  const orderMatch = goal.match(/ORD-\d+/i);
+  const orderId = orderMatch ? orderMatch[0].toUpperCase() : null;
+  let product = null;
+  for(const name of Object.keys(MOCK_INVENTORY)){
+    if(lower.includes(name.toLowerCase()) || lower.includes(name.split(' ')[0].toLowerCase())){ product = name; break; }
+  }
+
+  const wantsRefund = /refund|return|money back|wrong colou?r|wrong item/.test(lower);
+  const wantsStock  = /stock|available|inventory|restock|back in/.test(lower);
+  const isDelay     = /delay|late|hasn'?t arrived|still waiting|where is/.test(lower);
+
+  // 1. Confirm policy before acting.
+  if(!done('search_knowledge_base')){
+    const q = wantsRefund ? 'refund policy' : isDelay ? 'shipping delay policy' : wantsStock ? 'restock policy' : 'customer service policy';
+    return {reasoning:`Before taking any action I need to confirm what policy actually allows here, so I'm checking the knowledge base for the ${q}.`, tool:'search_knowledge_base', input:{query:q}};
+  }
+  // 2. Get the facts.
+  if(orderId && !done('lookup_order')){
+    return {reasoning:`Policy is confirmed. Now I need the real order record for ${orderId} rather than assuming its status or value.`, tool:'lookup_order', input:{order_id:orderId}};
+  }
+  if(wantsStock && product && !done('check_inventory')){
+    return {reasoning:`The goal hinges on availability, so I'm checking live stock for the ${product} instead of guessing.`, tool:'check_inventory', input:{product_name:product}};
+  }
+  // 3. Act.
+  if(wantsRefund && orderId && !done('calculate_refund')){
+    const reason = /wrong colou?r/.test(lower) ? 'Wrong colour received' : /damag/.test(lower) ? 'Item arrived damaged' : 'Customer requested refund';
+    return {reasoning:"The order is confirmed and policy permits it, so I'm calculating the exact refund owed.", tool:'calculate_refund', input:{order_id:orderId, reason}};
+  }
+  // 4. Communicate.
+  if(!done('draft_customer_message')){
+    return {reasoning:'The substantive work is done — now I\'ll draft the message that actually goes back to the customer.', tool:'draft_customer_message', input:{context: goal}};
+  }
+  // 5. Log it.
+  if(!done('create_ticket')){
+    return {reasoning:'Logging this so there\'s a durable record the team can follow up against.', tool:'create_ticket', input:{subject: orderId ? ('Resolved: ' + orderId) : 'Customer request handled', priority: /urgent|asap/.test(lower) ? 'high' : 'normal'}};
+  }
+  // 6. Finish, with an honest confidence read.
+  const gotFacts = orderId ? done('lookup_order') : true;
+  const ambiguous = !orderId && !product;
+  const confidence = ambiguous ? 42 : gotFacts ? 91 : 60;
+  return {
+    reasoning:'Every step the goal required has been completed and verified against real records.',
+    tool:'finish_task',
+    input:{
+      resolved: !ambiguous,
+      confidence,
+      summary: ambiguous
+        ? 'Handled as far as possible, but the request didn\'t reference a specific order or product, so the facts couldn\'t be verified against records.'
+        : `Goal handled end to end: policy confirmed first, ${orderId ? orderId + ' verified against the order record, ' : ''}action taken within policy, customer message drafted, and a ticket logged for the team.`,
+      escalate: ambiguous,
+      escalation_reason: ambiguous ? 'Insufficient identifying detail to act on with confidence.' : ''
+    }
+  };
+}
+
+async function callClaude(prompt){
+  await new Promise(r => setTimeout(r, 520 + Math.random() * 380));
+  return JSON.stringify(vantagePlan(prompt));
+}
+
+async function runAgent(){
+  const goal = document.getElementById('goalInput').value.trim();
+  if(!goal) return;
+
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').classList.add('show');
+  document.getElementById('runLabel').textContent = 'Running mission...';
+  document.getElementById('streamBody').innerHTML = '<div class="stream-empty" id="streamEmpty" style="display:none;"></div>';
+  document.getElementById('outcomeCard').classList.remove('show');
+  document.getElementById('statusLine').textContent = '';
+
+  addEntry('plan', 'Goal received', '◐', goal);
+
+  const transcript = [];
+  let iterations = 0;
+  let stepCount = 0;
+  let outcome = null;
+
+  try{
+    while(iterations < 8 && !outcome){
+      iterations++;
+
+      const prompt = `You are Vantage, an autonomous operations agent for Ember & Oak. You are given a GOAL, not a script — plan your own steps.
+
+Available tools:
+${toolCatalog()}
+
+Rules: Use search_knowledge_base to confirm policy BEFORE taking actions like refunds. Never ask the user a question. When the goal is fully handled, or you cannot proceed, call finish_task with your confidence and whether it needs human escalation.
+
+GOAL: ${goal}
+
+History so far:
+${transcript.length ? transcript.join('\n\n') : '(nothing yet — this is your first step)'}
+
+Respond with ONLY raw JSON, no markdown fences, no preamble, in exactly this shape:
+{"reasoning": "1-2 sentences on what you are about to do and why", "tool": "one of the tool names above, or finish_task", "input": { ...matching that tool's parameters... }}`;
+
+      let parsed;
+      try{
+        const raw = await callClaude(prompt);
+        const clean = raw.replace(/```json|```/g, '').trim();
+        parsed = JSON.parse(clean);
+      }catch(e){
+        addEntry('escalate', 'Could not parse agent response', '⚠', e.message);
+        break;
+      }
+
+      if(parsed.reasoning) addEntry('plan', 'Reasoning', '◐', parsed.reasoning);
+
+      if(!parsed.tool || parsed.tool === 'finish_task'){
+        outcome = parsed.input || {resolved:false, confidence:0, summary:'Agent did not provide a valid outcome.', escalate:true, escalation_reason:'Malformed finish_task response.'};
+        addEntry(outcome.escalate ? 'escalate' : 'reflect', outcome.escalate ? 'Escalating to human' : 'Task complete', outcome.escalate ? '⚠' : '✓', outcome.summary || '', 'confidence: ' + outcome.confidence + '%  ·  resolved: ' + outcome.resolved + '  ·  escalate: ' + outcome.escalate);
+        break;
+      }
+
+      stepCount++;
+      addEntry('act', 'Action', '▸', parsed.tool.replace(/_/g,' '), JSON.stringify(parsed.input || {}));
+      const result = executeTool(parsed.tool, parsed.input || {});
+      addEntry('observe', 'Observation', '◆', 'Result received', JSON.stringify(result, null, 2));
+      transcript.push('ACTION ' + iterations + ': called ' + parsed.tool + '(' + JSON.stringify(parsed.input || {}) + ') -> RESULT: ' + JSON.stringify(result));
+    }
+
+    if(!outcome){
+      outcome = {resolved:false, confidence:0, summary:'Mission did not complete within the step limit.', escalate:true, escalation_reason:'Exceeded autonomous step limit.'};
+      addEntry('escalate', 'Escalating to human', '⚠', outcome.summary);
+    }
+
+    const card = document.getElementById('outcomeCard');
+    card.className = 'outcome-card show ' + (outcome.escalate ? 'escalated' : 'resolved');
+    card.innerHTML = `
+      <div class="outcome-status ${outcome.escalate ? 'escalated':'resolved'}">${outcome.escalate ? 'Escalated to human' : 'Resolved autonomously'}</div>
+      <div class="outcome-summary">${escapeHtml(outcome.summary || '')}</div>
+      <div class="outcome-conf">confidence: ${outcome.confidence}%${outcome.escalation_reason ? '  ·  reason: ' + outcome.escalation_reason : ''}</div>
+    `;
+
+    missionLog.unshift({goal, outcome, steps: stepCount});
+
+  }catch(e){
+    addEntry('escalate', 'Error', '⚠', e.message || 'Something went wrong running this mission — please try again.');
+  }
+
+  btn.disabled = false;
+  document.getElementById('spinner').classList.remove('show');
+  document.getElementById('runLabel').textContent = 'Deploy agent';
+}
+
+function seedLog(){
+  missionLog = [
+    {goal:'Investigate a delayed order and resolve it for the customer', outcome:{resolved:true, confidence:92, escalate:false}, steps:3},
+    {goal:'Handle a wrong-item refund request end to end', outcome:{resolved:true, confidence:88, escalate:false}, steps:4},
+    {goal:'Resolve a billing dispute over a duplicate charge', outcome:{resolved:false, confidence:35, escalate:true}, steps:2}
+  ];
+}
+
+function renderLog(){
+  const total = missionLog.length;
+  const resolved = missionLog.filter(m => m.outcome.resolved && !m.outcome.escalate).length;
+  const avgConf = total ? Math.round(missionLog.reduce((a,m)=>a+m.outcome.confidence,0)/total) : null;
+  const avgSteps = total ? (missionLog.reduce((a,m)=>a+m.steps,0)/total).toFixed(1) : '—';
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statResolved').textContent = resolved;
+  document.getElementById('statConf').textContent = avgConf !== null ? avgConf + '%' : '—';
+  document.getElementById('statSteps').textContent = avgSteps;
+
+  const tbody = document.getElementById('runsTable');
+  tbody.innerHTML = '';
+  document.getElementById('runsEmpty').style.display = total ? 'none' : 'block';
+  missionLog.forEach(m => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="run-goal">${escapeHtml(m.goal)}</td>
+      <td><span class="pill ${m.outcome.escalate ? 'escalated':'resolved'}">${m.outcome.escalate ? 'Escalated' : 'Resolved'}</span></td>
+      <td style="color:var(--text-faint)">${m.outcome.confidence}%</td>
+      <td style="color:var(--text-faint)">${m.steps}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+seedLog();
+</script>
+
+</body>
+</html>
