@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reprise — AI Content Repurposing Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#121417;
+    --surface:#191C20;
+    --surface-raised:#20242A;
+    --line:#2B3038;
+    --text:#EDEEF0;
+    --text-muted:#9AA1AB;
+    --text-faint:#5E6570;
+    --accent:#B9A6FF;
+    --accent-dim:#8A7ACC;
+    --c-x:#55C1FF;
+    --c-linkedin:#6C8CFF;
+    --c-instagram:#FF6FA5;
+    --c-email:#FFB454;
+    --radius:14px;
+    --shadow:0 20px 50px -20px rgba(0,0,0,0.7);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 550px at 85% -10%, rgba(185,166,255,0.07), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+  }
+
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:22px 32px; border-bottom:1px solid var(--line);}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .brand-mark{width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, var(--c-x), var(--accent) 40%, var(--c-instagram) 75%, var(--c-email)); flex-shrink:0;}
+  .brand-name{font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600;}
+  .brand-sub{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:1.5px; margin-top:1px;}
+
+  .view-toggle{display:flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
+  .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
+  .view-toggle button.active{background:var(--accent); color:#15141C;}
+
+  .view{display:none; padding:36px 32px 64px;}
+  .view.active{display:block;}
+  .wrap{max-width:1200px; margin:0 auto;}
+
+  .hero-eyebrow{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:600;}
+  .hero-title{font-family:'Space Grotesk',sans-serif; font-size:38px; line-height:1.15; margin:14px 0 14px; font-weight:600; max-width:640px;}
+  .hero-desc{color:var(--text-muted); font-size:15px; line-height:1.7; max-width:620px;}
+
+  .channel-strip{display:flex; height:5px; border-radius:3px; overflow:hidden; margin:26px 0 34px; max-width:620px;}
+  .channel-strip div{flex:1;}
+
+  /* ---------- STUDIO ---------- */
+  .studio-grid{display:grid; grid-template-columns:400px 1fr; gap:28px; align-items:start;}
+  @media (max-width:900px){.studio-grid{grid-template-columns:1fr;}}
+
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);}
+  .panel label{display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); margin-bottom:8px; font-weight:600;}
+  .panel textarea{
+    width:100%; min-height:170px; background:var(--bg); border:1px solid var(--line); border-radius:9px;
+    color:var(--text); font-family:'Inter',sans-serif; font-size:13.5px; padding:12px; resize:vertical; line-height:1.6;
+  }
+  .panel textarea:focus{outline:none; border-color:var(--accent);}
+
+  .example-row{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px;}
+  .example-chip{border:1px solid var(--line); background:var(--surface-raised); color:var(--text-muted); font-size:12px; padding:7px 12px; border-radius:8px; cursor:pointer; transition:.15s;}
+  .example-chip:hover{border-color:var(--accent); color:var(--text);}
+
+  .tone-row{display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap;}
+  .tone-pill{border:1px solid var(--line); background:var(--bg); color:var(--text-muted); font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer; transition:.15s;}
+  .tone-pill.selected{background:var(--accent); color:#15141C; border-color:var(--accent); font-weight:600;}
+
+  .generate-btn{
+    width:100%; background:var(--accent); color:#15141C; border:none; border-radius:10px;
+    padding:13px; font-weight:700; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .generate-btn:disabled{opacity:.55; cursor:not-allowed;}
+  .spinner{width:13px; height:13px; border:2px solid rgba(21,20,28,0.3); border-top-color:#15141C; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner.show{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* output cards */
+  .output-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:700px){.output-grid{grid-template-columns:1fr;}}
+  .ch-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column;}
+  .ch-strip{height:4px;}
+  .ch-head{padding:14px 16px 0; display:flex; align-items:center; gap:9px;}
+  .ch-dot{width:8px; height:8px; border-radius:50%;}
+  .ch-label{font-size:12px; text-transform:uppercase; letter-spacing:1px; font-weight:700; color:var(--text-muted);}
+  .ch-body{padding:12px 16px 16px; font-size:13.5px; line-height:1.6; color:var(--text); white-space:pre-wrap; flex:1;}
+  .ch-body .tweet{padding:9px 0; border-bottom:1px solid var(--line);}
+  .ch-body .tweet:last-child{border-bottom:none;}
+  .hashtags{padding:0 16px 16px; display:flex; flex-wrap:wrap; gap:6px;}
+  .hashtag{font-size:11.5px; color:var(--accent); background:rgba(185,166,255,0.1); padding:4px 9px; border-radius:6px;}
+
+  .placeholder-state{grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--text-faint); font-size:13.5px; border:1px dashed var(--line); border-radius:var(--radius);}
+
+  /* ---------- CALENDAR ---------- */
+  .cal-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .cal-title{font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:600;}
+  .cal-sub{color:var(--text-faint); font-size:13px; margin-top:4px;}
+
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px;}
+  .stat-num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:500;}
+  .stat-label{color:var(--text-faint); font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:1px;}
+
+  .cal-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .cal-panel-head{padding:18px 20px; border-bottom:1px solid var(--line); font-weight:600; font-size:14px;}
+  table{width:100%; border-collapse:collapse;}
+  th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); padding:11px 20px; border-bottom:1px solid var(--line); font-weight:600;}
+  td{padding:14px 20px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  .cal-channel{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600;}
+  .cal-channel .ch-dot{width:7px; height:7px;}
+  .cal-snippet{color:var(--text-muted); max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .empty-state{padding:50px 20px; text-align:center; color:var(--text-faint); font-size:13.5px;}
+
+  .footnote{max-width:1200px; margin:40px auto 0; padding:16px 32px 0; border-top:1px solid var(--line); color:var(--text-faint); font-size:12px; line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <div class="brand-name">Reprise</div>
+      <div class="brand-sub">AI Content Engine</div>
+    </div>
+  </div>
+  <div class="view-toggle">
+    <button class="active" onclick="switchView('studio')" id="btn-studio">Studio</button>
+    <button onclick="switchView('cal')" id="btn-cal">Content Calendar</button>
+  </div>
+</div>
+
+<!-- STUDIO VIEW -->
+<div class="view active" id="view-studio">
+  <div class="wrap">
+    <div class="hero-eyebrow">AI Automation Case Study</div>
+    <h1 class="hero-title">One piece of content, repurposed across every channel — automatically.</h1>
+    <p class="hero-desc">Paste a blog post, video transcript, or newsletter draft. This working demo turns it into a ready-to-post X thread, LinkedIn post, Instagram caption, and email snippet — each written in a channel-native voice, with hashtags generated on the fly.</p>
+    <div class="channel-strip">
+      <div style="background:var(--c-x)"></div>
+      <div style="background:var(--c-linkedin)"></div>
+      <div style="background:var(--c-instagram)"></div>
+      <div style="background:var(--c-email)"></div>
+    </div>
+
+    <div class="studio-grid">
+      <div class="panel">
+        <label>Source content</label>
+        <textarea id="sourceInput" placeholder="Paste your blog post, transcript, or draft here...">Most people think productivity means doing more. It doesn't. Productivity means doing fewer things, more deliberately. In our study of 400 remote teams, the top performers weren't the ones with the longest hours — they were the ones with the shortest, most protected focus blocks. They said no to 3x more meetings than average teams. The lesson: your calendar is a values statement. What you protect on it is what you actually care about.</textarea>
+
+        <div class="example-row">
+          <div class="example-chip" onclick="loadExample(1)">Product launch</div>
+          <div class="example-chip" onclick="loadExample(2)">Case study</div>
+          <div class="example-chip" onclick="loadExample(3)">Hiring announcement</div>
+        </div>
+
+        <label>Tone</label>
+        <div class="tone-row" id="toneRow">
+          <div class="tone-pill selected" data-tone="Confident and direct">Confident</div>
+          <div class="tone-pill" data-tone="Warm and conversational">Conversational</div>
+          <div class="tone-pill" data-tone="Sharp and witty">Witty</div>
+          <div class="tone-pill" data-tone="Formal and authoritative">Formal</div>
+        </div>
+
+        <button class="generate-btn" id="genBtn" onclick="repurpose()">
+          <span class="spinner" id="spinner"></span>
+          <span id="genLabel">Repurpose this content</span>
+        </button>
+      </div>
+
+      <div class="output-grid" id="outputGrid">
+        <div class="placeholder-state">Paste content on the left and click "Repurpose this content" to generate real, channel-ready posts.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDAR VIEW -->
+<div class="view" id="view-cal">
+  <div class="wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Content Calendar</div>
+        <div class="cal-sub">Every generated batch is auto-scheduled across the week</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num" id="statBatches">0</div><div class="stat-label">Batches generated</div></div>
+      <div class="stat-card"><div class="stat-num" id="statPosts">0</div><div class="stat-label">Posts scheduled</div></div>
+      <div class="stat-card"><div class="stat-num" id="statChannels">4</div><div class="stat-label">Channels covered</div></div>
+      <div class="stat-card"><div class="stat-num">~12min</div><div class="stat-label">Time saved per batch</div></div>
+    </div>
+
+    <div class="cal-panel">
+      <div class="cal-panel-head">Scheduled posts</div>
+      <table>
+        <thead><tr><th>Day</th><th>Channel</th><th>Preview</th></tr></thead>
+        <tbody id="calTable"></tbody>
+      </table>
+      <div class="empty-state" id="calEmpty" style="display:none;">No posts yet — generate a batch in the Studio tab.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footnote wrap">
+  Portfolio demo — built by Hassan. Post generation runs on Claude, prompted per-channel with platform-specific voice rules. In a client deployment this connects to a real scheduling API (Buffer, Later, or native platform APIs) so approved posts publish automatically instead of landing in a calendar mock-up.
+</div>
+
+<script>
+let selectedTone = 'Confident and direct';
+let batches = 0;
+let scheduled = [];
+
+document.getElementById('toneRow').addEventListener('click', (e) => {
+  const pill = e.target.closest('.tone-pill');
+  if(!pill) return;
+  document.querySelectorAll('.tone-pill').forEach(p => p.classList.remove('selected'));
+  pill.classList.add('selected');
+  selectedTone = pill.dataset.tone;
+});
+
+const examples = {
+  1: "We're launching Aperture, a redesigned analytics dashboard for small teams. It cuts the time it takes to find a key metric from 8 clicks down to 2. Beta users saw setup time drop from 40 minutes to under 5. Early access opens Monday for our waitlist, then rolls out publicly two weeks later.",
+  2: "A 40-person logistics company came to us drowning in spreadsheets for route planning. We automated their dispatch workflow with a rules-based scheduler. Result: dispatch time dropped from 3 hours a day to 20 minutes, and on-time delivery rate rose from 81% to 96% within the first month.",
+  3: "We're hiring a Senior Product Designer to help shape our next chapter. This is a small team, high-ownership role — you'll ship work that reaches thousands of users within your first month, not your first year. Remote-friendly, four-day workweek, and a team that genuinely reads design critique as a gift, not a threat."
+};
+function loadExample(n){
+  document.getElementById('sourceInput').value = examples[n];
+}
+
+const days = ['Mon','Tue','Wed','Thu','Fri'];
+const channelMeta = {
+  x: {label:'X / Twitter', color:'var(--c-x)'},
+  linkedin: {label:'LinkedIn', color:'var(--c-linkedin)'},
+  instagram: {label:'Instagram', color:'var(--c-instagram)'},
+  email: {label:'Email', color:'var(--c-email)'}
+};
+
+/* Local repurposing engine — pulls real sentences from the pasted source and
+   reshapes them per channel and tone. No external API. */
+const R_STOP = new Set(['the','and','for','are','our','with','that','this','from','have','was','were','they','their','them','you','your','what','when','which','into','than','then','been','more','most','some','just','also','about','would','could','should','because','after','before','over','only','very','much','many','will','been','being','does','doing','made','make','take','like','said','says','one','two','get','got','how','why','who','its','it\u2019s']);
+
+function rSentences(text){
+  return text.replace(/\s+/g,' ').split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(s => s.length > 20);
+}
+
+function rKeywords(text, n){
+  const freq = {};
+  (text.toLowerCase().match(/[a-z][a-z'-]{3,}/g) || []).forEach(w => {
+    if(R_STOP.has(w)) return;
+    freq[w] = (freq[w] || 0) + 1;
+  });
+  return Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0, n).map(e => e[0]);
+}
+
+function rTrim(s, max){
+  if(s.length <= max) return s;
+  const cut = s.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/,'') + '…';
+}
+
+const R_TONE = {
+  confident: {open:'', close:'', li:'Worth sitting with.', ig:'No fluff.', em:'Read the full piece →'},
+  conversational: {open:'', close:'', li:"Curious whether others have found the same.", ig:'What do you reckon?', em:'Give it a read and tell us what you think →'},
+  witty: {open:'', close:'', li:'Turns out the boring answer was right all along.', ig:'Wild, I know.', em:'The full version is better. Promise →'},
+  formal: {open:'', close:'', li:'A consideration worth formal review.', ig:'Details below.', em:'The complete analysis is available here →'}
+};
+
+function localRepurpose(source, tone){
+  const sents = rSentences(source);
+  const t = R_TONE[(tone || 'confident').toLowerCase()] || R_TONE.confident;
+  const keys = rKeywords(source, 4);
+  const lead = sents[0] || source.slice(0, 160);
+  const mid = sents[1] || lead;
+  const support = sents[2] || mid;
+  const last = sents[sents.length - 1] || support;
+
+  return {
+    x_thread: [
+      rTrim(lead, 235),
+      rTrim(mid, 235),
+      rTrim(sents.length > 3 ? last : support, 220)
+    ],
+    linkedin_post: `${lead}\n\n${mid} ${support !== mid ? support : ''}\n\n${t.li}`.replace(/\s+\n/g,'\n').trim(),
+    instagram_caption: `${rTrim(lead, 120)}\n\n${rTrim(mid, 110)}\n\n${t.ig}`,
+    email_snippet: `${rTrim(lead, 180)} ${rTrim(mid, 150)}\n\n${t.em}`,
+    hashtags: (keys.length ? keys : ['content','strategy','insights','growth']).map(k => k.replace(/[^a-z0-9]/gi,''))
+  };
+}
+
+async function callClaude(msgList, system, maxTokens){
+  await new Promise(r => setTimeout(r, 700 + Math.random() * 400));
+  const prompt = msgList[msgList.length - 1].content;
+  const toneMatch = prompt.match(/Tone:\s*([a-z]+)/i);
+  const srcMatch = prompt.match(/"""([\s\S]*?)"""/);
+  const source = srcMatch ? srcMatch[1].trim() : '';
+  return JSON.stringify(localRepurpose(source, toneMatch ? toneMatch[1] : 'confident'));
+}
+
+async function repurpose(){
+  const source = document.getElementById('sourceInput').value.trim();
+  if(!source){ return; }
+
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').classList.add('show');
+  document.getElementById('genLabel').textContent = 'Repurposing...';
+
+  const prompt = `Repurpose the following source content into 4 channel-native outputs. Tone: ${selectedTone}.
+
+Source content:
+"""${source}"""
+
+Return ONLY raw JSON, no markdown fences, no preamble, in exactly this shape:
+{
+  "x_thread": ["tweet 1 text under 240 chars", "tweet 2 text", "tweet 3 text"],
+  "linkedin_post": "a 3-5 sentence linkedin post, more reflective and professional",
+  "instagram_caption": "a short punchy caption with line breaks, 2-3 sentences",
+  "email_snippet": "a 2-3 sentence email newsletter blurb with a soft call to action",
+  "hashtags": ["tag1", "tag2", "tag3", "tag4"]
+}`;
+
+  try{
+    const raw = await callClaude(
+      [{role:'user', content: prompt}],
+      'You are an expert social media copywriter who adapts long-form content into platform-native short-form posts. Output only valid JSON, nothing else.',
+      1200
+    );
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    renderOutputs(parsed);
+    scheduleBatch(parsed);
+  }catch(e){
+    document.getElementById('outputGrid').innerHTML = '<div class="placeholder-state">Something went wrong generating that batch — please try again.</div>';
+  }
+
+  btn.disabled = false;
+  document.getElementById('spinner').classList.remove('show');
+  document.getElementById('genLabel').textContent = 'Repurpose this content';
+}
+
+function renderOutputs(parsed){
+  const grid = document.getElementById('outputGrid');
+  grid.innerHTML = '';
+
+  const cards = [
+    {key:'x', title:'X / Twitter thread', color:'var(--c-x)', body: (parsed.x_thread || []).map(t => `<div class="tweet">${escapeHtml(t)}</div>`).join('')},
+    {key:'linkedin', title:'LinkedIn post', color:'var(--c-linkedin)', body: escapeHtml(parsed.linkedin_post || '')},
+    {key:'instagram', title:'Instagram caption', color:'var(--c-instagram)', body: escapeHtml(parsed.instagram_caption || '')},
+    {key:'email', title:'Email snippet', color:'var(--c-email)', body: escapeHtml(parsed.email_snippet || '')},
+  ];
+
+  cards.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'ch-card';
+    el.innerHTML = `
+      <div class="ch-strip" style="background:${c.color}"></div>
+      <div class="ch-head"><div class="ch-dot" style="background:${c.color}"></div><div class="ch-label">${c.title}</div></div>
+      <div class="ch-body">${c.body}</div>
+      ${c.key==='x' ? `<div class="hashtags">${(parsed.hashtags||[]).map(h => `<span class="hashtag">#${escapeHtml(h.replace(/^#/,''))}</span>`).join('')}</div>` : ''}
+    `;
+    grid.appendChild(el);
+  });
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function scheduleBatch(parsed){
+  batches++;
+  const dayBase = batches % 5;
+  const entries = [
+    {channel:'x', day: days[dayBase % 5], preview: (parsed.x_thread && parsed.x_thread[0]) || ''},
+    {channel:'linkedin', day: days[(dayBase+1) % 5], preview: parsed.linkedin_post || ''},
+    {channel:'instagram', day: days[(dayBase+2) % 5], preview: parsed.instagram_caption || ''},
+    {channel:'email', day: days[(dayBase+3) % 5], preview: parsed.email_snippet || ''},
+  ];
+  scheduled = entries.concat(scheduled);
+  renderCalendarStats();
+}
+
+function renderCalendarStats(){
+  document.getElementById('statBatches').textContent = batches;
+  document.getElementById('statPosts').textContent = scheduled.length;
+}
+
+function switchView(v){
+  document.getElementById('view-studio').classList.toggle('active', v==='studio');
+  document.getElementById('view-cal').classList.toggle('active', v==='cal');
+  document.getElementById('btn-studio').classList.toggle('active', v==='studio');
+  document.getElementById('btn-cal').classList.toggle('active', v==='cal');
+  if(v==='cal') renderCalendar();
+}
+
+function renderCalendar(){
+  const tbody = document.getElementById('calTable');
+  tbody.innerHTML = '';
+  document.getElementById('calEmpty').style.display = scheduled.length ? 'none' : 'block';
+  scheduled.forEach(s => {
+    const meta = channelMeta[s.channel];
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${s.day}</td>
+      <td><span class="cal-channel"><span class="ch-dot" style="background:${meta.color}"></span>${meta.label}</span></td>
+      <td class="cal-snippet">${escapeHtml(s.preview)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+renderCalendarStats();
+</script>
+
+
+<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#1A1A1F;color:#E9E9EC;border:1px solid #26262C;padding:9px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999;">← Portfolio</a>
+</body>
+</html>
