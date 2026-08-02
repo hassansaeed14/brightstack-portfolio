@@ -289,20 +289,70 @@ function renderCandidateList(){
   });
 }
 
-async function callClaude(msgList, system, maxTokens){
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({
-      model:'claude-sonnet-4-6',
-      max_tokens: maxTokens || 2000,
-      system: system,
-      messages: msgList
-    })
+/* Local screening — real keyword-overlap scoring against the role requirements. No external API. */
+const SIFT_STOP = new Set(['the','and','for','are','our','with','that','this','from','have','must','has','you','your','a','an','of','in','to','on','or','is','be','as','at','by','we','it','its','their','they','who','can','will','should','years','year','experience','strong','nice','have','plus','role','team','work','working']);
+
+function siftTokens(text){
+  return new Set((text.toLowerCase().match(/[a-z0-9+#.]+/g) || []).filter(w => w.length > 2 && !SIFT_STOP.has(w)));
+}
+
+function siftScreen(roleText, candidateTexts){
+  const roleWords = [...siftTokens(roleText)];
+  return candidateTexts.map((cText, i) => {
+    const cWords = siftTokens(cText);
+    const matched = roleWords.filter(w => cWords.has(w));
+    const missing = roleWords.filter(w => !cWords.has(w));
+    const coverage = roleWords.length ? matched.length / roleWords.length : 0;
+    const yearsMatch = cText.match(/(\d+)\+?\s*years?/i);
+    const years = yearsMatch ? parseInt(yearsMatch[1]) : null;
+    let score = Math.round(Math.min(96, 32 + coverage * 105));
+    if(years !== null && years >= 5) score = Math.min(96, score + 6);
+    if(years !== null && years <= 2) score = Math.max(12, score - 10);
+
+    const nameMatch = cText.match(/^\s*([A-Z][a-z]+(?:\s[A-Z][a-z]+)?)/);
+    const name = nameMatch ? nameMatch[1] : ('Candidate ' + (i + 1));
+    const topMatched = matched.slice(0, 3);
+    const topMissing = missing.slice(0, 3);
+
+    const verdict = score >= 75
+      ? `Strong overlap with the core requirements${years ? ` and ${years} years of relevant experience` : ''} — worth moving to interview.`
+      : score >= 50
+        ? `Partial fit — covers some of the requirements but has visible gaps worth probing before advancing.`
+        : `Limited overlap with the stated must-haves; likely a stretch for this role as written.`;
+
+    return {
+      name,
+      fit_score: score,
+      verdict,
+      strengths: topMatched.length
+        ? topMatched.map(w => `Direct match on "${w}" from the role requirements`)
+        : ['Some general relevant background, though not against the stated must-haves'],
+      gaps: topMissing.length
+        ? topMissing.map(w => `No clear evidence of "${w}" in the submitted profile`)
+        : ['No obvious gaps against the listed requirements'],
+      interview_questions: [
+        topMatched[0]
+          ? `Walk me through a specific project where you used ${topMatched[0]} — what was your direct contribution?`
+          : 'Walk me through the project you consider most relevant to this role.',
+        topMissing[0]
+          ? `The role calls for ${topMissing[0]} — what's your exposure to that, and how quickly could you ramp?`
+          : 'Which part of this role do you expect to be the steepest learning curve?'
+      ]
+    };
   });
-  const data = await res.json();
-  const textBlock = (data.content || []).find(b => b.type === 'text');
-  return textBlock ? textBlock.text : '';
+}
+
+async function callClaude(msgList, system, maxTokens){
+  await new Promise(r => setTimeout(r, 800 + Math.random() * 500));
+  const prompt = msgList[msgList.length - 1].content;
+  const roleMatch = prompt.match(/screening candidates against this role:\s*([\s\S]*?)\n\nCandidates:/);
+  const roleText = roleMatch ? roleMatch[1].trim() : '';
+  const candBlock = prompt.split('\nCandidates:\n')[1] || '';
+  const candidateTexts = candBlock
+    .split(/CANDIDATE \d+:\n/)
+    .map(s => s.split('\nFor EACH candidate')[0].trim())
+    .filter(Boolean);
+  return JSON.stringify(siftScreen(roleText, candidateTexts));
 }
 
 async function runScreening(){

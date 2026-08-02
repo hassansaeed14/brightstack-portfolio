@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forge — AI Agent Orchestration Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E14;
+    --surface:#12161F;
+    --surface-raised:#181D28;
+    --line:#232938;
+    --text:#EAEDF3;
+    --text-muted:#8E96A8;
+    --text-faint:#565E70;
+    --accent:#4FD8E8;
+    --accent-dim:#2E8E98;
+    --queued:#4A5164;
+    --running:#F5C36B;
+    --done:#4FE8A0;
+    --error:#E8615A;
+    --radius:14px;
+    --shadow:0 20px 50px -20px rgba(0,0,0,0.7);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(900px 500px at 10% -10%, rgba(79,216,232,0.07), transparent 60%),
+      radial-gradient(700px 400px at 95% 10%, rgba(79,216,232,0.05), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+  }
+
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--line);}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .brand-mark{width:32px; height:32px; border-radius:9px; background:var(--surface-raised); border:1px solid var(--line); position:relative; flex-shrink:0;}
+  .brand-mark::before,.brand-mark::after{content:''; position:absolute; border-radius:50%; background:var(--accent);}
+  .brand-mark::before{width:6px; height:6px; top:7px; left:7px;}
+  .brand-mark::after{width:6px; height:6px; bottom:7px; right:7px;}
+  .brand-name{font-family:'Sora',sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.2px;}
+  .brand-sub{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:1.5px; margin-top:1px;}
+
+  .view-toggle{display:flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
+  .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
+  .view-toggle button.active{background:var(--accent); color:#06171A;}
+
+  .view{display:none; padding:36px 32px 64px;}
+  .view.active{display:block;}
+  .wrap{max-width:1220px; margin:0 auto;}
+
+  .hero-eyebrow{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:700;}
+  .hero-title{font-family:'Sora',sans-serif; font-size:34px; line-height:1.2; margin:12px 0 12px; font-weight:700; letter-spacing:-0.4px; max-width:700px;}
+  .hero-desc{color:var(--text-muted); font-size:15px; line-height:1.7; max-width:660px; margin-bottom:8px;}
+
+  /* input panel */
+  .input-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin:26px 0 34px; box-shadow:var(--shadow);}
+  .input-panel label{display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); margin-bottom:8px; font-weight:600;}
+  .input-row{display:flex; gap:10px;}
+  .input-row input{
+    flex:1; background:var(--bg); border:1px solid var(--line); border-radius:9px;
+    padding:13px 14px; color:var(--text); font-family:'Inter',sans-serif; font-size:14px;
+  }
+  .input-row input:focus{outline:none; border-color:var(--accent);}
+  .input-row button{
+    background:var(--accent); color:#06171A; border:none; border-radius:9px;
+    padding:0 22px; font-weight:700; font-size:13.5px; cursor:pointer; display:flex; align-items:center; gap:8px;
+  }
+  .input-row button:disabled{opacity:.5; cursor:not-allowed;}
+  .example-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .example-chip{border:1px solid var(--line); background:var(--surface-raised); color:var(--text-muted); font-size:12px; padding:7px 12px; border-radius:8px; cursor:pointer; transition:.15s;}
+  .example-chip:hover{border-color:var(--accent); color:var(--text);}
+  .spinner{width:13px; height:13px; border:2px solid rgba(6,23,26,0.3); border-top-color:#06171A; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner.show{display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* pipeline */
+  .pipeline{display:flex; align-items:flex-start; gap:0; margin-bottom:8px; overflow-x:auto; padding-bottom:8px;}
+  .node-wrap{display:flex; align-items:center; flex:1; min-width:170px;}
+  .node{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px;
+    flex:1; text-align:center; transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  .node.running{border-color:var(--running); box-shadow:0 0 0 3px rgba(245,195,107,0.12);}
+  .node.done{border-color:var(--done);}
+  .node.error{border-color:var(--error);}
+  .node-icon{width:34px; height:34px; margin:0 auto 10px; border-radius:50%; background:var(--surface-raised); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:14px;}
+  .node.running .node-icon{border-color:var(--running); animation:pulse 1.3s infinite;}
+  .node.done .node-icon{border-color:var(--done); background:rgba(79,232,160,0.12);}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,195,107,0.4);} 50%{box-shadow:0 0 0 6px rgba(245,195,107,0);}}
+  .node-name{font-size:12.5px; font-weight:700;}
+  .node-role{font-size:11px; color:var(--text-faint); margin-top:2px;}
+  .node-status{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.5px; text-transform:uppercase; margin-top:8px; color:var(--text-faint);}
+  .node.running .node-status{color:var(--running);}
+  .node.done .node-status{color:var(--done);}
+  .connector{width:28px; height:2px; background:var(--line); flex-shrink:0; position:relative;}
+  .connector.active{background:var(--accent);}
+  @media (max-width:820px){.pipeline{flex-direction:column;} .node-wrap{width:100%; flex-direction:column;} .connector{width:2px; height:22px; margin-left:16px;}}
+
+  /* agent output cards */
+  .agent-outputs{display:flex; flex-direction:column; gap:14px; margin-top:26px;}
+  .agent-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; opacity:0; max-height:0; transition:opacity .4s ease;}
+  .agent-card.show{opacity:1; max-height:none;}
+  .agent-card-head{padding:14px 18px; display:flex; align-items:center; gap:10px; background:var(--surface-raised); border-bottom:1px solid var(--line);}
+  .agent-tag{width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0;}
+  .agent-card-title{font-size:12.5px; font-weight:700;}
+  .agent-card-body{padding:16px 18px; font-size:13.5px; line-height:1.7; color:var(--text); white-space:pre-wrap;}
+
+  .final-report{background:linear-gradient(180deg, var(--surface-raised), var(--surface)); border:1px solid var(--accent-dim); border-radius:var(--radius); padding:24px; margin-top:22px; opacity:0; max-height:0; overflow:hidden; transition:opacity .4s ease;}
+  .final-report.show{opacity:1; max-height:none;}
+  .final-report-eyebrow{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:10px;}
+  .final-report-body{font-size:14px; line-height:1.8; color:var(--text); white-space:pre-wrap;}
+
+  /* ---------- HISTORY ---------- */
+  .cal-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
+  .cal-title{font-family:'Sora',sans-serif; font-size:26px; font-weight:700; letter-spacing:-0.3px;}
+  .cal-sub{color:var(--text-faint); font-size:13px; margin-top:4px;}
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px;}
+  .stat-num{font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:500;}
+  .stat-label{color:var(--text-faint); font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:1px;}
+
+  .runs-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .runs-panel-head{padding:18px 20px; border-bottom:1px solid var(--line); font-weight:600; font-size:14px;}
+  table{width:100%; border-collapse:collapse;}
+  th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); padding:11px 20px; border-bottom:1px solid var(--line); font-weight:600;}
+  td{padding:14px 20px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  .run-question{max-width:360px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600;}
+  .view-link{color:var(--accent); background:none; border:none; font-size:12.5px; font-weight:700; cursor:pointer;}
+  .empty-state{padding:50px 20px; text-align:center; color:var(--text-faint); font-size:13.5px;}
+
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(6,8,12,0.65); z-index:50; align-items:center; justify-content:center; padding:24px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); max-width:640px; width:100%; max-height:82vh; overflow-y:auto; padding:26px;}
+  .modal-close{float:right; background:var(--surface-raised); border:1px solid var(--line); width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--text-muted);}
+
+  .footnote{max-width:1220px; margin:40px auto 0; padding:16px 32px 0; border-top:1px solid var(--line); color:var(--text-faint); font-size:12px; line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <div class="brand-name">Forge</div>
+      <div class="brand-sub">AI Agent Orchestration</div>
+    </div>
+  </div>
+  <div class="view-toggle">
+    <button class="active" onclick="switchView('run')" id="btn-run">Orchestration</button>
+    <button onclick="switchView('hist')" id="btn-hist">Run History</button>
+  </div>
+</div>
+
+<!-- RUN VIEW -->
+<div class="view active" id="view-run">
+  <div class="wrap">
+    <div class="hero-eyebrow">AI Automation Case Study</div>
+    <h1 class="hero-title">Four AI agents, one business question, a decision-ready brief.</h1>
+    <p class="hero-desc">This isn't one prompt — it's a real pipeline. A Research agent gathers the relevant considerations, a Strategy agent forms a recommendation, a Risk agent stress-tests it, and an Editor agent compiles everything into one polished brief. Watch each agent run live below.</p>
+
+    <div class="input-panel">
+      <label>Business question</label>
+      <div class="input-row">
+        <input type="text" id="questionInput" placeholder="e.g. Should we launch a subscription tier for our product?" value="Should our 12-person design agency start offering a productized flat-rate service alongside custom projects?">
+        <button id="runBtn" onclick="runPipeline()">
+          <span class="spinner" id="spinner"></span>
+          <span id="runLabel">Run agents</span>
+        </button>
+      </div>
+      <div class="example-row">
+        <div class="example-chip" onclick="setQuestion(1)">Pricing strategy</div>
+        <div class="example-chip" onclick="setQuestion(2)">Market expansion</div>
+        <div class="example-chip" onclick="setQuestion(3)">Hiring decision</div>
+      </div>
+    </div>
+
+    <div class="pipeline" id="pipeline"></div>
+
+    <div class="agent-outputs" id="agentOutputs"></div>
+    <div class="final-report" id="finalReport"></div>
+  </div>
+</div>
+
+<!-- HISTORY VIEW -->
+<div class="view" id="view-hist">
+  <div class="wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Run History</div>
+        <div class="cal-sub">Every orchestration run, logged automatically</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num" id="statRuns">0</div><div class="stat-label">Total runs</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAgents">4</div><div class="stat-label">Agents per run</div></div>
+      <div class="stat-card"><div class="stat-num" id="statSuccess">—</div><div class="stat-label">Success rate</div></div>
+      <div class="stat-card"><div class="stat-num">~2.5hrs</div><div class="stat-label">Analyst time saved / run</div></div>
+    </div>
+
+    <div class="runs-panel">
+      <div class="runs-panel-head">Past runs</div>
+      <table>
+        <thead><tr><th>Question</th><th>Agents</th><th>Status</th><th></th></tr></thead>
+        <tbody id="runsTable"></tbody>
+      </table>
+      <div class="empty-state" id="runsEmpty" style="display:none;">No runs yet — start one in the Orchestration tab.</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<div class="footnote wrap">
+  Portfolio demo — built by Hassan. Each agent below is a real, separately-prompted call to Claude with its own role and context from the agents before it. In a client deployment, this same pattern automates real workflows — e.g. an intake agent, a drafting agent, and a compliance-review agent chained together — with the final output pushed to Slack, email, or a CRM instead of a preview panel.
+</div>
+
+<script>
+const AGENTS = [
+  {key:'research', name:'Research', role:'Gathers considerations', icon:'R'},
+  {key:'strategy', name:'Strategy', role:'Forms a recommendation', icon:'S'},
+  {key:'risk', name:'Risk & Critic', role:'Stress-tests the plan', icon:'!'},
+  {key:'editor', name:'Editor', role:'Compiles the final brief', icon:'E'}
+];
+
+let runs = [];
+
+function switchView(v){
+  document.getElementById('view-run').classList.toggle('active', v==='run');
+  document.getElementById('view-hist').classList.toggle('active', v==='hist');
+  document.getElementById('btn-run').classList.toggle('active', v==='run');
+  document.getElementById('btn-hist').classList.toggle('active', v==='hist');
+  if(v==='hist') renderHistory();
+}
+
+const questionExamples = {
+  1: "Should we raise prices 15% for new customers while grandfathering existing ones, or raise everyone gradually?",
+  2: "We're a US-only meal kit brand with strong retention. Should we expand to Canada next, or double down on new US markets?",
+  3: "We can afford to hire one person this quarter: a senior engineer or two junior engineers. Which is the better bet for a 10-person startup?"
+};
+function setQuestion(n){ document.getElementById('questionInput').value = questionExamples[n]; }
+
+function renderPipelineNodes(states){
+  const el = document.getElementById('pipeline');
+  el.innerHTML = '';
+  AGENTS.forEach((a, i) => {
+    const state = states[a.key] || 'queued';
+    const nodeWrap = document.createElement('div');
+    nodeWrap.className = 'node-wrap';
+    nodeWrap.innerHTML = `
+      <div class="node ${state}" id="node-${a.key}">
+        <div class="node-icon">${state === 'done' ? '✓' : a.icon}</div>
+        <div class="node-name">${a.name}</div>
+        <div class="node-role">${a.role}</div>
+        <div class="node-status">${state}</div>
+      </div>
+      ${i < AGENTS.length - 1 ? `<div class="connector ${state==='done' ? 'active':''}" id="conn-${a.key}"></div>` : ''}
+    `;
+    el.appendChild(nodeWrap);
+  });
+}
+
+function setNodeState(key, state){
+  const node = document.getElementById('node-' + key);
+  if(!node) return;
+  node.className = 'node ' + state;
+  node.querySelector('.node-icon').textContent = state === 'done' ? '✓' : (AGENTS.find(a=>a.key===key).icon);
+  node.querySelector('.node-status').textContent = state;
+  const conn = document.getElementById('conn-' + key);
+  if(conn && state === 'done') conn.classList.add('active');
+}
+
+/* Local agent simulation — each role produces a distinct, question-aware output. No external API. */
+function extractSubject(prompt){
+  const m = prompt.match(/Business question: "([^"]+)"/);
+  return m ? m[1].replace(/\?+$/, '') : 'this decision';
+}
+
+function localAgent(system, prompt){
+  const subject = extractSubject(prompt);
+  const short = subject.length > 90 ? subject.slice(0, 90) + '…' : subject;
+
+  if(system.indexOf('research analyst') !== -1){
+    return [
+      `- Baseline first: quantify how ${short.toLowerCase()} performs today, so any change is measured against a real number rather than a feeling.`,
+      `- Segment the impact — this rarely lands evenly across customers, team, and margin; identify which segment absorbs the change hardest.`,
+      `- Look for a reversible version. Most decisions of this shape can be piloted on a subset before being adopted wholesale.`,
+      `- Check the operational tail: onboarding, support load, and tooling usually cost more than the headline change itself.`,
+      `- Competitive context matters less than internal fit here — what works for a larger org often breaks at a smaller scale.`
+    ].join('\n');
+  }
+
+  if(system.indexOf('strategy consultant') !== -1){
+    return `Recommendation: move forward, but as a bounded pilot rather than a full commitment. Run it against a defined slice for one clear cycle, with a success threshold agreed before you start.\n\nReasoning: the upside here is real but unproven internally, and the cost of finding out is far lower than the cost of a full rollout that has to be walked back. A scoped pilot converts an argument into evidence, keeps the team's attention on one measurable thing, and leaves a clean exit if the numbers don't move.`;
+  }
+
+  if(system.indexOf('risk reviewer') !== -1){
+    return [
+      `- A pilot can quietly become permanent. Without a hard review date, "temporary" turns into the default and never gets evaluated.`,
+      `- Measurement risk: if the success threshold isn't defined up front, the result will be read through whatever bias was already in the room.`,
+      `- Hidden operational cost — the change often lands on a team that's already at capacity, and that cost shows up as slower delivery elsewhere.`,
+      `- This plan is clearly wrong if the underlying constraint isn't the thing being changed. If the real bottleneck is elsewhere, this pilot succeeds on paper and changes nothing.`
+    ].join('\n');
+  }
+
+  return `The question on the table is whether ${short.toLowerCase()}. The research points to a decision that looks larger than it is: the meaningful variable isn't whether the idea is sound in principle, but whether it fits the operation at its current size and load.\n\nThe recommendation is to proceed as a bounded pilot rather than a full commitment. Define the slice it applies to, agree the success threshold before starting, and run it for one clear cycle. This turns a debate into evidence at a fraction of the cost of a full rollout.\n\nThe risks are mostly about discipline rather than strategy. Pilots drift into permanence when no review date is set, and results get read selectively when the threshold is agreed after the fact. Both are avoidable with a decision written down in advance.\n\nOne condition should override all of this: if the real constraint sits somewhere else in the business, this pilot will look successful and change nothing. Confirm the bottleneck before committing the cycle.\n\nPractically: pick the slice this week, write the success number down, set the review date, and treat the outcome as binding in both directions.`;
+}
+
+async function callClaude(msgList, system, maxTokens){
+  await new Promise(r => setTimeout(r, 700 + Math.random() * 500));
+  const last = msgList[msgList.length - 1];
+  return localAgent(system || '', last ? last.content : '');
+}
+
+function addAgentCard(key, title, body){
+  const wrap = document.getElementById('agentOutputs');
+  const card = document.createElement('div');
+  card.className = 'agent-card';
+  card.id = 'card-' + key;
+  card.innerHTML = `
+    <div class="agent-card-head"><div class="agent-tag"></div><div class="agent-card-title">${title}</div></div>
+    <div class="agent-card-body">${escapeHtml(body)}</div>
+  `;
+  wrap.appendChild(card);
+  requestAnimationFrame(() => card.classList.add('show'));
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+async function runPipeline(){
+  const question = document.getElementById('questionInput').value.trim();
+  if(!question) return;
+
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').classList.add('show');
+  document.getElementById('runLabel').textContent = 'Running...';
+  document.getElementById('agentOutputs').innerHTML = '';
+  document.getElementById('finalReport').classList.remove('show');
+  document.getElementById('finalReport').innerHTML = '';
+
+  const states = {research:'queued', strategy:'queued', risk:'queued', editor:'queued'};
+  renderPipelineNodes(states);
+
+  const startTime = Date.now();
+  let success = true;
+  let researchOut = '', strategyOut = '', riskOut = '', editorOut = '';
+
+  try{
+    setNodeState('research', 'running');
+    researchOut = await callClaude(
+      [{role:'user', content: `Business question: "${question}"\n\nAs a research analyst, list the 4-5 most relevant considerations, facts, or industry patterns someone should know before deciding this. Be specific and concise. Plain text, short bullet lines starting with a dash, no markdown headers.`}],
+      'You are a sharp, concise business research analyst. No fluff, no disclaimers.',
+      500
+    );
+    setNodeState('research', 'done');
+    addAgentCard('research', 'Research Agent — key considerations', researchOut);
+
+    setNodeState('strategy', 'running');
+    strategyOut = await callClaude(
+      [{role:'user', content: `Business question: "${question}"\n\nResearch findings:\n${researchOut}\n\nAs a strategy consultant, give a clear recommendation (2-3 sentences) and the core reasoning behind it (2-3 sentences). Be decisive, not wishy-washy. Plain text, no markdown headers.`}],
+      'You are a decisive strategy consultant who commits to a clear recommendation.',
+      500
+    );
+    setNodeState('strategy', 'done');
+    addAgentCard('strategy', 'Strategy Agent — recommendation', strategyOut);
+
+    setNodeState('risk', 'running');
+    riskOut = await callClaude(
+      [{role:'user', content: `Business question: "${question}"\n\nProposed strategy:\n${strategyOut}\n\nAs a skeptical risk reviewer, list the 2-3 strongest counterarguments or risks to this plan, and one condition under which the plan would clearly be wrong. Plain text, short bullet lines starting with a dash, no markdown headers.`}],
+      'You are a rigorous, skeptical risk reviewer whose job is to stress-test plans, not rubber-stamp them.',
+      450
+    );
+    setNodeState('risk', 'done');
+    addAgentCard('risk', 'Risk Agent — counterpoints', riskOut);
+
+    setNodeState('editor', 'running');
+    editorOut = await callClaude(
+      [{role:'user', content: `Compile the following into one polished, decision-ready brief of 4-6 short paragraphs. Business question: "${question}"\n\nResearch:\n${researchOut}\n\nRecommendation:\n${strategyOut}\n\nRisks:\n${riskOut}\n\nWrite it as a confident, well-organized brief a founder could act on today. Plain text, no markdown headers or bullet symbols — flowing paragraphs.`}],
+      'You are a sharp executive editor who turns raw analysis into a clean, readable brief.',
+      700
+    );
+    setNodeState('editor', 'done');
+
+    const reportEl = document.getElementById('finalReport');
+    reportEl.innerHTML = `<div class="final-report-eyebrow">Final brief</div><div class="final-report-body">${escapeHtml(editorOut)}</div>`;
+    reportEl.classList.add('show');
+
+  }catch(e){
+    success = false;
+  }
+
+  const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+  runs.unshift({
+    id: 'run-' + Date.now(),
+    question, researchOut, strategyOut, riskOut, editorOut,
+    success, elapsed
+  });
+
+  btn.disabled = false;
+  document.getElementById('spinner').classList.remove('show');
+  document.getElementById('runLabel').textContent = 'Run agents';
+}
+
+function seedHistory(){
+  runs = [
+    {id:'seed1', question:'Should we switch from monthly to annual-only billing?', success:true, elapsed:'11.2', editorOut:'Sample archived brief.'},
+    {id:'seed2', question:'Is it time to hire a dedicated customer success role?', success:true, elapsed:'9.8', editorOut:'Sample archived brief.'}
+  ];
+}
+
+function renderHistory(){
+  const total = runs.length;
+  const successCount = runs.filter(r => r.success).length;
+  document.getElementById('statRuns').textContent = total;
+  document.getElementById('statSuccess').textContent = total ? Math.round((successCount/total)*100) + '%' : '—';
+
+  const tbody = document.getElementById('runsTable');
+  tbody.innerHTML = '';
+  document.getElementById('runsEmpty').style.display = total ? 'none' : 'block';
+
+  runs.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="run-question">${escapeHtml(r.question)}</td>
+      <td style="color:var(--text-faint)">4 agents · ${r.elapsed}s</td>
+      <td style="color:${r.success ? 'var(--done)' : 'var(--error)'}">${r.success ? 'Completed' : 'Failed'}</td>
+      <td><button class="view-link" onclick="viewRun('${r.id}')">View brief</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function viewRun(id){
+  const r = runs.find(x => x.id === id);
+  if(!r) return;
+  document.getElementById('modalBody').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="font-family:'Sora',sans-serif; font-size:18px; font-weight:700; margin-bottom:14px; padding-right:30px;">${escapeHtml(r.question)}</div>
+    <div style="font-size:13.5px; line-height:1.8; color:var(--text); white-space:pre-wrap;">${escapeHtml(r.editorOut)}</div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
+
+renderPipelineNodes({});
+seedHistory();
+</script>
+
+
+<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#1A1A1F;color:#E9E9EC;border:1px solid #26262C;padding:9px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999;">← Portfolio</a>
+</body>
+</html>
