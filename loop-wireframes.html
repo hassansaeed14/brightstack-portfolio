@@ -3,351 +3,415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loop — Habit Tracker Wireframes | BrightStack Co.</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loop-wireframes.html">
+<title>Loop Apex Quantum v3.1 — Enterprise Habit & Neural Focus Suite</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loop-quantum.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Loop — Habit Tracker Wireframes | BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/loop-wireframes.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Loop Apex Quantum v3.1 — Enterprise Habit &amp; Neural Focus Suite">
+<meta property="og:description" content="Ultimate interactive habit orchestrator and focus matrix by BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0f16;
-    --card:rgba(255,255,255,0.02);
-    --ink:#ffffff;
-    --muted:#a0aec0;
-    --line:rgba(0,229,255,0.15);
-    --indigo:#00e5ff;
-    --indigo-dim:rgba(0,229,255,0.08);
-    --wire:rgba(255,255,255,0.08);
-    --wire-dark:rgba(255,255,255,0.2);
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-
-  /* Cyber Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.04), transparent 60%);}
-
-  .wrap{max-width:1120px;margin:0 auto;padding:64px 24px 100px;}
-  .eyebrow{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:12px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--indigo);
-    font-weight:600;
-    margin-bottom:14px;
-    font-family:'JetBrains Mono',monospace;
-  }
-  h1{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:40px;
-    line-height:1.1;
-    margin:0 0 16px;
-    font-weight:700;
-    letter-spacing:-0.01em;
-    color:#fff;
-  }
-  .lede{
-    color:var(--muted);
-    font-size:17px;
-    line-height:1.6;
-    max-width:640px;
-    margin:0 0 36px;
-  }
-  .meta-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:56px;
-  }
-  .pill{
-    font-size:13px;
-    font-weight:500;
-    padding:6px 14px;
-    border-radius:100px;
-    background:var(--card);
-    border:1px solid var(--line);
-    color:var(--muted);
-    backdrop-filter: blur(10px);
-    font-family:'JetBrains Mono',monospace;
-  }
-  .pill strong{color:#fff;font-weight:600;}
-
-  .section-label{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:14px;
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    color:#fff;
-    margin:0 0 6px;
-  }
-  .section-sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:600px;line-height:1.55;}
-
-  .screens{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:24px;
-    margin-bottom:64px;
-  }
-  @media(max-width:900px){.screens{grid-template-columns:repeat(2,1fr);}}
-  @media(max-width:520px){.screens{grid-template-columns:1fr;}}
-
-  .frame{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:16px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-  .frame-label{
-    font-size:12.5px;
-    font-weight:600;
-    color:#fff;
-    margin-bottom:2px;
-  }
-  .frame-num{
-    font-size:11px;
-    color:var(--muted);
-    margin-bottom:12px;
-    font-family:'JetBrains Mono',monospace;
-    letter-spacing:.05em;
-  }
-  .screen{
-    background:#05080d;
-    border:1px dashed var(--wire);
-    border-radius:10px;
-    aspect-ratio:9/17.5;
-    padding:12px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
-  .wb{background:var(--wire);border-radius:4px;}
-  .wb.dark{background:var(--wire-dark); box-shadow: 0 0 8px rgba(0,229,255,0.2);}
-  .wb-statusbar{height:8px;width:40%;border-radius:3px;margin-bottom:2px;}
-  .wb-title{height:14px;width:60%;}
-  .wb-sub{height:8px;width:40%;}
-  .wb-block{height:46px;border-radius:8px;}
-  .wb-row{display:flex;gap:6px;}
-  .wb-row .wb{flex:1;height:34px;border-radius:8px;}
-  .wb-line{height:7px;}
-  .wb-line.w80{width:80%;}
-  .wb-line.w60{width:60%;}
-  .wb-line.w40{width:40%;}
-  .wb-circle{width:46px;height:46px;border-radius:50%;margin:0 auto;}
-  .wb-nav{display:flex;justify-content:space-between;margin-top:auto;padding-top:6px;border-top:1px solid var(--line);}
-  .wb-nav .wb{width:16px;height:16px;border-radius:4px;}
-  .wb-fab{width:38px;height:38px;border-radius:50%;margin-left:auto;}
-  .wb-tag{height:20px;width:56px;border-radius:6px;}
-
-  .annotation{
-    font-size:12px;
-    color:var(--muted);
-    line-height:1.5;
-    margin-top:12px;
-    padding-top:12px;
-    border-top:1px solid var(--line);
-    font-family:'JetBrains Mono',monospace;
+  :root {
+    --bg: #010307;
+    --surface: rgba(10, 16, 28, 0.9);
+    --surface-raised: rgba(18, 27, 46, 0.95);
+    --line: rgba(245, 158, 11, 0.25);
+    --border-hover: rgba(217, 70, 239, 0.8);
+    
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --faint: #475569;
+    
+    --gold: #f59e0b;
+    --gold-dim: rgba(245, 158, 11, 0.15);
+    --orchid: #d946ef;
+    --orchid-dim: rgba(217, 70, 239, 0.15);
+    --emerald: #10b981;
+    --emerald-dim: rgba(16, 185, 129, 0.15);
+    
+    --radius: 24px;
+    --shadow: 0 40px 120px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
-  .concept{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:36px;
-    display:grid;
-    grid-template-columns:1fr 1.4fr;
-    gap:36px;
-    align-items:start;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  }
-  @media(max-width:800px){.concept{grid-template-columns:1fr;}}
-  .concept h3{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:20px;
-    margin:0 0 12px;
-    color:#fff;
-  }
-  .concept p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 14px;}
-  .swatches{display:flex;gap:10px;margin-top:16px;}
-  .sw{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);}
-  .concept-notes{display:flex;flex-direction:column;gap:14px;}
-  .note{display:flex;gap:12px;}
-  .note .dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);margin-top:7px;flex-shrink:0; box-shadow: 0 0 6px var(--indigo);}
-  .note div{color:var(--muted);font-size:14px;line-height:1.6;}
-  .note strong{color:#fff;font-weight:600;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100vh; width: 100vw; overflow: hidden; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); }
 
-  .footer-nav{
-    margin-top:72px;
-    padding-top:28px;
-    border-top:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:16px;
+  .scan {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.15;
+    background-image: repeating-linear-gradient(0deg, rgba(245,158,11,0.02) 0px, rgba(245,158,11,0.02) 1px, transparent 1px, transparent 3px);
   }
-  .footer-nav a{
-    color:var(--indigo);
-    text-decoration:none;
-    font-weight:600;
-    font-size:14.5px;
-  }
-  .brand{color:var(--muted);font-size:13.5px; font-family:'JetBrains Mono',monospace;}
+
+  .app { display: flex; height: 100vh; width: 100vw; }
+
+  /* Sidebar Navigation */
+  aside { width: 290px; flex-shrink: 0; background: rgba(2,4,8,0.96); border-right: 1px solid var(--line); display: flex; flex-direction: column; z-index: 10; backdrop-filter: blur(24px); }
+  .brand { padding: 24px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line); }
+  .brand-mark { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--gold), var(--orchid)); box-shadow: 0 0 25px rgba(245,158,11,0.5); }
+  .brand-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 19px; color: #fff; }
+  .brand-sub { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace; }
+
+  .nav-menu { padding: 22px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; text-decoration: none; border: 1px solid transparent; }
+  .nav-item:hover, .nav-item.active { background: var(--surface-raised); color: #fff; border-color: var(--line); }
+
+  .user-stats { margin-top: auto; padding: 22px; border-top: 1px solid var(--line); background: rgba(0,0,0,0.4); }
+  .stat-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; color: var(--muted); }
+  .stat-row span:last-child { color: var(--gold); font-weight: 700; }
+  .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .progress-fill { width: 84%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--orchid)); border-radius: 3px; }
+
+  /* Main Dashboard Area */
+  .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: var(--bg); }
+  header { height: 76px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(2,4,8,0.85); backdrop-filter: blur(18px); position: sticky; top: 0; z-index: 5; }
+  .page-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; font-weight: 800; color: #fff; }
+  .header-actions { display: flex; gap: 14px; align-items: center; }
+  .btn-primary { background: var(--gold); color: #010307; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 800; font-size: 13.5px; cursor: pointer; box-shadow: 0 0 25px rgba(245,158,11,0.45); transition: transform 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); }
+
+  .content-wrap { max-width: 1200px; margin: 0 auto; padding: 40px; width: 100%; }
+
+  /* Views Management */
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
+
+  /* Dashboard Grid */
+  .dash-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; margin-bottom: 40px; }
+  @media(max-width: 950px){ .dash-grid { grid-template-columns: 1fr; } }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; backdrop-filter: blur(20px); box-shadow: var(--shadow); }
+  .card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .card p.sub { font-size: 12.5px; color: var(--muted); margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Pomodoro Focus Module */
+  .pomodoro-box { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 20px; padding: 24px; text-align: center; margin-bottom: 30px; }
+  .timer-display { font-size: 48px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--gold); text-shadow: 0 0 20px rgba(245,158,11,0.4); margin: 10px 0; }
+  .timer-controls { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
+  .btn-sub { background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--ink); padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-sub:hover { border-color: var(--gold); color: #fff; }
+
+  /* Habit Checklist */
+  .habit-list { display: flex; flex-direction: column; gap: 14px; }
+  .habit-item { display: flex; align-items: center; justify-content: space-between; background: var(--surface-raised); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; transition: border-color 0.2s; }
+  .habit-item:hover { border-color: var(--gold); }
+  .habit-info h4 { font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .habit-info span { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .checkbox { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; background: rgba(245,158,11,0.05); }
+  .checkbox.completed { background: var(--gold); color: #010307; font-weight: 800; box-shadow: 0 0 15px rgba(245,158,11,0.5); }
+
+  /* Heatmap Grid */
+  .heatmap-grid { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; margin-top: 16px; }
+  .heatmap-cell { aspect-ratio: 1; border-radius: 4px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); transition: transform 0.2s; }
+  .heatmap-cell:hover { transform: scale(1.2); }
+  .heatmap-cell.l1 { background: rgba(245,158,11,0.3); border-color: rgba(245,158,11,0.4); }
+  .heatmap-cell.l2 { background: rgba(245,158,11,0.6); border-color: rgba(245,158,11,0.7); }
+  .heatmap-cell.l3 { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(245,158,11,0.6); }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(1,3,7,0.85); z-index: 50; display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+  .modal-overlay.show { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 38px; width: 440px; box-shadow: var(--shadow); position: relative; }
+  .modal h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 20px; }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .field input { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; color: #fff; font-size: 14px; outline: none; }
+  .field input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(245,158,11,0.3); }
+
+  .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); }
+  .back-link:hover { border-color: var(--gold); }
 </style>
 </head>
 <body>
 <div class="scan"></div>
 
-<div class="wrap">
-
-  <div class="eyebrow">// UI/UX Wireframe Deliverable</div>
-  <h1>Loop — Habit Tracker Wireframes</h1>
-  <p class="lede">Low-fidelity wireframe suite for a minimalist habit-tracking application. Scoped to validate core user flows (daily checklist, logging state, streak analysis) prior to high-fidelity visual design.</p>
-
-  <div class="meta-row">
-    <span class="pill"><strong>Deliverable</strong> — 4 wireframe screens</span>
-    <span class="pill"><strong>Fidelity</strong> — Grayscale wireframe</span>
-    <span class="pill"><strong>Concept</strong> — Single architecture</span>
-    <span class="pill"><strong>Timeline</strong> — 3-day sprint</span>
-  </div>
-
-  <div class="section-label">Wireframe Architecture</div>
-  <p class="section-sub">From onboarding sequence to habit logging. Structured with placeholder blocks to evaluate layout ergonomics and typography hierarchy without distraction.</p>
-
-  <div class="screens">
-    <div class="frame">
-      <div class="frame-label">Onboarding</div>
-      <div class="frame-num">// 01_ONBOARD</div>
-      <div class="screen">
-        <div class="wb wb-statusbar"></div>
-        <div class="wb wb-circle dark"></div>
-        <div class="wb wb-line w60" style="margin:0 auto;width:70%;"></div>
-        <div class="wb wb-line w40" style="margin:0 auto;width:50%;"></div>
-        <div style="flex:1;"></div>
-        <div class="wb wb-block dark"></div>
-        <div class="wb-nav"><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+<div class="app">
+  <!-- Sidebar -->
+  <aside>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">Loop Quantum</div>
+        <div class="brand-sub">Enterprise Suite</div>
       </div>
-      <div class="annotation">Single primary CTA, zero competing choices — streamlined entry funnel.</div>
+    </div>
+    
+    <div class="nav-menu">
+      <a class="nav-item active" onclick="switchView('dashboard', this)">⚡ Neural Dashboard</a>
+      <a class="nav-item" onclick="switchView('pomodoro', this)">⏳ Focus Pomodoro</a>
+      <a class="nav-item" onclick="switchView('matrix', this)">📊 Momentum Matrix</a>
+      <a class="nav-item" onclick="switchView('protocols', this)">⚙ System Protocols</a>
     </div>
 
-    <div class="frame">
-      <div class="frame-label">Today Dashboard</div>
-      <div class="frame-num">// 02_DASHBOARD</div>
-      <div class="screen">
-        <div class="wb wb-statusbar"></div>
-        <div class="wb wb-title"></div>
-        <div class="wb wb-line w40"></div>
-        <div class="wb-row" style="margin-top:4px;">
-          <div class="wb dark"></div>
-          <div class="wb"></div>
-          <div class="wb"></div>
+    <div class="user-stats">
+      <div class="stat-row"><span>Apex Rank</span><span>ELITE LVL 15</span></div>
+      <div class="stat-row"><span>Neural XP</span><span>3,420 / 4,000</span></div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main">
+    <header>
+      <div class="page-title" id="headerTitle">Executive Neural & Habit Command Center</div>
+      <div class="header-actions">
+        <button class="btn-primary" onclick="openModal()">+ New Habit Protocol</button>
+      </div>
+    </header>
+
+    <div class="content-wrap">
+      
+      <!-- VIEW 1: DASHBOARD -->
+      <div id="view-dashboard" class="view-panel active">
+        <div class="dash-grid">
+          <div class="card">
+            <h3>Daily Execution Queue</h3>
+            <p class="sub">// Active protocols scheduled for today</p>
+            <div class="habit-list" id="habitList">
+              <div class="habit-item">
+                <div class="habit-info">
+                  <h4>Deep Work Architecture</h4>
+                  <span>08:00 AM · 90 Minutes Focus</span>
+                </div>
+                <div class="checkbox completed" onclick="toggleCheck(this)">✓</div>
+              </div>
+              <div class="habit-item">
+                <div class="habit-info">
+                  <h4>Hydration Protocol</h4>
+                  <span>3.5 Liters Daily Target</span>
+                </div>
+                <div class="checkbox completed" onclick="toggleCheck(this)">✓</div>
+              </div>
+              <div class="habit-item">
+                <div class="habit-info">
+                  <h4>Algorithmic Problem Solving</h4>
+                  <span>LeetCode / System Design</span>
+                </div>
+                <div class="checkbox" onclick="toggleCheck(this)"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Streak Momentum</h3>
+            <p class="sub">// Consistency metrics</p>
+            <div style="text-align: center; padding: 20px 0;">
+              <div style="font-size: 46px; font-weight: 800; color: var(--gold); font-family: 'Plus Jakarta Sans', sans-serif;">21 Days</div>
+              <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px;">ACTIVE UNBROKEN STREAK</div>
+            </div>
+            <div style="margin-top: 20px;">
+              <div style="font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 8px;">30-Day Activity Matrix</div>
+              <div class="heatmap-grid" id="heatmap"></div>
+            </div>
+          </div>
         </div>
-        <div class="wb-row"><div class="wb"></div><div class="wb dark"></div></div>
-        <div class="wb-row"><div class="wb"></div><div class="wb"></div></div>
-        <div style="flex:1;"></div>
-        <div class="wb-nav"><div class="wb dark"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
       </div>
-      <div class="annotation">Checklist grid layout — completion status represented through structural fills.</div>
-    </div>
 
-    <div class="frame">
-      <div class="frame-label">Add Habit Modal</div>
-      <div class="frame-num">// 03_CREATE</div>
-      <div class="screen">
-        <div class="wb wb-statusbar"></div>
-        <div class="wb wb-title" style="width:50%;"></div>
-        <div class="wb wb-line w80" style="height:32px;border-radius:8px;"></div>
-        <div class="wb wb-line w80" style="height:32px;border-radius:8px;"></div>
-        <div class="wb-row">
-          <div class="wb wb-tag"></div>
-          <div class="wb wb-tag"></div>
-          <div class="wb wb-tag dark"></div>
+      <!-- VIEW 2: POMODORO -->
+      <div id="view-pomodoro" class="view-panel">
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+          <h3>Dedicated Focus Session</h3>
+          <p class="sub">// Time-boxing module for deep engineering</p>
+          <div class="pomodoro-box">
+            <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;" id="timerStatus">STATUS: READY FOR DEEP WORK</div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="timer-controls">
+              <button class="btn-sub" onclick="startTimer()">Start Focus</button>
+              <button class="btn-sub" onclick="pauseTimer()">Pause</button>
+              <button class="btn-sub" onclick="resetTimer()">Reset</button>
+            </div>
+          </div>
         </div>
-        <div style="flex:1;"></div>
-        <div class="wb wb-block dark"></div>
       </div>
-      <div class="annotation">Frequency configuration via tags instead of dropdowns for minimal tap friction.</div>
-    </div>
 
-    <div class="frame">
-      <div class="frame-label">Streak Detail</div>
-      <div class="frame-num">// 04_ANALYTICS</div>
-      <div class="screen">
-        <div class="wb wb-statusbar"></div>
-        <div class="wb wb-title" style="width:55%;"></div>
-        <div class="wb wb-circle dark" style="width:64px;height:64px;"></div>
-        <div class="wb wb-line w40" style="margin:0 auto;width:35%;"></div>
-        <div class="wb-row" style="margin-top:6px;">
-          <div class="wb" style="height:26px;"></div>
-          <div class="wb dark" style="height:26px;"></div>
-          <div class="wb dark" style="height:26px;"></div>
-          <div class="wb" style="height:26px;"></div>
-          <div class="wb dark" style="height:26px;"></div>
+      <!-- VIEW 3: MOMENTUM MATRIX -->
+      <div id="view-matrix" class="view-panel">
+        <div class="card">
+          <h3>Advanced Momentum Analytics</h3>
+          <p class="sub">// Long-term behavioral consistency tracking</p>
+          <div style="padding: 20px 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 13px;">
+            > Total Execution Hours: 142.5 hrs<br>
+            > Average Daily Completion: 92.4%<br>
+            > Peak Performance Window: 08:00 AM – 11:30 AM
+          </div>
+          <div style="margin-top: 20px;">
+            <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 12px;">Full-Year Compliance Heatmap Matrix</div>
+            <div class="heatmap-grid" id="heatmapFull" style="grid-template-columns: repeat(28, 1fr);"></div>
+          </div>
         </div>
-        <div style="flex:1;"></div>
-        <div class="wb-nav"><div class="wb"></div><div class="wb"></div><div class="wb dark"></div><div class="wb"></div></div>
       </div>
-      <div class="annotation">Weekly progress strip provides immediate scannability over aggregated counts.</div>
-    </div>
-  </div>
 
-  <div class="section-label">Design Philosophy</div>
-  <p class="section-sub">Core direction established for Basic-tier delivery — ready for UI skinning or developer handoff.</p>
-
-  <div class="concept">
-    <div>
-      <h3>UX Principle: "One Glance, One Tap"</h3>
-      <p>Every screen answers a singular intent without scrolling overhead: what is pending, what is completed, what follows next.</p>
-      <div class="swatches">
-        <div class="sw" style="background:#0a0f16;"></div>
-        <div class="sw" style="background:#00e5ff;"></div>
-        <div class="sw" style="background:#ffdab9;"></div>
-        <div class="sw" style="background:rgba(255,255,255,0.05);border:1px solid rgba(0,229,255,0.3);"></div>
+      <!-- VIEW 4: SYSTEM PROTOCOLS -->
+      <div id="view-protocols" class="view-panel">
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+          <h3>System Habit Protocols & Settings</h3>
+          <p class="sub">// Configure execution parameters and notifications</p>
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+            <div class="habit-item">
+              <div class="habit-info">
+                <h4>Quantum Notifications</h4>
+                <span>Receive push alerts before scheduled sessions</span>
+              </div>
+              <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
+            </div>
+            <div class="habit-item">
+              <div class="habit-info">
+                <h4>Strict Focus Lockdown</h4>
+                <span>Block distracting web protocols during deep work</span>
+              </div>
+              <input type="checkbox" style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
+            </div>
+          </div>
+        </div>
       </div>
-      <p style="font-size:12.5px;margin-top:10px; font-family:'JetBrains Mono',monospace; color:var(--muted);">// Design system palette preview</p>
-    </div>
-    <div class="concept-notes">
-      <div class="note"><div class="dot"></div><div><strong>Grid System.</strong> 8pt proportional spacing maintained consistently across all frames.</div></div>
-      <div class="note"><div class="dot"></div><div><strong>Visual Weight.</strong> Primary actions anchored by dominant contrast blocks.</div></div>
-      <div class="note"><div class="dot"></div><div><strong>Developer Ready.</strong> Fully named frames structured for zero-ambiguity handover.</div></div>
-      <div class="note"><div class="dot"></div><div><strong>Figma Source.</strong> Provided as an editable vector asset package.</div></div>
+
     </div>
   </div>
-
-  <div class="footer-nav">
-    <span class="brand">BrightStack Co. — UI/UX Division</span>
-    <a href="index.html">← Back to portfolio</a>
-  </div>
-
 </div>
 
-<!-- 3D Card Hover Effect -->
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>Create Habit Protocol</h3>
+    <div class="field">
+      <label>Habit Name</label>
+      <input type="text" id="newHabitName" placeholder="e.g., Read 30 pages">
+    </div>
+    <div class="field">
+      <label>Schedule / Time</label>
+      <input type="text" id="newHabitTime" placeholder="e.g., 07:00 AM · Daily">
+    </div>
+    <div style="display: flex; gap: 10px; margin-top: 24px;">
+      <button class="btn-primary" style="flex: 1;" onclick="createHabit()">Deploy Protocol</button>
+      <button class="btn-primary" style="flex: 1; background: var(--surface-raised); color: #fff; border: 1px solid var(--line);" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<a href="index.html" class="back-link">← Back to Portfolio Hub</a>
+
+<!-- 3D Tilt Effect & Functional Logic -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".frame, .concept"), {
-    max: 2,
+  VanillaTilt.init(document.querySelectorAll(".card"), {
+    max: 1.5,
     speed: 400,
     glare: true,
     "max-glare": 0.03,
   });
+
+  // Generate Heatmap Cells (Dashboard)
+  const hm = document.getElementById('heatmap');
+  for(let i=0; i<28; i++){
+    const cell = document.createElement('div');
+    cell.className = 'heatmap-cell';
+    const rand = Math.random();
+    if(rand > 0.6) cell.classList.add('l3');
+    else if(rand > 0.3) cell.classList.add('l2');
+    else if(rand > 0.1) cell.classList.add('l1');
+    hm.appendChild(cell);
+  }
+
+  // Generate Heatmap Cells (Matrix Full)
+  const hmFull = document.getElementById('heatmapFull');
+  if(hmFull){
+    for(let i=0; i<84; i++){
+      const cell = document.createElement('div');
+      cell.className = 'heatmap-cell';
+      const rand = Math.random();
+      if(rand > 0.5) cell.classList.add('l3');
+      else if(rand > 0.25) cell.classList.add('l2');
+      else if(rand > 0.1) cell.classList.add('l1');
+      hmFull.appendChild(cell);
+    }
+  }
+
+  // View Switcher Logic
+  function switchView(viewId, el){
+    document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    
+    document.getElementById('view-' + viewId).classList.add('active');
+    el.classList.add('active');
+
+    const titles = {
+      dashboard: 'Executive Neural & Habit Command Center',
+      pomodoro: 'Dedicated Focus Session Studio',
+      matrix: 'Momentum Analytics & Behavioral Matrix',
+      protocols: 'System Protocols & Habit Parameters'
+    };
+    document.getElementById('headerTitle').textContent = titles[viewId];
+  }
+
+  // Pomodoro Timer Logic
+  let timerInterval = null;
+  let timeLeft = 25 * 60;
+  let isRunning = false;
+
+  function updateTimerDisplay(){
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    const displayStr = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    document.getElementById('timerDisplay').textContent = displayStr;
+  }
+
+  function startTimer(){
+    if(isRunning) return;
+    isRunning = true;
+    document.getElementById('timerStatus').textContent = 'STATUS: FOCUS SESSION ACTIVE';
+    timerInterval = setInterval(() => {
+      if(timeLeft > 0){
+        timeLeft--;
+        updateTimerDisplay();
+      } else {
+        clearInterval(timerInterval);
+        isRunning = false;
+        alert('Focus session complete! Take a neural break.');
+      }
+    }, 1000);
+  }
+
+  function pauseTimer(){
+    clearInterval(timerInterval);
+    isRunning = false;
+    document.getElementById('timerStatus').textContent = 'STATUS: PAUSED';
+  }
+
+  function resetTimer(){
+    clearInterval(timerInterval);
+    isRunning = false;
+    timeLeft = 25 * 60;
+    updateTimerDisplay();
+    document.getElementById('timerStatus').textContent = 'STATUS: READY FOR DEEP WORK';
+  }
+
+  function toggleCheck(el){
+    el.classList.toggle('completed');
+    el.textContent = el.classList.contains('completed') ? '✓' : '';
+  }
+
+  function openModal(){ document.getElementById('modal').classList.add('show'); }
+  function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+
+  function createHabit(){
+    const name = document.getElementById('newHabitName').value.trim();
+    const time = document.getElementById('newHabitTime').value.trim();
+    if(!name) return;
+
+    const list = document.getElementById('habitList');
+    const item = document.createElement('div');
+    item.className = 'habit-item';
+    item.innerHTML = `
+      <div class="habit-info">
+        <h4>${name}</h4>
+        <span>${time || 'Daily Schedule'}</span>
+      </div>
+      <div class="checkbox" onclick="toggleCheck(this)"></div>
+    `;
+    list.appendChild(item);
+    closeModal();
+    document.getElementById('newHabitName').value = '';
+    document.getElementById('newHabitTime').value = '';
+  }
 </script>
 </body>
 </html>
