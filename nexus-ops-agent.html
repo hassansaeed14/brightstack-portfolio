@@ -16,18 +16,18 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0A0A0B;
-    --surface:#131316;
-    --surface-raised:#1A1A1F;
-    --line:#26262C;
-    --text:#E9E9EC;
-    --text-muted:#8C8C96;
-    --text-faint:#565660;
+    --bg:#0A0B0B;
+    --surface:#131516;
+    --surface-raised:#1A1E1F;
+    --line:#272B2B;
+    --text:#E9EBEC;
+    --text-muted:#8B9597;
+    --text-faint:#565E60;
     --accent:#7CFFB2;
-    --accent-dim:#3E8A5F;
+    --accent-dim:#418783;
     --warn:#FFB454;
     --error:#FF6B6B;
-    --info:#7CB8FF;
+    --info:#8EE1ED;
     --radius:14px;
     --shadow:0 20px 50px -20px rgba(0,0,0,0.8);
   }
@@ -51,7 +51,7 @@
 
   .view-toggle{display:flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
   .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
-  .view-toggle button.active{background:var(--accent); color:#06170D;}
+  .view-toggle button.active{background:var(--accent); color:#071615;}
 
   .view{display:none; padding:36px 32px 64px;}
   .view.active{display:block;}
@@ -74,14 +74,14 @@
   }
   .input-row input:focus{outline:none; border-color:var(--accent);}
   .input-row button{
-    background:var(--accent); color:#06170D; border:none; border-radius:9px;
+    background:var(--accent); color:#071615; border:none; border-radius:9px;
     padding:0 22px; font-weight:700; font-size:13.5px; cursor:pointer; display:flex; align-items:center; gap:8px;
   }
   .input-row button:disabled{opacity:.5; cursor:not-allowed;}
   .example-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
   .example-chip{border:1px solid var(--line); background:var(--surface-raised); color:var(--text-muted); font-size:12px; padding:7px 12px; border-radius:8px; cursor:pointer; transition:.15s;}
   .example-chip:hover{border-color:var(--accent); color:var(--text);}
-  .spinner{width:13px; height:13px; border:2px solid rgba(6,23,13,0.3); border-top-color:#06170D; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner{width:13px; height:13px; border:2px solid rgba(7,22,21,0.3); border-top-color:#071615; border-radius:50%; animation:spin .7s linear infinite; display:none;}
   .spinner.show{display:inline-block;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
@@ -556,6 +556,6 @@ seedLog();
 </script>
 
 
-<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#1A1A1F;color:#E9E9EC;border:1px solid #26262C;padding:9px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999;">← Portfolio</a>
+<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#1A1E1F;color:#E9EBEC;border:1px solid #272B2B;padding:9px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999;">← Portfolio</a>
 </body>
 </html>

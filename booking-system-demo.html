@@ -16,13 +16,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --rose:#B8467A;
-    --rose-light:#FBEAF1;
-    --charcoal:#26222A;
-    --muted:#8A8290;
-    --bg:#FAF8F9;
+    --rose:#B4674A;
+    --rose-light:#FAEFEB;
+    --charcoal:#22282A;
+    --muted:#838D8F;
+    --bg:#FAF9F8;
     --card:#FFFFFF;
-    --line:#EEE5EA;
+    --line:#EEE7E5;
     --green:#3A9B7A;
   }
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
@@ -48,7 +48,7 @@
     aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;
     font-size:13px;cursor:pointer;position:relative;
   }
-  .cal-day.muted{color:#D8D0D5;cursor:default;}
+  .cal-day.muted{color:#D8D2D0;cursor:default;}
   .cal-day:not(.muted):hover{background:var(--rose-light);}
   .cal-day.selected{background:var(--rose);color:#fff;font-weight:600;}
   .cal-day.has-booking::after{
@@ -62,7 +62,7 @@
     border:1px solid var(--line);border-radius:8px;padding:9px 4px;text-align:center;font-size:12px;
     cursor:pointer;background:var(--bg);
   }
-  .slot.taken{color:#D8D0D5;background:#F3F0F1;cursor:not-allowed;text-decoration:line-through;}
+  .slot.taken{color:#D8D2D0;background:#F3F1F0;cursor:not-allowed;text-decoration:line-through;}
   .slot.selected{background:var(--rose);color:#fff;border-color:var(--rose);}
   .slot:not(.taken):not(.selected):hover{border-color:var(--rose);}
 
@@ -70,7 +70,7 @@
     width:100%;margin-top:20px;background:var(--charcoal);color:#fff;border:none;padding:13px;
     border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;
   }
-  .book-btn:disabled{background:#D8D0D5;cursor:not-allowed;}
+  .book-btn:disabled{background:#D8D2D0;cursor:not-allowed;}
 
   /* SIDEBAR */
   .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}

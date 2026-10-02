@@ -16,8 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1B2430; --ink-soft:#4B5568; --paper:#EEF1F4; --paper-2:#FFFFFF;
-    --line:#D4DAE1; --signal:#FFC93C; --signal-ink:#2A2005; --indigo:#3C3EE8; --indigo-soft:#EEEEFD;
+    --ink:#13262B; --ink-soft:#4A626A; --paper:#EEF7F9; --paper-2:#FFFFFF;
+    --line:#CFE2E7; --signal:#FFC49A; --signal-ink:#2B1A0C; --indigo:#1795AE; --indigo-soft:#E6F6F9;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
@@ -182,7 +182,7 @@
           Budget: ${escapeHtml(brief.budget || '—')} · Timeline: ${escapeHtml(brief.timeline || '—')}
         </div>` : `<div class="lead-meta" style="margin-top:10px;">No project brief submitted yet.</div>`}
         ${(client.complaints && client.complaints.length) ? `
-        <div class="lead-meta" style="margin-top:10px;background:#FBE9E7;border:1px solid #f0c9c4;border-radius:8px;padding:12px 14px;">
+        <div class="lead-meta" style="margin-top:10px;background:#FAEFE8;border:1px solid #EED6C6;border-radius:8px;padding:12px 14px;">
           <strong style="color:#C4453A;">${client.complaints.length} complaint${client.complaints.length > 1 ? 's' : ''}</strong><br>
           ${client.complaints.slice().reverse().map(c => escapeHtml(c.text)).join('<br>')}
         </div>` : ''}

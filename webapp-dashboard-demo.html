@@ -16,16 +16,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#1B2432;
-    --navy-2:#232E40;
-    --blue:#3D63DD;
-    --teal:#1F9E8E;
-    --amber:#D9911F;
-    --bg:#F4F6F9;
+    --navy:#1C2E31;
+    --navy-2:#243B3F;
+    --blue:#43C0D7;
+    --teal:#23989A;
+    --amber:#D27C26;
+    --bg:#F4F8F9;
     --card:#FFFFFF;
-    --border:#E3E7EE;
-    --text:#1B2432;
-    --text-muted:#697386;
+    --border:#E3ECEE;
+    --text:#1C2E31;
+    --text-muted:#6A8185;
   }
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
   body{background:var(--bg);color:var(--text);}
@@ -44,14 +44,14 @@
   .field label{display:block;font-size:13px;font-weight:500;margin-bottom:6px;color:var(--text);}
   .field input{
     width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:6px;
-    font-size:14px;background:#FBFBFD;
+    font-size:14px;background:#FBFDFD;
   }
   .field input:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue);}
   .login-btn{
     width:100%;background:var(--blue);color:#fff;border:none;padding:12px;border-radius:6px;
     font-weight:600;font-size:14px;cursor:pointer;margin-top:8px;
   }
-  .login-btn:hover{background:#3153c4;}
+  .login-btn:hover{background:#36A9BF;}
   .login-hint{font-size:12px;color:var(--text-muted);margin-top:16px;text-align:center;}
 
   /* DASHBOARD */
@@ -63,7 +63,7 @@
   }
   .side-logo{font-weight:700;font-size:18px;padding:0 24px;margin-bottom:32px;}
   .side-link{
-    display:block;padding:11px 24px;font-size:14px;color:#C3CAD9;font-weight:500;
+    display:block;padding:11px 24px;font-size:14px;color:#C4D5D8;font-weight:500;
   }
   .side-link.active{background:var(--navy-2);color:#fff;border-left:3px solid var(--blue);}
 
@@ -91,8 +91,8 @@
   tr:last-child td{border-bottom:none;}
   .badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;}
   .badge.paid{background:#E3F5F1;color:var(--teal);}
-  .badge.pending{background:#FCF1E0;color:var(--amber);}
-  .badge.overdue{background:#FBE9E7;color:#C4453A;}
+  .badge.pending{background:#FAEEE2;color:var(--amber);}
+  .badge.overdue{background:#FAEFE8;color:#C4453A;}
 
   @media (max-width:900px){
     .stats-row{grid-template-columns:repeat(2,1fr);}

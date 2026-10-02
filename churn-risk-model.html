@@ -17,9 +17,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1B2430; --ink-soft:#4B5568; --paper:#EEF1F4; --paper-2:#FFFFFF;
-    --line:#D4DAE1; --signal:#FFC93C; --signal-ink:#2A2005; --indigo:#3C3EE8; --indigo-soft:#EEEEFD;
-    --churn:#E4573D; --good:#0EA5A5;
+    --ink:#13262B; --ink-soft:#4A626A; --paper:#EEF7F9; --paper-2:#FFFFFF;
+    --line:#CFE2E7; --signal:#FFC49A; --signal-ink:#2B1A0C; --indigo:#1795AE; --indigo-soft:#E6F6F9;
+    --churn:#E4573D; --good:#19969A;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
@@ -55,7 +55,7 @@
     font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;
   }
   #trainBtn:disabled{background:var(--line);color:var(--ink-soft);cursor:wait;}
-  #trainBtn:not(:disabled):hover{background:#ffbb0f;}
+  #trainBtn:not(:disabled):hover{background:#DE8B30;}
   .status-line{font-size:12.5px;color:var(--ink-soft);margin-left:auto;}
 
   .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
@@ -294,7 +294,7 @@ function drawLoss(losses){
   const ctx = c.getContext('2d');
   const w = c.width, h = c.height, pad = 30;
   ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = '#D4DAE1'; ctx.lineWidth = 1;
+  ctx.strokeStyle = '#CFE2E7'; ctx.lineWidth = 1;
   ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
   const maxLoss = Math.max(...losses, 0.01);
   ctx.beginPath();
@@ -304,8 +304,8 @@ function drawLoss(losses){
     const [px, py] = mapPt(nx, ny, w, h, pad);
     if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
   });
-  ctx.strokeStyle = '#3C3EE8'; ctx.lineWidth = 2; ctx.stroke();
-  ctx.fillStyle = '#4B5568'; ctx.font = '11px Inter, sans-serif';
+  ctx.strokeStyle = '#1795AE'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#4A626A'; ctx.font = '11px Inter, sans-serif';
   ctx.fillText('epoch →', w-pad-40, h-8);
   ctx.save(); ctx.translate(12, h/2); ctx.rotate(-Math.PI/2);
   ctx.fillText('loss (high → low)', -40, 0); ctx.restore();
@@ -316,7 +316,7 @@ function drawScatter(trainPts, testPts, w0, w1, b){
   const ctx = c.getContext('2d');
   const w = c.width, h = c.height, pad = 30;
   ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = '#D4DAE1'; ctx.lineWidth = 1;
+  ctx.strokeStyle = '#CFE2E7'; ctx.lineWidth = 1;
   ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
 
   // decision boundary: w0*x + w1*y + b = 0  ->  y = -(w0*x+b)/w1
@@ -330,27 +330,27 @@ function drawScatter(trainPts, testPts, w0, w1, b){
       if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     });
   }
-  ctx.strokeStyle = '#1B2430'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.strokeStyle = '#13262B'; ctx.lineWidth = 1.5; ctx.stroke();
   ctx.setLineDash([]);
 
   trainPts.forEach(p => {
     const [px, py] = mapPt(p.x, p.y, w, h, pad);
     ctx.beginPath(); ctx.arc(px, py, 3.5, 0, Math.PI*2);
-    ctx.fillStyle = p.label === 1 ? '#E4573D' : '#3C3EE8';
+    ctx.fillStyle = p.label === 1 ? '#E4573D' : '#1795AE';
     ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
   });
 
   testPts.forEach(p => {
     const [px, py] = mapPt(p.x, p.y, w, h, pad);
     ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI*2);
-    ctx.fillStyle = p.label === 1 ? '#E4573D' : '#3C3EE8';
+    ctx.fillStyle = p.label === 1 ? '#E4573D' : '#1795AE';
     ctx.fill();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = p.pred === p.label ? '#0EA5A5' : '#000000';
+    ctx.strokeStyle = p.pred === p.label ? '#19969A' : '#000000';
     ctx.stroke();
   });
 
-  ctx.fillStyle = '#4B5568'; ctx.font = '11px Inter, sans-serif';
+  ctx.fillStyle = '#4A626A'; ctx.font = '11px Inter, sans-serif';
   ctx.fillText('engagement →', w-pad-70, h-8);
   ctx.save(); ctx.translate(12, h/2); ctx.rotate(-Math.PI/2);
   ctx.fillText('payment delay →', -50, 0); ctx.restore();

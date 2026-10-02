@@ -16,8 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#15181C; --paper:#F7F6F3; --card:#FFFFFF; --line:#E4E1DA;
-    --coral:#FF4B3E; --coral-soft:#FFE3E0; --muted:#6B6F76;
+    --ink:#151B1C; --paper:#F7F5F3; --card:#FFFFFF; --line:#E4DFDA;
+    --coral:#E58E58; --coral-soft:#FBEDE4; --muted:#6A7577;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
@@ -48,13 +48,13 @@
     flex:1;background:var(--ink);border-radius:10px;padding:22px;color:var(--paper);
   }
   .sp-title{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);margin-bottom:14px;}
-  .sp-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #2A2E33;font-size:13px;}
+  .sp-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #2A3233;font-size:13px;}
   .sp-row:last-child{border-bottom:none;}
   .sp-day{font-weight:700;width:40px;flex-shrink:0;}
-  .sp-class{flex:1;color:#C7CBD1;}
+  .sp-class{flex:1;color:#C7CFD1;}
   .sp-intensity{width:44px;height:6px;border-radius:3px;flex-shrink:0;}
-  .i-low{background:rgba(255,75,62,0.3);}
-  .i-mid{background:rgba(255,75,62,0.6);}
+  .i-low{background:rgba(229,142,88,0.3);}
+  .i-mid{background:rgba(229,142,88,0.6);}
   .i-high{background:var(--coral);}
 
   .section{padding:70px 32px;max-width:1120px;margin:0 auto;}
@@ -65,12 +65,12 @@
 
   /* Full weekly schedule — the signature element in full */
   .schedule-board{background:var(--ink);border-radius:14px;padding:30px;color:var(--paper);overflow-x:auto;}
-  .schedule-grid{display:grid;grid-template-columns:70px repeat(7,1fr);gap:1px;background:#2A2E33;min-width:760px;}
+  .schedule-grid{display:grid;grid-template-columns:70px repeat(7,1fr);gap:1px;background:#2A3233;min-width:760px;}
   .sched-cell{background:var(--ink);padding:12px 10px;font-size:12px;}
   .sched-head{font-family:'IBM Plex Mono',monospace;font-weight:700;text-align:center;font-size:11px;color:var(--coral);text-transform:uppercase;}
-  .sched-time{font-family:'IBM Plex Mono',monospace;color:#8A8F96;font-size:11px;}
+  .sched-time{font-family:'IBM Plex Mono',monospace;color:#8A9496;font-size:11px;}
   .sched-class{border-radius:5px;padding:8px 6px;font-size:11px;text-align:center;font-weight:600;}
-  .legend{display:flex;gap:18px;margin-top:18px;font-size:11.5px;color:#9BA0A7;flex-wrap:wrap;}
+  .legend{display:flex;gap:18px;margin-top:18px;font-size:11.5px;color:#9CA4A6;flex-wrap:wrap;}
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
 
@@ -83,7 +83,7 @@
 
   .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .price-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px;}
-  .price-card.featured{border-color:var(--coral);box-shadow:0 14px 30px rgba(255,75,62,0.12);}
+  .price-card.featured{border-color:var(--coral);box-shadow:0 14px 30px rgba(229,142,88,0.12);}
   .price-name{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;color:var(--coral);margin-bottom:10px;}
   .price-val{font-family:'Archivo Black',sans-serif;font-size:34px;margin-bottom:4px;}
   .price-val span{font-size:14px;font-family:'Inter',sans-serif;color:var(--muted);}
@@ -159,26 +159,26 @@
       <div class="sched-cell sched-head">Thu</div><div class="sched-cell sched-head">Fri</div><div class="sched-cell sched-head">Sat</div><div class="sched-cell sched-head">Sun</div>
 
       <div class="sched-cell sched-time">6:00 AM</div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.6);">Strength</div></div>
       <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Mobility</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.3);">Mobility</div></div>
       <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Olympic Lift</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Open Gym</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.6);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.3);">Open Gym</div></div>
       <div class="sched-cell"></div>
 
       <div class="sched-cell sched-time">5:30 PM</div>
       <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.6);">Strength</div></div>
       <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Olympic Lift</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Mobility</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.3);">Mobility</div></div>
       <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
       <div class="sched-cell"></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Community WOD</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(229,142,88,0.3);">Community WOD</div></div>
     </div>
     <div class="legend">
-      <span><i style="background:rgba(255,75,62,0.3);"></i>Low intensity</span>
-      <span><i style="background:rgba(255,75,62,0.6);"></i>Moderate</span>
+      <span><i style="background:rgba(229,142,88,0.3);"></i>Low intensity</span>
+      <span><i style="background:rgba(229,142,88,0.6);"></i>Moderate</span>
       <span><i style="background:var(--coral);"></i>High intensity</span>
     </div>
   </div>

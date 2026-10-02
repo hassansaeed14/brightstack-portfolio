@@ -16,10 +16,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --page-bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080; --line:#e3e5ee; --indigo:#4f46e5;
-    --studio-bg:#181a20; --studio-panel:#1f222b; --studio-panel-2:#262a35; --studio-line:#2c2f3a;
-    --amber:#e0a458; --cyan:#5fc9c1; --red:#e0665f; --violet:#9b8cf0;
-    --studio-text:#e8e9ee; --studio-muted:#7d8190;
+    --page-bg:#F1F6F7; --card:#ffffff; --ink:#12181A; --muted:#6C7C7F; --line:#E3ECEE; --indigo:#4CC1DF;
+    --studio-bg:#181F20; --studio-panel:#1F292B; --studio-panel-2:#273234; --studio-line:#2C373A;
+    --amber:#DB9A5D; --cyan:#63C3C5; --red:#DB9164; --violet:#8FD8ED;
+    --studio-text:#E8EDEE; --studio-muted:#808B8D;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--page-bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
@@ -42,12 +42,12 @@
   /* Studio */
   .studio{
     background:var(--studio-bg);border-radius:20px;padding:22px;color:var(--studio-text);
-    font-family:'Inter',sans-serif;box-shadow:0 40px 80px -30px rgba(10,10,14,.45);margin-bottom:16px;
+    font-family:'Inter',sans-serif;box-shadow:0 40px 80px -30px rgba(10,13,14,.45);margin-bottom:16px;
   }
 
   .studio-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
   .studio-brand{display:flex;align-items:center;gap:10px;}
-  .studio-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--amber),#b9803a);}
+  .studio-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--amber),#B5783E);}
   .studio-brand-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;}
   .transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .transport-btn{
@@ -56,7 +56,7 @@
   }
   .transport-btn:hover{border-color:var(--amber);}
   .transport-btn:active{transform:scale(.92);}
-  .transport-btn.play{background:var(--amber);color:#221a0d;border-color:var(--amber);width:42px;height:42px;}
+  .transport-btn.play{background:var(--amber);color:#21180E;border-color:var(--amber);width:42px;height:42px;}
   .ctrl-box{background:var(--studio-panel);border:1px solid var(--studio-line);border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;}
   .ctrl-val{font-size:13.5px;font-weight:600;color:var(--amber);min-width:26px;text-align:center;}
   .ctrl-arrow{cursor:pointer;color:var(--studio-muted);font-size:11px;user-select:none;padding:2px 3px;}
@@ -68,7 +68,7 @@
   }
   .len-toggle{display:flex;background:var(--studio-panel);border:1px solid var(--studio-line);border-radius:10px;overflow:hidden;}
   .len-btn{padding:8px 12px;font-size:12px;font-weight:600;color:var(--studio-muted);cursor:pointer;}
-  .len-btn.active{background:var(--amber);color:#221a0d;}
+  .len-btn.active{background:var(--amber);color:#21180E;}
 
   /* Spectrum analyzer */
   .spectrum{
@@ -91,7 +91,7 @@
     transition:all .15s;flex-shrink:0;
   }
   .mini-btn.m-on{background:var(--red);color:#fff;border-color:var(--red);}
-  .mini-btn.s-on{background:var(--amber);color:#221a0d;border-color:var(--amber);}
+  .mini-btn.s-on{background:var(--amber);color:#21180E;border-color:var(--amber);}
   .mini-btn:hover{color:var(--studio-text);}
 
   .steps-area{display:flex;flex-direction:column;gap:4px;}
@@ -241,14 +241,14 @@
 
 <script>
   const TRACKS = [
-    { name:'Kick',      color:'#e0665f', type:'kick'   },
-    { name:'Snare',     color:'#e0a458', type:'snare'  },
-    { name:'Clap',      color:'#f0c26a', type:'clap'   },
-    { name:'Closed Hat',color:'#5fc9c1', type:'hatC'   },
-    { name:'Open Hat',  color:'#7fd8cf', type:'hatO'   },
-    { name:'Tom',       color:'#e08a5f', type:'tom'    },
-    { name:'Bass Synth',color:'#9b8cf0', type:'bass'   },
-    { name:'Lead Synth',color:'#8b93f0', type:'lead'   },
+    { name:'Kick',      color:'#DB9164', type:'kick'   },
+    { name:'Snare',     color:'#DB9A5D', type:'snare'  },
+    { name:'Clap',      color:'#E8AE72', type:'clap'   },
+    { name:'Closed Hat',color:'#63C3C5', type:'hatC'   },
+    { name:'Open Hat',  color:'#82D4D5', type:'hatO'   },
+    { name:'Tom',       color:'#DB9864', type:'tom'    },
+    { name:'Bass Synth',color:'#8FD8ED', type:'bass'   },
+    { name:'Lead Synth',color:'#8FDBEC', type:'lead'   },
   ];
 
   const PRESETS = {

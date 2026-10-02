@@ -16,9 +16,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080;
-    --line:#e3e5ee; --indigo:#4f46e5; --indigo-dim:#eef0fd;
-    --coral:#ff5470; --coral-dim:#ffe7ec; --green:#0f9d63; --green-dim:#e7f7ef;
+    --bg:#F1F6F7; --card:#ffffff; --ink:#12181A; --muted:#6C7C7F;
+    --line:#E3ECEE; --indigo:#4CC1DF; --indigo-dim:#EFFAFC;
+    --coral:#E8956B; --coral-dim:#FCF0EA; --green:#0f9d63; --green-dim:#e7f7ef;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
@@ -41,9 +41,9 @@
   .btn-primary{background:var(--coral);color:#fff;}
   .btn-ghost{background:var(--indigo-dim);color:var(--indigo);}
   .size-row{display:flex;gap:8px;}
-  .size-chip{width:34px;height:34px;border-radius:8px;background:#fafafd;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
+  .size-chip{width:34px;height:34px;border-radius:8px;background:#FAFCFD;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
   .size-chip.on{background:var(--coral);color:#fff;border-color:var(--coral);}
-  .cart-badge-demo{position:relative;width:40px;height:40px;border-radius:10px;background:#fafafd;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
+  .cart-badge-demo{position:relative;width:40px;height:40px;border-radius:10px;background:#FAFCFD;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
   .cart-badge-demo .badge{position:absolute;top:-6px;right:-6px;background:var(--coral);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
   .rating{display:flex;gap:3px;}
   .star{width:14px;height:14px;background:var(--coral);clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);}
@@ -52,9 +52,9 @@
   .proto-wrap{display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:flex-start;}
   @media(max-width:820px){.proto-wrap{grid-template-columns:1fr;justify-items:center;}}
 
-  .phone{width:290px;height:600px;background:#0e0f14;border-radius:42px;padding:11px;box-shadow:0 30px 60px -20px rgba(18,19,26,.35), 0 0 0 1px rgba(18,19,26,.06);position:relative;flex-shrink:0;}
-  .phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:90px;height:20px;background:#0e0f14;border-radius:0 0 16px 16px;z-index:6;}
-  .phone-screen{width:100%;height:100%;background:#fafafd;border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
+  .phone{width:290px;height:600px;background:#0E1314;border-radius:42px;padding:11px;box-shadow:0 30px 60px -20px rgba(18,24,26,.35), 0 0 0 1px rgba(18,24,26,.06);position:relative;flex-shrink:0;}
+  .phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:90px;height:20px;background:#0E1314;border-radius:0 0 16px 16px;z-index:6;}
+  .phone-screen{width:100%;height:100%;background:#FAFCFD;border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
   .app-body{flex:1;position:relative;overflow:hidden;}
 
   .view{position:absolute;inset:0;padding:34px 18px 18px;display:flex;flex-direction:column;opacity:0;transform:translateX(28px);transition:opacity .4s cubic-bezier(.2,.8,.2,1), transform .4s cubic-bezier(.2,.8,.2,1);pointer-events:none;overflow-y:auto;}
@@ -71,15 +71,15 @@
   .prod-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .15s;}
   .prod-card:active{transform:scale(.96);}
   .prod-thumb{height:80px;}
-  .prod-thumb.p1{background:linear-gradient(140deg,#ff8fa3,#ff5470);}
-  .prod-thumb.p2{background:linear-gradient(140deg,#7c8cf8,#4f46e5);}
-  .prod-thumb.p3{background:linear-gradient(140deg,#5fd6c0,#0f9d63);}
-  .prod-thumb.p4{background:linear-gradient(140deg,#ffc975,#e0a458);}
+  .prod-thumb.p1{background:linear-gradient(140deg,#F0BA9E,#E8956B);}
+  .prod-thumb.p2{background:linear-gradient(140deg,#88DAEC,#4CC1DF);}
+  .prod-thumb.p3{background:linear-gradient(140deg,#63D2D2,#0f9d63);}
+  .prod-thumb.p4{background:linear-gradient(140deg,#ECBA88,#DB9A5D);}
   .prod-info{padding:9px 10px;}
   .prod-name{font-size:11.5px;font-weight:700;}
   .prod-price{font-size:11px;color:var(--coral);font-weight:700;margin-top:2px;}
 
-  .detail-thumb{height:180px;border-radius:14px;background:linear-gradient(150deg,#ff8fa3,#ff5470);margin-bottom:14px;}
+  .detail-thumb{height:180px;border-radius:14px;background:linear-gradient(150deg,#F0BA9E,#E8956B);margin-bottom:14px;}
   .detail-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;}
   .detail-price{font-size:14px;color:var(--coral);font-weight:700;margin:4px 0 10px;}
   .detail-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 6px;}
@@ -200,8 +200,8 @@
           <div class="view" id="view-2">
             <div class="v-header"><div class="v-title">Your bag</div></div>
             <div id="cartList">
-              <div class="cart-item" id="ci-1"><div class="ci-thumb" style="background:linear-gradient(140deg,#ff8fa3,#ff5470);"></div><div><div class="ci-name">Cloud Trainer</div><div class="ci-meta">Size 8 · Qty 1</div></div><div class="ci-price">$68</div><div class="ci-remove" onclick="removeItem('ci-1')">✕</div></div>
-              <div class="cart-item" id="ci-2"><div class="ci-thumb" style="background:linear-gradient(140deg,#5fd6c0,#0f9d63);"></div><div><div class="ci-name">Trail Tee</div><div class="ci-meta">Size M · Qty 1</div></div><div class="ci-price">$32</div><div class="ci-remove" onclick="removeItem('ci-2')">✕</div></div>
+              <div class="cart-item" id="ci-1"><div class="ci-thumb" style="background:linear-gradient(140deg,#F0BA9E,#E8956B);"></div><div><div class="ci-name">Cloud Trainer</div><div class="ci-meta">Size 8 · Qty 1</div></div><div class="ci-price">$68</div><div class="ci-remove" onclick="removeItem('ci-1')">✕</div></div>
+              <div class="cart-item" id="ci-2"><div class="ci-thumb" style="background:linear-gradient(140deg,#63D2D2,#0f9d63);"></div><div><div class="ci-name">Trail Tee</div><div class="ci-meta">Size M · Qty 1</div></div><div class="ci-price">$32</div><div class="ci-remove" onclick="removeItem('ci-2')">✕</div></div>
             </div>
             <div class="add-btn" onclick="goView(3)" style="margin-top:16px;">Checkout — $100</div>
           </div>

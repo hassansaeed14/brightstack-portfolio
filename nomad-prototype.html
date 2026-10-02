@@ -16,17 +16,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f1f2f7;
+    --bg:#F1F6F7;
     --card:#ffffff;
-    --ink:#12131a;
-    --muted:#6b7080;
-    --line:#e3e5ee;
-    --indigo:#4f46e5;
-    --indigo-dim:#eef0fd;
+    --ink:#12181A;
+    --muted:#6C7C7F;
+    --line:#E3ECEE;
+    --indigo:#4CC1DF;
+    --indigo-dim:#EFFAFC;
     --green:#0f9d63;
     --green-dim:#e7f7ef;
-    --amber:#b45309;
-    --amber-dim:#fdf1e3;
+    --amber:#A3591A;
+    --amber-dim:#FBF0E5;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
@@ -52,12 +52,12 @@
   .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:100px;}
   .tag.paid{background:var(--green-dim);color:var(--green);}
   .tag.pending{background:var(--amber-dim);color:var(--amber);}
-  .tag.overdue{background:#fde8e8;color:#c0362c;}
+  .tag.overdue{background:#FCF0E9;color:#BB6631;}
   .tag-row{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
   .field{width:100%;}
   .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500;}
-  .field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px;font-family:'Inter',sans-serif;background:#fafafd;}
-  .card-mini{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fafafd;}
+  .field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px;font-family:'Inter',sans-serif;background:#FAFCFD;}
+  .card-mini{border:1px solid var(--line);border-radius:10px;padding:14px;background:#FAFCFD;}
   .card-mini .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
   .card-mini .row:last-child{margin-bottom:0;}
   .card-mini .label{color:var(--muted);}
@@ -76,7 +76,7 @@
   }
   @media(max-width:760px){.proto{grid-template-columns:1fr;}}
   .screen-nav{
-    background:#fafafd;
+    background:#FAFCFD;
     border-right:1px solid var(--line);
     padding:20px 14px;
   }
@@ -107,7 +107,7 @@
   .invoice-sub{color:var(--muted);font-size:12.5px;margin-top:2px;}
   .invoice-amt{font-weight:700;font-size:14.5px;font-family:'Space Grotesk',sans-serif;}
   .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
-  .kpi{background:#fafafd;border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .kpi{background:#FAFCFD;border:1px solid var(--line);border-radius:12px;padding:16px;}
   .kpi-label{font-size:11.5px;color:var(--muted);margin-bottom:6px;}
   .kpi-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;}
   .client-chip{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;}

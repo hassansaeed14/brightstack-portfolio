@@ -16,15 +16,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#121417;
-    --surface:#191C20;
-    --surface-raised:#20242A;
-    --line:#2B3038;
-    --text:#EDEEF0;
-    --text-muted:#9AA1AB;
-    --text-faint:#5E6570;
-    --accent:#B9A6FF;
-    --accent-dim:#8A7ACC;
+    --bg:#121617;
+    --surface:#191F20;
+    --surface-raised:#20282A;
+    --line:#2B3638;
+    --text:#EDEFF0;
+    --text-muted:#9BA8AA;
+    --text-faint:#5F6D6F;
+    --accent:#B2E4F3;
+    --accent-dim:#7DB8C9;
     --c-x:#55C1FF;
     --c-linkedin:#6C8CFF;
     --c-instagram:#FF6FA5;
@@ -36,7 +36,7 @@
   body{
     margin:0;
     background:
-      radial-gradient(1100px 550px at 85% -10%, rgba(185,166,255,0.07), transparent 60%),
+      radial-gradient(1100px 550px at 85% -10%, rgba(178,228,243,0.07), transparent 60%),
       var(--bg);
     color:var(--text);
     font-family:'Inter',sans-serif;
@@ -51,7 +51,7 @@
 
   .view-toggle{display:flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
   .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
-  .view-toggle button.active{background:var(--accent); color:#15141C;}
+  .view-toggle button.active{background:var(--accent); color:#141A1C;}
 
   .view{display:none; padding:36px 32px 64px;}
   .view.active{display:block;}
@@ -82,15 +82,15 @@
 
   .tone-row{display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap;}
   .tone-pill{border:1px solid var(--line); background:var(--bg); color:var(--text-muted); font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer; transition:.15s;}
-  .tone-pill.selected{background:var(--accent); color:#15141C; border-color:var(--accent); font-weight:600;}
+  .tone-pill.selected{background:var(--accent); color:#141A1C; border-color:var(--accent); font-weight:600;}
 
   .generate-btn{
-    width:100%; background:var(--accent); color:#15141C; border:none; border-radius:10px;
+    width:100%; background:var(--accent); color:#141A1C; border:none; border-radius:10px;
     padding:13px; font-weight:700; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif;
     display:flex; align-items:center; justify-content:center; gap:8px;
   }
   .generate-btn:disabled{opacity:.55; cursor:not-allowed;}
-  .spinner{width:13px; height:13px; border:2px solid rgba(21,20,28,0.3); border-top-color:#15141C; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner{width:13px; height:13px; border:2px solid rgba(20,26,28,0.3); border-top-color:#141A1C; border-radius:50%; animation:spin .7s linear infinite; display:none;}
   .spinner.show{display:inline-block;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
@@ -106,7 +106,7 @@
   .ch-body .tweet{padding:9px 0; border-bottom:1px solid var(--line);}
   .ch-body .tweet:last-child{border-bottom:none;}
   .hashtags{padding:0 16px 16px; display:flex; flex-wrap:wrap; gap:6px;}
-  .hashtag{font-size:11.5px; color:var(--accent); background:rgba(185,166,255,0.1); padding:4px 9px; border-radius:6px;}
+  .hashtag{font-size:11.5px; color:var(--accent); background:rgba(178,228,243,0.1); padding:4px 9px; border-radius:6px;}
 
   .placeholder-state{grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--text-faint); font-size:13.5px; border:1px dashed var(--line); border-radius:var(--radius);}
 
@@ -438,6 +438,6 @@ renderCalendarStats();
 </script>
 
 
-<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#1A1A1F;color:#E9E9EC;border:1px solid #26262C;padding:9px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999;">← Portfolio</a>
+<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#1A1E1F;color:#E9EBEC;border:1px solid #272B2B;padding:9px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999;">← Portfolio</a>
 </body>
 </html>

@@ -13,30 +13,61 @@
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="BrightStack Co. designs and builds websites, dashboards, booking systems, and AI-powered tools for small businesses and startups.">
+<meta name="theme-color" content="#04161B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#F4F7FF;
-    --ink-soft:#9CA7BC;
-    --paper:#070A12;
-    --paper-2:#101521;
-    --surface:#0D121D;
-    --line:rgba(255,255,255,.10);
-    --signal:#C9FF63;
-    --signal-ink:#172100;
-    --indigo:#8E8CFF;
-    --indigo-soft:rgba(142,140,255,.12);
-    --cyan:#63E6FF;
+    /* Aqua ramp — the primary brand hue */
+    --aqua-100:#D5F4FA;
+    --aqua-200:#A9E8F3;
+    --aqua-300:#7FE3F0;
+    --aqua-400:#5FD9E8;
+    --aqua-500:#2FBBD1;
+    --aqua-700:#14707F;
+    --aqua-900:#07323C;
+    /* Peach puff ramp — the warm secondary */
+    --peach-100:#FFEEE0;
+    --peach-200:#FFDAB9;
+    --peach-300:#FFD3B0;
+    --peach-400:#F8B98C;
+    --peach-600:#C9794E;
+
+    --ink:#ECFAFC;
+    --ink-soft:#93B4BD;
+    --paper:#04161B;
+    --paper-2:#0A242C;
+    --surface:#071E25;
+    --line:rgba(173,235,245,.13);
+    --signal:#5FD9E8;
+    --signal-ink:#042128;
+    --indigo:#FFD3B0;
+    --indigo-soft:rgba(255,211,176,.12);
+    --cyan:#7FE3F0;
+
+    /* Glassmorphism surface used by the tilting cards */
+    --glass:rgba(12,42,51,.55);
+    --glass-strong:rgba(12,42,51,.78);
+    --glass-line:rgba(173,235,245,.18);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;scroll-padding-top:90px;}
   body{
     background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;
     overflow-x:hidden;
-    background-image:radial-gradient(circle at 72% 9%,rgba(91,77,255,.17),transparent 27%),radial-gradient(circle at 8% 32%,rgba(99,230,255,.07),transparent 24%);
+    background-image:radial-gradient(circle at 72% 9%,rgba(47,187,209,.20),transparent 27%),radial-gradient(circle at 8% 32%,rgba(255,218,185,.07),transparent 24%);
   }
-  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,#000,transparent 82%);}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;background-image:linear-gradient(rgba(173,235,245,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(173,235,245,.03) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,#000,transparent 82%);}
+
+  /* Parallax aura layers — GSAP drifts these behind the content on scroll. */
+  .aura{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:-1;opacity:.5;}
+  .aura-1{width:560px;height:560px;background:radial-gradient(circle,rgba(47,187,209,.42),transparent 68%);top:-140px;right:-160px;}
+  .aura-2{width:480px;height:480px;background:radial-gradient(circle,rgba(255,218,185,.26),transparent 68%);top:38%;left:-220px;}
+  .aura-3{width:620px;height:620px;background:radial-gradient(circle,rgba(47,187,209,.24),transparent 70%);bottom:-200px;right:-180px;}
+
   a{color:inherit;text-decoration:none;}
   button,input,textarea{font:inherit;}
   :focus-visible{outline:3px solid var(--signal);outline-offset:4px;}
@@ -47,85 +78,129 @@
 
   header{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;max-width:1180px;margin:0 auto;position:relative;z-index:20;}
   .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.04em;display:flex;align-items:center;gap:10px;}
-  .logo::before{content:'';width:27px;height:27px;border-radius:8px;background:linear-gradient(145deg,var(--signal),var(--cyan));box-shadow:inset -7px -7px 15px rgba(0,0,0,.2),0 0 25px rgba(201,255,99,.18);transform:rotate(-8deg);}
+  .logo::before{content:'';width:27px;height:27px;border-radius:8px;background:linear-gradient(145deg,var(--aqua-400),var(--peach-200));box-shadow:inset -7px -7px 15px rgba(0,0,0,.2),0 0 25px rgba(95,217,232,.22);transform:rotate(-8deg);}
   .logo span{color:var(--signal);}
-  nav{display:flex;align-items:center;gap:28px;padding:7px 8px 7px 22px;background:rgba(13,18,29,.72);border:1px solid var(--line);border-radius:99px;backdrop-filter:blur(18px);box-shadow:0 10px 38px rgba(0,0,0,.2);}
+  nav{display:flex;align-items:center;gap:28px;padding:7px 8px 7px 22px;background:rgba(7,30,37,.72);border:1px solid var(--line);border-radius:99px;backdrop-filter:blur(18px);box-shadow:0 10px 38px rgba(0,0,0,.2);}
   nav a{font-size:13px;font-weight:500;color:var(--ink-soft);transition:color .2s ease;}
   nav a:hover{color:var(--ink);}
-  .nav-cta{background:var(--ink);color:#0A0D14;padding:9px 17px;border-radius:99px;font-weight:700;}
+  .nav-cta{background:var(--ink);color:var(--signal-ink);padding:9px 17px;border-radius:99px;font-weight:700;}
   .nav-cta:hover{background:var(--signal);color:var(--signal-ink);}
 
   .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(420px,.95fr);align-items:center;gap:64px;min-height:690px;padding:86px 32px 110px;max-width:1180px;margin:0 auto;position:relative;}
-  .hero::after{content:'';position:absolute;width:540px;height:540px;right:-100px;top:40px;border:1px solid rgba(255,255,255,.06);border-radius:50%;pointer-events:none;}
+  .hero::after{content:'';position:absolute;width:540px;height:540px;right:-100px;top:40px;border:1px solid rgba(173,235,245,.07);border-radius:50%;pointer-events:none;}
   .hero-text{position:relative;z-index:2;}
-  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-bottom:23px;font-family:'JetBrains Mono',monospace;background:rgba(201,255,99,.07);border:1px solid rgba(201,255,99,.2);padding:7px 12px;border-radius:99px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-bottom:23px;font-family:'JetBrains Mono',monospace;background:rgba(95,217,232,.08);border:1px solid rgba(95,217,232,.22);padding:7px 12px;border-radius:99px;}
   .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(48px,5.4vw,74px);line-height:.99;letter-spacing:-.055em;margin-bottom:27px;max-width:720px;}
-  h1 .gradient-word{display:block;color:transparent;background:linear-gradient(105deg,#fff 8%,var(--indigo) 48%,var(--cyan));background-clip:text;-webkit-background-clip:text;}
-  .hero-text>p{font-size:17px;max-width:570px;color:var(--ink-soft);margin-bottom:34px;line-height:1.75;}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(44px,5.2vw,70px);line-height:1.02;letter-spacing:-.05em;margin-bottom:27px;max-width:740px;}
+  h1 .gradient-word{display:block;color:transparent;background:linear-gradient(105deg,#fff 6%,var(--aqua-300) 42%,var(--peach-200));background-clip:text;-webkit-background-clip:text;}
+  .hero-text>p{font-size:17px;max-width:575px;color:var(--ink-soft);margin-bottom:34px;line-height:1.75;}
   .btn-row{display:flex;gap:13px;align-items:center;flex-wrap:wrap;}
   .btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:49px;padding:13px 22px;border-radius:99px;font-weight:700;font-size:14px;transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;}
-  .btn-primary{background:var(--signal);color:var(--signal-ink);border:1px solid var(--signal);box-shadow:0 10px 30px rgba(201,255,99,.12);}
-  .btn-primary:hover{background:#D7FF8C;transform:translateY(-2px);box-shadow:0 14px 35px rgba(201,255,99,.2);}
-  .btn-secondary{color:var(--ink);border:1px solid var(--line);background:rgba(255,255,255,.035);}
-  .btn-secondary:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.07);transform:translateY(-2px);}
-  .hero-proof{display:flex;gap:24px;align-items:center;margin-top:34px;color:var(--ink-soft);font-size:12px;}
+  .btn-primary{background:var(--signal);color:var(--signal-ink);border:1px solid var(--signal);box-shadow:0 10px 30px rgba(95,217,232,.16);}
+  .btn-primary:hover{background:var(--aqua-300);transform:translateY(-2px);box-shadow:0 14px 35px rgba(95,217,232,.26);}
+  .btn-secondary{color:var(--ink);border:1px solid var(--line);background:rgba(173,235,245,.05);}
+  .btn-secondary:hover{border-color:rgba(173,235,245,.34);background:rgba(173,235,245,.1);transform:translateY(-2px);}
+  .btn-peach{background:var(--peach-200);color:#3A2415;border:1px solid var(--peach-200);box-shadow:0 10px 30px rgba(255,218,185,.14);}
+  .btn-peach:hover{background:var(--peach-100);transform:translateY(-2px);box-shadow:0 14px 35px rgba(255,218,185,.22);}
+  .hero-proof{display:flex;gap:24px;align-items:center;margin-top:34px;color:var(--ink-soft);font-size:12px;flex-wrap:wrap;}
   .hero-proof span{display:flex;align-items:center;gap:7px;}
   .hero-proof span::before{content:'✓';color:var(--signal);font-weight:800;}
 
-  /* Lightweight CSS 3D scene — no canvas, model downloads, or framework. */
+  /* ---------- Hero 3D stage ---------- */
   .hero-visual{height:490px;position:relative;display:grid;place-items:center;perspective:1100px;z-index:1;isolation:isolate;}
-  .hero-visual::before{content:'';position:absolute;width:390px;height:390px;border-radius:50%;background:radial-gradient(circle at 38% 32%,rgba(142,140,255,.44),rgba(77,67,206,.16) 42%,transparent 68%);filter:blur(2px);animation:breathe 5s ease-in-out infinite;}
-  .hero-visual::after{content:'';position:absolute;width:360px;height:90px;bottom:22px;border-radius:50%;background:rgba(0,0,0,.65);filter:blur(28px);z-index:-1;}
-  .scene-ring{position:absolute;width:390px;height:390px;border-radius:50%;border:1px solid rgba(142,140,255,.25);transform:rotateX(68deg) rotateZ(-14deg);box-shadow:0 0 50px rgba(142,140,255,.08),inset 0 0 50px rgba(142,140,255,.06);}
+  .hero-visual::before{content:'';position:absolute;width:390px;height:390px;border-radius:50%;background:radial-gradient(circle at 38% 32%,rgba(47,187,209,.42),rgba(255,218,185,.14) 44%,transparent 68%);filter:blur(2px);animation:breathe 5s ease-in-out infinite;}
+  .hero-visual::after{content:'';position:absolute;width:360px;height:90px;bottom:22px;border-radius:50%;background:rgba(0,0,0,.6);filter:blur(28px);z-index:-1;}
+
+  /* Spline canvas mounts here. Hidden until the scene reports it has loaded,
+     so a slow or blocked CDN never leaves a blank hole in the hero. */
+  .spline-mount{position:absolute;inset:0;z-index:3;opacity:0;transition:opacity .9s ease;pointer-events:none;}
+  .spline-mount spline-viewer{width:100%;height:100%;display:block;}
+  .hero-visual.spline-on .spline-mount{opacity:1;pointer-events:auto;}
+  .hero-visual.spline-on .css-scene{opacity:0;pointer-events:none;transition:opacity .7s ease;}
+
+  .css-scene{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .7s ease;}
+  .scene-ring{position:absolute;width:390px;height:390px;border-radius:50%;border:1px solid rgba(95,217,232,.28);transform:rotateX(68deg) rotateZ(-14deg);box-shadow:0 0 50px rgba(47,187,209,.1),inset 0 0 50px rgba(47,187,209,.07);}
   .scene-ring::before,.scene-ring::after{content:'';position:absolute;border-radius:50%;background:var(--signal);box-shadow:0 0 18px var(--signal);width:7px;height:7px;}
-  .scene-ring::before{top:42px;left:50px}.scene-ring::after{bottom:25px;right:82px;background:var(--cyan);box-shadow:0 0 18px var(--cyan);}
-  .scene-core{width:350px;height:350px;position:relative;transform-style:preserve-3d;transform:rotateX(7deg) rotateY(-8deg);transition:transform .14s ease-out;}
-  .stack-card{position:absolute;width:272px;min-height:126px;padding:20px 21px;background:linear-gradient(145deg,rgba(26,33,50,.96),rgba(11,15,25,.95));border:1px solid rgba(255,255,255,.14);border-radius:19px;box-shadow:0 24px 65px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08);font-family:'JetBrains Mono',monospace;backdrop-filter:blur(10px);opacity:0;animation:cardIn .8s cubic-bezier(.2,.8,.2,1) forwards,floatCard 6s ease-in-out infinite;}
+  .scene-ring::before{top:42px;left:50px}
+  .scene-ring::after{bottom:25px;right:82px;background:var(--peach-200);box-shadow:0 0 18px var(--peach-200);}
+  .scene-core{width:350px;height:350px;position:relative;transform-style:preserve-3d;transform:rotateX(7deg) rotateY(-8deg);will-change:transform;}
+  .stack-card{position:absolute;width:272px;min-height:126px;padding:20px 21px;background:linear-gradient(145deg,rgba(14,48,58,.94),rgba(5,22,27,.95));border:1px solid var(--glass-line);border-radius:19px;box-shadow:0 24px 65px rgba(0,0,0,.45),inset 0 1px 0 rgba(173,235,245,.1);font-family:'JetBrains Mono',monospace;backdrop-filter:blur(10px);opacity:0;transform-style:preserve-3d;animation:cardIn .8s cubic-bezier(.2,.8,.2,1) forwards,floatCard 6s ease-in-out infinite;}
   .stack-card .tag{font-size:10px;color:var(--cyan);letter-spacing:.09em;text-transform:uppercase;margin-bottom:12px;}
   .stack-card .label{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
   .stack-card .dot-row{display:flex;gap:5px;margin-bottom:14px;}
-  .stack-card .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);}
+  .stack-card .dot{width:6px;height:6px;border-radius:50%;background:rgba(173,235,245,.25);}
   .c1{top:10px;left:2px;z-index:1;transform:translateZ(-60px) rotateZ(-7deg);animation-delay:.05s;}
   .c2{top:112px;right:-8px;z-index:2;transform:translateZ(15px) rotateZ(4deg);animation-delay:.18s;}
-  .c3{top:229px;left:10px;z-index:3;transform:translateZ(80px) rotateZ(-3deg);animation-delay:.31s;background:linear-gradient(145deg,#26265F,#12142D);border-color:rgba(142,140,255,.5);}
-  .c3 .tag{color:var(--signal)}
-  .card-spark{position:absolute;width:72px;height:72px;right:13px;bottom:10px;border-radius:20px;background:linear-gradient(145deg,rgba(201,255,99,.25),rgba(99,230,255,.05));transform:rotate(12deg);border:1px solid rgba(201,255,99,.18);}
+  .c3{top:229px;left:10px;z-index:3;transform:translateZ(80px) rotateZ(-3deg);animation-delay:.31s;background:linear-gradient(145deg,#0F4E5C,#07323C);border-color:rgba(95,217,232,.5);}
+  .c3 .tag{color:var(--peach-200)}
+  .card-spark{position:absolute;width:72px;height:72px;right:13px;bottom:10px;border-radius:20px;background:linear-gradient(145deg,rgba(95,217,232,.26),rgba(255,218,185,.08));transform:rotate(12deg);border:1px solid rgba(95,217,232,.2);}
   .card-spark::after{content:'↗';display:grid;place-items:center;height:100%;font:22px 'Space Grotesk';color:var(--signal);}
   @keyframes cardIn{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
   @keyframes floatCard{0%,100%{margin-top:0}50%{margin-top:-8px}}
   @keyframes breathe{50%{transform:scale(1.06);opacity:.78}}
 
-  .section{padding:92px 32px;max-width:1180px;margin:0 auto;}
+  .section{padding:92px 32px;max-width:1180px;margin:0 auto;position:relative;}
   .section-head{margin-bottom:42px;max-width:650px;}
   .section-head .eyebrow{margin-bottom:16px;}
   .section-head h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(31px,4vw,46px);line-height:1.08;letter-spacing:-.04em;margin-bottom:15px;}
   .section-head p{color:var(--ink-soft);font-size:15px;max-width:590px;}
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
   .work-grid .work-card:last-child:nth-child(odd){grid-column:1/-1;}
-  .work-card{background:linear-gradient(145deg,rgba(18,24,37,.92),rgba(10,14,22,.92));border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;}
-  .work-card:hover{transform:translateY(-6px);border-color:rgba(142,140,255,.4);box-shadow:0 24px 55px rgba(0,0,0,.25);}
-  .chrome{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025);}
-  .chrome .dots{display:flex;gap:6px}.chrome .dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18)}
-  .chrome .url{font:10.5px 'JetBrains Mono',monospace;color:#727E94;background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:99px;padding:4px 10px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .work-body{padding:25px 25px 27px}.work-tags{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}.work-tag{font:10px 'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;background:var(--indigo-soft);color:#B8B7FF;padding:5px 9px;border:1px solid rgba(142,140,255,.13);border-radius:99px;}
-  .work-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;margin-bottom:8px;letter-spacing:-.02em}.work-card p{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px}.work-link{font-size:13px;font-weight:700;color:var(--signal);display:inline-flex;align-items:center;gap:6px}.work-link .arrow{transition:transform .2s}.work-link:hover .arrow{transform:translateX(4px)}
-  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}.cap-cell{background:var(--paper-2);padding:27px 22px}.cap-cell .mono{font-size:11px;color:var(--signal);margin-bottom:10px;display:block}.cap-cell h4{font:600 16px 'Space Grotesk';margin-bottom:8px}.cap-cell p{font-size:13px;color:var(--ink-soft)}
-  .cta-band{background:linear-gradient(120deg,#171A39,#111725 55%,#17231B);color:var(--ink);padding:60px 44px;border:1px solid rgba(255,255,255,.1);border-radius:24px;max-width:1116px;margin:0 auto 80px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;box-shadow:0 30px 70px rgba(0,0,0,.3)}
-  .cta-band h2{font:600 30px 'Space Grotesk';margin-bottom:10px;letter-spacing:-.03em}.cta-band p{color:var(--ink-soft);font-size:14px;max-width:540px}
-  footer{padding:36px 32px 48px;text-align:center;font-size:12px;color:#69758B;border-top:1px solid var(--line)}
+
+  /* Glass cards. Vanilla-Tilt writes an inline transform on hover, so the
+     hover rule here only touches colour and shadow — never transform. */
+  .work-card{
+    background:linear-gradient(145deg,var(--glass),rgba(5,22,27,.72));
+    border:1px solid var(--glass-line);border-radius:18px;overflow:hidden;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    transform-style:preserve-3d;
+    transition:border-color .3s ease,box-shadow .3s ease;
+  }
+  .work-card:hover{border-color:rgba(95,217,232,.45);box-shadow:0 24px 55px rgba(0,0,0,.33),0 0 0 1px rgba(95,217,232,.12);}
+  /* Devices without tilt still get a lift on hover. */
+  @media (hover:hover) and (pointer:fine){ html:not(.tilt-on) .work-card:hover{transform:translateY(-6px);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;} }
+  .work-card .work-body,.work-card .chrome{transform:translateZ(28px);}
+  .chrome{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(173,235,245,.03);}
+  .chrome .dots{display:flex;gap:6px}.chrome .dots span{width:7px;height:7px;border-radius:50%;background:rgba(173,235,245,.2)}
+  .chrome .url{font:10.5px 'JetBrains Mono',monospace;color:#6F8F97;background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:99px;padding:4px 10px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .work-body{padding:25px 25px 27px}
+  .work-tags{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+  .work-tag{font:10px 'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;background:var(--indigo-soft);color:var(--peach-200);padding:5px 9px;border:1px solid rgba(255,211,176,.18);border-radius:99px;}
+  .work-tag.tag-aqua{background:rgba(95,217,232,.1);color:var(--aqua-200);border-color:rgba(95,217,232,.2);}
+  .work-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;margin-bottom:8px;letter-spacing:-.02em}
+  .work-card p{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px}
+  .work-link{font-size:13px;font-weight:700;color:var(--signal);display:inline-flex;align-items:center;gap:6px}
+  .work-link .arrow{transition:transform .2s}.work-link:hover .arrow{transform:translateX(4px)}
+  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .cap-cell{background:var(--paper-2);padding:27px 22px}.cap-cell .mono{font-size:11px;color:var(--signal);margin-bottom:10px;display:block}.cap-cell h4{font:600 16px 'Space Grotesk';margin-bottom:8px}.cap-cell p{font-size:13px;color:var(--ink-soft)}
+  .cta-band{background:linear-gradient(120deg,#0B2E38,#07232B 55%,#13333A);color:var(--ink);padding:60px 44px;border:1px solid var(--glass-line);border-radius:24px;max-width:1116px;margin:0 auto 80px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;box-shadow:0 30px 70px rgba(0,0,0,.3)}
+  .cta-band h2{font:600 30px 'Space Grotesk';margin-bottom:10px;letter-spacing:-.03em}.cta-band p{color:var(--ink-soft);font-size:14px;max-width:560px}
+  footer{padding:36px 32px 48px;text-align:center;font-size:12px;color:#6B8990;border-top:1px solid var(--line)}
+
+  /* Editing prompts for the About story — deliberately loud so they can't ship by accident. */
+  .draft{border:1px dashed var(--peach-400);background:rgba(255,218,185,.06);border-radius:14px;padding:18px 20px;margin-bottom:16px;}
+  .draft b{display:block;font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--peach-300);margin-bottom:9px;}
+  .draft p{font-size:14px;color:var(--ink-soft);line-height:1.7;margin:0;}
+  .draft p + p{margin-top:9px;}
 
   @media(max-width:900px){
     header{padding:18px 24px;align-items:flex-start}.logo{margin-top:7px}nav{gap:16px;flex-wrap:wrap;border-radius:20px;justify-content:flex-end;max-width:70%}
     .hero{grid-template-columns:1fr;padding:60px 24px 80px;gap:25px}.hero-text{text-align:center}.hero-text>p{margin-left:auto;margin-right:auto}.btn-row,.hero-proof{justify-content:center}.hero-visual{height:460px;width:min(100%,500px);margin:auto}.hero::after{right:50%;transform:translateX(50%);top:auto;bottom:20px}
     .section{padding:70px 24px}.cap-grid{grid-template-columns:repeat(2,1fr)}.tier-grid{grid-template-columns:repeat(2,1fr)}
+    .aura{filter:blur(70px);opacity:.38}
   }
   @media(max-width:620px){
     header{display:block;padding:17px 18px}.logo{margin:0 0 15px}nav{max-width:none;width:100%;padding:10px 12px;gap:8px 16px;justify-content:flex-start;border-radius:15px}nav a{font-size:12px}.nav-cta{margin-left:auto}
-    .hero{padding:48px 18px 65px;min-height:auto}.hero::after{width:400px;height:400px}h1{font-size:42px}.hero-text>p{font-size:15px}.hero-proof{gap:9px 18px;flex-wrap:wrap}.hero-visual{height:400px;transform:scale(.88);margin:-12px auto;width:100%}.scene-core{transform:rotateX(7deg) rotateY(-8deg) scale(.9)}
+    .hero{padding:48px 18px 65px;min-height:auto}.hero::after{width:400px;height:400px}h1{font-size:40px}.hero-text>p{font-size:15px}.hero-proof{gap:9px 18px;flex-wrap:wrap}.hero-visual{height:400px;transform:scale(.88);margin:-12px auto;width:100%}.scene-core{transform:rotateX(7deg) rotateY(-8deg) scale(.9)}
     .section{padding:58px 18px}.work-grid{grid-template-columns:1fr}.work-grid .work-card:last-child:nth-child(odd){grid-column:auto}.cap-grid{grid-template-columns:1fr}.btn-primary,.btn-secondary{padding:12px 17px}.cta-band{padding:36px 21px;border-radius:18px;margin:0 18px 58px}.cta-band h2{font-size:25px}.wrap{padding-left:18px!important;padding-right:18px!important}.service-tabs{flex-wrap:nowrap!important;overflow-x:auto;padding-bottom:7px}.service-tab{white-space:nowrap;flex-shrink:0}.tier-grid{grid-template-columns:1fr!important}.section-head h2{font-size:32px}
+    .aura-2,.aura-3{display:none}
   }
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stack-card,.hero-visual::before{animation:none;opacity:1}.scene-core{transition:none!important}.btn-primary,.btn-secondary,.work-card{transition:none}}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .stack-card,.hero-visual::before{animation:none;opacity:1}
+    .scene-core{transition:none!important}
+    .btn-primary,.btn-secondary,.work-card{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -146,73 +221,81 @@
 </header>
 
 <section class="hero" aria-labelledby="hero-title">
+  <span class="aura aura-1" data-parallax="14" aria-hidden="true"></span>
   <div class="hero-text">
-    <div class="eyebrow">Independent digital product studio</div>
-    <h1 id="hero-title">Ideas, engineered into <span class="gradient-word">digital advantage.</span></h1>
-    <p>I'm Hassan Saeed. I design and build polished websites, focused web apps, and practical AI automations that help ambitious businesses move faster.</p>
+    <div class="eyebrow">Independent studio · Mansehra, Pakistan</div>
+    <h1 id="hero-title">I build websites, web apps, <span class="gradient-word">and the odd AI tool.</span></h1>
+    <p>I'm Hassan Saeed, and BrightStack Co. is just me. I take on a handful of projects at a time so each one gets built properly — designed, coded, launched, and fixed when something inevitably breaks.</p>
     <div class="btn-row">
-      <a href="#projects" class="btn-primary">Explore selected work <span aria-hidden="true">↗</span></a>
-      <a href="#contact" class="btn-secondary">Start a conversation</a>
+      <a href="#projects" class="btn-primary">See what I've built <span aria-hidden="true">↗</span></a>
+      <a href="#contact" class="btn-secondary">Tell me about your project</a>
     </div>
-    <div class="hero-proof" aria-label="Service highlights">
-      <span>Strategy to launch</span>
-      <span>Built for every screen</span>
-      <span>Fast by default</span>
+    <div class="hero-proof" aria-label="How I work">
+      <span>Hand-coded, no page builders</span>
+      <span>Every demo below just opens</span>
+      <span>One person, start to finish</span>
     </div>
   </div>
-  <div class="hero-visual" aria-label="A three-dimensional stack representing websites, digital products, and automation">
-    <div class="scene-ring" aria-hidden="true"></div>
-    <div class="scene-core" id="sceneCore">
-      <div class="stack-card c1">
-        <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="tag">01 / Experience</div>
-        <div class="label">Conversion-first websites</div>
-        <span class="card-spark" aria-hidden="true"></span>
-      </div>
-      <div class="stack-card c2">
-        <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="tag">02 / Product</div>
-        <div class="label">Web apps that feel effortless</div>
-        <span class="card-spark" aria-hidden="true"></span>
-      </div>
-      <div class="stack-card c3">
-        <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="tag">03 / Intelligence</div>
-        <div class="label">Useful AI, thoughtfully applied</div>
-        <span class="card-spark" aria-hidden="true"></span>
+
+  <div class="hero-visual" id="heroVisual" data-parallax="8" aria-label="A three-dimensional stack representing websites, digital products, and automation">
+    <!-- Spline scene mounts here (see the loader near the bottom of this file). -->
+    <div class="spline-mount" id="splineMount" aria-hidden="true"></div>
+    <!-- Fallback 3D scene: pure CSS, always present, hidden once Spline loads. -->
+    <div class="css-scene" id="cssScene">
+      <div class="scene-ring" aria-hidden="true"></div>
+      <div class="scene-core" id="sceneCore">
+        <div class="stack-card c1">
+          <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="tag">01 / Websites</div>
+          <div class="label">Sites that bring in work</div>
+          <span class="card-spark" aria-hidden="true"></span>
+        </div>
+        <div class="stack-card c2">
+          <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="tag">02 / Web apps</div>
+          <div class="label">Tools your team runs on</div>
+          <span class="card-spark" aria-hidden="true"></span>
+        </div>
+        <div class="stack-card c3">
+          <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="tag">03 / Automation</div>
+          <div class="label">AI where it earns its place</div>
+          <span class="card-spark" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <section class="section" id="projects" aria-labelledby="projects-title">
-  <div class="section-head">
+  <span class="aura aura-2" data-parallax="-10" aria-hidden="true"></span>
+  <div class="section-head" data-reveal>
     <div class="eyebrow">Selected work</div>
-    <h2 id="projects-title">Four projects, four different business problems.</h2>
-    <p>A focused selection of independent concepts and technical demonstrations. Every demo opens publicly—no account required.</p>
+    <h2 id="projects-title">A few things I've built.</h2>
+    <p>These are my own concepts rather than client work — I built them to try ideas out and to have something real to point at. Every one opens in your browser. None of them are screenshots.</p>
   </div>
   <div class="work-grid">
-    <article class="work-card">
+    <article class="work-card" data-tilt-card>
       <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">nexora-flagship-project.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Independent concept</span><span class="work-tag">Full-stack</span></div><h3>Nexora — Agency Platform</h3><p>A concept platform exploring how agencies can track projects, currency conversion, and account health in one focused workspace.</p><a href="nexora-flagship-project.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Own concept</span><span class="work-tag tag-aqua">Front-end + live API</span></div><h3>Nexora — Agency Platform</h3><p>An agency dashboard: client roster, project health, revenue, and a currency converter wired to a real exchange-rate API. The interface and the API call are real — the business data behind them is sample data.</p><a href="nexora-flagship-project.html" class="work-link">Open the demo <span class="arrow">→</span></a></div>
     </article>
-    <article class="work-card">
+    <article class="work-card" data-tilt-card>
       <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">noor-bakehouse.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Independent concept</span><span class="work-tag">Business website</span></div><h3>Noor Bakehouse</h3><p>A storefront concept for a local bakery, designed around quick menu discovery and a clear route from browsing to ordering.</p><a href="noor-bakehouse.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Own concept</span><span class="work-tag tag-aqua">Static site</span></div><h3>Noor Bakehouse</h3><p>A bakery storefront. The whole job was getting someone from "what do they sell?" to "how do I order?" in about two taps.</p><a href="noor-bakehouse.html" class="work-link">Open the demo <span class="arrow">→</span></a></div>
     </article>
-    <article class="work-card">
+    <article class="work-card" data-tilt-card>
       <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">booking-system-demo.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Technical demonstration</span><span class="work-tag">Scheduling</span></div><h3>Glow Studio — Salon Booking</h3><p>A three-step booking flow that demonstrates date selection, availability rules, and confirmation without requiring an account.</p><a href="booking-system-demo.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Front-end demo</span><span class="work-tag tag-aqua">Booking flow</span></div><h3>Glow Studio — Salon Booking</h3><p>A three-step booking flow: pick a date, see what's actually free, confirm. You can click the whole thing through without making an account.</p><a href="booking-system-demo.html" class="work-link">Open the demo <span class="arrow">→</span></a></div>
     </article>
-    <article class="work-card">
+    <article class="work-card" data-tilt-card>
       <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">ember-oak-ai-assistant.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Local AI simulation</span><span class="work-tag">Lead workflow</span></div><h3>Ember &amp; Oak — Concierge</h3><p>A transparent local simulation of a product concierge and lead-scoring workflow, with a documented path to secure server-side AI integration.</p><a href="ember-oak-ai-assistant.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Front-end demo</span><span class="work-tag tag-aqua">Rule-based, not an LLM</span></div><h3>Ember &amp; Oak — Concierge</h3><p>A shop assistant that answers product questions and ranks leads. It runs on rules in your browser rather than a language model — the page says so plainly, and spells out what putting a real one behind it would take.</p><a href="ember-oak-ai-assistant.html" class="work-link">Open the demo <span class="arrow">→</span></a></div>
     </article>
   </div>
   <div class="btn-row" style="margin-top:28px;">
-    <a class="btn-secondary" href="web-design-collection.html">Explore website collection</a>
-    <a class="btn-secondary" href="web-apps-collection.html">Explore app collection</a>
-    <a class="btn-secondary" href="ai-automation-collection.html">Explore AI labs</a>
+    <a class="btn-secondary" href="web-design-collection.html">All the websites</a>
+    <a class="btn-secondary" href="web-apps-collection.html">All the web apps</a>
+    <a class="btn-secondary" href="ai-automation-collection.html">All the AI builds</a>
   </div>
 </section>
 
@@ -220,18 +303,18 @@
   <div class="cta-band" style="margin:0;max-width:none;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);">
     <div>
       <div class="eyebrow" style="margin-bottom:14px;">New · interactive</div>
-      <h2 style="color:var(--ink);">Don't just read about the work — ask about it.</h2>
-      <p style="color:var(--ink-soft);">A small local assistant indexed on this portfolio. Ask it what Nexora is built with, what my skills are, or how to reach me — it answers from what's actually here, and says so honestly when it doesn't know.</p>
+      <h2 style="color:var(--ink);">Would you rather ask than read?</h2>
+      <p style="color:var(--ink-soft);">There's a small assistant on here that knows this site. Ask it what Nexora runs on, what I've worked with, or how to get hold of me. It only answers from what's actually on these pages — and it says so plainly when it doesn't know.</p>
     </div>
     <a href="ask-brightstack.html" class="btn-primary">Ask BrightStack →</a>
   </div>
 </section>
 
 <section class="section" id="services">
-  <div class="section-head">
+  <div class="section-head" data-reveal>
     <div class="eyebrow">Services</div>
-    <h2>Pick a category, then a package.</h2>
-    <p>Every service comes in three tiers — pick the one that matches your scope and budget. Prices are a starting point; every project gets scoped properly before we start.</p>
+    <h2>What things cost.</h2>
+    <p>Three tiers per service. Treat these as starting points — I'll scope your project properly and give you a real number before either of us commits to anything.</p>
   </div>
 
   <div class="service-tabs" id="serviceTabs">
@@ -245,31 +328,32 @@
     <!-- populated by JS -->
   </div>
 
-  <p style="font-size:12.5px;color:var(--ink-soft);margin-top:20px;">Every tier here is backed by a real project in the Projects section above — see the work before you pick a package.</p>
+  <p style="font-size:12.5px;color:var(--ink-soft);margin-top:20px;">Every tier here is backed by a real build in the projects above — have a look before you pick one.</p>
 </section>
 
 <style>
   .service-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
   .service-tab{
     background:var(--paper-2);border:1px solid var(--line);padding:10px 18px;border-radius:8px;
-    font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink-soft);
+    font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink-soft);transition:background .2s ease,color .2s ease,border-color .2s ease;
   }
-  .service-tab.active{background:var(--ink);color:var(--paper-2);border-color:var(--ink);}
+  .service-tab:hover{color:var(--ink);border-color:rgba(95,217,232,.35);}
+  .service-tab.active{background:var(--ink);color:var(--signal-ink);border-color:var(--ink);}
   .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .tier-card{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:26px 22px;display:flex;flex-direction:column;}
-  .tier-card.featured{border-color:var(--indigo);box-shadow:0 12px 28px rgba(60,62,232,0.1);position:relative;}
+  .tier-card.featured{border-color:var(--signal);box-shadow:0 12px 28px rgba(47,187,209,.14);position:relative;}
   .tier-featured-tag{
-    position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--indigo);color:#fff;
-    font-size:11px;font-weight:600;padding:4px 12px;border-radius:12px;
+    position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--signal);color:var(--signal-ink);
+    font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;
   }
-  .tier-name{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--indigo);margin-bottom:10px;}
+  .tier-name{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--peach-200);margin-bottom:10px;}
   .tier-price{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;margin-bottom:4px;}
   .tier-delivery{font-size:12.5px;color:var(--ink-soft);margin-bottom:16px;}
   .tier-features{list-style:none;flex:1;margin-bottom:20px;}
   .tier-features li{font-size:13.5px;padding:8px 0;border-top:1px solid var(--line);color:var(--ink-soft);}
   .tier-features li:first-child{border-top:none;}
   .tier-see{
-    display:block;text-align:center;font-size:12.5px;font-weight:600;color:var(--indigo);
+    display:block;text-align:center;font-size:12.5px;font-weight:600;color:var(--aqua-200);
     margin-bottom:10px;text-decoration:none;
   }
   .tier-see:hover{text-decoration:underline;}
@@ -277,7 +361,7 @@
     text-align:center;background:var(--paper);border:1px solid var(--line);padding:11px;border-radius:8px;
     font-weight:600;font-size:13.5px;color:var(--ink);
   }
-  .tier-card.featured .tier-btn{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .tier-card.featured .tier-btn{background:var(--signal);color:var(--signal-ink);border-color:var(--signal);}
   @media (max-width:900px){ .tier-grid{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:620px){
     .tier-grid{grid-template-columns:1fr;gap:16px;}
@@ -296,7 +380,7 @@
     app: [
       { name:'Basic', price:'$150', delivery:'5-day delivery', features:['Single dashboard screen','Static or mock data','Responsive layout'], featured:false },
       { name:'Standard', price:'$350', delivery:'10-day delivery', features:['Live database-backed data','Basic authentication','Multiple views/tables'], featured:true },
-      { name:'Premium', price:'$600+', delivery:'3-week delivery', features:['Full-stack app + live API','Admin panel included','Real-time data updates'], featured:false }
+      { name:'Premium', price:'$600+', delivery:'3-week delivery', features:['Front-end plus a live API','Admin panel included','Real-time data updates'], featured:false }
     ],
     uiux: [
       { name:'Basic', price:'$70', delivery:'3-day delivery', features:['3–5 wireframe screens','One design concept','Figma file delivered'], featured:false },
@@ -328,7 +412,7 @@
         <div class="tier-delivery">${t.delivery}</div>
         <ul class="tier-features">${t.features.map(f => `<li>${f}</li>`).join('')}</ul>
         <a href="${hub}" class="tier-see">See ${t.name.toLowerCase()}-tier examples →</a>
-        <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="tier-btn">Get started</a>
+        <a href="#contact" class="tier-btn">Start here</a>
       </div>
     `).join('');
   }
@@ -343,25 +427,50 @@
 
   renderTiers('web');
 </script>
+
 <section class="section" id="about">
-  <div class="section-head">
+  <span class="aura aura-3" data-parallax="12" aria-hidden="true"></span>
+  <div class="section-head" data-reveal>
     <div class="eyebrow">About</div>
-    <h2>The person behind BrightStack.</h2>
-    <p>Founder of BrightStack Co., with hands-on experience across machine learning and UI/UX through two structured industry internships.</p>
+    <h2>Hi — I'm Hassan.</h2>
+    <p>I run BrightStack Co. out of Mansehra, Pakistan. Two internships at novaXccelerate taught me the two halves of this job: how interfaces should feel, and how models actually behave once they meet real data.</p>
   </div>
+
+  <!-- ─────────────────────────────────────────────────────────────────────
+       YOUR STORY GOES HERE.
+       Replace each .draft block below with a short paragraph in your own
+       words. Keep it plain and specific — the specifics are what make a
+       client trust you. Delete any block you don't want, and delete the
+       class="draft" wrapper once you've written the real text.
+       ───────────────────────────────────────────────────────────────────── -->
+  <div style="max-width:680px;margin-bottom:28px;">
+    <div class="draft">
+      <b>▸ Replace: how you started</b>
+      <p>Two or three sentences on how you got into this. What was the first thing you ever built, and what made you keep going? A real detail beats a polished one — "I rebuilt my college society's website because the old one took nine seconds to load" lands harder than "I have a passion for technology."</p>
+    </div>
+    <div class="draft">
+      <b>▸ Replace: what you actually enjoy</b>
+      <p>Which part of the work do you genuinely like — the design, the code, the moment something finally works? Name the thing you'd do even if nobody paid you for it. This is the paragraph that makes a stranger feel like they've met you.</p>
+    </div>
+    <div class="draft">
+      <b>▸ Replace: how you like to work with people</b>
+      <p>How do you run a project? How often do you check in, how do you handle changes of mind, what do you need from a client to do your best work? Clients are quietly scouting for reassurance here more than anywhere else on the page.</p>
+    </div>
+  </div>
+
   <div class="work-grid" style="grid-template-columns:repeat(2,1fr);">
-    <div class="work-card">
+    <div class="work-card" data-tilt-card>
       <div class="work-body">
         <div class="work-tags"><span class="work-tag">Dec 2025 – Mar 2026</span></div>
         <h3>ML Engineer Intern</h3>
-        <p>novaXccelerate — a hybrid, mentored internship applying machine learning to real, industry-led projects rather than theory alone.</p>
+        <p>novaXccelerate — a mentored, hybrid internship putting machine learning on real industry projects instead of textbook datasets.</p>
       </div>
     </div>
-    <div class="work-card">
+    <div class="work-card" data-tilt-card>
       <div class="work-body">
         <div class="work-tags"><span class="work-tag">Jul 2024 – Oct 2024</span></div>
         <h3>UI/UX Design Intern</h3>
-        <p>novaXccelerate — user-centered interfaces and wireframes; a practical foundation in user flows and information hierarchy.</p>
+        <p>novaXccelerate — wireframes, user flows, and the habit of asking who a screen is for before deciding what goes on it.</p>
       </div>
     </div>
   </div>
@@ -380,26 +489,26 @@
   <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
     <div>
       <h2>Have a project in mind?</h2>
-      <p>Message us on Fiverr to talk through scope and timeline. Email is reserved for support complaints, not new project inquiries.</p>
+      <p>Tell me what you're building and I'll come back with scope, timeline, and a price. Email is usually the quickest way to reach me — or message me on Fiverr if you'd rather keep everything on the platform.</p>
     </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn-primary" style="background:#1DBF73;color:#04341F;">Message us on Fiverr →</a>
-      <a href="mailto:19hsnkhan@gmail.com?subject=Complaint" class="btn-secondary" style="background:transparent;border:1px solid #3A4557;color:var(--paper);">File a complaint by email</a>
+      <a href="mailto:19hsnkhan@gmail.com?subject=Project%20enquiry" class="btn-primary">Email me →</a>
+      <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn-secondary">Message on Fiverr</a>
     </div>
   </div>
 
-  <div style="background:rgba(255,255,255,0.04);border:1px solid #2D3646;border-radius:10px;padding:20px 22px;">
-    <div class="mono" style="font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Or send a quick message</div>
+  <div style="background:rgba(173,235,245,.045);border:1px solid var(--glass-line);border-radius:10px;padding:20px 22px;">
+    <div class="mono" style="font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Or just leave a message here</div>
     <form id="leadForm">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px;">
-        <div><label for="leadName" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">Your name</label><input type="text" id="leadName" name="name" autocomplete="name" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;"></div>
-        <div><label for="leadEmail" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">Email address</label><input type="email" id="leadEmail" name="email" autocomplete="email" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;"></div>
+        <div><label for="leadName" style="display:block;font-size:12px;margin-bottom:5px;color:#CFE6EB;">Your name</label><input type="text" id="leadName" name="name" autocomplete="name" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #2C4A52;background:#061D23;color:#fff;font-size:13.5px;"></div>
+        <div><label for="leadEmail" style="display:block;font-size:12px;margin-bottom:5px;color:#CFE6EB;">Email address</label><input type="email" id="leadEmail" name="email" autocomplete="email" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #2C4A52;background:#061D23;color:#fff;font-size:13.5px;"></div>
       </div>
-      <label for="leadMessage" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">What are you building?</label>
-      <textarea id="leadMessage" name="message" required minlength="10" rows="3" style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;font-family:inherit;margin-bottom:10px;resize:vertical;"></textarea>
+      <label for="leadMessage" style="display:block;font-size:12px;margin-bottom:5px;color:#CFE6EB;">What are you building?</label>
+      <textarea id="leadMessage" name="message" required minlength="10" rows="3" style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #2C4A52;background:#061D23;color:#fff;font-size:13.5px;font-family:inherit;margin-bottom:10px;resize:vertical;"></textarea>
       <button id="leadSubmitBtn" type="submit" class="btn-primary" style="border:none;cursor:pointer;">Send message</button>
-      <p style="font-size:11.5px;color:#9AA4B2;margin-top:10px;">Your details are used only to respond to this enquiry.</p>
-      <div id="leadStatus" role="status" aria-live="polite" class="mono" style="font-size:12px;color:#9AA4B2;margin-top:10px;"></div>
+      <p style="font-size:11.5px;color:#8FAEB5;margin-top:10px;">Your details are only used to reply to this message.</p>
+      <div id="leadStatus" role="status" aria-live="polite" class="mono" style="font-size:12px;color:#8FAEB5;margin-top:10px;"></div>
     </form>
   </div>
 </div>
@@ -409,22 +518,185 @@
   BrightStack Co. · Hassan Saeed · Mansehra, Pakistan · <span class="mono">est. 2024</span>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════════════════════
+     3D / motion layer.
+     Three libraries, all loaded from CDN and all optional: if any of them
+     fail to load the page still works exactly as it does now. Every effect
+     is also switched off for `prefers-reduced-motion` and for touch devices,
+     where tilt and parallax are either impossible or just make scrolling
+     feel broken.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script defer src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+
 <script>
-  // A tiny progressive-enhancement tilt replaces a heavyweight 3D library.
-  (() => {
-    const visual = document.querySelector('.hero-visual');
-    const scene = document.getElementById('sceneCore');
-    if (!visual || !scene || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return;
+(() => {
+  /* ═══════════════════════════════════════════════════════════════════
+     ❶  SPLINE — the 3D hero scene.
+
+     Swap SCENE_URL for your own scene:
+       1. Build a scene at https://spline.design
+       2. Export ▸ "Spline Viewer" ▸ copy the .splinecode URL
+       3. Paste it below.
+     Set it to null to turn Spline off entirely and keep the CSS scene,
+     which is lighter and never costs a visitor a megabyte of download.
+     ═══════════════════════════════════════════════════════════════════ */
+  const SCENE_URL = 'https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode';
+  const VIEWER_SRC = 'https://unpkg.com/@splinetool/viewer@2.0.66/build/spline-viewer.js';
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer  = matchMedia('(pointer: fine)').matches;
+
+  // A Spline scene is a multi-megabyte WebGL download. Don't inflict it on
+  // phones, metered connections, or low-memory devices.
+  const heavyOK =
+    SCENE_URL &&
+    !reduceMotion &&
+    finePointer &&
+    innerWidth >= 1024 &&
+    !(navigator.connection && navigator.connection.saveData) &&
+    !(navigator.deviceMemory && navigator.deviceMemory < 4);
+
+  const visual = document.getElementById('heroVisual');
+  const mount  = document.getElementById('splineMount');
+
+  if (heavyOK && visual && mount) {
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = VIEWER_SRC;
+      script.onerror = () => console.info('[BrightStack] Spline viewer unavailable — keeping the CSS scene.');
+      document.head.appendChild(script);
+
+      const viewer = document.createElement('spline-viewer');
+      viewer.setAttribute('url', SCENE_URL);
+      viewer.setAttribute('events-target', 'global');
+      viewer.setAttribute('loading', 'eager'); // we already gated on visibility
+
+      // The component's real event names are 'load-complete' / 'rendered' /
+      // 'splineerror' — there is no plain 'load' event. Cross-fade only once
+      // the scene is genuinely on screen, so the hero never flashes empty.
+      const reveal = () => visual.classList.add('spline-on');
+      viewer.addEventListener('load-complete', reveal);
+      viewer.addEventListener('rendered', reveal);
+      viewer.addEventListener('splineerror', () => {
+        visual.classList.remove('spline-on');
+        viewer.remove();
+      });
+      mount.appendChild(viewer);
+
+      // If the element never upgrades or never renders (CDN blocked, WebGL
+      // refused, scene 404s), bin it and stay on the CSS scene rather than
+      // leaving a dead canvas sitting on top of the hero.
+      setTimeout(() => {
+        if (!visual.classList.contains('spline-on')) {
+          visual.classList.remove('spline-on');
+          viewer.remove();
+        }
+      }, 15000);
+    };
+
+    // Only load when the hero is actually in view.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some(e => e.isIntersecting)) { start(); io.disconnect(); }
+      }, { rootMargin: '200px' });
+      io.observe(visual);
+    } else {
+      start();
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     ❷  CSS 3D STACK — mouse-tracked rotation on the fallback scene.
+     Lerped towards the target each frame so it glides instead of snapping.
+     ═══════════════════════════════════════════════════════════════════ */
+  const scene = document.getElementById('sceneCore');
+  if (scene && visual && !reduceMotion && finePointer) {
+    const rest = { x: -8, y: 7 };
+    let target = { ...rest }, current = { ...rest }, raf = null;
+
+    const tick = () => {
+      current.x += (target.x - current.x) * 0.1;
+      current.y += (target.y - current.y) * 0.1;
+      scene.style.transform = `rotateX(${current.y}deg) rotateY(${current.x}deg)`;
+      if (Math.abs(target.x - current.x) > 0.05 || Math.abs(target.y - current.y) > 0.05) {
+        raf = requestAnimationFrame(tick);
+      } else { raf = null; }
+    };
+    const run = () => { if (raf === null) raf = requestAnimationFrame(tick); };
+
     visual.addEventListener('pointermove', (event) => {
       const rect = visual.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - .5;
-      const y = (event.clientY - rect.top) / rect.height - .5;
-      scene.style.transform = `rotateX(${7 - y * 12}deg) rotateY(${-8 + x * 16}deg)`;
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      target = { x: rest.x + x * 18, y: rest.y - y * 14 };
+      run();
     });
-    visual.addEventListener('pointerleave', () => {
-      scene.style.transform = 'rotateX(7deg) rotateY(-8deg)';
-    });
-  })();
+    visual.addEventListener('pointerleave', () => { target = { ...rest }; run(); });
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     ❸  VANILLA-TILT + ❹ GSAP SCROLLTRIGGER.
+     Both are deferred scripts, so wait for load before touching them.
+     ═══════════════════════════════════════════════════════════════════ */
+  const enhance = () => {
+    // ❸ Tilt on the project / experience cards.
+    if (window.VanillaTilt && !reduceMotion && finePointer) {
+      const cards = document.querySelectorAll('[data-tilt-card]');
+      if (cards.length) {
+        document.documentElement.classList.add('tilt-on');
+        VanillaTilt.init(cards, {
+          max: 7,
+          speed: 500,
+          scale: 1.015,
+          perspective: 1000,
+          glare: true,
+          'max-glare': 0.16,
+          gyroscope: false
+        });
+      }
+    }
+
+    // ❹ Scroll parallax. Background auras drift slowly, the hero stack
+    // drifts a little, section headings rise into place.
+    if (window.gsap && window.ScrollTrigger && !reduceMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.utils.toArray('[data-parallax]').forEach((el) => {
+        const depth = parseFloat(el.dataset.parallax) || 0;
+        gsap.to(el, {
+          yPercent: -depth,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el.closest('section') || el,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.6
+          }
+        });
+      });
+
+      gsap.utils.toArray('[data-reveal]').forEach((el) => {
+        gsap.from(el, {
+          y: 34,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        });
+      });
+    }
+  };
+
+  if (document.readyState === 'complete') enhance();
+  else window.addEventListener('load', enhance);
+})();
 </script>
 
 <script type="module">
@@ -444,7 +716,7 @@
     if (adminSlot){
       if (user && user.uid === ADMIN_UID){
         adminSlot.style.display = 'inline';
-        adminSlot.innerHTML = `<a href="admin.html" style="color:var(--indigo);">Admin</a>`;
+        adminSlot.innerHTML = `<a href="admin.html" style="color:var(--peach-200);">Admin</a>`;
       } else {
         adminSlot.style.display = 'none';
         adminSlot.innerHTML = '';
@@ -484,12 +756,12 @@
       document.getElementById('leadName').value = '';
       document.getElementById('leadEmail').value = '';
       document.getElementById('leadMessage').value = '';
-      statusEl.textContent = "Sent — we'll get back to you soon.";
+      statusEl.textContent = "Sent — I'll get back to you soon.";
     } catch(err){
       if (timedOut){
-        statusEl.innerHTML = "Couldn't confirm your message was sent — it may still arrive. If you use an ad-blocker or privacy extension it may be blocking this form. You can also reach us directly on <a href=\"https://www.fiverr.com/brightstackco\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--signal);text-decoration:underline;\">Fiverr</a>.";
+        statusEl.innerHTML = "Couldn't confirm your message was sent — it may still arrive. If you use an ad-blocker or privacy extension it may be blocking this form. You can also email <a href=\"mailto:19hsnkhan@gmail.com?subject=Project%20enquiry\" style=\"color:var(--signal);text-decoration:underline;\">19hsnkhan@gmail.com</a> directly.";
       } else {
-        statusEl.textContent = 'Something went wrong — please try again, or message us on Fiverr.';
+        statusEl.textContent = 'Something went wrong — please try again, or email 19hsnkhan@gmail.com directly.';
       }
     } finally {
       btn.disabled = false;

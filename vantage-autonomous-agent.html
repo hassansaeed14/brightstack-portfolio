@@ -16,17 +16,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#100D14;
-    --surface:#191420;
-    --surface-raised:#20192A;
-    --line:#2C2436;
-    --text:#F0EAF5;
-    --text-muted:#A79BB5;
-    --text-faint:#655A72;
-    --gold:#E8B84B;
-    --violet:#9B7FD4;
-    --blue:#6FA8DC;
-    --teal:#5FC9A8;
+    --bg:#0D1214;
+    --surface:#141D20;
+    --surface-raised:#1A2529;
+    --line:#253135;
+    --text:#EAF2F5;
+    --text-muted:#9CADB4;
+    --text-faint:#5B6B71;
+    --gold:#E39C50;
+    --violet:#82BDD1;
+    --blue:#73CDD8;
+    --teal:#63C5C3;
     --green:#4FE8A0;
     --red:#E8615A;
     --radius:14px;
@@ -36,8 +36,8 @@
   body{
     margin:0;
     background:
-      radial-gradient(900px 500px at 90% -10%, rgba(232,184,75,0.06), transparent 60%),
-      radial-gradient(700px 450px at 5% 100%, rgba(155,127,212,0.05), transparent 55%),
+      radial-gradient(900px 500px at 90% -10%, rgba(227,156,80,0.06), transparent 60%),
+      radial-gradient(700px 450px at 5% 100%, rgba(130,189,209,0.05), transparent 55%),
       var(--bg);
     color:var(--text); font-family:'Inter',sans-serif; min-height:100vh;
   }
@@ -50,7 +50,7 @@
 
   .view-toggle{display:flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
   .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
-  .view-toggle button.active{background:var(--gold); color:#221A08;}
+  .view-toggle button.active{background:var(--gold); color:#211509;}
 
   .view{display:none; padding:32px 32px 60px;}
   .view.active{display:block;}
@@ -78,12 +78,12 @@
   .example-chip:hover{border-color:var(--gold); color:var(--text);}
 
   .run-btn{
-    width:100%; background:var(--gold); color:#221A08; border:none; border-radius:10px;
+    width:100%; background:var(--gold); color:#211509; border:none; border-radius:10px;
     padding:13px; font-weight:700; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif;
     display:flex; align-items:center; justify-content:center; gap:8px;
   }
   .run-btn:disabled{opacity:.5; cursor:not-allowed;}
-  .spinner{width:13px; height:13px; border:2px solid rgba(34,26,8,0.3); border-top-color:#221A08; border-radius:50%; animation:spin .7s linear infinite; display:none;}
+  .spinner{width:13px; height:13px; border:2px solid rgba(33,21,9,0.3); border-top-color:#211509; border-radius:50%; animation:spin .7s linear infinite; display:none;}
   .spinner.show{display:inline-block;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
@@ -106,13 +106,13 @@
   .entry-text{font-size:13px; line-height:1.65; color:var(--text);}
   .entry-code{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-muted); background:var(--bg); border:1px solid var(--line); border-radius:7px; padding:8px 10px; margin-top:7px; white-space:pre-wrap;}
 
-  .entry.plan .entry-icon{background:rgba(155,127,212,0.15); color:var(--violet); border:1.5px solid var(--violet);}
+  .entry.plan .entry-icon{background:rgba(130,189,209,0.15); color:var(--violet); border:1.5px solid var(--violet);}
   .entry.plan .entry-phase{color:var(--violet);}
-  .entry.act .entry-icon{background:rgba(232,184,75,0.15); color:var(--gold); border:1.5px solid var(--gold);}
+  .entry.act .entry-icon{background:rgba(227,156,80,0.15); color:var(--gold); border:1.5px solid var(--gold);}
   .entry.act .entry-phase{color:var(--gold);}
-  .entry.observe .entry-icon{background:rgba(111,168,220,0.15); color:var(--blue); border:1.5px solid var(--blue);}
+  .entry.observe .entry-icon{background:rgba(115,205,216,0.15); color:var(--blue); border:1.5px solid var(--blue);}
   .entry.observe .entry-phase{color:var(--blue);}
-  .entry.reflect .entry-icon{background:rgba(95,201,168,0.15); color:var(--teal); border:1.5px solid var(--teal);}
+  .entry.reflect .entry-icon{background:rgba(99,197,195,0.15); color:var(--teal); border:1.5px solid var(--teal);}
   .entry.reflect .entry-phase{color:var(--teal);}
   .entry.escalate .entry-icon{background:rgba(232,97,90,0.15); color:var(--red); border:1.5px solid var(--red);}
   .entry.escalate .entry-phase{color:var(--red);}
