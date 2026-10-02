@@ -13,97 +13,109 @@
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#15181C; --paper:#F7F6F3; --card:#FFFFFF; --line:#E4E1DA;
-    --coral:#FF4B3E; --coral-soft:#FFE3E0; --muted:#6B6F76;
+    --bg:#0a0f16; --ink:#ffffff; --paper:rgba(255,255,255,0.02); --card:rgba(255,255,255,0.02); --line:rgba(0,229,255,0.15);
+    --coral:#00e5ff; --coral-soft:rgba(0,229,255,0.08); --muted:#a0aec0; --accent:#00e5ff;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6; overflow-x:hidden;}
+  
+  /* Cyber Scan Effect */
+  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.04), transparent 60%);}
+
   a{color:inherit;text-decoration:none;}
   .display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
+  .mono{font-family:'JetBrains Mono',monospace;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:24px 32px;max-width:1120px;margin:0 auto;}
-  .logo{font-family:'Archivo Black',sans-serif;font-size:18px;text-transform:uppercase;}
-  .logo span{color:var(--coral);}
+  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1120px;margin:0 auto; border-bottom:1px solid var(--line); background:rgba(5,8,13,0.8); backdrop-filter: blur(10px);}
+  .logo{font-family:'Archivo Black',sans-serif;font-size:18px;text-transform:uppercase; color:#fff;}
+  .logo span{color:var(--accent);}
   nav{display:flex;gap:28px;align-items:center;}
-  nav a{font-size:13.5px;font-weight:600;}
-  .nav-cta{background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:2px;}
-  .back-link{font-size:12.5px;color:var(--muted);}
+  nav a{font-size:13.5px;font-weight:600; color:var(--muted); transition: color 0.2s;}
+  nav a:hover{color:#fff;}
+  .nav-cta{background:var(--accent);color:#0a0f16;padding:10px 20px;border-radius:8px; font-weight:700; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
+  .nav-cta:hover{transform: translateY(-2px); opacity: 0.9;}
+  .back-link{font-size:12.5px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  .back-link:hover{color:var(--accent);}
 
-  .hero{display:flex;gap:48px;align-items:center;padding:50px 32px 80px;max-width:1120px;margin:0 auto;}
+  .hero{display:flex;gap:48px;align-items:center;padding:60px 32px 80px;max-width:1120px;margin:0 auto;}
   .hero-text{flex:1.1;}
-  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);margin-bottom:18px;font-weight:600;}
-  h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:52px;line-height:1.02;margin-bottom:22px;}
-  .hero-text p{color:var(--muted);font-size:16px;max-width:440px;margin-bottom:30px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;font-weight:600;}
+  h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:48px;line-height:1.05;margin-bottom:22px; color:#fff;}
+  .hero-text p{color:var(--muted);font-size:16px;max-width:440px;margin-bottom:30px; line-height:1.7;}
   .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
-  .btn-primary{background:var(--coral);color:#fff;padding:15px 28px;border-radius:2px;font-weight:700;font-size:14.5px;}
-  .btn-secondary{border:1.5px solid var(--ink);padding:15px 26px;border-radius:2px;font-weight:700;font-size:14.5px;}
+  .btn-primary{background:var(--accent);color:#0a0f16;padding:14px 26px;border-radius:8px;font-weight:700;font-size:14px; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3); display:inline-block;}
+  .btn-primary:hover{transform: translateY(-2px); opacity: 0.9;}
+  .btn-secondary{border:1px solid var(--line);padding:14px 24px;border-radius:8px;font-weight:600;font-size:14px; color:var(--ink); background:var(--card); backdrop-filter: blur(10px); transition: all 0.2s; display:inline-block;}
+  .btn-secondary:hover{border-color:var(--accent); color:#fff;}
 
   /* Signature: whiteboard schedule preview in hero */
   .schedule-preview{
-    flex:1;background:var(--ink);border-radius:10px;padding:22px;color:var(--paper);
+    flex:1;background:rgba(5,8,13,0.8);border:1px solid var(--line);border-radius:16px;padding:24px;color:var(--paper); backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
   }
-  .sp-title{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);margin-bottom:14px;}
-  .sp-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #2A2E33;font-size:13px;}
+  .sp-title{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:14px;}
+  .sp-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;}
   .sp-row:last-child{border-bottom:none;}
-  .sp-day{font-weight:700;width:40px;flex-shrink:0;}
-  .sp-class{flex:1;color:#C7CBD1;}
+  .sp-day{font-weight:700;width:40px;flex-shrink:0; font-family:'JetBrains Mono',monospace; color:#fff;}
+  .sp-class{flex:1;color:var(--muted);}
   .sp-intensity{width:44px;height:6px;border-radius:3px;flex-shrink:0;}
-  .i-low{background:rgba(255,75,62,0.3);}
-  .i-mid{background:rgba(255,75,62,0.6);}
-  .i-high{background:var(--coral);}
+  .i-low{background:rgba(0,229,255,0.25);}
+  .i-mid{background:rgba(0,229,255,0.6);}
+  .i-high{background:var(--accent); box-shadow: 0 0 6px var(--accent);}
 
-  .section{padding:70px 32px;max-width:1120px;margin:0 auto;}
+  .section{padding:60px 32px;max-width:1120px;margin:0 auto;}
   .section-head{max-width:560px;margin-bottom:44px;}
   .section-head .eyebrow{margin-bottom:14px;}
-  .section-head h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:32px;margin-bottom:10px;}
+  .section-head h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:30px;margin-bottom:10px; color:#fff;}
   .section-head p{color:var(--muted);font-size:14.5px;}
 
   /* Full weekly schedule — the signature element in full */
-  .schedule-board{background:var(--ink);border-radius:14px;padding:30px;color:var(--paper);overflow-x:auto;}
-  .schedule-grid{display:grid;grid-template-columns:70px repeat(7,1fr);gap:1px;background:#2A2E33;min-width:760px;}
-  .sched-cell{background:var(--ink);padding:12px 10px;font-size:12px;}
-  .sched-head{font-family:'IBM Plex Mono',monospace;font-weight:700;text-align:center;font-size:11px;color:var(--coral);text-transform:uppercase;}
-  .sched-time{font-family:'IBM Plex Mono',monospace;color:#8A8F96;font-size:11px;}
-  .sched-class{border-radius:5px;padding:8px 6px;font-size:11px;text-align:center;font-weight:600;}
-  .legend{display:flex;gap:18px;margin-top:18px;font-size:11.5px;color:#9BA0A7;flex-wrap:wrap;}
+  .schedule-board{background:rgba(5,8,13,0.8);border:1px solid var(--line);border-radius:16px;padding:30px;color:var(--paper);overflow-x:auto; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);}
+  .schedule-grid{display:grid;grid-template-columns:70px repeat(7,1fr);gap:2px;background:var(--line);min-width:760px;}
+  .sched-cell{background:#0a0f16;padding:12px 10px;font-size:12px;}
+  .sched-head{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:center;font-size:11px;color:var(--accent);text-transform:uppercase;}
+  .sched-time{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:11px;}
+  .sched-class{border-radius:6px;padding:8px 6px;font-size:11px;text-align:center;font-weight:600; color:#0a0f16;}
+  .legend{display:flex;gap:18px;margin-top:18px;font-size:11.5px;color:var(--muted);flex-wrap:wrap; font-family:'JetBrains Mono',monospace;}
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
 
   .trainer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .trainer-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;}
-  .trainer-avatar{width:56px;height:56px;border-radius:50%;background:var(--coral-soft);margin-bottom:16px;}
-  .trainer-card h3{font-size:16px;font-weight:700;margin-bottom:4px;}
-  .trainer-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--coral);text-transform:uppercase;margin-bottom:10px;display:block;}
-  .trainer-card p{font-size:13.5px;color:var(--muted);}
+  .trainer-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
+  .trainer-avatar{width:56px;height:56px;border-radius:50%;background:var(--coral-soft);margin-bottom:16px; border:1px solid var(--line);}
+  .trainer-card h3{font-size:17px;font-weight:700;margin-bottom:4px; color:#fff;}
+  .trainer-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;display:block;}
+  .trainer-card p{font-size:13.5px;color:var(--muted); line-height:1.6;}
 
   .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .price-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px;}
-  .price-card.featured{border-color:var(--coral);box-shadow:0 14px 30px rgba(255,75,62,0.12);}
-  .price-name{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;color:var(--coral);margin-bottom:10px;}
-  .price-val{font-family:'Archivo Black',sans-serif;font-size:34px;margin-bottom:4px;}
-  .price-val span{font-size:14px;font-family:'Inter',sans-serif;color:var(--muted);}
-  .price-desc{font-size:13px;color:var(--muted);margin-bottom:18px;}
-  .price-list{list-style:none;margin-bottom:22px;}
-  .price-list li{font-size:13px;padding:7px 0;border-top:1px solid var(--line);}
-  .price-btn{display:block;text-align:center;background:var(--ink);color:#fff;padding:11px;border-radius:2px;font-weight:700;font-size:13px;}
-  .price-card.featured .price-btn{background:var(--coral);}
+  .price-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); display:flex; flex-direction:column;}
+  .price-card.featured{border-color:var(--accent);box-shadow:0 0 30px rgba(0,229,255,0.15);}
+  .price-name{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  .price-val{font-family:'Archivo Black',sans-serif;font-size:32px;margin-bottom:4px; color:#fff;}
+  .price-val span{font-size:14px;font-family:'Inter',sans-serif;color:var(--muted); font-weight:normal;}
+  .price-desc{font-size:13px;color:var(--muted);margin-bottom:20px;}
+  .price-list{list-style:none;margin-bottom:24px; flex:1;}
+  .price-list li{font-size:13px;padding:9px 0;border-top:1px solid var(--line); color:var(--muted);}
+  .price-btn{display:block;text-align:center;background:var(--card);border:1px solid var(--line);color:#fff;padding:12px;border-radius:8px;font-weight:700;font-size:13px; transition: all 0.2s;}
+  .price-card.featured .price-btn{background:var(--accent); color:#0a0f16; border:none; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
+  .price-btn:hover{border-color:var(--accent);}
 
   .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .t-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;}
-  .t-card p{font-size:13.5px;margin-bottom:14px;}
-  .t-name{font-size:12.5px;font-weight:700;}
-  .t-role{font-size:11.5px;color:var(--muted);}
+  .t-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
+  .t-card p{font-size:13.5px;margin-bottom:14px; color:var(--ink); line-height:1.6;}
+  .t-name{font-size:12.5px;font-weight:700; color:#fff;}
+  .t-role{font-size:11.5px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
 
-  .cta-band{background:var(--ink);color:var(--paper);text-align:center;padding:70px 32px;}
-  .cta-band h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:30px;margin-bottom:20px;}
+  .cta-band{background:rgba(5,8,13,0.9); border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--paper);text-align:center;padding:70px 32px; backdrop-filter: blur(12px);}
+  .cta-band h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:28px;margin-bottom:20px; color:#fff;}
   .cta-band .btn-primary{display:inline-block;}
 
-  footer{padding:28px 32px;text-align:center;font-size:12.5px;color:var(--muted);}
+  footer{padding:30px 32px;text-align:center;font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
 
   @media (max-width:900px){
     .hero{flex-direction:column;}
@@ -114,6 +126,7 @@
 </style>
 </head>
 <body>
+<div class="scan"></div>
 
 <header>
   <div class="logo">Momentum <span>Studio</span></div>
@@ -121,23 +134,23 @@
     <a href="#schedule">Schedule</a>
     <a href="#trainers">Trainers</a>
     <a href="#pricing">Membership</a>
-    <a href="#" class="nav-cta">Book a free class</a>
+    <a href="#pricing" class="nav-cta">Book Free Class</a>
   </nav>
   <a href="index.html" class="back-link">← Portfolio</a>
 </header>
 
 <section class="hero">
   <div class="hero-text">
-    <div class="eyebrow">Mansehra · Strength & conditioning</div>
-    <h1>Train different.</h1>
-    <p>Small-group strength and conditioning classes, built around real coaching — not a treadmill row and a mirror. First class is free.</p>
+    <div class="eyebrow">// Mansehra Strength & Conditioning</div>
+    <h1>Train Different.</h1>
+    <p>Small-group strength and conditioning classes built around rigorous coaching and personal progression. Your first session is fully complimentary.</p>
     <div class="btn-row">
-      <a href="#" class="btn-primary">Book a free class</a>
-      <a href="#schedule" class="btn-secondary">See this week's schedule</a>
+      <a href="#pricing" class="btn-primary">Book Free Class</a>
+      <a href="#schedule" class="btn-secondary">View Schedule</a>
     </div>
   </div>
   <div class="schedule-preview">
-    <div class="sp-title">This week</div>
+    <div class="sp-title">// Live Weekly Snapshot</div>
     <div class="sp-row"><span class="sp-day">Mon</span><span class="sp-class">Strength Foundations</span><span class="sp-intensity i-mid"></span></div>
     <div class="sp-row"><span class="sp-day">Tue</span><span class="sp-class">Conditioning Circuit</span><span class="sp-intensity i-high"></span></div>
     <div class="sp-row"><span class="sp-day">Wed</span><span class="sp-class">Mobility & Recovery</span><span class="sp-intensity i-low"></span></div>
@@ -148,9 +161,9 @@
 
 <section class="section" id="schedule">
   <div class="section-head">
-    <div class="eyebrow">Weekly schedule</div>
-    <h2>Every class, every day.</h2>
-    <p>Color shows intensity, not difficulty — every class is coached and scaled to whoever's in the room that day.</p>
+    <div class="eyebrow">// Weekly Timetable</div>
+    <h2>Structured Class Schedule.</h2>
+    <p>Intensity scales dynamically to individual capacity under expert coaching supervision.</p>
   </div>
   <div class="schedule-board">
     <div class="schedule-grid">
@@ -158,107 +171,118 @@
       <div class="sched-cell sched-head">Mon</div><div class="sched-cell sched-head">Tue</div><div class="sched-cell sched-head">Wed</div>
       <div class="sched-cell sched-head">Thu</div><div class="sched-cell sched-head">Fri</div><div class="sched-cell sched-head">Sat</div><div class="sched-cell sched-head">Sun</div>
 
-      <div class="sched-cell sched-time">6:00 AM</div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Mobility</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Olympic Lift</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Open Gym</div></div>
+      <div class="sched-cell sched-time">06:00 AM</div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.7);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Condition</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;">Mobility</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Olympic</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.7);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;">Open Gym</div></div>
       <div class="sched-cell"></div>
 
-      <div class="sched-cell sched-time">5:30 PM</div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.6);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Olympic Lift</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Mobility</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--coral);">Conditioning</div></div>
+      <div class="sched-cell sched-time">05:30 PM</div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Condition</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.7);">Strength</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Olympic</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;">Mobility</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Condition</div></div>
       <div class="sched-cell"></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(255,75,62,0.3);">Community WOD</div></div>
+      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.4); color:#fff;">Community</div></div>
     </div>
     <div class="legend">
-      <span><i style="background:rgba(255,75,62,0.3);"></i>Low intensity</span>
-      <span><i style="background:rgba(255,75,62,0.6);"></i>Moderate</span>
-      <span><i style="background:var(--coral);"></i>High intensity</span>
+      <span><i style="background:rgba(0,229,255,0.3);"></i>Low intensity</span>
+      <span><i style="background:rgba(0,229,255,0.7);"></i>Moderate</span>
+      <span><i style="background:var(--accent);"></i>High intensity</span>
     </div>
   </div>
 </section>
 
 <section class="section" id="trainers">
   <div class="section-head">
-    <div class="eyebrow">Coaching staff</div>
-    <h2>Three coaches, one standard.</h2>
+    <div class="eyebrow">// Coaching Staff</div>
+    <h2>Elite Guidance, Uncompromising Standards.</h2>
   </div>
   <div class="trainer-grid">
     <div class="trainer-card">
       <div class="trainer-avatar"></div>
       <h3>Bilal Ahmed</h3>
       <span class="trainer-tag">Strength & Olympic Lifting</span>
-      <p>Runs the Monday/Thursday strength blocks — big on technique before load.</p>
+      <p>Directs primary barbell blocks emphasizing technical mastery before load progression.</p>
     </div>
     <div class="trainer-card">
       <div class="trainer-avatar"></div>
       <h3>Sara Khalid</h3>
-      <span class="trainer-tag">Conditioning</span>
-      <p>Builds every conditioning circuit around what the room can actually sustain that day.</p>
+      <span class="trainer-tag">Conditioning Lead</span>
+      <p>Engineers metabolic conditioning circuits tailored to daily recovery metrics.</p>
     </div>
     <div class="trainer-card">
       <div class="trainer-avatar"></div>
       <h3>Usman Tariq</h3>
-      <span class="trainer-tag">Mobility & Recovery</span>
-      <p>The Wednesday reset — mobility work scaled for anyone nursing something.</p>
+      <span class="trainer-tag">Mobility & Rehabilitation</span>
+      <p>Directs joint mechanics and active recovery protocols for injury prevention.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="pricing">
   <div class="section-head">
-    <div class="eyebrow">Membership</div>
-    <h2>Simple pricing, no lock-in.</h2>
+    <div class="eyebrow">// Membership Plans</div>
+    <h2>Transparent Pricing, Zero Lock-In.</h2>
   </div>
   <div class="price-grid">
     <div class="price-card">
-      <div class="price-name">Drop-in</div>
+      <div class="price-name">Drop-In</div>
       <div class="price-val">Rs 1,200<span>/class</span></div>
-      <div class="price-desc">For visitors and one-off sessions</div>
-      <ul class="price-list"><li>Any single class</li><li>No commitment</li></ul>
-      <a href="#" class="price-btn">Book a class</a>
+      <div class="price-desc">Ideal for visiting athletes & single sessions</div>
+      <ul class="price-list"><li>Single class access</li><li>Equipment included</li><li>Zero commitment</li></ul>
+      <a href="#" class="price-btn">Book Session</a>
     </div>
     <div class="price-card featured">
-      <div class="price-name">Monthly</div>
+      <div class="price-name">Monthly Unlimited</div>
       <div class="price-val">Rs 9,500<span>/mo</span></div>
-      <div class="price-desc">Unlimited classes, most popular</div>
-      <ul class="price-list"><li>Unlimited classes</li><li>Priority booking</li><li>Monthly progress check-in</li></ul>
+      <div class="price-desc">Full training access — most popular tier</div>
+      <ul class="price-list"><li>Unlimited class bookings</li><li>Priority slot reservation</li><li>Monthly biometric review</li></ul>
       <a href="#" class="price-btn">Join Momentum</a>
     </div>
     <div class="price-card">
-      <div class="price-name">Annual</div>
+      <div class="price-name">Annual Pass</div>
       <div class="price-val">Rs 95,000<span>/yr</span></div>
-      <div class="price-desc">Two months free vs. monthly</div>
-      <ul class="price-list"><li>Everything in Monthly</li><li>Locked-in rate</li><li>1 free guest pass/month</li></ul>
-      <a href="#" class="price-btn">Join annually</a>
+      <div class="price-desc">Committed conditioning with annual savings</div>
+      <ul class="price-list"><li>All Monthly benefits</li><li>Locked annual rate</li><li>1 guest pass / month</li></ul>
+      <a href="#" class="price-btn">Secure Annual</a>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="section-head">
-    <div class="eyebrow">Members</div>
-    <h2>What training here actually feels like.</h2>
+    <div class="eyebrow">// Member Feedback</div>
+    <h2>Verified Athlete Experiences.</h2>
   </div>
   <div class="testimonial-grid">
-    <div class="t-card"><p>"First gym where a coach has actually corrected my form without me asking."</p><div class="t-name">Ayesha R.</div><div class="t-role">Member since 2024</div></div>
-    <div class="t-card"><p>"The schedule board on the site matches exactly what's on the wall — no surprises showing up."</p><div class="t-name">Hamza K.</div><div class="t-role">Monthly member</div></div>
-    <div class="t-card"><p>"Switched from a big-box gym. Smaller classes, way more attention."</p><div class="t-name">Nida F.</div><div class="t-role">Member since 2025</div></div>
+    <div class="t-card"><p>"The level of individualized coaching attention here is unmatched in any commercial gym."</p><div class="t-name">Ayesha R.</div><div class="t-role">// Member since 2024</div></div>
+    <div class="t-card"><p>"The digital timetable matches physical studio execution perfectly — zero scheduling friction."</p><div class="t-name">Hamza K.</div><div class="t-role">// Monthly Member</div></div>
+    <div class="t-card"><p>"Transitioning here was the best decision for my compound lift technique."</p><div class="t-name">Nida F.</div><div class="t-role">// Member since 2025</div></div>
   </div>
 </section>
 
 <div class="cta-band">
-  <h2>First class is free.</h2>
-  <a href="#" class="btn-primary">Book your free class</a>
+  <h2>Your First Session is Free.</h2>
+  <a href="#pricing" class="btn-primary">Reserve Your Spot</a>
 </div>
 
-<footer>Concept site by BrightStack Co. — Web Design, Premium tier. Built as a static page composed in WordPress-style content blocks (hero, schedule, pricing, testimonials) — not hosted on WordPress itself.</footer>
+<footer>BrightStack Co. · Momentum Studio Concept · High-Performance UI Theme</footer>
+
+<!-- 3D Card Hover Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script>
+  VanillaTilt.init(document.querySelectorAll(".trainer-card, .price-card, .t-card, .schedule-board, .schedule-preview"), {
+    max: 2,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.03,
+  });
+</script>
 
 </body>
 </html>
