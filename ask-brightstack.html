@@ -31,7 +31,7 @@
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
   
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     min-height: 100vh;
     background:
@@ -46,7 +46,6 @@
     overflow-x: hidden;
   }
   
-  /* Global Background Effects */
   .background {
     position: fixed; inset: 0; pointer-events: none; z-index: -10; overflow: hidden;
   }
@@ -68,7 +67,6 @@
   a:hover { color: var(--cyan); }
   .mono { font-family: 'JetBrains Mono', monospace; }
 
-  /* Floating Navbar */
   header {
     position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
     width: min(calc(100% - 40px), var(--max-width)); height: 68px;
@@ -417,7 +415,7 @@ function renderChips(){
 
 renderChips();
 setTimeout(() => {
-  addMessage('bot', "Hi — I'm your local guide to Hassan Saeed's portfolio. Ask me anything about his projects, UI/UX and AI skills, or how to collaborate.");
+  addMessage('bot', "Hi, I'm your local guide to Hassan Saeed's portfolio. Ask me anything about his projects, UI/UX and AI skills, or how to collaborate.");
 }, 400);
 </script>
 
