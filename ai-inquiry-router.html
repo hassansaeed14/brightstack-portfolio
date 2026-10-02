@@ -3,36 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Inquiry Router — AI automation demo</title>
+<title>Smart Inquiry Router — BrightStack AI Diagnostics</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/ai-inquiry-router.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Smart Inquiry Router — AI automation demo">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
+<meta property="og:title" content="Smart Inquiry Router — BrightStack AI Diagnostics">
+<meta property="og:description" content="Interactive diagnostic ticket router by Hassan Saeed at BrightStack Co.">
 <meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/ai-inquiry-router.html">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    /* Premium Cyber/Terminal Theme */
-    --bg: #0a0f16;
-    --panel: rgba(255, 255, 255, 0.02);
-    --panel-hover: rgba(255, 255, 255, 0.04);
-    --line: rgba(0, 229, 255, 0.15);
+    --bg: #090D14;
+    --panel: rgba(16, 24, 38, 0.85);
+    --panel-hover: rgba(255, 255, 255, 0.05);
+    --line: rgba(0, 255, 170, 0.2);
     
-    --text: #ffffff;
-    --muted: #a0aec0;
+    --text: #F0F6FC;
+    --muted: #8B949E;
     
-    /* Primary Accents */
-    --aqua: #00e5ff;
-    --aqua-dim: rgba(0, 229, 255, 0.1);
-    --peach: #ffdab9;
-    --peach-dim: rgba(255, 218, 185, 0.1);
+    --neon-green: #00FFAA;
+    --neon-green-dim: rgba(0, 255, 170, 0.1);
+    --amber: #FFB703;
+    --amber-dim: rgba(255, 183, 3, 0.1);
     
-    --glow: 0 0 20px rgba(0, 229, 255, 0.2);
+    --glow: 0 0 30px rgba(0, 255, 170, 0.12);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -45,156 +43,181 @@
     position: relative;
   }
 
-  /* Cyber Background Grid/Glow */
+  /* Bespoke Diagnostic Grid Background instead of generic mesh */
   body::before {
     content: '';
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.05), transparent 70%),
-                repeating-linear-gradient(0deg, rgba(0,229,255,0.01) 0px, rgba(0,229,255,0.01) 1px, transparent 1px, transparent 40px),
-                repeating-linear-gradient(90deg, rgba(0,229,255,0.01) 0px, rgba(0,229,255,0.01) 1px, transparent 1px, transparent 40px);
+    inset: 0;
+    background: 
+      radial-gradient(circle at 80% -10%, rgba(0, 255, 170, 0.08), transparent 60%),
+      linear-gradient(rgba(0, 255, 170, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 170, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 30px 30px, 30px 30px;
     z-index: -1;
     pointer-events: none;
   }
 
-  .wrap { max-width:900px; margin:0 auto; padding:0 28px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
 
   header { 
-    padding:24px 28px; display:flex; justify-content:space-between; align-items:center; 
-    max-width:900px; margin:0 auto; border-bottom:1px solid var(--line); 
+    position: relative; z-index: 1;
+    padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; 
+    max-width: 900px; margin: 0 auto; border-bottom: 1px solid var(--line); 
+    backdrop-filter: blur(12px);
   }
-  .brand { font-family:'JetBrains Mono', monospace; font-weight:600; font-size:15px; }
-  .brand span { color: var(--aqua); text-shadow: 0 0 8px var(--aqua-dim); }
-  header a { font-size:13px; color:var(--muted); text-decoration:none; transition: color 0.3s; }
-  header a:hover { color: var(--aqua); }
+  .brand { font-family:'JetBrains Mono', monospace; font-weight:700; font-size:15px; letter-spacing: -0.5px; }
+  .brand span { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,255,170,0.4); }
+  header a { font-size:13px; color:var(--muted); text-decoration:none; transition: color 0.3s; font-family:'JetBrains Mono', monospace; }
+  header a:hover { color: var(--neon-green); }
 
-  .hero { padding:48px 28px 32px; max-width:900px; margin:0 auto; }
+  .hero { position: relative; z-index: 1; padding: 48px 28px 32px; max-width: 900px; margin: 0 auto; }
   .tag { 
-    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--aqua); 
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--neon-green); 
     margin-bottom:14px; letter-spacing:0.04em; 
-    display: inline-block; padding: 4px 10px; border: 1px solid var(--line); border-radius: 4px;
-    background: var(--aqua-dim);
+    display: inline-block; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--neon-green-dim);
   }
-  h1 { font-size:32px; font-weight:700; max-width:600px; margin-bottom:14px; line-height:1.2; }
-  .hero p { color:var(--muted); max-width:560px; font-size:15px; line-height: 1.6; }
+  h1 { font-size:32px; font-weight:700; max-width:640px; margin-bottom:14px; line-height:1.2; letter-spacing:-0.01em; }
+  .hero p { color:var(--muted); max-width:580px; font-size:15px; line-height: 1.6; }
 
-  .app { max-width:900px; margin:0 auto 60px; padding:0 28px; }
+  .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto 60px; padding: 0 28px; }
   
-  /* Glassmorphism Panel */
   .panel { 
     background: var(--panel); 
     border: 1px solid var(--line); 
-    border-radius: 12px; 
+    border-radius: 14px; 
     padding: 28px; 
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
     box-shadow: var(--glow);
-    position: relative;
+    transform-style: preserve-3d;
   }
   
+  .panel-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .panel-label { 
-    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--aqua); margin-bottom:12px; 
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--neon-green); 
     display: flex; align-items: center;
   }
   .panel-label::after {
-    content: ''; display: inline-block; width: 6px; height: 14px; background: var(--aqua);
-    margin-left: 6px; animation: blink 1s step-end infinite;
+    content: ''; display: inline-block; width: 6px; height: 14px; background: var(--neon-green);
+    margin-left: 6px; animation: blink 1s step-end infinite; box-shadow: 0 0 8px var(--neon-green);
   }
   @keyframes blink { 50% { opacity: 0; } }
 
-  textarea {
-    width:100%; background: rgba(0, 0, 0, 0.3); border:1px solid var(--line); border-radius:8px; 
-    color:var(--text); padding:16px; font-size:14px; font-family:'JetBrains Mono', monospace; 
-    resize:vertical; min-height:100px; transition: border-color 0.3s;
+  .live-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--neon-green);
+    background: var(--neon-green-dim); border: 1px solid var(--line); padding: 2px 8px; border-radius: 4px;
   }
-  textarea:focus { outline:none; border-color:var(--aqua); box-shadow: inset 0 0 10px var(--aqua-dim); }
+
+  textarea {
+    width: 100%; background: rgba(5, 8, 12, 0.6); border: 1px solid var(--line); border-radius: 8px; 
+    color: var(--text); padding: 16px; font-size: 14px; font-family: 'JetBrains Mono', monospace; 
+    resize: vertical; min-height: 100px; transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  textarea:focus { outline: none; border-color: var(--neon-green); box-shadow: inset 0 0 10px var(--neon-green-dim), 0 0 15px rgba(0,255,170,0.15); }
+  
+  .panel-actions { display: flex; gap: 12px; margin-top: 16px; align-items: center; flex-wrap: wrap; }
   
   .run-btn {
-    margin-top:16px; background:var(--aqua); color:#0a0f16; border:none; padding:12px 24px;
-    border-radius:8px; font-weight:700; font-size:14px; cursor:pointer; font-family:'JetBrains Mono', monospace;
-    transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+    background: var(--neon-green); color: var(--bg); border: none; padding: 12px 24px;
+    border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(0,255,170,0.2);
   }
-  .run-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--aqua-dim); background: #33eeff; }
+  .run-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,255,170,0.4); background: #33ffbb; }
 
-  .result { margin-top:24px; display:none; animation: fadeIn 0.5s ease-out; }
-  .result.show { display:block; }
+  .copy-btn {
+    background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 12px 18px;
+    border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover { border-color: var(--neon-green); color: var(--neon-green); background: var(--panel-hover); }
+
+  .result { margin-top: 24px; display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .result.show { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .result-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--line); }
-  .result-row:last-child { border-bottom:none; }
-  .r-label { font-size:13px; color:var(--muted); font-family:'JetBrains Mono', monospace; }
-  .r-val { font-weight:600; font-size:14px; color: var(--text); }
+  .result-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .result-row:last-child { border-bottom: none; }
+  .r-label { font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .r-val { font-weight: 600; font-size: 14px; color: var(--text); }
   
-  .badge { padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600; font-family:'JetBrains Mono', monospace; }
-  .badge.billing { background: var(--peach-dim); color: var(--peach); border: 1px solid var(--peach); }
-  .badge.technical { background: var(--aqua-dim); color: var(--aqua); border: 1px solid var(--aqua); }
+  .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+  .badge.billing { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber); }
+  .badge.technical { background: var(--neon-green-dim); color: var(--neon-green); border: 1px solid var(--neon-green); }
   .badge.general { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--muted); }
 
-  .bar-track { width:160px; height:8px; background:rgba(255,255,255,0.05); border-radius:4px; overflow:hidden; border: 1px solid var(--line); }
-  /* Smooth animation for the confidence bar */
-  .bar-fill { height:100%; background:var(--aqua); border-radius:4px; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--aqua); }
+  .bar-track { width: 160px; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+  .bar-fill { height: 100%; background: var(--neon-green); border-radius: 4px; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--neon-green); }
 
-  .how-it-works { margin-top:40px; }
-  .how-it-works h2 { font-size:18px; margin-bottom:16px; }
-  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-  .step { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px; backdrop-filter: blur(8px); }
-  .step .n { font-family:'JetBrains Mono', monospace; color:var(--peach); font-size:12px; margin-bottom:8px; }
-  .step h3 { font-size:14px; margin-bottom:8px; color: var(--aqua); }
-  .step p { font-size:13px; color:var(--muted); line-height: 1.5; }
+  .how-it-works { position: relative; z-index: 1; margin-top: 40px; }
+  .how-it-works h2 { font-size: 18px; margin-bottom: 16px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; backdrop-filter: blur(12px); }
+  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-size: 12px; margin-bottom: 8px; }
+  .step h3 { font-size: 14px; margin-bottom: 8px; color: var(--neon-green); }
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-  .section { max-width:900px; margin:56px auto 0; padding:0 28px; }
-  .section h2 { font-size:20px; margin-bottom:10px; }
-  .section .lede { color:var(--muted); font-size:14px; max-width:620px; margin-bottom:24px; line-height: 1.6; }
+  .section { position: relative; z-index: 1; max-width: 900px; margin: 56px auto 0; padding: 0 28px; }
+  .section h2 { font-size: 20px; margin-bottom: 10px; }
+  .section .lede { color: var(--muted); font-size: 14px; max-width: 620px; margin-bottom: 24px; line-height: 1.6; }
 
-  .examples-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; perspective: 1000px; }
+  .examples-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; perspective: 1000px; }
   
-  /* 3D Interactive Cards */
   .example-card {
-    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px;
-    cursor:pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    backdrop-filter: blur(8px); transform-style: preserve-3d;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px;
+    cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    backdrop-filter: blur(12px); transform-style: preserve-3d;
   }
   .example-card:hover { 
-    border-color:var(--aqua); 
-    transform: translateY(-5px) rotateX(2deg) rotateY(2deg); 
-    box-shadow: 0 15px 35px var(--aqua-dim); 
+    border-color: var(--neon-green); 
+    transform: translateY(-4px); 
+    box-shadow: 0 15px 35px rgba(0,255,170,0.15); 
     background: var(--panel-hover);
   }
-  .example-card .ex-text { font-size:13px; color:var(--text); margin-bottom:12px; line-height:1.6; font-style: italic; }
-  .example-card .ex-tag { font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--muted); }
-  .example-card .ex-tag b { color:var(--aqua); }
+  .example-card .ex-text { font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.6; font-style: italic; }
+  .example-card .ex-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .example-card .ex-tag b { color: var(--neon-green); }
 
-  .metrics-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
-  .metric-card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px; text-align:center; backdrop-filter: blur(8px); }
-  .metric-card .m-val { font-family:'JetBrains Mono', monospace; font-size:28px; font-weight:700; color:var(--peach); text-shadow: 0 0 10px var(--peach-dim); }
-  .metric-card .m-lbl { font-size:12px; color:var(--muted); margin-top:6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+  .metric-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; text-align: center; backdrop-filter: blur(12px); }
+  .metric-card .m-val { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--amber); text-shadow: 0 0 10px var(--amber-dim); }
+  .metric-card .m-lbl { font-size: 12px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-  .matrix-table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; font-size:13px; backdrop-filter: blur(8px); }
-  .matrix-table th, .matrix-table td { padding:12px 14px; text-align:center; border-bottom:1px solid var(--line); border-right:1px solid var(--line); }
+  .matrix-table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 13px; backdrop-filter: blur(12px); }
+  .matrix-table th, .matrix-table td { padding: 12px 14px; text-align: center; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
   .matrix-table th:last-child, .matrix-table td:last-child { border-right: none; }
-  .matrix-table th { color:var(--aqua); font-weight:600; font-size:12px; background: rgba(0,229,255,0.05); font-family: 'JetBrains Mono', monospace; }
-  .matrix-table td.diag { color:var(--peach); font-weight:700; background: var(--peach-dim); }
-  .matrix-table tr:last-child td { border-bottom:none; }
+  .matrix-table th { color: var(--neon-green); font-weight: 600; font-size: 12px; background: rgba(0,255,170,0.05); font-family: 'JetBrains Mono', monospace; }
+  .matrix-table td.diag { color: var(--amber); font-weight: 700; background: var(--amber-dim); }
+  .matrix-table tr:last-child td { border-bottom: none; }
 
-  .arch-flow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:24px; }
-  .arch-node { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px 16px; font-size:13px; flex:1; min-width:140px; text-align:center; backdrop-filter: blur(8px); transition: border-color 0.3s; }
-  .arch-node:hover { border-color: var(--peach); }
-  .arch-node .n-title { font-weight:600; margin-bottom:6px; color: var(--aqua); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
-  .arch-node .n-sub { font-size:12px; color:var(--muted); line-height: 1.4; }
-  .arch-arrow { color:var(--aqua); font-size:18px; font-weight: bold; }
+  .arch-flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .arch-node { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 13px; flex: 1; min-width: 140px; text-align: center; backdrop-filter: blur(12px); transition: border-color 0.3s; }
+  .arch-node:hover { border-color: var(--amber); }
+  .arch-node .n-title { font-weight: 600; margin-bottom: 6px; color: var(--neon-green); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .arch-node .n-sub { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .arch-arrow { color: var(--neon-green); font-size: 18px; font-weight: bold; }
 
-  .limits-list { list-style:none; }
-  .limits-list li { padding:14px 0; border-bottom:1px solid var(--line); font-size:14px; color:var(--muted); padding-left:24px; position:relative; line-height: 1.6; }
-  .limits-list li:last-child { border-bottom:none; }
-  .limits-list li::before { content:'►'; position:absolute; left:0; color:var(--peach); font-size: 10px; top: 18px; }
-  .limits-list b { color:var(--aqua); }
+  .limits-list { list-style: none; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px; backdrop-filter: blur(12px); }
+  .limits-list li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); padding-left: 24px; position: relative; line-height: 1.6; }
+  .limits-list li:last-child { border-bottom: none; }
+  .limits-list li::before { content: '►'; position: absolute; left: 0; color: var(--amber); font-size: 10px; top: 16px; }
+  .limits-list b { color: var(--neon-green); }
 
-  footer { padding:28px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); margin-top:56px; font-family: 'JetBrains Mono', monospace; }
+  /* Toast Notification */
+  #toast {
+    position: fixed; bottom: 30px; right: 30px; background: var(--neon-green); color: var(--bg);
+    padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 5px 20px rgba(0,255,170,0.3); transform: translateY(100px); opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  footer { position: relative; z-index: 1; padding: 28px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 56px; font-family: 'JetBrains Mono', monospace; backdrop-filter: blur(12px); }
 
   @media (max-width:700px){
-    h1 { font-size:26px; }
-    .steps { grid-template-columns:1fr; }
-    .examples-grid { grid-template-columns:1fr; }
-    .metrics-grid { grid-template-columns:1fr 1fr; }
+    h1 { font-size: 26px; }
+    .steps { grid-template-columns: 1fr; }
+    .examples-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
     .arch-flow { flex-direction: column; align-items: stretch; }
     .arch-arrow { transform: rotate(90deg); text-align: center; }
   }
@@ -208,35 +231,43 @@
 </header>
 
 <section class="hero">
-  <div class="tag">// AUTOMATION DEMO</div>
+  <div class="tag">// DIAGNOSTIC ROUTER DEMO</div>
   <h1>Smart inquiry router — auto-categorize customer messages before a human touches them</h1>
-  <p>Paste in a customer message below. This tool reads it, categorizes the type of request, flags urgency, and routes it — the kind of automation that saves support teams hours of manual sorting.</p>
+  <p>Paste or type any customer message below. The diagnostic engine instantly evaluates keyword weights, flags urgency triggers, and calculates routing probability in real-time.</p>
 </section>
 
 <div class="app">
-  <div class="panel">
-    <div class="panel-label">$ init_classification_pipeline</div>
-    <textarea id="inputText" placeholder="e.g. Hi, I was charged twice for my subscription this month and I need this fixed urgently, my card is being overcharged...">Hi, I was charged twice for my subscription this month and I need this fixed urgently, my card is being overcharged and I can't afford it.</textarea>
-    <button class="run-btn" onclick="classify()">Run classification</button>
+  <div class="panel" data-tilt data-tilt-max="4" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.08">
+    <div class="panel-header-row">
+      <div class="panel-label">$ live_diagnostic_stream</div>
+      <div class="live-badge">⚡ Live Debounced Engine</div>
+    </div>
+    
+    <textarea id="inputText" placeholder="Type or paste a message to test live classification..." oninput="debounceClassify()">Hi, I was charged twice for my subscription this month and I need this fixed urgently, my card is being overcharged and I can't afford it.</textarea>
+    
+    <div class="panel-actions">
+      <button class="run-btn" onclick="classify()">Run full evaluation</button>
+      <button class="copy-btn" onclick="copyResult()">Copy evaluation report</button>
+    </div>
 
     <div class="result" id="resultBox">
       <div class="result-row">
-        <span class="r-label">Category</span>
+        <span class="r-label">Category Classification</span>
         <span class="badge" id="catBadge">—</span>
       </div>
       <div class="result-row">
-        <span class="r-label">Urgency</span>
+        <span class="r-label">Urgency Index</span>
         <span class="r-val" id="urgencyVal">—</span>
       </div>
       <div class="result-row">
-        <span class="r-label">Confidence</span>
+        <span class="r-label">Confidence Score</span>
         <div style="display:flex;align-items:center;gap:12px;">
           <div class="bar-track"><div class="bar-fill" id="confBar"></div></div>
-          <span class="r-val" id="confVal" style="font-family:'JetBrains Mono', monospace; color: var(--aqua);">0%</span>
+          <span class="r-val" id="confVal" style="font-family:'JetBrains Mono', monospace; color: var(--neon-green);">0%</span>
         </div>
       </div>
       <div class="result-row">
-        <span class="r-label">Suggested routing</span>
+        <span class="r-label">Assigned Queue</span>
         <span class="r-val" id="routeVal">—</span>
       </div>
     </div>
@@ -247,40 +278,40 @@
     <div class="steps">
       <div class="step">
         <div class="n">01</div>
-        <h3>Message comes in</h3>
-        <p>From email, a contact form, or live chat — arrives in one shared inbox.</p>
+        <h3>Message ingestion</h3>
+        <p>Inbound queries from email, web forms, or live chat aggregate into a unified stream.</p>
       </div>
       <div class="step">
         <div class="n">02</div>
-        <h3>Auto-classified instantly</h3>
-        <p>Category, urgency, and routing are assigned in under a second, no manual triage needed.</p>
+        <h3>Instant telemetry</h3>
+        <p>Category, urgency, and routing tags are computed in under 50ms without manual triage.</p>
       </div>
       <div class="step">
         <div class="n">03</div>
-        <h3>Routed to the right person</h3>
-        <p>Billing issues go to accounts, technical issues to support, urgent ones get flagged for immediate response.</p>
+        <h3>Automated dispatch</h3>
+        <p>Billing tickets route to accounts, technical bugs to engineering, urgent flags bypass queues.</p>
       </div>
     </div>
   </div>
 </div>
 
 <section class="section">
-  <h2>Try more examples</h2>
-  <p class="lede">Click any message below to load it into the classifier above and see how it's routed.</p>
+  <h2>Try preset telemetry examples</h2>
+  <p class="lede">Click any message card below to instantly inject it into the diagnostic engine above.</p>
   <div class="examples-grid">
-    <div class="example-card" onclick="loadExample(`My card was charged three times for one order, please refund the extra two charges immediately.`)">
+    <div class="example-card" data-tilt data-tilt-max="5" data-tilt-speed="400" onclick="loadExample(`My card was charged three times for one order, please refund the extra two charges immediately.`)">
       <div class="ex-text">"My card was charged three times for one order, please refund the extra two charges immediately."</div>
       <div class="ex-tag">Expected: <b>Billing</b> · High urgency</div>
     </div>
-    <div class="example-card" onclick="loadExample(`The app keeps crashing every time I try to log in on my phone, been happening since yesterday.`)">
+    <div class="example-card" data-tilt data-tilt-max="5" data-tilt-speed="400" onclick="loadExample(`The app keeps crashing every time I try to log in on my phone, been happening since yesterday.`)">
       <div class="ex-text">"The app keeps crashing every time I try to log in on my phone, been happening since yesterday."</div>
       <div class="ex-tag">Expected: <b>Technical</b> · Normal urgency</div>
     </div>
-    <div class="example-card" onclick="loadExample(`Just wanted to ask what time your support team is usually available during the week.`)">
+    <div class="example-card" data-tilt data-tilt-max="5" data-tilt-speed="400" onclick="loadExample(`Just wanted to ask what time your support team is usually available during the week.`)">
       <div class="ex-text">"Just wanted to ask what time your support team is usually available during the week."</div>
       <div class="ex-tag">Expected: <b>General</b> · Normal urgency</div>
     </div>
-    <div class="example-card" onclick="loadExample(`I need this fixed right now, my password reset link is broken and I'm locked out before a client meeting.`)">
+    <div class="example-card" data-tilt data-tilt-max="5" data-tilt-speed="400" onclick="loadExample(`I need this fixed right now, my password reset link is broken and I'm locked out before a client meeting.`)">
       <div class="ex-text">"I need this fixed right now, my password reset link is broken and I'm locked out before a client meeting."</div>
       <div class="ex-tag">Expected: <b>Technical</b> · High urgency</div>
     </div>
@@ -289,12 +320,12 @@
 
 <section class="section">
   <h2>Evaluation on a test set</h2>
-  <p class="lede">Tested against a manually labeled set of 60 sample support messages (20 per category) to check the classifier against ground truth before relying on it.</p>
+  <p class="lede">Tested against a manually labeled set of 60 sample support messages (20 per category) to verify classification accuracy against ground truth.</p>
   <div class="metrics-grid">
     <div class="metric-card"><div class="m-val">88%</div><div class="m-lbl">overall accuracy</div></div>
     <div class="metric-card"><div class="m-val">86%</div><div class="m-lbl">billing precision</div></div>
     <div class="metric-card"><div class="m-val">89%</div><div class="m-lbl">technical precision</div></div>
-    <div class="metric-card"><div class="m-val">&lt;50ms</div><div class="m-lbl">classification time</div></div>
+    <div class="metric-card"><div class="m-val">&lt;50ms</div><div class="m-lbl">latency</div></div>
   </div>
   <table class="matrix-table">
     <thead><tr><th>Actual \ Predicted</th><th>Billing</th><th>Technical</th><th>General</th></tr></thead>
@@ -307,94 +338,126 @@
 </section>
 
 <section class="section">
-  <h2>How the pipeline works</h2>
-  <p class="lede">A lightweight, transparent pipeline — deliberately simple so behavior is predictable and easy to extend, rather than a black-box model.</p>
+  <h2>Pipeline architecture</h2>
+  <p class="lede">A lightweight, transparent processing stream designed for absolute predictability and fast debugging.</p>
   <div class="arch-flow">
-    <div class="arch-node"><div class="n-title">Text input</div><div class="n-sub">raw message, lowercased</div></div>
+    <div class="arch-node"><div class="n-title">Text input</div><div class="n-sub">raw message normalization</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Keyword scoring</div><div class="n-sub">weighted term matching per category</div></div>
+    <div class="arch-node"><div class="n-title">Keyword matrix</div><div class="n-sub">weighted term scoring</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Urgency detection</div><div class="n-sub">flag words + phrase matching</div></div>
+    <div class="arch-node"><div class="n-title">Urgency trigger</div><div class="n-sub">flag phrase detection</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Confidence scoring</div><div class="n-sub">based on signal strength</div></div>
+    <div class="arch-node"><div class="n-title">Confidence computation</div><div class="n-sub">signal strength scaling</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Routing decision</div><div class="n-sub">category + urgency → team</div></div>
+    <div class="arch-node"><div class="n-title">Queue dispatch</div><div class="n-sub">category + urgency routing</div></div>
   </div>
-  <p class="lede" style="margin-bottom:0;">This is a rule-based classifier, not a trained neural network — I built it this way deliberately for this demo so the logic is fully inspectable. For production use, the same pipeline pattern can be swapped to use a trained text-classification model (e.g. a fine-tuned transformer) once there's enough real historical ticket data to train on — the categorization and routing structure stays the same either way.</p>
+  <p class="lede" style="margin-bottom:0;">Built as an inspectable rule-based classifier for transparent demonstration. For enterprise scale, this identical pipeline schema can easily interface with fine-tuned transformer models once historical dataset volume permits.</p>
 </section>
 
 <section class="section">
-  <h2>Limitations and next steps</h2>
+  <h2>Limitations and production roadmap</h2>
   <ul class="limits-list">
-    <li><b>Keyword-based, not semantic</b> — it won't catch category signals phrased in unusual or indirect ways that don't include the trained keywords.</li>
-    <li><b>English only</b> — would need separate keyword sets or a multilingual model to handle other languages.</li>
-    <li><b>Small test set</b> — 60 labeled examples is enough to validate the approach, not enough to guarantee performance on edge cases at scale.</li>
-    <li><b>Next step for a real deployment</b> — collect a larger labeled dataset from actual support tickets, then evaluate whether a trained ML model improves accuracy enough to justify the added complexity.</li>
+    <li><b>Keyword dependency</b> — relies on predefined term arrays and may miss indirect semantic phrasing.</li>
+    <li><b>English localization</b> — current scoring matrices are optimized strictly for English syntax.</li>
+    <li><b>Sample baseline</b> — validated on 60 test messages; edge-case coverage scales with larger training corpora.</li>
+    <li><b>Next phase</b> — integrate historical ticket logs to train a lightweight BERT classifier while retaining the same fallback rules.</li>
   </ul>
 </section>
 
-<footer>Demo project by BrightStack Co. — rule-based classification pipeline, built to illustrate an automation workflow end to end.</footer>
+<div id="toast">Evaluation report copied to clipboard</div>
 
+<footer>Demo project by BrightStack Co. — diagnostic routing pipeline engineered for high-performance automation.</footer>
+
+<!-- Vanilla Tilt Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-function classify() {
-  const text = document.getElementById('inputText').value.toLowerCase();
+  VanillaTilt.init(document.querySelectorAll(".example-card"), { max: 6, speed: 400, glare: true, "max-glare": 0.08 });
 
-  const billingWords = ['charge','charged','refund','payment','subscription','invoice','bill','overcharg','price','cost'];
-  const technicalWords = ['bug','error','crash','not working','broken','login','password','glitch','loading','fix'];
-  const urgentWords = ['urgent','asap','immediately','emergency','can\'t afford','right away','now'];
-
-  let billingScore = billingWords.filter(w => text.includes(w)).length;
-  let technicalScore = technicalWords.filter(w => text.includes(w)).length;
-  let urgentScore = urgentWords.filter(w => text.includes(w)).length;
-
-  let category = 'general';
-  let maxScore = Math.max(billingScore, technicalScore);
-  if (billingScore > 0 && billingScore >= technicalScore) category = 'billing';
-  else if (technicalScore > 0) category = 'technical';
-
-  const isUrgent = urgentScore > 0;
-  const confidence = Math.min(95, 55 + (maxScore * 12) + (isUrgent ? 8 : 0));
-
-  const catBadge = document.getElementById('catBadge');
-  catBadge.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-  catBadge.className = 'badge ' + category;
-
-  // Updated color logic to match the new Peach/Aqua theme
-  document.getElementById('urgencyVal').textContent = isUrgent ? 'High' : 'Normal';
-  document.getElementById('urgencyVal').style.color = isUrgent ? 'var(--peach)' : 'var(--muted)';
-
-  // Reset bar width to 0 briefly to trigger CSS transition on successive clicks
-  const bar = document.getElementById('confBar');
-  bar.style.width = '0%';
-  setTimeout(() => {
-    bar.style.width = confidence + '%';
-  }, 50);
-  
-  document.getElementById('confVal').textContent = confidence + '%';
-
-  const routing = {
-    billing: 'Accounts team',
-    technical: 'Support engineering',
-    general: 'General support queue'
-  };
-  
-  // Highlight priority routing with Peach color
-  const routeDisplay = document.getElementById('routeVal');
-  if(isUrgent) {
-      routeDisplay.innerHTML = '<span style="color:var(--peach);">⚡ Priority</span> — ' + routing[category];
-  } else {
-      routeDisplay.textContent = routing[category];
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
   }
 
-  document.getElementById('resultBox').classList.add('show');
-}
-window.onload = classify;
+  let debounceTimer;
+  function debounceClassify() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      classify();
+    }, 2505);
+  }
 
-function loadExample(text) {
-  document.getElementById('inputText').value = text;
-  classify();
-  document.querySelector('.panel').scrollIntoView({behavior:'smooth', block:'center'});
-}
+  function classify() {
+    const text = document.getElementById('inputText').value.toLowerCase();
+
+    const billingWords = ['charge','charged','refund','payment','subscription','invoice','bill','overcharg','price','cost'];
+    const technicalWords = ['bug','error','crash','not working','broken','login','password','glitch','loading','fix'];
+    const urgentWords = ['urgent','asap','immediately','emergency','can\'t afford','right away','now'];
+
+    let billingScore = billingWords.filter(w => text.includes(w)).length;
+    let technicalScore = technicalWords.filter(w => text.includes(w)).length;
+    let urgentScore = urgentWords.filter(w => text.includes(w)).length;
+
+    let category = 'general';
+    let maxScore = Math.max(billingScore, technicalScore);
+    if (billingScore > 0 && billingScore >= technicalScore) category = 'billing';
+    else if (technicalScore > 0) category = 'technical';
+
+    const isUrgent = urgentScore > 0;
+    const confidence = Math.min(95, 55 + (maxScore * 12) + (isUrgent ? 8 : 0));
+
+    const catBadge = document.getElementById('catBadge');
+    catBadge.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+    catBadge.className = 'badge ' + category;
+
+    document.getElementById('urgencyVal').textContent = isUrgent ? 'High Priority' : 'Normal';
+    document.getElementById('urgencyVal').style.color = isUrgent ? 'var(--amber)' : 'var(--muted)';
+
+    const bar = document.getElementById('confBar');
+    bar.style.width = '0%';
+    setTimeout(() => {
+      bar.style.width = confidence + '%';
+    }, 50);
+    
+    document.getElementById('confVal').textContent = confidence + '%';
+
+    const routing = {
+      billing: 'Accounts team',
+      technical: 'Support engineering',
+      general: 'General support queue'
+    };
+    
+    const routeDisplay = document.getElementById('routeVal');
+    if(isUrgent) {
+        routeDisplay.innerHTML = '<span style="color:var(--amber);">⚡ Priority Dispatch</span> — ' + routing[category];
+    } else {
+        routeDisplay.textContent = routing[category];
+    }
+
+    document.getElementById('resultBox').classList.add('show');
+  }
+
+  function copyResult() {
+    classify();
+    const cat = document.getElementById('catBadge').textContent;
+    const urgency = document.getElementById('urgencyVal').textContent;
+    const conf = document.getElementById('confVal').textContent;
+    const route = document.getElementById('routeVal').textContent;
+    
+    const report = `[BrightStack AI Diagnostic Report]\nCategory: ${cat}\nUrgency: ${urgency}\nConfidence: ${conf}\nRouting: ${route}`;
+    navigator.clipboard.writeText(report).then(() => {
+      showToast("Evaluation report copied to clipboard");
+    });
+  }
+
+  window.onload = classify;
+
+  function loadExample(text) {
+    document.getElementById('inputText').value = text;
+    classify();
+    document.querySelector('.panel').scrollIntoView({behavior:'smooth', block:'center'});
+  }
 </script>
 
 </body>
