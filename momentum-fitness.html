@@ -3,286 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Momentum Studio — Strength & Conditioning</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/momentum-fitness.html">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Momentum Studio — Strength &amp; Conditioning">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/momentum-fitness.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<title>Momentum Apex Ultimate — Elite Strength &amp; Conditioning Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0f16; --ink:#ffffff; --paper:rgba(255,255,255,0.02); --card:rgba(255,255,255,0.02); --line:rgba(0,229,255,0.15);
-    --coral:#00e5ff; --coral-soft:rgba(0,229,255,0.08); --muted:#a0aec0; --accent:#00e5ff;
+  :root {
+    --bg: #010307;
+    --surface: rgba(10, 16, 28, 0.9);
+    --surface-raised: rgba(18, 27, 46, 0.95);
+    --line: rgba(0, 229, 255, 0.22);
+    --cyan: #00e5ff;
+    --emerald: #00f5d4;
+    --orchid: #d946ef;
+    --amber: #ffb703;
+    --ink: #f8fafc;
+    --muted: #8b9bb4;
+    --radius: 20px;
+    --shadow: 0 40px 100px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6; overflow-x:hidden;}
-  
-  /* Cyber Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.04), transparent 60%);}
 
-  a{color:inherit;text-decoration:none;}
-  .display{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-0.01em;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100vh; width: 100vw; overflow: hidden; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); }
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1120px;margin:0 auto; border-bottom:1px solid var(--line); background:rgba(5,8,13,0.8); backdrop-filter: blur(10px);}
-  .logo{font-family:'Archivo Black',sans-serif;font-size:18px;text-transform:uppercase; color:#fff;}
-  .logo span{color:var(--accent);}
-  nav{display:flex;gap:28px;align-items:center;}
-  nav a{font-size:13.5px;font-weight:600; color:var(--muted); transition: color 0.2s;}
-  nav a:hover{color:#fff;}
-  .nav-cta{background:var(--accent);color:#0a0f16;padding:10px 20px;border-radius:8px; font-weight:700; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
-  .nav-cta:hover{transform: translateY(-2px); opacity: 0.9;}
-  .back-link{font-size:12.5px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .back-link:hover{color:var(--accent);}
-
-  .hero{display:flex;gap:48px;align-items:center;padding:60px 32px 80px;max-width:1120px;margin:0 auto;}
-  .hero-text{flex:1.1;}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;font-weight:600;}
-  h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:48px;line-height:1.05;margin-bottom:22px; color:#fff;}
-  .hero-text p{color:var(--muted);font-size:16px;max-width:440px;margin-bottom:30px; line-height:1.7;}
-  .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
-  .btn-primary{background:var(--accent);color:#0a0f16;padding:14px 26px;border-radius:8px;font-weight:700;font-size:14px; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3); display:inline-block;}
-  .btn-primary:hover{transform: translateY(-2px); opacity: 0.9;}
-  .btn-secondary{border:1px solid var(--line);padding:14px 24px;border-radius:8px;font-weight:600;font-size:14px; color:var(--ink); background:var(--card); backdrop-filter: blur(10px); transition: all 0.2s; display:inline-block;}
-  .btn-secondary:hover{border-color:var(--accent); color:#fff;}
-
-  /* Signature: whiteboard schedule preview in hero */
-  .schedule-preview{
-    flex:1;background:rgba(5,8,13,0.8);border:1px solid var(--line);border-radius:16px;padding:24px;color:var(--paper); backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  .scanline {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.15;
+    background-image: repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px);
   }
-  .sp-title{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:14px;}
-  .sp-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;}
-  .sp-row:last-child{border-bottom:none;}
-  .sp-day{font-weight:700;width:40px;flex-shrink:0; font-family:'JetBrains Mono',monospace; color:#fff;}
-  .sp-class{flex:1;color:var(--muted);}
-  .sp-intensity{width:44px;height:6px;border-radius:3px;flex-shrink:0;}
-  .i-low{background:rgba(0,229,255,0.25);}
-  .i-mid{background:rgba(0,229,255,0.6);}
-  .i-high{background:var(--accent); box-shadow: 0 0 6px var(--accent);}
 
-  .section{padding:60px 32px;max-width:1120px;margin:0 auto;}
-  .section-head{max-width:560px;margin-bottom:44px;}
-  .section-head .eyebrow{margin-bottom:14px;}
-  .section-head h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:30px;margin-bottom:10px; color:#fff;}
-  .section-head p{color:var(--muted);font-size:14.5px;}
+  .app { display: flex; height: 100vh; width: 100vw; }
 
-  /* Full weekly schedule — the signature element in full */
-  .schedule-board{background:rgba(5,8,13,0.8);border:1px solid var(--line);border-radius:16px;padding:30px;color:var(--paper);overflow-x:auto; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);}
-  .schedule-grid{display:grid;grid-template-columns:70px repeat(7,1fr);gap:2px;background:var(--line);min-width:760px;}
-  .sched-cell{background:#0a0f16;padding:12px 10px;font-size:12px;}
-  .sched-head{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:center;font-size:11px;color:var(--accent);text-transform:uppercase;}
-  .sched-time{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:11px;}
-  .sched-class{border-radius:6px;padding:8px 6px;font-size:11px;text-align:center;font-weight:600; color:#0a0f16;}
-  .legend{display:flex;gap:18px;margin-top:18px;font-size:11.5px;color:var(--muted);flex-wrap:wrap; font-family:'JetBrains Mono',monospace;}
-  .legend span{display:inline-flex;align-items:center;gap:6px;}
-  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  /* Sidebar Navigation */
+  aside { width: 280px; flex-shrink: 0; background: rgba(2,4,8,0.98); border-right: 1px solid var(--line); display: flex; flex-direction: column; z-index: 10; backdrop-filter: blur(20px); }
+  .brand { padding: 24px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line); }
+  .brand-mark { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--emerald)); box-shadow: 0 0 25px rgba(0,229,255,0.4); }
+  .brand-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 18px; color: #fff; }
+  .brand-sub { font-size: 10px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace; }
 
-  .trainer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .trainer-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
-  .trainer-avatar{width:56px;height:56px;border-radius:50%;background:var(--coral-soft);margin-bottom:16px; border:1px solid var(--line);}
-  .trainer-card h3{font-size:17px;font-weight:700;margin-bottom:4px; color:#fff;}
-  .trainer-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;display:block;}
-  .trainer-card p{font-size:13.5px;color:var(--muted); line-height:1.6;}
+  .nav-menu { padding: 20px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; text-decoration: none; border: 1px solid transparent; font-family: 'JetBrains Mono', monospace; }
+  .nav-item:hover, .nav-item.active { background: var(--surface-raised); color: #fff; border-color: var(--line); }
 
-  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .price-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); display:flex; flex-direction:column;}
-  .price-card.featured{border-color:var(--accent);box-shadow:0 0 30px rgba(0,229,255,0.15);}
-  .price-name{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-  .price-val{font-family:'Archivo Black',sans-serif;font-size:32px;margin-bottom:4px; color:#fff;}
-  .price-val span{font-size:14px;font-family:'Inter',sans-serif;color:var(--muted); font-weight:normal;}
-  .price-desc{font-size:13px;color:var(--muted);margin-bottom:20px;}
-  .price-list{list-style:none;margin-bottom:24px; flex:1;}
-  .price-list li{font-size:13px;padding:9px 0;border-top:1px solid var(--line); color:var(--muted);}
-  .price-btn{display:block;text-align:center;background:var(--card);border:1px solid var(--line);color:#fff;padding:12px;border-radius:8px;font-weight:700;font-size:13px; transition: all 0.2s;}
-  .price-card.featured .price-btn{background:var(--accent); color:#0a0f16; border:none; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
-  .price-btn:hover{border-color:var(--accent);}
+  .user-stats { margin-top: auto; padding: 22px; border-top: 1px solid var(--line); background: rgba(0,0,0,0.4); }
+  .stat-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; color: var(--muted); }
+  .stat-row span:last-child { color: var(--emerald); font-weight: 700; }
+  .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .progress-fill { width: 92%; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--emerald)); border-radius: 3px; }
 
-  .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .t-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
-  .t-card p{font-size:13.5px;margin-bottom:14px; color:var(--ink); line-height:1.6;}
-  .t-name{font-size:12.5px;font-weight:700; color:#fff;}
-  .t-role{font-size:11.5px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  /* Main Workspace */
+  .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: var(--bg); }
+  header { height: 74px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(1,3,7,0.85); backdrop-filter: blur(18px); position: sticky; top: 0; z-index: 5; }
+  .page-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; color: #fff; }
+  .header-actions { display: flex; gap: 14px; align-items: center; }
+  .btn-primary { background: linear-gradient(135deg, var(--cyan), var(--emerald)); color: #010307; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 800; font-size: 13.5px; cursor: pointer; box-shadow: 0 0 25px rgba(0,229,255,0.4); transition: transform 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); }
 
-  .cta-band{background:rgba(5,8,13,0.9); border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--paper);text-align:center;padding:70px 32px; backdrop-filter: blur(12px);}
-  .cta-band h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:28px;margin-bottom:20px; color:#fff;}
-  .cta-band .btn-primary{display:inline-block;}
+  .content-wrap { max-width: 1200px; margin: 0 auto; padding: 40px; width: 100%; }
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
 
-  footer{padding:30px 32px;text-align:center;font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; backdrop-filter: blur(20px); box-shadow: var(--shadow); margin-bottom: 30px; }
+  .card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .card p.sub { font-size: 12.5px; color: var(--muted); margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; }
 
-  @media (max-width:900px){
-    .hero{flex-direction:column;}
-    h1{font-size:36px;}
-    .trainer-grid, .price-grid, .testimonial-grid{grid-template-columns:1fr;}
-    nav a:not(.nav-cta){display:none;}
-  }
+  /* Schedule Table */
+  .schedule-board { overflow-x: auto; }
+  .schedule-grid { display: grid; grid-template-columns: 80px repeat(7,1fr); gap: 4px; background: rgba(0,229,255,0.1); min-width: 800px; border-radius: 12px; overflow: hidden; }
+  .sched-cell { background: #040810; padding: 14px 10px; font-size: 12.5px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .sched-head { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11.5px; color: var(--cyan); text-transform: uppercase; background: rgba(8,14,26,0.9); }
+  .sched-time { font-family: 'JetBrains Mono', monospace; color: var(--muted); font-size: 11.5px; background: rgba(8,14,26,0.9); font-weight: 600; }
+  .sched-class { border-radius: 8px; padding: 10px 8px; font-size: 11.5px; font-weight: 700; color: #010307; width: 100%; cursor: pointer; transition: transform 0.2s; }
+  .sched-class:hover { transform: scale(1.04); }
+
+  /* Calculator Grid */
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  @media(max-width: 850px){ .calc-grid { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .field input, .field select { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; color: #fff; font-size: 14px; outline: none; font-family: 'JetBrains Mono', monospace; }
+  .field input:focus, .field select:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,229,255,0.3); }
+
+  .result-box { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 16px; padding: 24px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .result-num { font-size: 42px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--emerald); margin: 10px 0; }
+
+  /* Trainer Grid */
+  .trainer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media(max-width: 900px){ .trainer-grid { grid-template-columns: 1fr; } }
+  .trainer-card { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+  .trainer-avatar { width: 56px; height: 56px; border-radius: 14px; background: rgba(0,229,255,0.1); margin-bottom: 16px; border: 1px solid var(--cyan); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--cyan); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+  .trainer-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; color: #fff; }
+  .trainer-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); text-transform: uppercase; margin-bottom: 10px; display: block; font-weight: 700; }
+  .trainer-card p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(1,3,7,0.85); z-index: 50; display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+  .modal-overlay.show { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 38px; width: 440px; box-shadow: var(--shadow); position: relative; }
+  .modal h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .modal p { font-size: 13px; color: var(--muted); margin-bottom: 20px; font-family: 'JetBrains Mono', monospace; }
+
+  .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; }
+  .back-link:hover { border-color: var(--cyan); }
 </style>
 </head>
 <body>
-<div class="scan"></div>
+<div class="scanline"></div>
 
-<header>
-  <div class="logo">Momentum <span>Studio</span></div>
-  <nav>
-    <a href="#schedule">Schedule</a>
-    <a href="#trainers">Trainers</a>
-    <a href="#pricing">Membership</a>
-    <a href="#pricing" class="nav-cta">Book Free Class</a>
-  </nav>
-  <a href="index.html" class="back-link">← Portfolio</a>
-</header>
+<div class="app">
+  <!-- Sidebar -->
+  <aside>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">Momentum Apex</div>
+        <div class="brand-sub">Ultimate Studio OS</div>
+      </div>
+    </div>
+    
+    <div class="nav-menu">
+      <a class="nav-item active" onclick="switchView('timetable', this)">⚡ Operational Schedule</a>
+      <a class="nav-item" onclick="switchView('calculator', this)">📊 Biometric Macro Engine</a>
+      <a class="nav-item" onclick="switchView('faculty', this)">🎯 Elite Coaching Roster</a>
+      <a class="nav-item" onclick="switchView('protocols', this)">⚙ System Parameters</a>
+    </div>
 
-<section class="hero">
-  <div class="hero-text">
-    <div class="eyebrow">// Mansehra Strength & Conditioning</div>
-    <h1>Train Different.</h1>
-    <p>Small-group strength and conditioning classes built around rigorous coaching and personal progression. Your first session is fully complimentary.</p>
-    <div class="btn-row">
-      <a href="#pricing" class="btn-primary">Book Free Class</a>
-      <a href="#schedule" class="btn-secondary">View Schedule</a>
+    <div class="user-stats">
+      <div class="stat-row"><span>Status</span><span>ACTIVE NODE</span></div>
+      <div class="stat-row"><span>Load Index</span><span>98.6% OPTIMAL</span></div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="main">
+    <header>
+      <div class="page-title" id="headerTitle">Operational Weekly Timetable</div>
+      <div class="header-actions">
+        <button class="btn-primary" onclick="openModal('Complimentary Assessment')">Book Free Assessment</button>
+      </div>
+    </header>
+
+    <div class="content-wrap">
+      
+      <!-- VIEW 1: SCHEDULE -->
+      <div id="view-timetable" class="view-panel active">
+        <div class="card">
+          <h3>Live Class Architecture</h3>
+          <p class="sub">// Select any active time slot below to secure your reservation.</p>
+          <div class="schedule-board">
+            <div class="schedule-grid">
+              <div class="sched-cell"></div>
+              <div class="sched-cell sched-head">Mon</div>
+              <div class="sched-cell sched-head">Tue</div>
+              <div class="sched-cell sched-head">Wed</div>
+              <div class="sched-cell sched-head">Thu</div>
+              <div class="sched-cell sched-head">Fri</div>
+              <div class="sched-cell sched-head">Sat</div>
+              <div class="sched-cell sched-head">Sun</div>
+
+              <div class="sched-cell sched-time">06:00 AM</div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--cyan);" onclick="openModal('Strength Block (06:00)')">Strength</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--emerald);" onclick="openModal('Conditioning (06:00)')">Condition</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;" onclick="openModal('Mobility (06:00)')">Mobility</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--emerald);" onclick="openModal('Olympic Lift (06:00)')">Olympic</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--cyan);" onclick="openModal('Strength (06:00)')">Strength</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;" onclick="openModal('Open Gym (06:00)')">Open Gym</div></div>
+              <div class="sched-cell"></div>
+
+              <div class="sched-cell sched-time">05:30 PM</div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--emerald);" onclick="openModal('Conditioning (17:30)')">Condition</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--cyan);" onclick="openModal('Strength (17:30)')">Strength</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--emerald);" onclick="openModal('Olympic Lift (17:30)')">Olympic</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;" onclick="openModal('Mobility (17:30)')">Mobility</div></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--emerald);" onclick="openModal('Conditioning (17:30)')">Condition</div></div>
+              <div class="sched-cell"></div>
+              <div class="sched-cell"><div class="sched-class" style="background:var(--amber);" onclick="openModal('Masterclass')">Masterclass</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: CALCULATOR -->
+      <div id="view-calculator" class="view-panel">
+        <div class="card">
+          <h3>Biometric Caloric &amp; Macro Engine</h3>
+          <p class="sub">// Real-time nutritional target computation for high-output athletes.</p>
+          <div class="calc-grid">
+            <div>
+              <div class="field">
+                <label>Body Weight (kg)</label>
+                <input type="number" id="calcWeight" value="78" oninput="computeMacros()">
+              </div>
+              <div class="field">
+                <label>Height (cm)</label>
+                <input type="number" id="calcHeight" value="180" oninput="computeMacros()">
+              </div>
+              <div class="field">
+                <label>Training Intensity</label>
+                <select id="calcIntensity" onchange="computeMacros()">
+                  <option value="1.3">Moderate (3x / week)</option>
+                  <option value="1.55" selected>High (5x / week)</option>
+                  <option value="1.75">Elite (Daily Double Sessions)</option>
+                </select>
+              </div>
+            </div>
+            <div class="result-box">
+              <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase;">Estimated Daily Energy Target</div>
+              <div class="result-num" id="resultCalories">3,120 kcal</div>
+              <div style="font-size: 12px; color: var(--emerald); font-family: 'JetBrains Mono', monospace;" id="resultProtein">Protein Target: 172g / day</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: FACULTY -->
+      <div id="view-faculty" class="view-panel">
+        <div class="card">
+          <h3>Elite Coaching Faculty</h3>
+          <p class="sub">// Uncompromising technical standards and direct supervision.</p>
+          <div class="trainer-grid">
+            <div class="trainer-card">
+              <div class="trainer-avatar">BA</div>
+              <h3>Bilal Ahmed</h3>
+              <span class="trainer-tag">Strength &amp; Olympic Kinematics</span>
+              <p>Directs primary barbell blocks emphasizing technical mastery before load progression.</p>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-avatar">SK</div>
+              <h3>Sara Khalid</h3>
+              <span class="trainer-tag">Metabolic Conditioning Lead</span>
+              <p>Engineers energy systems training calibrated against daily biometric recovery metrics.</p>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-avatar">UT</div>
+              <h3>Usman Tariq</h3>
+              <span class="trainer-tag">Joint Mechanics &amp; Recovery</span>
+              <p>Directs joint mechanics, active tissue release, and orthopedic injury prevention protocols.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 4: PROTOCOLS -->
+      <div id="view-protocols" class="view-panel">
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+          <h3>Studio Protocols &amp; Preferences</h3>
+          <p class="sub">// Configure operational notifications and security parameters</p>
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
+              <div>
+                <h4 style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Session Reminder Alerts</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Push notifications 30 mins prior to class</span>
+              </div>
+              <input type="checkbox" checked style="accent-color: var(--cyan); width: 20px; height: 20px; cursor: pointer;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
+              <div>
+                <h4 style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Biometric Data Sync</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Automatic wear-band integration</span>
+              </div>
+              <input type="checkbox" checked style="accent-color: var(--cyan); width: 20px; height: 20px; cursor: pointer;">
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="schedule-preview">
-    <div class="sp-title">// Live Weekly Snapshot</div>
-    <div class="sp-row"><span class="sp-day">Mon</span><span class="sp-class">Strength Foundations</span><span class="sp-intensity i-mid"></span></div>
-    <div class="sp-row"><span class="sp-day">Tue</span><span class="sp-class">Conditioning Circuit</span><span class="sp-intensity i-high"></span></div>
-    <div class="sp-row"><span class="sp-day">Wed</span><span class="sp-class">Mobility & Recovery</span><span class="sp-intensity i-low"></span></div>
-    <div class="sp-row"><span class="sp-day">Thu</span><span class="sp-class">Olympic Lifting</span><span class="sp-intensity i-high"></span></div>
-    <div class="sp-row"><span class="sp-day">Fri</span><span class="sp-class">Strength Foundations</span><span class="sp-intensity i-mid"></span></div>
-  </div>
-</section>
-
-<section class="section" id="schedule">
-  <div class="section-head">
-    <div class="eyebrow">// Weekly Timetable</div>
-    <h2>Structured Class Schedule.</h2>
-    <p>Intensity scales dynamically to individual capacity under expert coaching supervision.</p>
-  </div>
-  <div class="schedule-board">
-    <div class="schedule-grid">
-      <div class="sched-cell"></div>
-      <div class="sched-cell sched-head">Mon</div><div class="sched-cell sched-head">Tue</div><div class="sched-cell sched-head">Wed</div>
-      <div class="sched-cell sched-head">Thu</div><div class="sched-cell sched-head">Fri</div><div class="sched-cell sched-head">Sat</div><div class="sched-cell sched-head">Sun</div>
-
-      <div class="sched-cell sched-time">06:00 AM</div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.7);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Condition</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;">Mobility</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Olympic</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.7);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;">Open Gym</div></div>
-      <div class="sched-cell"></div>
-
-      <div class="sched-cell sched-time">05:30 PM</div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Condition</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.7);">Strength</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Olympic</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.3); color:#fff;">Mobility</div></div>
-      <div class="sched-cell"><div class="sched-class" style="background:var(--accent);">Condition</div></div>
-      <div class="sched-cell"></div>
-      <div class="sched-cell"><div class="sched-class" style="background:rgba(0,229,255,0.4); color:#fff;">Community</div></div>
-    </div>
-    <div class="legend">
-      <span><i style="background:rgba(0,229,255,0.3);"></i>Low intensity</span>
-      <span><i style="background:rgba(0,229,255,0.7);"></i>Moderate</span>
-      <span><i style="background:var(--accent);"></i>High intensity</span>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="trainers">
-  <div class="section-head">
-    <div class="eyebrow">// Coaching Staff</div>
-    <h2>Elite Guidance, Uncompromising Standards.</h2>
-  </div>
-  <div class="trainer-grid">
-    <div class="trainer-card">
-      <div class="trainer-avatar"></div>
-      <h3>Bilal Ahmed</h3>
-      <span class="trainer-tag">Strength & Olympic Lifting</span>
-      <p>Directs primary barbell blocks emphasizing technical mastery before load progression.</p>
-    </div>
-    <div class="trainer-card">
-      <div class="trainer-avatar"></div>
-      <h3>Sara Khalid</h3>
-      <span class="trainer-tag">Conditioning Lead</span>
-      <p>Engineers metabolic conditioning circuits tailored to daily recovery metrics.</p>
-    </div>
-    <div class="trainer-card">
-      <div class="trainer-avatar"></div>
-      <h3>Usman Tariq</h3>
-      <span class="trainer-tag">Mobility & Rehabilitation</span>
-      <p>Directs joint mechanics and active recovery protocols for injury prevention.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="pricing">
-  <div class="section-head">
-    <div class="eyebrow">// Membership Plans</div>
-    <h2>Transparent Pricing, Zero Lock-In.</h2>
-  </div>
-  <div class="price-grid">
-    <div class="price-card">
-      <div class="price-name">Drop-In</div>
-      <div class="price-val">Rs 1,200<span>/class</span></div>
-      <div class="price-desc">Ideal for visiting athletes & single sessions</div>
-      <ul class="price-list"><li>Single class access</li><li>Equipment included</li><li>Zero commitment</li></ul>
-      <a href="#" class="price-btn">Book Session</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-name">Monthly Unlimited</div>
-      <div class="price-val">Rs 9,500<span>/mo</span></div>
-      <div class="price-desc">Full training access — most popular tier</div>
-      <ul class="price-list"><li>Unlimited class bookings</li><li>Priority slot reservation</li><li>Monthly biometric review</li></ul>
-      <a href="#" class="price-btn">Join Momentum</a>
-    </div>
-    <div class="price-card">
-      <div class="price-name">Annual Pass</div>
-      <div class="price-val">Rs 95,000<span>/yr</span></div>
-      <div class="price-desc">Committed conditioning with annual savings</div>
-      <ul class="price-list"><li>All Monthly benefits</li><li>Locked annual rate</li><li>1 guest pass / month</li></ul>
-      <a href="#" class="price-btn">Secure Annual</a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-head">
-    <div class="eyebrow">// Member Feedback</div>
-    <h2>Verified Athlete Experiences.</h2>
-  </div>
-  <div class="testimonial-grid">
-    <div class="t-card"><p>"The level of individualized coaching attention here is unmatched in any commercial gym."</p><div class="t-name">Ayesha R.</div><div class="t-role">// Member since 2024</div></div>
-    <div class="t-card"><p>"The digital timetable matches physical studio execution perfectly — zero scheduling friction."</p><div class="t-name">Hamza K.</div><div class="t-role">// Monthly Member</div></div>
-    <div class="t-card"><p>"Transitioning here was the best decision for my compound lift technique."</p><div class="t-name">Nida F.</div><div class="t-role">// Member since 2025</div></div>
-  </div>
-</section>
-
-<div class="cta-band">
-  <h2>Your First Session is Free.</h2>
-  <a href="#pricing" class="btn-primary">Reserve Your Spot</a>
 </div>
 
-<footer>BrightStack Co. · Momentum Studio Concept · High-Performance UI Theme</footer>
+<a href="index.html" class="back-link">← Portfolio Hub</a>
 
-<!-- 3D Card Hover Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button style="float:right; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;" onclick="closeModal()">✕</button>
+    <h3 id="modalTitle">Secure Session Slot</h3>
+    <p id="modalDesc">// Provision training slot in system</p>
+    <div class="field">
+      <label>Athlete Name</label>
+      <input type="text" id="athleteName" placeholder="e.g., Hassan Saeed">
+    </div>
+    <div class="field">
+      <label>Contact Phone / WhatsApp</label>
+      <input type="text" id="athletePhone" placeholder="e.g., +92 300 0000000">
+    </div>
+    <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="confirmBooking()">Confirm Reservation</button>
+  </div>
+</div>
+
 <script>
-  VanillaTilt.init(document.querySelectorAll(".trainer-card, .price-card, .t-card, .schedule-board, .schedule-preview"), {
-    max: 2,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.03,
-  });
-</script>
+  function switchView(viewId, el){
+    document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    
+    document.getElementById('view-' + viewId).classList.add('active');
+    el.classList.add('active');
 
+    const titles = {
+      timetable: 'Operational Weekly Timetable',
+      calculator: 'Biometric Caloric & Macro Engine',
+      faculty: 'Elite Coaching Faculty Roster',
+      protocols: 'Studio System Parameters'
+    };
+    document.getElementById('headerTitle').textContent = titles[viewId];
+  }
+
+  function computeMacros(){
+    const w = parseFloat(document.getElementById('calcWeight').value) || 78;
+    const h = parseFloat(document.getElementById('calcHeight').value) || 180;
+    const mult = parseFloat(document.getElementById('calcIntensity').value) || 1.55;
+
+    const bmr = 10 * w + 6.25 * h - 5 * 25 + 5;
+    const cals = Math.round(bmr * mult);
+    const protein = Math.round(w * 2.2);
+
+    document.getElementById('resultCalories').textContent = cals.toLocaleString() + ' kcal';
+    document.getElementById('resultProtein').textContent = `Protein Target: ${protein}g / day`;
+  }
+
+  function openModal(sessionName){
+    document.getElementById('modalTitle').textContent = sessionName;
+    document.getElementById('modal').classList.add('show');
+  }
+
+  function closeModal(){
+    document.getElementById('modal').classList.remove('show');
+  }
+
+  function confirmBooking(){
+    const name = document.getElementById('athleteName').value.trim();
+    if(!name){
+      alert('Please enter your athlete name.');
+      return;
+    }
+    alert(`Success, ${name}! Your session has been officially logged in Momentum Apex.`);
+    closeModal();
+    document.getElementById('athleteName').value = '';
+    document.getElementById('athletePhone').value = '';
+  }
+
+  computeMacros();
+</script>
 </body>
 </html>
