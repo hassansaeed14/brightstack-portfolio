@@ -16,23 +16,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1B2430; --ink-soft:#5A6676; --ink-faint:#8C97A6;
-    --paper:#F4F6F8; --card:#FFFFFF; --line:#E2E7ED; --line-soft:#EDF1F5;
-    --indigo:#3C3EE8; --indigo-soft:#EEEEFD; --indigo-line:#C9CAF8;
-    --signal:#FFC93C; --green:#0E9F6E; --green-soft:#E6F6F0;
-    --amber:#B7791F; --amber-soft:#FEF6E7; --red:#C4453A; --red-soft:#FDECEA;
+    --bg:#0a0f16; --card:rgba(255,255,255,0.02); --ink:#ffffff; --muted:#a0aec0; --ink-faint:#718096;
+    --line:rgba(0,229,255,0.15); --line-soft:rgba(255,255,255,0.04);
+    --indigo:#00e5ff; --indigo-dim:rgba(0,229,255,0.08); --indigo-line:rgba(0,229,255,0.3);
+    --signal:#ffdab9; --green:#00e5ff; --green-dim:rgba(0,229,255,0.1);
+    --amber:#ffdab9; --amber-dim:rgba(255,218,185,0.08); --red:#ff4d4d; --red-dim:rgba(255,77,77,0.1);
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased; overflow-x:hidden;}
+  
+  /* Cyber Background Scan Effect */
+  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
+
   a{color:inherit;text-decoration:none;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
   /* ---------- gate states ---------- */
   .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;}
-  .gate-inner{max-width:380px;}
-  .gate h2{font-family:'Space Grotesk',sans-serif;font-size:21px;margin:0 0 10px;}
-  .gate p{color:var(--ink-soft);font-size:14.5px;margin:0 0 22px;}
-  .gate-btn{display:inline-block;background:var(--ink);color:#fff;padding:12px 26px;border-radius:8px;font-weight:600;font-size:14px;}
+  .gate-inner{max-width:380px;background:var(--card);border:1px solid var(--line);padding:32px;border-radius:16px; backdrop-filter: blur(12px);}
+  .gate h2{font-family:'Space Grotesk',sans-serif;font-size:21px;margin:0 0 10px; color:#fff;}
+  .gate p{color:var(--muted);font-size:14.5px;margin:0 0 22px;}
+  .gate-btn{display:inline-block;background:var(--indigo);color:#0a0f16;padding:12px 26px;border-radius:8px;font-weight:700;font-size:14px; box-shadow: 0 0 15px rgba(0,229,255,0.3); transition: transform 0.2s;}
+  .gate-btn:hover{transform: translateY(-2px);}
   .spin{width:22px;height:22px;border:2px solid var(--line);border-top-color:var(--indigo);border-radius:50%;margin:0 auto 14px;animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
@@ -41,50 +48,50 @@
   .shell{display:flex;min-height:100vh;}
 
   .sidebar{
-    width:252px;flex-shrink:0;background:var(--card);border-right:1px solid var(--line);
+    width:252px;flex-shrink:0;background:#05080d;border-right:1px solid var(--line);
     display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
   }
   .side-top{padding:22px 22px 18px;border-bottom:1px solid var(--line-soft);}
-  .side-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em;}
+  .side-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em; color:#fff;}
   .side-logo span{color:var(--indigo);}
   .side-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-top:3px;}
 
   .side-profile{display:flex;align-items:center;gap:11px;padding:18px 22px;border-bottom:1px solid var(--line-soft);}
-  .avatar{width:38px;height:38px;border-radius:50%;background:var(--indigo-soft);object-fit:cover;flex-shrink:0;border:1px solid var(--line);}
-  .side-name{font-size:13.5px;font-weight:600;line-height:1.25;}
-  .side-email{font-size:11.5px;color:var(--ink-faint);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--indigo-dim);object-fit:cover;flex-shrink:0;border:1px solid var(--line);}
+  .side-name{font-size:13.5px;font-weight:600;line-height:1.25; color:#fff;}
+  .side-email{font-size:11.5px;color:var(--muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px; font-family:'JetBrains Mono',monospace;}
 
-  .side-nav{padding:14px 12px;flex:1;display:flex;flex-direction:column;gap:2px;}
+  .side-nav{padding:14px 12px;flex:1;display:flex;flex-direction:column;gap:4px;}
   .side-link{
     display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;
-    font-size:13.5px;font-weight:500;color:var(--ink-soft);cursor:pointer;
+    font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer; transition: all 0.2s;
   }
-  .side-link:hover{background:var(--paper);color:var(--ink);}
-  .side-link.active{background:var(--indigo-soft);color:var(--indigo);font-weight:600;}
+  .side-link:hover{background:rgba(255,255,255,0.03);color:#fff;}
+  .side-link.active{background:var(--indigo-dim);color:var(--indigo);font-weight:600; border: 1px solid var(--line);}
   .side-link svg{width:16px;height:16px;flex-shrink:0;}
-  .side-badge{margin-left:auto;font-size:10.5px;font-weight:700;background:var(--indigo);color:#fff;border-radius:20px;padding:1px 7px;}
+  .side-badge{margin-left:auto;font-size:10.5px;font-weight:700;background:var(--indigo);color:#0a0f16;border-radius:20px;padding:1px 7px;}
   .side-foot{padding:12px;border-top:1px solid var(--line-soft);}
-  .side-link.logout{color:var(--ink-soft);}
-  .side-link.logout:hover{background:var(--red-soft);color:var(--red);}
+  .side-link.logout{color:var(--muted);}
+  .side-link.logout:hover{background:var(--red-dim);color:var(--red);}
 
   /* ---------- main ---------- */
   .main{flex:1;min-width:0;}
   .topbar{
-    background:var(--card);border-bottom:1px solid var(--line);padding:0 40px;
+    background:rgba(5,8,13,0.8); backdrop-filter: blur(10px); border-bottom:1px solid var(--line);padding:0 40px;
     display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:5;
   }
-  .topbar h1{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin:0;}
-  .topbar-back{font-size:13px;color:var(--ink-soft);}
-  .topbar-back:hover{color:var(--ink);}
-  .content{padding:32px 40px 60px;max-width:820px;}
+  .topbar h1{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin:0; color:#fff;}
+  .topbar-back{font-size:13px;color:var(--muted); transition: color 0.3s;}
+  .topbar-back:hover{color:var(--indigo);}
+  .content{padding:32px 40px 60px;max-width:860px;}
   .panel{display:none;}
   .panel.active{display:block;animation:fade .25s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(4px);}}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:20px;overflow:hidden;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:20px;overflow:hidden; backdrop-filter: blur(12px);}
   .card-head{padding:18px 22px;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .card-head h2{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin:0;}
-  .card-head .hint{font-size:12px;color:var(--ink-faint);}
+  .card-head h2{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin:0; color:#fff;}
+  .card-head .hint{font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
   .card-body{padding:22px;}
 
   .link-btn{background:none;border:none;font-size:12.5px;font-weight:600;color:var(--indigo);cursor:pointer;font-family:inherit;padding:0;}
@@ -92,8 +99,8 @@
 
   /* ---------- status timeline ---------- */
   .status-now{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-  .status-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 0 4px var(--green-soft);}
-  .status-text{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;}
+  .status-dot{width:9px;height:9px;border-radius:50%;background:var(--indigo);flex-shrink:0;box-shadow:0 0 10px var(--indigo);}
+  .status-text{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600; color:#fff;}
   .track{display:flex;gap:0;}
   .stage{flex:1;position:relative;padding-top:22px;}
   .stage::before{
@@ -103,67 +110,67 @@
   .stage:last-child::before{right:50%;}
   .stage-node{
     position:absolute;top:1px;left:50%;transform:translateX(-50%);
-    width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--line);z-index:1;
+    width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--line);z-index:1;
   }
   .stage.done::before{background:var(--indigo);}
-  .stage.done .stage-node{background:var(--indigo);border-color:var(--indigo);}
-  .stage.current .stage-node{background:var(--card);border-color:var(--indigo);box-shadow:0 0 0 4px var(--indigo-soft);}
-  .stage-label{font-size:11.5px;text-align:center;color:var(--ink-faint);font-weight:500;}
-  .stage.done .stage-label, .stage.current .stage-label{color:var(--ink);font-weight:600;}
+  .stage.done .stage-node{background:var(--indigo);border-color:var(--indigo); box-shadow: 0 0 8px var(--indigo);}
+  .stage.current .stage-node{background:var(--bg);border-color:var(--indigo);box-shadow:0 0 10px var(--indigo);}
+  .stage-label{font-size:11.5px;text-align:center;color:var(--muted);font-weight:500;}
+  .stage.done .stage-label, .stage.current .stage-label{color:#fff;font-weight:600;}
   @media(max-width:620px){.stage-label{font-size:10px;}}
 
   /* ---------- brief ---------- */
   .brief-view dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
   .brief-view .full{grid-column:1/-1;}
-  .brief-view dt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;}
-  .brief-view dd{margin:0;font-size:14px;}
+  .brief-view dt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+  .brief-view dd{margin:0;font-size:14px; color:#fff;}
   .field{margin-bottom:14px;}
-  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px; font-family:'JetBrains Mono',monospace;}
   .input, textarea.input{
     width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;
-    font-size:14px;font-family:inherit;background:var(--card);color:var(--ink);
+    font-size:14px;font-family:inherit;background:rgba(255,255,255,0.03);color:var(--ink); outline: none; transition: border-color 0.2s;
   }
-  .input:focus{outline:2px solid var(--indigo);outline-offset:-1px;border-color:var(--indigo);}
+  .input:focus{border-color:var(--indigo); box-shadow: 0 0 10px rgba(0,229,255,0.2);}
   textarea.input{resize:vertical;}
   .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   @media(max-width:620px){.row-2, .brief-view dl{grid-template-columns:1fr;}}
 
-  .btn{background:var(--indigo);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit;}
-  .btn:hover{background:#3133c9;}
-  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line);}
-  .btn.ghost:hover{background:var(--paper);color:var(--ink);}
-  .btn.danger{background:var(--red);}
+  .btn{background:var(--indigo);color:#0a0f16;border:none;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
+  .btn:hover{transform: translateY(-2px); opacity: 0.9;}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line); box-shadow:none;}
+  .btn.ghost:hover{background:rgba(255,255,255,0.03);color:#fff; border-color:var(--indigo);}
+  .btn.danger{background:var(--red); color:#fff; box-shadow: 0 0 15px rgba(255,77,77,0.3);}
   .btn-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
-  .save-note{font-size:12px;color:var(--ink-faint);}
+  .save-note{font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
 
   /* ---------- empty states ---------- */
-  .empty{text-align:center;padding:34px 20px;color:var(--ink-faint);}
+  .empty{text-align:center;padding:34px 20px;color:var(--muted);}
   .empty svg{width:30px;height:30px;margin-bottom:10px;opacity:.5;}
   .empty p{margin:0;font-size:13.5px;}
 
   /* ---------- messages ---------- */
-  .thread{padding:20px 22px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
-  .day-sep{text-align:center;font-size:11px;color:var(--ink-faint);margin:14px 0 10px;}
-  .msg{max-width:76%;padding:10px 14px;font-size:13.8px;line-height:1.5;border-radius:14px;}
-  .msg.them{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px;}
-  .msg.me{background:var(--ink);color:#fff;align-self:flex-end;border-bottom-right-radius:5px;}
-  .msg-meta{font-size:10.5px;color:var(--ink-faint);margin-top:3px;}
+  .thread{padding:20px 22px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;}
+  .day-sep{text-align:center;font-size:11px;color:var(--muted);margin:14px 0 10px; font-family:'JetBrains Mono',monospace;}
+  .msg{max-width:76%;padding:11px 15px;font-size:13.8px;line-height:1.5;border-radius:14px;}
+  .msg.them{background:rgba(255,255,255,0.03);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px; color:#fff;}
+  .msg.me{background:var(--indigo);color:#0a0f16;font-weight:500;align-self:flex-end;border-bottom-right-radius:5px; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
+  .msg-meta{font-size:10.5px;color:var(--muted);margin-top:3px; font-family:'JetBrains Mono',monospace;}
   .msg-meta.me{align-self:flex-end;}
   .msg-meta.them{align-self:flex-start;}
-  .composer{display:flex;gap:9px;padding:16px 22px;border-top:1px solid var(--line-soft);background:var(--paper);}
+  .composer{display:flex;gap:9px;padding:16px 22px;border-top:1px solid var(--line-soft);background:rgba(255,255,255,0.01);}
 
   /* ---------- complaints ---------- */
-  .c-item{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .c-item{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px; background:rgba(255,255,255,0.01);}
   .c-item:last-child{margin-bottom:0;}
   .c-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;}
-  .c-status{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--amber-soft);color:var(--amber);}
-  .c-status.resolved{background:var(--green-soft);color:var(--green);}
-  .c-date{font-size:11px;color:var(--ink-faint);}
-  .c-text{font-size:13.5px;}
+  .c-status{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--amber-dim);color:var(--amber); font-family:'JetBrains Mono',monospace;}
+  .c-status.resolved{background:var(--green-dim);color:var(--green);}
+  .c-date{font-size:11px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  .c-text{font-size:13.5px; color:#fff;}
 
-  .notice{font-size:12.5px;padding:10px 14px;border-radius:8px;margin-bottom:16px;display:none;}
-  .notice.warn{background:var(--amber-soft);color:var(--amber);display:block;}
-  .notice.err{background:var(--red-soft);color:var(--red);display:block;}
+  .notice{font-size:12.5px;padding:10px 14px;border-radius:8px;margin-bottom:16px;display:none; font-family:'JetBrains Mono',monospace;}
+  .notice.warn{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber);display:block;}
+  .notice.err{background:var(--red-dim);color:var(--red);border:1px solid var(--red);display:block;}
 
   @media(max-width:860px){
     .shell{flex-direction:column;}
@@ -176,16 +183,20 @@
 </style>
 </head>
 <body>
+<div class="scan"></div>
 
 <div class="gate" id="loadingGate">
-  <div class="gate-inner"><div class="spin"></div><p class="mono" style="font-size:12.5px;">Checking your sign-in…</p></div>
+  <div class="gate-inner">
+    <div class="spin"></div>
+    <p class="mono" style="font-size:12.5px; color:var(--muted);">Authenticating secure portal session…</p>
+  </div>
 </div>
 
 <div class="gate" id="signedOutGate" style="display:none;">
   <div class="gate-inner">
-    <h2>You're not signed in</h2>
-    <p>Sign in to view your project status, send messages, and track your brief.</p>
-    <a href="signin.html" class="gate-btn">Sign in →</a>
+    <h2>Authentication Required</h2>
+    <p>Sign in to monitor live project deliverables, communicate with developers, and view scope specifications.</p>
+    <a href="signin.html" class="gate-btn">Sign in to Portal →</a>
   </div>
 </div>
 
@@ -215,17 +226,17 @@
         </div>
         <div class="side-link" data-panel="complaint">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l9 16H3z"/><path d="M12 9v4M12 16h.01"/></svg>
-          Raise an issue
+          Raise an Issue
         </div>
         <div class="side-link" data-panel="profile">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>
-          Profile
+          Account Profile
         </div>
       </nav>
       <div class="side-foot">
         <div class="side-link logout" id="logoutLink">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 12H4M9 7l-5 5 5 5"/><path d="M14 4h5v16h-5"/></svg>
-          Log out
+          Sign Out
         </div>
       </div>
     </aside>
@@ -242,11 +253,11 @@
         <!-- PROJECT -->
         <section class="panel active" id="panel-project">
           <div class="card">
-            <div class="card-head"><h2>Project status</h2><span class="hint" id="statusHint"></span></div>
+            <div class="card-head"><h2>Project Milestone Status</h2><span class="hint" id="statusHint"></span></div>
             <div class="card-body">
               <div class="status-now">
                 <span class="status-dot" id="statusDot"></span>
-                <span class="status-text" id="statusText">Loading…</span>
+                <span class="status-text" id="statusText">Synchronizing status…</span>
               </div>
               <div class="track" id="track"></div>
             </div>
@@ -254,31 +265,31 @@
 
           <div class="card">
             <div class="card-head">
-              <h2>Your brief</h2>
-              <button class="link-btn" id="briefToggle" style="display:none;">Edit</button>
+              <h2>Project Brief & Scope</h2>
+              <button class="link-btn" id="briefToggle" style="display:none;">Edit Specification</button>
             </div>
             <div class="card-body">
               <div id="briefEmpty" class="empty" style="display:none;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>
-                <p>No brief yet — add your project details so we can scope it properly.</p>
+                <p>No project brief submitted yet. Add parameters to initiate technical scoping.</p>
               </div>
               <div class="brief-view" id="briefView" style="display:none;">
                 <dl>
-                  <div class="full"><dt>Project</dt><dd id="vTitle"></dd></div>
-                  <div class="full"><dt>Description</dt><dd id="vDesc"></dd></div>
-                  <div><dt>Budget</dt><dd id="vBudget"></dd></div>
-                  <div><dt>Timeline</dt><dd id="vTimeline"></dd></div>
+                  <div class="full"><dt>// Project Title</dt><dd id="vTitle"></dd></div>
+                  <div class="full"><dt>// Description</dt><dd id="vDesc"></dd></div>
+                  <div><dt>// Budget Allocation</dt><dd id="vBudget"></dd></div>
+                  <div><dt>// Target Timeline</dt><dd id="vTimeline"></dd></div>
                 </dl>
               </div>
               <div id="briefForm">
-                <div class="field"><label>Project title</label><input type="text" id="bTitle" class="input" placeholder="e.g. A booking site for my salon"></div>
-                <div class="field"><label>What are you building?</label><textarea id="bDesc" rows="3" class="input" placeholder="A short description of the project…"></textarea></div>
+                <div class="field"><label>Project Title</label><input type="text" id="bTitle" class="input" placeholder="e.g. Fintech Mobile App UI"></div>
+                <div class="field"><label>Project Scope Description</label><textarea id="bDesc" rows="3" class="input" placeholder="Describe core feature requirements…"></textarea></div>
                 <div class="row-2" style="margin-bottom:16px;">
-                  <div><label class="field" style="margin:0;">Budget</label><input type="text" id="bBudget" class="input" placeholder="e.g. $200–500"></div>
-                  <div><label class="field" style="margin:0;">Timeline</label><input type="text" id="bTimeline" class="input" placeholder="e.g. 2–3 weeks"></div>
+                  <div><label class="field" style="margin:0;">Budget</label><input type="text" id="bBudget" class="input" placeholder="e.g. $1,500"></div>
+                  <div><label class="field" style="margin:0;">Timeline</label><input type="text" id="bTimeline" class="input" placeholder="e.g. 3 Weeks"></div>
                 </div>
                 <div class="btn-row">
-                  <button class="btn" id="briefSave">Save brief</button>
+                  <button class="btn" id="briefSave">Save Brief</button>
                   <button class="btn ghost" id="briefCancel" style="display:none;">Cancel</button>
                   <span class="save-note" id="briefNote"></span>
                 </div>
@@ -290,10 +301,10 @@
         <!-- MESSAGES -->
         <section class="panel" id="panel-messages">
           <div class="card">
-            <div class="card-head"><h2>Messages</h2><span class="hint">Replies usually within one business day</span></div>
+            <div class="card-head"><h2>Developer Comm Hub</h2><span class="hint">Response time < 24 hours</span></div>
             <div class="thread" id="thread"></div>
             <div class="composer">
-              <input type="text" id="msgInput" class="input" placeholder="Write a message…" onkeydown="if(event.key==='Enter') window.sendMsg();">
+              <input type="text" id="msgInput" class="input" placeholder="Type message to development lead…" onkeydown="if(event.key==='Enter') window.sendMsg();">
               <button class="btn" onclick="window.sendMsg()">Send</button>
             </div>
           </div>
@@ -302,18 +313,18 @@
         <!-- COMPLAINT -->
         <section class="panel" id="panel-complaint">
           <div class="card">
-            <div class="card-head"><h2>Raise an issue</h2></div>
+            <div class="card-head"><h2>Escalate Issue</h2></div>
             <div class="card-body">
-              <p style="font-size:13.5px;color:var(--ink-soft);margin:0 0 16px;">For anything that isn't going right — a delay, a misunderstanding, or work that missed the brief. This goes straight to BrightStack and is tracked separately from ordinary messages.</p>
-              <div class="field"><textarea id="cText" rows="4" class="input" placeholder="What happened, and what would you like done about it?"></textarea></div>
+              <p style="font-size:13.5px;color:var(--muted);margin:0 0 16px;">Use this channel for critical delivery blockers, missed scope deliverables, or dispute resolution. Handled directly by senior leadership.</p>
+              <div class="field"><textarea id="cText" rows="4" class="input" placeholder="Detail the issue and proposed resolution…"></textarea></div>
               <div class="btn-row">
-                <button class="btn danger" id="cSubmit">Submit issue</button>
+                <button class="btn danger" id="cSubmit">Submit Escalation</button>
                 <span class="save-note" id="cNote"></span>
               </div>
             </div>
           </div>
           <div class="card">
-            <div class="card-head"><h2>Issue history</h2></div>
+            <div class="card-head"><h2>Escalation History</h2></div>
             <div class="card-body" id="cList"></div>
           </div>
         </section>
@@ -321,25 +332,25 @@
         <!-- PROFILE -->
         <section class="panel" id="panel-profile">
           <div class="card">
-            <div class="card-head"><h2>Account</h2></div>
+            <div class="card-head"><h2>Client Account Details</h2></div>
             <div class="card-body">
               <div class="brief-view">
                 <dl>
-                  <div><dt>Name</dt><dd id="pName">–</dd></div>
-                  <div><dt>Email</dt><dd id="pEmail">–</dd></div>
-                  <div><dt>Signed in with</dt><dd id="pProvider">–</dd></div>
-                  <div><dt>Client since</dt><dd id="pSince">–</dd></div>
+                  <div><dt>// Name</dt><dd id="pName">–</dd></div>
+                  <div><dt>// Email</dt><dd id="pEmail">–</dd></div>
+                  <div><dt>// Authentication Provider</dt><dd id="pProvider">–</dd></div>
+                  <div><dt>// Account Creation</dt><dd id="pSince">–</dd></div>
                 </dl>
               </div>
             </div>
           </div>
           <div class="card">
-            <div class="card-head"><h2>Need to reach us another way?</h2></div>
+            <div class="card-head"><h2>Direct Channels</h2></div>
             <div class="card-body">
-              <p style="font-size:13.5px;color:var(--ink-soft);margin:0 0 14px;">Messages here are the fastest route for anything project-related. For a new project or a formal complaint:</p>
+              <p style="font-size:13.5px;color:var(--muted);margin:0 0 14px;">Portal messaging is optimized for ongoing builds. For initiating new contracts or formal audits:</p>
               <div class="btn-row">
-                <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn ghost">Start a new project on Fiverr</a>
-                <a href="mailto:19hsnkhan@gmail.com?subject=Complaint" class="btn ghost">Email a formal complaint</a>
+                <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn ghost">Open Fiverr Contract</a>
+                <a href="mailto:19hsnkhan@gmail.com?subject=Formal%20Audit" class="btn ghost">Email Direct Inquiry</a>
               </div>
             </div>
           </div>
@@ -350,6 +361,17 @@
   </div>
 </div>
 
+<!-- 3D Card Hover Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script>
+  VanillaTilt.init(document.querySelectorAll(".card"), {
+    max: 3,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.04,
+  });
+</script>
+
 <script type="module">
   import { auth, db } from './firebase-config.js';
   import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -357,7 +379,7 @@
 
   let uid = null, ref = null, editingBrief = false;
 
-  const STAGES = ['Enquiry','Scoping','In progress','Review','Delivered'];
+  const STAGES = ['Enquiry','Scoping','In Progress','Review','Delivered'];
   function stageIndex(status){
     const s = (status || '').toLowerCase();
     if (/deliver|complete|done|shipped|launched/.test(s)) return 4;
@@ -388,7 +410,7 @@
 
   /* ---------- renderers ---------- */
   function renderStatus(status){
-    const txt = status || 'No active project yet';
+    const txt = status || 'No active project assigned';
     document.getElementById('statusText').textContent = txt;
     const idx = stageIndex(txt);
     document.getElementById('statusHint').textContent = idx >= 0 ? `Stage ${idx+1} of ${STAGES.length}` : '';
@@ -405,7 +427,7 @@
     document.getElementById('briefView').style.display = (has && !editingBrief) ? 'block' : 'none';
     document.getElementById('briefForm').style.display = (!has || editingBrief) ? 'block' : 'none';
     document.getElementById('briefToggle').style.display = has ? 'inline' : 'none';
-    document.getElementById('briefToggle').textContent = editingBrief ? 'Cancel' : 'Edit';
+    document.getElementById('briefToggle').textContent = editingBrief ? 'Cancel' : 'Edit Specification';
     document.getElementById('briefCancel').style.display = (has && editingBrief) ? 'inline-block' : 'none';
     if (has){
       document.getElementById('vTitle').textContent = brief.title;
@@ -422,7 +444,7 @@
   function renderThread(messages){
     const el = document.getElementById('thread');
     if (!messages || !messages.length){
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4z"/></svg><p>No messages yet — say hello, or ask anything about your project.</p></div>`;
+      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4z"/></svg><p>No messages recorded. Transmit project inquiries here.</p></div>`;
       return;
     }
     let lastDay = '';
@@ -440,7 +462,7 @@
   function renderComplaints(list){
     const el = document.getElementById('cList');
     if (!list || !list.length){
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg><p>No issues raised — good sign.</p></div>`;
+      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg><p>No active escalations logged.</p></div>`;
       return;
     }
     el.innerHTML = list.slice().reverse().map(c => `
@@ -477,7 +499,7 @@
       clearNotice();
     }catch(e){
       i.value = text;
-      notify("Couldn't send that message. If you use an ad-blocker or privacy extension, it may be blocking this page — try allowing this site, then send again.", 'err');
+      notify("Transmission failed. Ad-blockers or privacy extensions may interfere with database calls.", 'err');
     }
   };
 
@@ -494,30 +516,30 @@
     const title = document.getElementById('bTitle').value.trim();
     const description = document.getElementById('bDesc').value.trim();
     const note = document.getElementById('briefNote');
-    if (!title || !description){ note.textContent = 'Add a title and description first.'; return; }
-    note.textContent = 'Saving…';
+    if (!title || !description){ note.textContent = 'Title and description required.'; return; }
+    note.textContent = 'Synchronizing…';
     try{
       const brief = {title, description, budget:document.getElementById('bBudget').value.trim(), timeline:document.getElementById('bTimeline').value.trim(), submittedAt: Date.now()};
       await updateDoc(ref, { projectBrief: brief });
       editingBrief = false;
       renderBrief(brief);
-      note.textContent = 'Saved.';
+      note.textContent = 'Synced successfully.';
       setTimeout(()=>note.textContent='', 2500);
-    }catch(e){ note.textContent = "Couldn't save — check your connection."; }
+    }catch(e){ note.textContent = "Sync failed — check connection."; }
   });
 
   document.getElementById('cSubmit').addEventListener('click', async () => {
     const t = document.getElementById('cText');
     const note = document.getElementById('cNote');
-    if (!t.value.trim()){ note.textContent = 'Describe what happened first.'; return; }
-    note.textContent = 'Submitting…';
+    if (!t.value.trim()){ note.textContent = 'Escalation details required.'; return; }
+    note.textContent = 'Transmitting…';
     try{
       await updateDoc(ref, { complaints: arrayUnion({text:t.value.trim(), status:'open', timestamp: Date.now()}) });
       t.value = '';
       renderComplaints((await getDoc(ref)).data().complaints);
-      note.textContent = "Submitted — we'll respond directly.";
+      note.textContent = "Logged — management notified.";
       setTimeout(()=>note.textContent='', 3500);
-    }catch(e){ note.textContent = "Couldn't submit — check your connection."; }
+    }catch(e){ note.textContent = "Transmission failed."; }
   });
 
   /* ---------- boot ---------- */
@@ -536,7 +558,7 @@
     document.getElementById('pName').textContent = name;
     document.getElementById('pEmail').textContent = user.email || '';
     const prov = (user.providerData[0]?.providerId || 'password');
-    document.getElementById('pProvider').textContent = prov.includes('google') ? 'Google' : prov.includes('facebook') ? 'Facebook' : prov.includes('github') ? 'GitHub' : 'Email & password';
+    document.getElementById('pProvider').textContent = prov.includes('google') ? 'Google' : prov.includes('github') ? 'GitHub' : 'Email & Password';
     if (user.metadata?.creationTime) document.getElementById('pSince').textContent = fmtDate(new Date(user.metadata.creationTime).getTime());
 
     load();
@@ -547,9 +569,9 @@
       let snap = await getDoc(ref);
       if (!snap.exists()){
         await setDoc(ref, {
-          name: auth.currentUser.displayName || auth.currentUser.email || 'New client',
+          name: auth.currentUser.displayName || auth.currentUser.email || 'New Client',
           email: auth.currentUser.email || '',
-          projectStatus: 'No active project yet',
+          projectStatus: 'No active project assigned',
           messages: []
         });
         snap = await getDoc(ref);
@@ -571,15 +593,15 @@
       }
       console.error('Portal load failed:', err);
       if (transient){
-        document.getElementById('statusText').textContent = 'Can\'t connect';
-        notify('Can\'t reach our servers. If you use an ad-blocker or privacy extension, it may be blocking this page — try allowing this site, or open it in a private window. Retrying automatically; your data is safe.', 'warn');
+        document.getElementById('statusText').textContent = 'Connection Lost';
+        notify('Network timeout reached. Check browser ad-blockers or local firewall rules.', 'warn');
         setTimeout(() => load(1), 8000);
       } else if (err.code === 'permission-denied'){
-        document.getElementById('statusText').textContent = 'Unavailable';
-        notify('We couldn\'t open your account data. Please contact BrightStack so we can fix this.', 'err');
+        document.getElementById('statusText').textContent = 'Access Restricted';
+        notify('Firestore permission denied. Contact administrator.', 'err');
       } else {
-        document.getElementById('statusText').textContent = 'Unavailable';
-        notify('Something went wrong loading your portal. Please refresh, or contact us if it persists.', 'err');
+        document.getElementById('statusText').textContent = 'System Error';
+        notify('Failed to load portal telemetry.', 'err');
       }
     }
   }
