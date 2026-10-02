@@ -13,40 +13,46 @@
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080;
-    --line:#e3e5ee; --indigo:#4f46e5; --indigo-dim:#eef0fd;
-    --wire:#cfd2df; --wire-dark:#9ea3b8; --red:#e05a5a; --green:#0f9d63;
+    --bg:#0a0f16; --card:rgba(255,255,255,0.02); --ink:#ffffff; --muted:#a0aec0;
+    --line:rgba(0,229,255,0.15); --indigo:#00e5ff; --indigo-dim:rgba(0,229,255,0.08);
+    --wire:rgba(255,255,255,0.1); --wire-dark:rgba(255,255,255,0.2); --red:#ff5470; --green:#00e5ff;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased; overflow-x:hidden;}
+  
+  /* Cyber Scan Effect */
+  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
+
   .wrap{max-width:1080px;margin:0 auto;padding:64px 24px 100px;}
-  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px;}
-  h1{font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px; font-family:'JetBrains Mono',monospace;}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em; color:#fff;}
   .lede{color:var(--muted);font-size:17px;line-height:1.6;max-width:640px;margin:0 0 36px;}
   .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px;}
-  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
-  .pill strong{color:var(--ink);font-weight:600;}
-  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:0 0 6px;}
+  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted); backdrop-filter: blur(10px); font-family:'JetBrains Mono',monospace;}
+  .pill strong{color:#fff;font-weight:600;}
+  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#fff;margin:0 0 6px;}
   .section-sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:600px;line-height:1.55;}
 
   .demo{
     display:grid;grid-template-columns:280px 1fr;gap:36px;
     background:var(--card);border:1px solid var(--line);border-radius:24px;padding:36px;
-    margin-bottom:24px;align-items:center;
+    margin-bottom:24px;align-items:center; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   }
   @media(max-width:760px){.demo{grid-template-columns:1fr;}}
 
-  .phone{width:260px;height:540px;background:#0e0f14;border-radius:38px;padding:10px;margin:0 auto;box-shadow:0 30px 60px -20px rgba(18,19,26,.35), 0 0 0 1px rgba(18,19,26,.06);position:relative;}
-  .phone::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:80px;height:18px;background:#0e0f14;border-radius:0 0 14px 14px;z-index:5;}
-  .phone-screen{width:100%;height:100%;background:#fafafd;border-radius:30px;overflow:hidden;position:relative;}
+  .phone{width:260px;height:540px;background:#05080d;border-radius:38px;padding:10px;margin:0 auto;box-shadow:0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px var(--line);position:relative;}
+  .phone::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:80px;height:18px;background:#05080d;border-radius:0 0 14px 14px;z-index:5;}
+  .phone-screen{width:100%;height:100%;background:#0a0f16;border-radius:30px;overflow:hidden;position:relative;}
 
   .deck{position:absolute;inset:34px 16px 76px;}
   .swipe-card{
-    position:absolute;inset:0;background:var(--card);border:1px dashed var(--wire);border-radius:16px;
-    padding:16px;display:flex;flex-direction:column;gap:10px;cursor:grab;
+    position:absolute;inset:0;background:rgba(255,255,255,0.03);border:1px dashed var(--wire);border-radius:16px;
+    padding:16px;display:flex;flex-direction:column;gap:10px;cursor:grab; backdrop-filter: blur(8px);
     transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s;
     touch-action:none;user-select:none;
   }
@@ -68,68 +74,71 @@
     position:absolute;top:24px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:22px;
     padding:6px 14px;border-radius:8px;border:3px solid;opacity:0;transform:rotate(-18deg);transition:opacity .15s;
   }
-  .stamp.like{right:20px;color:var(--green);border-color:var(--green);}
-  .stamp.pass{left:20px;color:var(--red);border-color:var(--red);transform:rotate(18deg);}
+  .stamp.like{right:20px;color:var(--green);border-color:var(--green); box-shadow: 0 0 10px rgba(0,229,255,0.3);}
+  .stamp.pass{left:20px;color:var(--red);border-color:var(--red);transform:rotate(18deg); box-shadow: 0 0 10px rgba(255,84,112,0.3);}
 
   .action-row{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:20px;z-index:4;}
   .action-btn{
-    width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:0 8px 20px -6px rgba(18,19,26,.25);
-    display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .15s;border:1px solid var(--line);
+    width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.05);box-shadow:0 8px 20px -6px rgba(0,0,0,0.5);
+    display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .2s;border:1px solid var(--line);
   }
   .action-btn:active{transform:scale(.88);}
   .action-btn.pass{color:var(--red);}
   .action-btn.like{color:var(--green);}
 
   .match-overlay{
-    position:absolute;inset:0;background:rgba(18,19,26,.88);z-index:10;
+    position:absolute;inset:0;background:rgba(5,8,13,0.92);z-index:10;
     display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;
-    opacity:0;pointer-events:none;transition:opacity .3s;
+    opacity:0;pointer-events:none;transition:opacity .3s; backdrop-filter: blur(10px);
   }
   .match-overlay.show{opacity:1;pointer-events:auto;}
-  .match-overlay h2{font-family:'Space Grotesk',sans-serif;font-size:24px;margin:0 0 8px;}
-  .match-overlay p{font-size:12px;color:#c8c9d4;margin:0 0 20px;}
+  .match-overlay h2{font-family:'Space Grotesk',sans-serif;font-size:24px;margin:0 0 8px; color:#fff;}
+  .match-overlay p{font-size:12px;color:var(--muted);margin:0 0 20px; font-family:'JetBrains Mono',monospace;}
   .match-circles{display:flex;margin-bottom:20px;}
-  .match-circles .c{width:56px;height:56px;border-radius:50%;background:var(--wire-dark);border:3px solid #fff;}
+  .match-circles .c{width:56px;height:56px;border-radius:50%;background:var(--wire-dark);border:3px solid var(--bg);}
   .match-circles .c:last-child{margin-left:-16px;}
-  .match-btn{background:#fff;color:var(--ink);padding:10px 22px;border-radius:100px;font-size:12.5px;font-weight:700;cursor:pointer;}
+  .match-btn{background:var(--indigo);color:#0a0f16;padding:10px 22px;border-radius:100px;font-size:12.5px;font-weight:700;cursor:pointer; box-shadow: 0 0 15px rgba(0,229,255,0.3); transition: transform 0.2s;}
+  .match-btn:hover{transform: translateY(-2px);}
 
-  .side-info h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 8px;}
+  .side-info h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 8px; color:#fff;}
   .side-info p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px;}
-  .hint{font-size:12px;color:var(--indigo);font-weight:600;margin-bottom:14px;}
-  .annot{font-size:13px;color:var(--muted);line-height:1.6;background:var(--indigo-dim);padding:14px 16px;border-radius:12px;border-left:3px solid var(--indigo);}
-  .annot strong{color:var(--ink);}
+  .hint{font-size:12px;color:var(--indigo);font-weight:600;margin-bottom:14px; font-family:'JetBrains Mono',monospace;}
+  .annot{font-size:13px;color:var(--muted);line-height:1.6;background:rgba(0,229,255,0.03);padding:14px 16px;border-radius:12px;border-left:3px solid var(--indigo); border:1px solid var(--line);}
+  .annot strong{color:#fff;}
 
-  .concept{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px;display:grid;grid-template-columns:1fr 1.4fr;gap:36px;align-items:start;margin-top:56px;}
+  .concept{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px;display:grid;grid-template-columns:1fr 1.4fr;gap:36px;align-items:start;margin-top:56px; backdrop-filter: blur(12px);}
   @media(max-width:800px){.concept{grid-template-columns:1fr;}}
-  .concept h3{font-family:'Space Grotesk',sans-serif;font-size:20px;margin:0 0 12px;}
+  .concept h3{font-family:'Space Grotesk',sans-serif;font-size:20px;margin:0 0 12px; color:#fff;}
   .concept p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 14px;}
   .concept-notes{display:flex;flex-direction:column;gap:14px;}
   .note{display:flex;gap:12px;}
-  .note .n-dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);margin-top:7px;flex-shrink:0;}
+  .note .n-dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);margin-top:7px;flex-shrink:0; box-shadow: 0 0 6px var(--indigo);}
   .note div{color:var(--muted);font-size:14px;line-height:1.6;}
-  .note strong{color:var(--ink);font-weight:600;}
+  .note strong{color:#fff;font-weight:600;}
 
   .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
   .footer-nav a{color:var(--indigo);text-decoration:none;font-weight:600;font-size:14.5px;}
-  .brand{color:var(--muted);font-size:13.5px;}
+  .brand{color:var(--muted);font-size:13.5px; font-family:'JetBrains Mono',monospace;}
 </style>
 </head>
 <body>
+<div class="scan"></div>
+
 <div class="wrap">
 
-  <div class="eyebrow">UI/UX — Basic package</div>
-  <h1>Kindred — Discovery Wireframes</h1>
-  <p class="lede">A low-fidelity wireframe set for a dating app's discovery screen — built as a real drag-to-swipe deck instead of static cards, because the swipe gesture itself is the interaction this screen lives or dies on.</p>
+  <div class="eyebrow">// UI/UX Wireframe Prototype</div>
+  <h1>Kindred — Discovery Interface Wireframes</h1>
+  <p class="lede">Low-fidelity wireframe set for a modern dating application discovery screen. Designed as an interactive drag-to-swipe deck to validate core gesture mechanics directly within the design phase.</p>
 
   <div class="meta-row">
     <span class="pill"><strong>Deliverable</strong> — 4 wireframe screens</span>
-    <span class="pill"><strong>Fidelity</strong> — low-fi, grayscale</span>
-    <span class="pill"><strong>Prototype</strong> — real drag gesture</span>
-    <span class="pill"><strong>Timeline</strong> — 3-day delivery</span>
+    <span class="pill"><strong>Fidelity</strong> — Grayscale wireframe</span>
+    <span class="pill"><strong>Prototype</strong> — Native drag physics</span>
+    <span class="pill"><strong>Timeline</strong> — 3-day sprint</span>
   </div>
 
-  <div class="section-label">Drag it yourself</div>
-  <p class="section-sub">This is an actual draggable card stack, not an animation loop — drag a card left or right (or tap the buttons below it) and feel where the release threshold sits.</p>
+  <div class="section-label">Interactive Prototype Demo</div>
+  <p class="section-sub">Test the swipe kinematics. Drag the top card horizontally or use the action buttons below to evaluate release thresholds.</p>
 
   <div class="demo">
     <div class="phone">
@@ -160,42 +169,51 @@
         </div>
         <div class="match-overlay" id="matchOverlay">
           <div class="match-circles"><div class="c"></div><div class="c"></div></div>
-          <h2>It's a match</h2>
-          <p>You and Profile 04 both swiped right</p>
-          <div class="match-btn" onclick="closeMatch()">Send a message</div>
+          <h2>It's a Match</h2>
+          <p>Mutual swipe detected with Profile 04</p>
+          <div class="match-btn" onclick="closeMatch()">Initialize Chat</div>
         </div>
       </div>
     </div>
 
     <div class="side-info">
-      <h3>Discovery deck</h3>
-      <p>Drag the top card, or use the pass/like buttons. Every fourth card is scripted to trigger a match overlay, so that screen's wireframe is reachable too, not just described.</p>
-      <div class="hint">↳ click and drag the top card, left or right</div>
-      <div class="annot" id="annot"><strong>Discovery.</strong> Cards stack three-deep so the "more coming" affordance is visible without needing a scroll hint.</div>
+      <h3>Discovery Stack</h3>
+      <p>Cards stack three layers deep to establish spatial depth and indicate queue volume without requiring vertical scroll affordances.</p>
+      <div class="hint">// Action: Click and drag top card left or right</div>
+      <div class="annot" id="annot"><strong>Discovery Architecture:</strong> Optimized card hierarchy emphasizes photography and concise user bio metadata.</div>
     </div>
   </div>
 
   <div class="concept">
     <div>
-      <h3>Direction: "the gesture is the interface"</h3>
-      <p>Almost nothing on the discovery screen is a traditional tap target — the card itself is the control. Wireframing that means the drag physics have to exist even at this fidelity, or the concept can't actually be evaluated.</p>
+      <h3>UX Philosophy: "The Gesture is the Interface"</h3>
+      <p>In high-frequency discovery apps, traditional tap targets are minimized in favor of direct manipulation. Wireframing these flows requires functional physics from the earliest stages.</p>
     </div>
     <div class="concept-notes">
-      <div class="note"><div class="n-dot"></div><div><strong>Rotation follows drag.</strong> The card tilts proportionally to horizontal drag distance — the same subtle physics a built app would use, not just a straight slide.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Stamp opacity as a threshold cue.</strong> LIKE/PASS stamps fade in with drag distance, giving a visual read on how far is "far enough" before release.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Match overlay reachable.</strong> One of the four cards is scripted to trigger a match state, so that screen exists as a real wireframe, not just a mention in the brief.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Figma file.</strong> Delivered with the same drag interaction built via Smart Animate + drag triggers, not flattened images.</div></div>
+      <div class="note"><div class="n-dot"></div><div><strong>Rotational Kinematics:</strong> Cards tilt proportionally to horizontal drag displacement for realistic inertia.</div></div>
+      <div class="note"><div class="n-dot"></div><div><strong>Threshold Feedback:</strong> LIKE/PASS stamps scale opacity smoothly to signal commit boundaries.</div></div>
+      <div class="note"><div class="n-dot"></div><div><strong>State Transition:</strong> Cyclic card evaluation triggers match overlay states to test full user journey loops.</div></div>
+      <div class="note"><div class="n-dot"></div><div><strong>Figma Delivery:</strong> Constructed with Smart Animate and drag triggers for developer handover.</div></div>
     </div>
   </div>
 
   <div class="footer-nav">
-    <span class="brand">BrightStack Co. — UI/UX, Basic tier</span>
-    <a href="index.html">← Back to all projects</a>
+    <span class="brand">BrightStack Co. — UI/UX Division</span>
+    <a href="index.html">← Back to portfolio</a>
   </div>
 
 </div>
 
+<!-- 3D Card Hover Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
+  VanillaTilt.init(document.querySelectorAll(".demo, .concept"), {
+    max: 2,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.03,
+  });
+
   let cardIndex = 0;
   let startX = 0, currentX = 0, dragging = false;
   const topCard = document.getElementById('topCard');
@@ -261,7 +279,7 @@
 
   function closeMatch(){
     document.getElementById('matchOverlay').classList.remove('show');
-    document.getElementById('annot').innerHTML = '<strong>Match sent.</strong> The overlay closes back into the deck, ready for the next card — no screen change needed for this state.';
+    document.getElementById('annot').innerHTML = '<strong>Match Processed:</strong> Overlay dismissed smoothly back into the active deck queue.';
   }
 
   topCard.addEventListener('mousedown', pointerDown);
