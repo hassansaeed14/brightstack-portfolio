@@ -13,84 +13,93 @@
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --rose:#B8467A;
-    --rose-light:#FBEAF1;
-    --charcoal:#26222A;
-    --muted:#8A8290;
-    --bg:#FAF8F9;
-    --card:#FFFFFF;
-    --line:#EEE5EA;
-    --green:#3A9B7A;
+    --rose:#ffdab9; /* Peach Puff accent */
+    --rose-light:rgba(255, 218, 185, 0.05);
+    --charcoal:#ffffff;
+    --muted:#a0aec0;
+    --bg:#0a0f16; /* Deep dark tech background */
+    --card:rgba(255, 255, 255, 0.02);
+    --line:rgba(0, 229, 255, 0.15);
+    --green:#00e5ff; /* Aqua accent */
   }
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-  body{background:var(--bg);color:var(--charcoal);}
+  body{background:var(--bg);color:var(--charcoal); overflow-x:hidden;}
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1080px;margin:0 auto;}
-  .brand{font-weight:700;font-size:18px;}
+  /* Cyber Background Scan Effect */
+  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 50% 0%, rgba(255,218,185,0.04), transparent 60%);}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1080px;margin:0 auto; border-bottom:1px solid var(--line);}
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px; color:#fff;}
   .brand span{color:var(--rose);}
-  .back-link{font-size:13px;color:var(--muted);text-decoration:none;}
+  .back-link{font-size:13px;color:var(--muted);text-decoration:none; transition: color 0.3s;}
+  .back-link:hover{color:var(--rose);}
 
-  .layout{max-width:1080px;margin:0 auto;padding:0 32px 60px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;}
+  .layout{max-width:1080px;margin:0 auto;padding:40px 32px 60px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;}
-  .card-title{font-weight:600;font-size:16px;margin-bottom:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);}
+  .card-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:20px; color:#fff;}
 
   /* CALENDAR */
   .cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-  .cal-nav button{background:none;border:1px solid var(--line);border-radius:6px;width:28px;height:28px;cursor:pointer;color:var(--charcoal);}
-  .cal-month{font-weight:600;font-size:14px;}
+  .cal-nav button{background:rgba(255,255,255,0.05);border:1px solid var(--line);border-radius:6px;width:32px;height:32px;cursor:pointer;color:#fff; transition: all 0.2s;}
+  .cal-nav button:hover{border-color:var(--rose); color:var(--rose);}
+  .cal-month{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px; color:var(--rose);}
   .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
-  .cal-dow{font-size:11px;color:var(--muted);padding:6px 0;font-weight:600;}
+  .cal-dow{font-size:11px;color:var(--muted);padding:6px 0;font-weight:600; font-family:'JetBrains Mono',monospace;}
   .cal-day{
     aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;
-    font-size:13px;cursor:pointer;position:relative;
+    font-size:13px;cursor:pointer;position:relative; transition: all 0.2s; border: 1px solid transparent;
   }
-  .cal-day.muted{color:#D8D0D5;cursor:default;}
-  .cal-day:not(.muted):hover{background:var(--rose-light);}
-  .cal-day.selected{background:var(--rose);color:#fff;font-weight:600;}
+  .cal-day.muted{color:rgba(255,255,255,0.15);cursor:default;}
+  .cal-day:not(.muted):hover{background:var(--rose-light); border-color:var(--rose);}
+  .cal-day.selected{background:var(--rose);color:#0a0f16;font-weight:700; box-shadow: 0 0 15px rgba(255,218,185,0.3);}
   .cal-day.has-booking::after{
-    content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--rose);
+    content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--green);
   }
-  .cal-day.selected.has-booking::after{background:#fff;}
+  .cal-day.selected.has-booking::after{background:#0a0f16;}
 
-  .slots-title{font-size:13px;color:var(--muted);margin:18px 0 10px;}
+  .slots-title{font-size:13px;color:var(--muted);margin:22px 0 10px; font-family:'JetBrains Mono',monospace;}
   .slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
   .slot{
-    border:1px solid var(--line);border-radius:8px;padding:9px 4px;text-align:center;font-size:12px;
-    cursor:pointer;background:var(--bg);
+    border:1px solid var(--line);border-radius:8px;padding:10px 4px;text-align:center;font-size:12px;
+    cursor:pointer;background:rgba(255,255,255,0.02); color:#fff; transition: all 0.2s;
   }
-  .slot.taken{color:#D8D0D5;background:#F3F0F1;cursor:not-allowed;text-decoration:line-through;}
-  .slot.selected{background:var(--rose);color:#fff;border-color:var(--rose);}
-  .slot:not(.taken):not(.selected):hover{border-color:var(--rose);}
+  .slot.taken{color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.01);cursor:not-allowed;text-decoration:line-through;border-color:transparent;}
+  .slot.selected{background:var(--rose);color:#0a0f16;border-color:var(--rose); font-weight:700; box-shadow: 0 0 15px rgba(255,218,185,0.3);}
+  .slot:not(.taken):not(.selected):hover{border-color:var(--rose); color:var(--rose);}
 
   .book-btn{
-    width:100%;margin-top:20px;background:var(--charcoal);color:#fff;border:none;padding:13px;
-    border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;
+    width:100%;margin-top:24px;background:var(--rose);color:#0a0f16;border:none;padding:13px;
+    border-radius:8px;font-weight:700;font-size:14px;cursor:pointer; transition: transform 0.2s, opacity 0.2s;
   }
-  .book-btn:disabled{background:#D8D0D5;cursor:not-allowed;}
+  .book-btn:hover:not(:disabled){transform: translateY(-2px); opacity: 0.9;}
+  .book-btn:disabled{background:rgba(255,255,255,0.05); color:var(--muted); cursor:not-allowed; border: 1px solid var(--line);}
 
   /* SIDEBAR */
-  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
-  .stat-mini{background:var(--rose-light);border-radius:10px;padding:14px;}
-  .stat-mini .v{font-weight:700;font-size:20px;color:var(--rose);}
-  .stat-mini .l{font-size:11px;color:var(--muted);margin-top:2px;}
+  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .stat-mini{background:var(--rose-light);border:1px solid var(--line);border-radius:10px;padding:16px;}
+  .stat-mini .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--rose);}
+  .stat-mini .l{font-size:11px;color:var(--muted);margin-top:4px; text-transform: uppercase; letter-spacing: 0.5px;}
 
-  .appt-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .appt-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
   .appt-item:last-child{border-bottom:none;}
-  .appt-name{font-weight:600;}
-  .appt-service{font-size:11px;color:var(--muted);}
-  .appt-time{font-size:12px;color:var(--rose);font-weight:600;}
+  .appt-name{font-weight:600; color:#fff;}
+  .appt-service{font-size:11.5px;color:var(--muted); margin-top:2px;}
+  .appt-time{font-size:12.5px;color:var(--green);font-weight:600; font-family:'JetBrains Mono',monospace;}
 
   .confirm-box{
-    display:none;margin-top:16px;background:var(--rose-light);border-radius:10px;padding:16px;font-size:13px;
+    display:none;margin-top:16px;background:rgba(0,229,255,0.05);border:1px solid var(--green);border-radius:10px;padding:16px;font-size:13px; color:#fff;
   }
-  .confirm-box.show{display:block;}
-  .confirm-box .c-title{font-weight:600;color:var(--rose);margin-bottom:6px;}
+  .confirm-box.show{display:block; animation: fadeIn 0.3s;}
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  .confirm-box .c-title{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--green);margin-bottom:6px; font-size:14px;}
 
-  footer{padding:28px;text-align:center;font-size:12px;color:var(--muted);}
+  footer{padding:32px;text-align:center;font-size:12px;color:var(--muted); border-top:1px solid var(--line); margin-top:40px; font-family:'JetBrains Mono',monospace;}
 
   @media (max-width:800px){
     .layout{grid-template-columns:1fr;}
@@ -99,6 +108,7 @@
 </style>
 </head>
 <body>
+<div class="scan"></div>
 
 <header>
   <div class="brand">Glow <span>Studio</span></div>
@@ -116,25 +126,25 @@
     </div>
     <div class="cal-grid" id="calGrid"></div>
 
-    <div class="slots-title">Available times — <span id="selectedDateLabel">select a date</span></div>
+    <div class="slots-title">Available times — <span id="selectedDateLabel" style="color:var(--rose);">select a date</span></div>
     <div class="slots-grid" id="slotsGrid"></div>
 
     <button class="book-btn" id="bookBtn" disabled onclick="confirmBooking()">Confirm booking</button>
 
     <div class="confirm-box" id="confirmBox">
-      <div class="c-title">Booking confirmed</div>
-      <div id="confirmText"></div>
+      <div class="c-title">✓ Booking confirmed</div>
+      <div id="confirmText" style="color:var(--muted); line-height:1.5;"></div>
     </div>
   </div>
 
   <div class="card">
     <div class="card-title">Today at a glance</div>
     <div class="stat-row">
-      <div class="stat-mini"><div class="v">6</div><div class="l">appointments today</div></div>
-      <div class="stat-mini"><div class="v">Rs 24,500</div><div class="l">expected revenue</div></div>
+      <div class="stat-mini"><div class="v">6</div><div class="l">Appointments</div></div>
+      <div class="stat-mini"><div class="v">Rs 24,500</div><div class="l">Revenue</div></div>
     </div>
 
-    <div class="card-title" style="font-size:14px;">Upcoming appointments</div>
+    <div class="card-title" style="font-size:14px; margin-bottom:12px;">Upcoming appointments</div>
     <div class="appt-item"><div><div class="appt-name">Ayesha Malik</div><div class="appt-service">Haircut & style</div></div><div class="appt-time">10:00 AM</div></div>
     <div class="appt-item"><div><div class="appt-name">Fatima Noor</div><div class="appt-service">Facial treatment</div></div><div class="appt-time">11:30 AM</div></div>
     <div class="appt-item"><div><div class="appt-name">Sana Raza</div><div class="appt-service">Manicure</div></div><div class="appt-time">1:00 PM</div></div>
@@ -144,101 +154,110 @@
 
 <footer>Concept booking system by BrightStack Co. — designed for portfolio purposes.</footer>
 
+<!-- 3D Card Hover Effect Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-let currentMonth = 2; // March
-let currentYear = 2026;
-let selectedDay = null;
-let selectedSlot = null;
-
-const bookedDays = [3, 8, 12, 15, 22];
-const takenSlots = {
-  8: ['9:00 AM','2:00 PM'],
-  12: ['10:30 AM','11:00 AM','3:00 PM'],
-  15: ['9:00 AM']
-};
-const allSlots = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM'];
-
-function renderCalendar(){
-  document.getElementById('calMonth').textContent = months[currentMonth] + ' ' + currentYear;
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{
-    const el = document.createElement('div');
-    el.className = 'cal-dow';
-    el.textContent = d;
-    grid.appendChild(el);
+  VanillaTilt.init(document.querySelectorAll(".card"), {
+    max: 4,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.05,
   });
-  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
-  for(let i=0;i<firstDay;i++){
-    const el = document.createElement('div');
-    el.className = 'cal-day muted';
-    grid.appendChild(el);
-  }
-  for(let d=1; d<=daysInMonth; d++){
-    const el = document.createElement('div');
-    el.className = 'cal-day' + (bookedDays.includes(d) ? ' has-booking' : '') + (d===selectedDay ? ' selected' : '');
-    el.textContent = d;
-    if(d >= 1){
-      el.onclick = () => selectDay(d);
+
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  let currentMonth = 2; // March
+  let currentYear = 2026;
+  let selectedDay = null;
+  let selectedSlot = null;
+
+  const bookedDays = [3, 8, 12, 15, 22];
+  const takenSlots = {
+    8: ['9:00 AM','2:00 PM'],
+    12: ['10:30 AM','11:00 AM','3:00 PM'],
+    15: ['9:00 AM']
+  };
+  const allSlots = ['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM'];
+
+  function renderCalendar(){
+    document.getElementById('calMonth').textContent = months[currentMonth] + ' ' + currentYear;
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{
+      const el = document.createElement('div');
+      el.className = 'cal-dow';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+    for(let i=0;i<firstDay;i++){
+      const el = document.createElement('div');
+      el.className = 'cal-day muted';
+      grid.appendChild(el);
     }
-    grid.appendChild(el);
-  }
-}
-
-function selectDay(d){
-  selectedDay = d;
-  selectedSlot = null;
-  document.getElementById('selectedDateLabel').textContent = months[currentMonth] + ' ' + d + ', ' + currentYear;
-  renderCalendar();
-  renderSlots(d);
-  document.getElementById('bookBtn').disabled = true;
-  document.getElementById('confirmBox').classList.remove('show');
-}
-
-function renderSlots(d){
-  const grid = document.getElementById('slotsGrid');
-  grid.innerHTML = '';
-  const taken = takenSlots[d] || [];
-  allSlots.forEach(s=>{
-    const el = document.createElement('div');
-    const isTaken = taken.includes(s);
-    el.className = 'slot' + (isTaken ? ' taken' : '');
-    el.textContent = s;
-    if(!isTaken){
-      el.onclick = () => selectSlot(s, el);
+    for(let d=1; d<=daysInMonth; d++){
+      const el = document.createElement('div');
+      el.className = 'cal-day' + (bookedDays.includes(d) ? ' has-booking' : '') + (d===selectedDay ? ' selected' : '');
+      el.textContent = d;
+      if(d >= 1){
+        el.onclick = () => selectDay(d);
+      }
+      grid.appendChild(el);
     }
-    grid.appendChild(el);
-  });
-}
+  }
 
-function selectSlot(s, el){
-  document.querySelectorAll('.slot').forEach(x => x.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedSlot = s;
-  document.getElementById('bookBtn').disabled = false;
-  document.getElementById('confirmBox').classList.remove('show');
-}
+  function selectDay(d){
+    selectedDay = d;
+    selectedSlot = null;
+    document.getElementById('selectedDateLabel').textContent = months[currentMonth] + ' ' + d + ', ' + currentYear;
+    renderCalendar();
+    renderSlots(d);
+    document.getElementById('bookBtn').disabled = true;
+    document.getElementById('confirmBox').classList.remove('show');
+  }
 
-function confirmBooking(){
-  document.getElementById('confirmText').textContent =
-    'Appointment set for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '. A confirmation would normally be sent by email or SMS here.';
-  document.getElementById('confirmBox').classList.add('show');
-}
+  function renderSlots(d){
+    const grid = document.getElementById('slotsGrid');
+    grid.innerHTML = '';
+    const taken = takenSlots[d] || [];
+    allSlots.forEach(s=>{
+      const el = document.createElement('div');
+      const isTaken = taken.includes(s);
+      el.className = 'slot' + (isTaken ? ' taken' : '');
+      el.textContent = s;
+      if(!isTaken){
+        el.onclick = () => selectSlot(s, el);
+      }
+      grid.appendChild(el);
+    });
+  }
 
-function shiftMonth(dir){
-  currentMonth += dir;
-  if(currentMonth > 11){currentMonth = 0; currentYear++;}
-  if(currentMonth < 0){currentMonth = 11; currentYear--;}
-  selectedDay = null;
-  document.getElementById('selectedDateLabel').textContent = 'select a date';
-  document.getElementById('slotsGrid').innerHTML = '';
-  document.getElementById('bookBtn').disabled = true;
+  function selectSlot(s, el){
+    document.querySelectorAll('.slot').forEach(x => x.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedSlot = s;
+    document.getElementById('bookBtn').disabled = false;
+    document.getElementById('confirmBox').classList.remove('show');
+  }
+
+  function confirmBooking(){
+    document.getElementById('confirmText').textContent =
+      'Appointment successfully reserved for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '. Notification dispatched to client records.';
+    document.getElementById('confirmBox').classList.add('show');
+  }
+
+  function shiftMonth(dir){
+    currentMonth += dir;
+    if(currentMonth > 11){currentMonth = 0; currentYear++;}
+    if(currentMonth < 0){currentMonth = 11; currentYear--;}
+    selectedDay = null;
+    document.getElementById('selectedDateLabel').textContent = 'select a date';
+    document.getElementById('slotsGrid').innerHTML = '';
+    document.getElementById('bookBtn').disabled = true;
+    renderCalendar();
+  }
+
   renderCalendar();
-}
-
-renderCalendar();
 </script>
 
 </body>
