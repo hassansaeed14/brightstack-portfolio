@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexus — Autonomous Operations Agent</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/nexus-ops-agent.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nexus — Autonomous Operations Agent">
+<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
+<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/nexus-ops-agent.html">
+<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -151,7 +159,7 @@
   <div class="wrap">
     <div class="hero-eyebrow">AI Automation Case Study</div>
     <h1 class="hero-title">An agent that doesn't just answer — it decides what to check, checks it, and resolves the request.</h1>
-    <p class="hero-desc">Built for Ember & Oak's ops team. This agent has real function-calling access to order lookup, inventory, refunds, ticketing, and callback scheduling — and it decides on its own, per request, which tools to call and in what order. Every decision is logged live below.</p>
+    <p class="hero-desc">A local operations-agent simulation for Ember & Oak. It demonstrates order lookup, inventory, refunds, ticketing, callback scheduling, and a visible decision trace without connecting to real customer systems.</p>
 
     <div class="tools-strip">
       <span class="tool-badge">lookup_order()</span>
@@ -224,7 +232,7 @@
 </div>
 
 <div class="footnote wrap">
-  Portfolio demo — built by Hassan. This uses Claude's real function-calling: the tools below are actual JSON schemas passed to the API, and the model chooses which to call, executes them against a mock dataset, and reasons over the results — the same pattern used to connect an agent to a live CRM, order system, or ticketing tool in production.
+  Portfolio demo — built by Hassan. This hosted version simulates tool selection against a mock dataset so no private API key or customer data is exposed. A production build can move the same tool schemas and approval steps to a secure server-side AI integration connected to a CRM, order system, or ticketing tool.
 </div>
 
 <script>
