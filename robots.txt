@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hassansaeed14.github.io/brightstack-portfolio/sitemap.xml

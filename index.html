@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BrightStack Co. — Web design & product studio</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BrightStack Co. — Web design &amp; product studio">
+<meta property="og:description" content="BrightStack Co. designs and builds websites, dashboards, booking systems, and AI-powered tools for small businesses and startups.">
+<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/">
+<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="BrightStack Co. designs and builds websites, dashboards, booking systems, and AI-powered tools for small businesses and startups.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -33,6 +41,9 @@
     background-position:-1px -1px;
   }
   a{color:inherit;text-decoration:none;}
+  :focus-visible{outline:3px solid var(--signal);outline-offset:3px;}
+  .skip-link{position:fixed;left:16px;top:12px;z-index:9999;background:var(--ink);color:#fff;padding:10px 14px;border-radius:6px;transform:translateY(-160%);}
+  .skip-link:focus{transform:translateY(0);}
   .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
@@ -209,6 +220,8 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<main id="main-content">
 
 <header>
   <div class="logo">Bright<span>Stack</span> Co.</div>
@@ -226,11 +239,11 @@
 <section class="hero">
   <div class="hero-text">
     <div class="eyebrow">Web & app development, built solo</div>
-    <h1>Full-stack builds, backed by an AI engineering background.</h1>
-    <p>I'm Hassan Saeed — a full-stack developer running BrightStack Co., an independent practice building responsive websites, full-stack apps, and API-integrated products end to end, from scoping through delivery.</p>
+    <h1>I design and build digital products that solve real business problems.</h1>
+    <p>I'm Hassan Saeed, a full-stack developer in Pakistan. I build conversion-focused websites, booking systems, dashboards, and practical automations for small businesses and startups.</p>
     <div class="btn-row">
-      <a href="#projects" class="btn-primary">See the projects</a>
-      <a href="#contact" class="btn-secondary">Book a call</a>
+      <a href="#projects" class="btn-primary">View selected work</a>
+      <a href="#contact" class="btn-secondary">Discuss your project</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -252,184 +265,36 @@
   </div>
 </section>
 
-<section class="section" id="projects">
+<section class="section" id="projects" aria-labelledby="projects-title">
   <div class="section-head">
     <div class="eyebrow">Selected work</div>
-    <h2>Pick a category, see the tier in action.</h2>
-    <p>Every project below is real proof for a package on the Services tiers — sign in free to open any demo. New projects get added here as they're finished.</p>
+    <h2 id="projects-title">Four projects, four different business problems.</h2>
+    <p>A focused selection of independent concepts and technical demonstrations. Every demo opens publicly—no account required.</p>
   </div>
-
-  <div class="service-tabs" id="projectTabs">
-    <button class="service-tab active" data-cat="web">Web Design</button>
-    <button class="service-tab" data-cat="app">Web Apps & Dashboards</button>
-    <button class="service-tab" data-cat="uiux">UI/UX Design</button>
-    <button class="service-tab" data-cat="ai">AI & Automation</button>
-    <button class="service-tab" data-cat="rd">R&D</button>
+  <div class="work-grid">
+    <article class="work-card">
+      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">nexora-flagship-project.html</div></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Independent concept</span><span class="work-tag">Full-stack</span></div><h3>Nexora — Agency Platform</h3><p>A concept platform exploring how agencies can track projects, currency conversion, and account health in one focused workspace.</p><a href="nexora-flagship-project.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+    </article>
+    <article class="work-card">
+      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">noor-bakehouse.html</div></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Independent concept</span><span class="work-tag">Business website</span></div><h3>Noor Bakehouse</h3><p>A storefront concept for a local bakery, designed around quick menu discovery and a clear route from browsing to ordering.</p><a href="noor-bakehouse.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+    </article>
+    <article class="work-card">
+      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">booking-system-demo.html</div></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Technical demonstration</span><span class="work-tag">Scheduling</span></div><h3>Glow Studio — Salon Booking</h3><p>A three-step booking flow that demonstrates date selection, availability rules, and confirmation without requiring an account.</p><a href="booking-system-demo.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+    </article>
+    <article class="work-card">
+      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">ember-oak-ai-assistant.html</div></div>
+      <div class="work-body"><div class="work-tags"><span class="work-tag">Local AI simulation</span><span class="work-tag">Lead workflow</span></div><h3>Ember &amp; Oak — Concierge</h3><p>A transparent local simulation of a product concierge and lead-scoring workflow, with a documented path to secure server-side AI integration.</p><a href="ember-oak-ai-assistant.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
+    </article>
   </div>
-
-  <div id="projectTiers"><!-- populated by JS --></div>
+  <div class="btn-row" style="margin-top:28px;">
+    <a class="btn-secondary" href="web-design-collection.html">Explore website collection</a>
+    <a class="btn-secondary" href="web-apps-collection.html">Explore app collection</a>
+    <a class="btn-secondary" href="ai-automation-collection.html">Explore AI labs</a>
+  </div>
 </section>
-
-<style>
-  .tier-block{margin-bottom:36px;}
-  .hub-banner{
-    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
-    background:var(--ink);color:var(--paper-2);border-radius:12px;padding:20px 24px;margin-bottom:32px;
-    text-decoration:none;transition:transform .2s;
-  }
-  .hub-banner:hover{transform:translateY(-2px);}
-  .hub-label{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin-bottom:4px;}
-  .hub-blurb{font-size:13.5px;color:#B7BFCB;max-width:520px;}
-  .hub-arrow{font-weight:600;font-size:13.5px;color:var(--signal);white-space:nowrap;}
-  .tier-block:last-child{margin-bottom:0;}
-  .tier-block-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;}
-  .tier-block-head h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;}
-  .tier-block-head span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);}
-  .tier-empty{
-    background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:18px 20px;
-    font-size:13.5px;color:var(--ink-soft);
-  }
-</style>
-
-<script>
-  const PROJECTS = {
-    web: {
-      basic: [
-        { title:'Larkspur — Photography', file:'larkspur-photography.html', tags:['Business site','One-page'], desc:'A deliberately minimal one-page photographer booking site — hero, a contact-sheet portfolio strip, and a booking form. The Basic web design tier, shown in full scope.' }
-      ],
-      standard: [
-        { title:'Noor Bakehouse', file:'noor-bakehouse.html', tags:['Business site','Local'], desc:'A local bakery\'s storefront — daily menu, online ordering CTA, and a brand identity built around small-batch sourdough.' },
-        { title:'Ledgerly — SaaS Landing', file:'saas-landing-demo.html', tags:['Marketing site','SaaS'], desc:'A conversion-focused product site for a budgeting app — pricing, testimonials, and an interactive FAQ.' }
-      ],
-      premium: [
-        { title:'Momentum Studio', file:'momentum-fitness.html', tags:['Multi-page','WordPress-style'], desc:'A full fitness-studio site — live weekly class schedule, trainer bios, membership pricing, and testimonials, composed in WordPress-style content blocks.' }
-      ]
-    },
-    app: {
-      basic: [],
-      standard: [
-        { title:'Glow Studio — Salon Booking', file:'booking-system-demo.html', tags:['Web app','Scheduling'], desc:'A working calendar with real availability logic — pick a date, see taken slots, book a time, get a live confirmation.' },
-        { title:'Flowdesk — Order & Invoice Management', file:'webapp-dashboard-demo.html', tags:['Web app','Dashboard'], desc:'A sign-in-gated operations dashboard — revenue and order KPIs, a status-tracked orders table, sidebar navigation.' }
-      ],
-      premium: [
-        { title:'Nexora — Agency Platform', file:'nexora-flagship-project.html', tags:['Flagship','Full-stack'], desc:'A client & project management platform — a live currency-conversion API, a rule-based client health-scoring engine, and a documented design system.' }
-      ]
-    },
-    uiux: {
-      basic: [
-        { title:'Pulse — Guided Breathing', file:'pulse-wireframes.html', tags:['Wireframes','Tappable prototype'], desc:'Four low-fidelity, grayscale wireframes for a breathing app — wired into a tappable prototype so the flow\'s pacing can be judged, not just the layout.' },
-        { title:'Loop — Habit Tracker', file:'loop-wireframes.html', tags:['Wireframes','One direction'], desc:'A four-screen low-fi wireframe pass for a habit tracker, scoped to answer one question fast: does the core flow hold up.' },
-        { title:'Kindred — Dating Discovery', file:'kindred-wireframes.html', tags:['Wireframes','Draggable prototype'], desc:'Low-fidelity wireframes for a dating app\'s discovery screen — a real drag-to-swipe card deck, not a static mockup of one.' }
-      ],
-      standard: [
-        { title:'Surge — Fitness Tracking', file:'surge-prototype.html', tags:['Clickable prototype','Design system'], desc:'A clickable prototype with real interaction — an animated progress ring, a swipeable workout carousel, and a tab bar with a sliding indicator.' },
-        { title:'Nomad — Freelancer Invoicing', file:'nomad-prototype.html', tags:['Clickable prototype','Design system'], desc:'A prototype for freelancers tracking who\'s paid and who\'s late, built on a small reusable design system shared across every screen.' },
-        { title:'Cartel — Shopping & Checkout', file:'cartel-shop.html', tags:['Clickable prototype','E-commerce'], desc:'A shopping and checkout flow prototype — a popping cart badge, swipe-to-remove, and a filling step tracker through checkout.' }
-      ],
-      premium: [
-        { title:'Aviary — Travel Booking', file:'aviary-case-study.html', tags:['Full case study','Animated prototype'], desc:'A full case study for a travel booking app — research through a realistic animated prototype: loading states, a seat picker, a save gesture, an animated confirmation.' },
-        { title:'Vela — First-Time Investing', file:'vela-case-study.html', tags:['Full case study','Usability notes'], desc:'A full case study for a micro-investing app for first-time investors — research question through high-fidelity flow and usability observations.' },
-        { title:'Pillbox — Medication Reminders', file:'uiux-case-study.html', tags:['Full case study'], desc:'A case study for people managing multiple prescriptions — one problem, three screens, a one-tap-to-complete principle.' },
-        { title:'Wander — Trail Companion', file:'wander-trail-companion.html', tags:['Interactive prototype','Flow map'], desc:'A fully clickable prototype — onboarding, live trail tracking, badge unlocks, and a flow-map view of how all seven screens connect.' },
-        { title:'Nimbus — Smart Home Control', file:'nimbus-smart-home.html', tags:['Case study','Interactive'], desc:'A smart home control case study — working toggles and a draggable slider, not just a static screen of a "smart" interface.' }
-      ],
-      explore: [
-        { title:'Cadence — Beat Sequencer', file:'cadence-beatmaker.html', tags:['Self-directed','Plays real audio'], desc:'An 8-track beat sequencer exploring sound-design UI — real audio synthesis, live spectrum analysis, swing timing, mute/solo controls.' }
-      ]
-    },
-    ai: {
-      basic: [
-        { title:'Smart Inquiry Router', file:'ai-inquiry-router.html', tags:['Rule-based','Live classifier'], desc:'Paste a message in and watch it get categorized and routed live. Evaluated at 88% accuracy, with the confusion matrix and limitations shown openly.' }
-      ],
-      standard: [
-        { title:'Churn Risk Model', file:'churn-risk-model.html', tags:['Machine learning','From scratch'], desc:'A real logistic regression model, trained live in the browser via gradient descent — no ML library, no backend.' }
-      ],
-      premium: [
-        { title:'Nexus — Autonomous Ops Agent', file:'nexus-ops-agent.html', tags:['Agentic AI','Live decision log'], desc:'An agent with real function-calling access to order lookup, inventory, refunds, and scheduling — it decides which tools to call and logs every decision live.' },
-        { title:'Forge — Agent Orchestration', file:'forge-agent-orchestration.html', tags:['Multi-agent pipeline'], desc:'Four AI agents — Research, Strategy, Risk, Editor — running as a real pipeline to turn one business question into a decision-ready brief.' },
-        { title:'Sift — Candidate Screening', file:'sift-screening-pipeline.html', tags:['AI pipeline','Hiring'], desc:'Screen a stack of resumes against a role in one pass — each candidate gets a fit score, strengths, gaps, and interview questions, then lands on a pipeline board.' },
-        { title:'Reprise — Content Repurposing', file:'reprise-content-engine.html', tags:['AI pipeline','Content'], desc:'Paste a blog post or transcript and get a channel-native X thread, LinkedIn post, Instagram caption, and email snippet, generated live.' },
-        { title:'Ember & Oak — AI Concierge', file:'ember-oak-ai-assistant.html', tags:['Live assistant','Lead scoring'], desc:'A live assistant for a fictional coffee roastery that answers real customer questions and quietly scores every conversation as cold, warm, or hot in a live dashboard.' }
-      ]
-    },
-    rd: {
-      basic: [], standard: [],
-      premium: [
-        { title:'VORIS — AI Assistant', file:'https://github.com/hassansaeed14/VORIS', external:true, tags:['R&D · In progress','External · GitHub'], desc:'A local-first, JARVIS-style AI assistant with a Python FastAPI backend — a tiered trust model, document generation through chat, an in-browser RAG pipeline, and 290+ passing tests.' }
-      ]
-    }
-  };
-
-  const TIER_LABELS = { basic:'Basic', standard:'Standard', premium:'Premium' };
-
-  function renderProjectCard(p){
-    const linkAttrs = p.external ? 'target="_blank" rel="noopener"' : '';
-    const urlLabel = p.external ? p.file.replace('https://','') : p.file;
-    return `
-      <div class="work-card">
-        <div class="chrome"><div class="dots"><span></span><span></span><span></span></div><div class="url">${urlLabel}</div></div>
-        <div class="work-body">
-          <div class="work-tags">${p.tags.map(t => `<span class="work-tag">${t}</span>`).join('')}</div>
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-          <a href="${p.file}" ${linkAttrs} class="work-link gated-link">View demo <span class="arrow">→</span></a>
-        </div>
-      </div>
-    `;
-  }
-
-  const CATEGORY_HUBS = {
-    web:  {file:'web-design-collection.html',    label:'The Web Design Collection',           blurb:'Four businesses, four entirely different voices — browse the full collection with tier filters.'},
-    app:  {file:'web-apps-collection.html',      label:'The Web Apps & Dashboards Collection', blurb:'Working dashboards and tools, not screenshots — browse the full collection with tier filters.'},
-    uiux: {file:'uiux-collection.html',          label:'The UI/UX Collection',                 blurb:'Wireframes through full case studies — browse the full collection with tier filters.'},
-    ai:   {file:'ai-automation-collection.html', label:'The AI & Automation Collection',       blurb:'From keyword rules to autonomous agents — browse the full collection with tier filters.'}
-  };
-
-  function renderProjectTiers(cat){
-    const container = document.getElementById('projectTiers');
-    const data = PROJECTS[cat];
-    const hub = CATEGORY_HUBS[cat];
-    const hubBanner = hub ? `
-      <a class="hub-banner" href="${hub.file}">
-        <div>
-          <div class="hub-label">${hub.label}</div>
-          <div class="hub-blurb">${hub.blurb}</div>
-        </div>
-        <span class="hub-arrow">Open collection →</span>
-      </a>` : '';
-    container.innerHTML = hubBanner + ['basic','standard','premium'].map(tier => {
-      const items = data[tier];
-      const heading = `<div class="tier-block-head"><h3>${TIER_LABELS[tier]}</h3><span>${items.length} project${items.length===1?'':'s'}</span></div>`;
-      if (items.length === 0){
-        return `<div class="tier-block">${heading}<div class="tier-empty">No ${TIER_LABELS[tier].toLowerCase()}-tier example here yet — ask and we'll scope one.</div></div>`;
-      }
-      return `<div class="tier-block">${heading}<div class="work-grid">${items.map(renderProjectCard).join('')}</div></div>`;
-    }).join('');
-    rewireGatedLinks();
-  }
-
-  function rewireGatedLinks(){
-    document.querySelectorAll('#projectTiers .gated-link').forEach(link => {
-      link.addEventListener('click', function(e){
-        if (!window.__bsAuth || !window.__bsAuth.currentUser){
-          e.preventDefault();
-          sessionStorage.setItem('pendingProject', this.getAttribute('href'));
-          window.location.href = 'signin.html';
-        }
-      });
-    });
-  }
-
-  document.querySelectorAll('#projectTabs .service-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('#projectTabs .service-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      renderProjectTiers(tab.dataset.cat);
-    });
-  });
-
-  renderProjectTiers('web');
-</script>
 
 <section class="wrap" style="padding:0 32px 64px;">
   <div class="cta-band" style="margin:0;max-width:none;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);">
@@ -605,16 +470,21 @@
 
   <div style="background:rgba(255,255,255,0.04);border:1px solid #2D3646;border-radius:10px;padding:20px 22px;">
     <div class="mono" style="font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Or send a quick message</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px;">
-      <input type="text" id="leadName" placeholder="Your name" style="padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;">
-      <input type="email" id="leadEmail" placeholder="Your email" style="padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;">
-    </div>
-    <textarea id="leadMessage" placeholder="What are you building?" rows="3" style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;font-family:inherit;margin-bottom:10px;resize:vertical;"></textarea>
-    <button id="leadSubmitBtn" class="btn-primary" style="border:none;cursor:pointer;">Send message</button>
-    <div id="leadStatus" class="mono" style="font-size:12px;color:#9AA4B2;margin-top:10px;"></div>
+    <form id="leadForm">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px;">
+        <div><label for="leadName" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">Your name</label><input type="text" id="leadName" name="name" autocomplete="name" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;"></div>
+        <div><label for="leadEmail" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">Email address</label><input type="email" id="leadEmail" name="email" autocomplete="email" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;"></div>
+      </div>
+      <label for="leadMessage" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">What are you building?</label>
+      <textarea id="leadMessage" name="message" required minlength="10" rows="3" style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;font-family:inherit;margin-bottom:10px;resize:vertical;"></textarea>
+      <button id="leadSubmitBtn" type="submit" class="btn-primary" style="border:none;cursor:pointer;">Send message</button>
+      <p style="font-size:11.5px;color:#9AA4B2;margin-top:10px;">Your details are used only to respond to this enquiry.</p>
+      <div id="leadStatus" role="status" aria-live="polite" class="mono" style="font-size:12px;color:#9AA4B2;margin-top:10px;"></div>
+    </form>
   </div>
 </div>
 
+</main>
 <footer>
   BrightStack Co. · Hassan Saeed · Mansehra, Pakistan · <span class="mono">est. 2024</span>
 </footer>
@@ -624,9 +494,6 @@
   import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
   import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-  // Exposed so the plain (non-module) Projects tab script can check sign-in state
-  // when someone clicks a project card rendered dynamically after tab switches.
-  window.__bsAuth = auth;
 
   onAuthStateChanged(auth, (user) => {
     const slot = document.getElementById('authNavSlot');
@@ -647,7 +514,8 @@
     }
   });
 
-  document.getElementById('leadSubmitBtn').addEventListener('click', async () => {
+  document.getElementById('leadForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
     const name = document.getElementById('leadName').value.trim();
     const email = document.getElementById('leadEmail').value.trim();
     const message = document.getElementById('leadMessage').value.trim();
