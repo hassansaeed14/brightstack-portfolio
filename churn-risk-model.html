@@ -3,104 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Churn Model Lab — live Python ML in the browser</title>
+<title>Churn Model Lab Pro — Live Python ML & Inference Engine</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/churn-risk-model.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Churn Model Lab — live Python ML in the browser">
-<meta property="og:description" content="A real logistic regression model, written from scratch in Python and trained live in the browser via WebAssembly.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/churn-risk-model.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="A real logistic regression model, written from scratch in Python and trained live in the browser via WebAssembly.">
+<meta property="og:title" content="Churn Model Lab Pro — Live Python ML & Inference Engine">
+<meta property="og:description" content="Enterprise logistic regression machine learning lab executing live in browser via WebAssembly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0f16; --card:rgba(255,255,255,0.02); --ink:#ffffff; --muted:#a0aec0;
-    --line:rgba(0,229,255,0.15); --indigo:#00e5ff; --indigo-dim:rgba(0,229,255,0.08);
-    --signal:#ffdab9; --signal-ink:#0a0f16; --churn:#ff5470; --good:#00e5ff;
+  :root {
+    --bg: #030509;
+    --surface: rgba(12, 17, 28, 0.88);
+    --surface-sunken: rgba(5, 8, 14, 0.95);
+    --line: rgba(0, 229, 255, 0.18);
+    --border-hover: rgba(0, 229, 255, 0.5);
+    
+    --ink: #f8fafc;
+    --muted: #8b9bb4;
+    --faint: #4e5d75;
+    
+    --cyan: #00e5ff;
+    --cyan-dim: rgba(0, 229, 255, 0.12);
+    --coral: #ff5470;
+    --coral-dim: rgba(255, 84, 112, 0.12);
+    --green: #00f5d4;
+    --green-dim: rgba(0, 245, 212, 0.12);
+    --amber: #ffb703;
+    
+    --radius: 20px;
+    --shadow: 0 40px 90px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255,255,255,0.06);
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6; overflow-x:hidden;}
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   
-  /* Cyber Background Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
-
-  a{color:inherit;text-decoration:none;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-
-  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:960px;margin:0 auto; border-bottom:1px solid var(--line);}
-  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px; color:#fff;}
-  .logo span{color:var(--indigo);}
-  .back-link{font-size:13px;font-weight:600;color:var(--muted); transition: color 0.3s;}
-  .back-link:hover{color:var(--indigo);}
-
-  .hero{max-width:960px;margin:0 auto;padding:40px 32px 30px;}
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
-    color:var(--indigo);font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;
-    background:var(--indigo-dim);padding:6px 12px;border-radius:20px; border: 1px solid var(--line);
+  body {
+    background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif;
+    min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    background-image: 
+      radial-gradient(circle at 10% 10%, rgba(0,229,255,0.06), transparent 45%),
+      radial-gradient(circle at 90% 90%, rgba(255,84,112,0.05), transparent 45%),
+      var(--bg);
   }
-  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--indigo);display:inline-block; box-shadow: 0 0 8px var(--indigo);}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.01em;margin-bottom:12px;max-width:680px; color:#fff;}
-  .hero p{color:var(--muted);font-size:15.5px;max-width:640px;}
-  .hero p.note{margin-top:10px;font-size:13px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
 
-  .lab-wrap{max-width:960px;margin:0 auto;padding:0 32px 20px;}
-  .lab-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);}
-
-  .lab-controls{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:22px;}
-  .control-group{min-width:180px;}
-  .control-group label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:8px; font-family:'JetBrains Mono',monospace;}
-  .control-group input[type=range]{width:100%;accent-color:var(--indigo);}
-  #trainBtn{
-    background:var(--signal);color:var(--signal-ink);border:none;padding:12px 24px;border-radius:8px;
-    font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap; transition: transform 0.2s, opacity 0.2s;
-    box-shadow: 0 0 15px rgba(255,218,185,0.3);
+  .scan {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.25;
+    background-image: repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px);
   }
-  #trainBtn:disabled{background:rgba(255,255,255,0.05);color:var(--muted);cursor:wait; border: 1px solid var(--line); box-shadow:none;}
-  #trainBtn:not(:disabled):hover{transform: translateY(-2px); opacity: 0.9;}
-  .status-line{font-size:12.5px;color:var(--muted);margin-left:auto;}
 
-  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
-  .stat-box{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
-  .stat-label{font-size:12px;color:var(--muted);margin-bottom:6px; font-family:'JetBrains Mono',monospace;}
-  .stat-value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:var(--indigo);}
+  header {
+    display: flex; justify-content: space-between; align-items: center; padding: 22px 36px;
+    max-width: 1240px; margin: 0 auto; border-bottom: 1px solid var(--line);
+    background: rgba(3,5,9,0.85); backdrop-filter: blur(16px); position: sticky; top: 0; z-index: 10;
+  }
+  .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: #fff; }
+  .logo span { color: var(--cyan); text-shadow: 0 0 15px rgba(0,229,255,0.5); }
+  .back-link { font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color 0.3s; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .back-link:hover { color: var(--cyan); }
 
-  .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;}
-  .chart-card{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:10px;padding:16px;}
-  .chart-title{font-size:13px;font-weight:600;margin-bottom:10px; color:#fff; font-family:'Space Grotesk',sans-serif;}
-  canvas{width:100%;height:auto;display:block;}
+  .hero { max-width: 1240px; margin: 0 auto; padding: 48px 24px 32px; }
+  .eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan); font-weight: 700; background: var(--cyan-dim); padding: 6px 14px; border-radius: 20px; display: inline-block; border: 1px solid rgba(0,229,255,0.3); margin-bottom: 16px; }
+  h1 { font-size: clamp(34px, 5vw, 48px); line-height: 1.1; margin: 0 0 16px; font-weight: 800; letter-spacing: -0.02em; font-family: 'Space Grotesk', sans-serif; }
+  .hero p { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 720px; margin: 0 0 12px; }
+  .hero p.note { font-size: 12.5px; color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
 
-  .equation-row{background:rgba(0,229,255,0.03);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:22px;}
-  .equation-label{font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
-  .equation{font-size:13.5px;line-height:1.7; color:#fff;}
+  .lab-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px 80px; }
+  .lab-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; backdrop-filter: blur(20px); box-shadow: var(--shadow); }
 
-  .confusion-title{font-size:13px;font-weight:600;margin-bottom:10px; color:#fff; font-family:'Space Grotesk',sans-serif;}
-  .confusion-table{border-collapse:collapse;font-size:13px; width: 100%;}
-  .confusion-table td, .confusion-table th{border:1px solid var(--line);padding:10px 16px;text-align:center;}
-  .confusion-table th{background:rgba(255,255,255,0.03);font-size:11.5px;color:var(--muted);font-weight:600; font-family:'JetBrains Mono',monospace;}
-  .confusion-table td.hit{background:var(--indigo-dim);font-weight:700; color:var(--indigo);}
+  .lab-controls { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; padding-bottom: 24px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .control-group { min-width: 180px; flex: 1; }
+  .control-group label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .control-group input[type=range] { width: 100%; accent-color: var(--cyan); cursor: pointer; }
+  
+  #trainBtn {
+    background: var(--cyan); color: var(--bg); border: none; padding: 12px 28px; border-radius: 12px;
+    font-weight: 700; font-size: 13.5px; cursor: pointer; white-space: nowrap; transition: all 0.2s;
+    box-shadow: 0 0 20px rgba(0,229,255,0.3); font-family: 'Space Grotesk', sans-serif;
+  }
+  #trainBtn:disabled { background: rgba(255,255,255,0.05); color: var(--muted); cursor: wait; border: 1px solid var(--line); box-shadow: none; }
+  #trainBtn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0,229,255,0.5); }
+  .status-line { font-size: 12.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; width: 100%; }
+
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  @media(max-width: 900px){ .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+  
+  .stat-box { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-value { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 26px; color: var(--cyan); }
+
+  .charts-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-bottom: 24px; }
+  @media(max-width: 900px){ .charts-row { grid-template-columns: 1fr; } }
+  
+  .chart-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .chart-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: space-between; align-items: center; }
+  canvas { width: 100%; height: auto; display: block; background: rgba(0,0,0,0.2); border-radius: 10px; }
+
+  /* Live Inference Playground */
+  .inference-card { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+  .inference-layout { display: grid; grid-template-columns: 1fr 280px; gap: 24px; align-items: center; }
+  @media(max-width: 750px){ .inference-layout { grid-template-columns: 1fr; } }
+  
+  .inf-sliders { display: flex; flex-direction: column; gap: 16px; }
+  .inf-result { background: rgba(0,229,255,0.03); border: 1px solid var(--line); border-radius: 12px; padding: 20px; text-align: center; }
+  .inf-prob { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; margin: 6px 0; }
+  .inf-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+  .inf-badge.retained { background: var(--cyan-dim); color: var(--cyan); border: 1px solid var(--cyan); }
+  .inf-badge.churn { background: var(--coral-dim); color: var(--coral); border: 1px solid var(--coral); }
+
+  .equation-row { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 14px; padding: 18px 24px; margin-bottom: 24px; }
+  .equation-label { font-size: 11px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .equation { font-size: 13.5px; line-height: 1.7; color: #fff; font-family: 'JetBrains Mono', monospace; word-break: break-all; }
+
+  .confusion-container { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .confusion-table { border-collapse: collapse; font-size: 13px; width: 100%; font-family: 'JetBrains Mono', monospace; }
+  .confusion-table td, .confusion-table th { border: 1px solid var(--line); padding: 12px 16px; text-align: center; }
+  .confusion-table th { background: rgba(255,255,255,0.02); font-size: 11.5px; color: var(--muted); font-weight: 600; }
+  .confusion-table td.hit { background: var(--cyan-dim); font-weight: 700; color: var(--cyan); }
   .confusion-table td { color: #fff; }
 
-  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .legend span{display:inline-flex;align-items:center;gap:6px;}
-  .legend .sw{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-size: 11.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
 
-  .how-it-works{max-width:960px;margin:30px auto;padding:0 32px 40px;font-size:13.5px;color:var(--muted);}
-  .how-it-works summary{cursor:pointer;font-weight:600;color:#fff; font-family:'Space Grotesk',sans-serif;}
-  .how-it-works p{margin-top:10px;max-width:680px; line-height:1.6;}
-  .how-it-works ul{margin:10px 0 0 18px;max-width:680px; line-height:1.6;}
+  .how-it-works { max-width: 1240px; margin: 30px auto; padding: 0 24px 40px; font-size: 14px; color: var(--muted); }
+  .how-it-works summary { cursor: pointer; font-weight: 700; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 16px; }
+  .how-it-works p { margin-top: 10px; max-width: 800px; line-height: 1.7; }
+  .how-it-works ul { margin: 10px 0 0 18px; max-width: 800px; line-height: 1.7; }
 
-  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--muted); border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace;}
-
-  @media (max-width:700px){
-    .charts-row, .result-grid{grid-template-columns:1fr;}
-    .status-line{margin-left:0;}
-  }
+  footer { padding: 24px 36px 36px; text-align: center; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; }
 </style>
 </head>
 <body>
@@ -108,82 +138,126 @@
 
 <header>
   <div class="logo">Bright<span>Stack</span></div>
-  <a href="index.html" class="back-link">← Back to portfolio</a>
+  <a href="index.html" class="back-link">← Portfolio Hub</a>
 </header>
 
 <section class="hero">
-  <div class="eyebrow">// Live Python · WebAssembly Engine</div>
-  <h1>Logistic Regression Model Training Live in Browser</h1>
-  <p>A native CPython runtime executed directly inside the client browser via Pyodide (WASM). Features raw batch gradient descent implemented from scratch in pure Python—completely eliminating server dependencies and pre-compiled model weights.</p>
-  <p class="note">// Dataset: Synthetic telemetry vector (140 rows, fixed pseudo-random seed).</p>
+  <div class="eyebrow">// Enterprise ML Engine · WebAssembly Runtime</div>
+  <h1>Churn Model Lab Pro — Live Python ML & Inference</h1>
+  <p>A native CPython runtime executed directly inside your browser via Pyodide. Features raw batch gradient descent with logistic regression trained live from scratch—zero server overhead and zero pre-compiled weights.</p>
+  <p class="note">// Telemetry Dataset: 180 enterprise accounts across engagement score and payment latency vectors.</p>
 </section>
 
 <section class="lab-wrap">
   <div class="lab-panel">
+    
+    <!-- Controls Bar -->
     <div class="lab-controls">
       <div class="control-group">
-        <label>Learning Rate: <span id="lrVal" style="color:var(--indigo);">0.50</span></label>
-        <input type="range" id="lrSlider" min="0.05" max="2" step="0.05" value="0.5">
+        <label>Learning Rate: <span id="lrVal" style="color:var(--cyan);">0.40</span></label>
+        <input type="range" id="lrSlider" min="0.05" max="2" step="0.05" value="0.4">
       </div>
       <div class="control-group">
-        <label>Epochs: <span id="epochsVal" style="color:var(--indigo);">300</span></label>
-        <input type="range" id="epochsSlider" min="20" max="800" step="20" value="300">
+        <label>Epochs: <span id="epochsVal" style="color:var(--cyan);">400</span></label>
+        <input type="range" id="epochsSlider" min="50" max="1000" step="50" value="400">
       </div>
       <button id="trainBtn" disabled>Booting CPython…</button>
-      <div class="status-line mono" id="statusLine">Initializing WebAssembly runtime...</div>
+      <div class="status-line" id="statusLine">Initializing WebAssembly CPython runtime environment...</div>
     </div>
 
+    <!-- Results Dashboard (Hidden until trained) -->
     <div id="labResults" style="display:none;">
-      <div class="result-grid">
+      
+      <!-- Metrics Cards -->
+      <div class="metrics-grid">
         <div class="stat-box">
-          <div class="stat-label">Test Set Accuracy</div>
+          <div class="stat-label">Test Accuracy</div>
           <div class="stat-value" id="accVal">–</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Execution Time</div>
+          <div class="stat-label">Precision Score</div>
+          <div class="stat-value" id="precVal" style="color:var(--green);">–</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Recall Score</div>
+          <div class="stat-value" id="recVal" style="color:var(--amber);">–</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Execution Latency</div>
           <div class="stat-value" id="timeVal" style="color:var(--signal);">–</div>
         </div>
       </div>
 
+      <!-- Charts Row -->
       <div class="charts-row">
         <div class="chart-card">
-          <div class="chart-title">Loss Curve Convergence</div>
-          <canvas id="lossCanvas" width="380" height="220"></canvas>
+          <div class="chart-title">
+            <span>Loss Curve Convergence</span>
+            <span id="finalLoss" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);">Loss: –</span>
+          </div>
+          <canvas id="lossCanvas" width="420" height="240"></canvas>
         </div>
         <div class="chart-card">
-          <div class="chart-title">Decision Boundary Mapping</div>
-          <canvas id="scatterCanvas" width="380" height="220"></canvas>
+          <div class="chart-title">
+            <span>Decision Boundary Hyperplane</span>
+          </div>
+          <canvas id="scatterCanvas" width="420" height="240"></canvas>
           <div class="legend">
-            <span><i class="sw" style="background:var(--indigo)"></i>Retained</span>
-            <span><i class="sw" style="background:var(--churn)"></i>Churned</span>
-            <span><i class="sw" style="background:var(--good)"></i>Correct</span>
+            <span><i class="sw" style="background:var(--cyan)"></i>Retained</span>
+            <span><i class="sw" style="background:var(--coral)"></i>Churned</span>
+            <span><i class="sw" style="background:var(--green)"></i>Correct Prediction</span>
           </div>
         </div>
       </div>
 
-      <div class="equation-row">
-        <div class="equation-label mono">// Learned Decision Function (Normalized 0–1 Space)</div>
-        <div class="equation mono" id="equationText">–</div>
+      <!-- Live Inference Playground -->
+      <div class="inference-card">
+        <div class="chart-title" style="margin-bottom:16px;">// Live Model Inference Sandbox (Test Custom Account)</div>
+        <div class="inference-layout">
+          <div class="inf-sliders">
+            <div class="control-group" style="min-width:auto;">
+              <label>Customer Engagement Score (0 - 10): <span id="infEngVal" style="color:var(--cyan);">5.0</span></label>
+              <input type="range" id="infEngSlider" min="0" max="10" step="0.1" value="5" oninput="runInference()">
+            </div>
+            <div class="control-group" style="min-width:auto;">
+              <label>Payment Latency / Delay (Days 0 - 30): <span id="infDelayVal" style="color:var(--cyan);">15.0</span></label>
+              <input type="range" id="infDelaySlider" min="0" max="30" step="0.5" value="15" oninput="runInference()">
+            </div>
+          </div>
+          <div class="inf-result">
+            <div class="stat-label">Predicted Churn Probability</div>
+            <div class="inf-prob" id="infProbVal">--%</div>
+            <div class="inf-badge retained" id="infBadgeVal">Retained</div>
+          </div>
+        </div>
       </div>
 
-      <div class="confusion-row">
-        <div class="confusion-title">Confusion Matrix (Held-out Test Split)</div>
+      <!-- Learned Equation -->
+      <div class="equation-row">
+        <div class="equation-label">// Learned Weights & Decision Boundary Function</div>
+        <div class="equation" id="equationText">–</div>
+      </div>
+
+      <!-- Confusion Matrix -->
+      <div class="confusion-container">
+        <div class="chart-title">Confusion Matrix (Held-out Test Split)</div>
         <table class="confusion-table" id="confusionTable"></table>
       </div>
+
     </div>
   </div>
 </section>
 
 <details class="how-it-works">
-  <summary>View Architecture & Implementation Details</summary>
+  <summary>View Technical Architecture & Mathematical Spec</summary>
   <p>This module mounts a standalone Python environment inside the client browser, executing compiled C code via WASM. It proves that client-side applications can handle rigorous mathematical computations locally without offloading tasks to remote compute clusters.</p>
   <ul>
-    <li><strong>Data Pipeline:</strong> 140 synthetic client feature rows generated across two parameters (engagement score, payment latency).</li>
+    <li><strong>Data Pipeline:</strong> 180 synthetic enterprise customer rows generated across two parameters (engagement score, payment latency).</li>
     <li><strong>Normalization:</strong> Min-max feature scaling applied prior to train/test set splitting (80/20 ratio).</li>
     <li><strong>Optimization:</strong> Batch gradient descent calculated iteratively using fundamental math primitives (`math.log`, `math.exp`).</li>
     <li><strong>Live Execution:</strong> Parameter updates trigger immediate recompilation and forward/backward passes on unseen validation data.</li>
   </ul>
-  <p class="note" style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--indigo);">// Note: Optimized as a transparent, verifiable machine learning demonstration rather than a black-box enterprise pipeline.</p>
+  <p style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--cyan);">// Note: Engineered as a transparent, verifiable machine learning demonstration rather than a black-box enterprise pipeline.</p>
 </details>
 
 <footer>Built by BrightStack Co. · Real Python, Real Gradient Descent, Zero Server Overhead.</footer>
@@ -193,14 +267,15 @@
 <!-- 3D Card Hover Effect -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".lab-panel, .chart-card, .stat-box"), {
-    max: 3,
+  VanillaTilt.init(document.querySelectorAll(".lab-panel, .chart-card, .stat-box, .inference-card"), {
+    max: 2,
     speed: 400,
     glare: true,
-    "max-glare": 0.04,
+    "max-glare": 0.03,
   });
 
   let pyodide = null;
+  let modelWeights = { w: [0,0], b: 0, minMax: { eng: [0,10], delay: [0,30] } };
 
   const SETUP_CODE = `
 import random, math
@@ -212,21 +287,26 @@ def gen_data(n):
     for _ in range(n):
         engagement = round(random.uniform(0, 10), 2)
         delay = round(random.uniform(0, 30), 2)
-        z = -0.9*engagement + 0.15*delay - 1.0
+        z = -0.85*engagement + 0.18*delay - 0.8
         prob = 1/(1+math.exp(-z))
         label = 1 if random.random() < prob else 0
         X.append([engagement, delay])
         y.append(label)
     return X, y
 
-_X, _y = gen_data(140)
+_X, _y = gen_data(180)
 
-def _normalize(X):
+def _get_mins_maxs(X):
     n_feat = len(X[0])
     mins = [min(row[i] for row in X) for i in range(n_feat)]
     maxs = [max(row[i] for row in X) for i in range(n_feat)]
-    Xn = [[(row[i]-mins[i])/(maxs[i]-mins[i]+1e-9) for i in range(n_feat)] for row in X]
-    return Xn
+    return mins, maxs
+
+_mins, _maxs = _get_mins_maxs(_X)
+
+def _normalize(X):
+    n_feat = len(X[0])
+    return [[(X[row_idx][i]-_mins[i])/(_maxs[i]-_mins[i]+1e-9) for i in range(n_feat)] for row_idx in range(len(X))]
 
 _Xn = _normalize(_X)
 _split = int(len(_Xn)*0.8)
@@ -279,12 +359,18 @@ tp = sum(1 for p,t in zip(preds_test,y_test) if p==1 and t==1)
 tn = sum(1 for p,t in zip(preds_test,y_test) if p==0 and t==0)
 fp = sum(1 for p,t in zip(preds_test,y_test) if p==1 and t==0)
 fn = sum(1 for p,t in zip(preds_test,y_test) if p==0 and t==1)
+
 accuracy = (tp+tn)/len(y_test) if y_test else 0
+precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+recall = tp / (tp + fn) if (tp + fn) > 0 else 0
 
 result = {
   "w": w, "b": b, "losses": losses, "elapsed_ms": _elapsed_ms,
   "accuracy": round(accuracy, 4),
+  "precision": round(precision, 4),
+  "recall": round(recall, 4),
   "confusion": {"tp": tp, "tn": tn, "fp": fp, "fn": fn},
+  "mins": _mins, "maxs": _maxs,
   "train_points": [{"x": X_train[i][0], "y": X_train[i][1], "label": y_train[i]} for i in range(len(X_train))],
   "test_points": [{"x": X_test[i][0], "y": X_test[i][1], "label": y_test[i], "pred": preds_test[i]} for i in range(len(X_test))]
 }
@@ -295,7 +381,7 @@ json.dumps(result)
     try{
       pyodide = await loadPyodide();
       pyodide.runPython(SETUP_CODE);
-      document.getElementById('statusLine').textContent = 'CPython Ready — Click Train to execute.';
+      document.getElementById('statusLine').textContent = 'CPython Ready — Click Train Model to execute WebAssembly training pipeline.';
       document.getElementById('trainBtn').disabled = false;
       document.getElementById('trainBtn').textContent = 'Train Model';
     }catch(err){
@@ -310,10 +396,13 @@ json.dumps(result)
   function drawLoss(losses){
     const c = document.getElementById('lossCanvas');
     const ctx = c.getContext('2d');
-    const w = c.width, h = c.height, pad = 30;
+    const w = c.width, h = c.height, pad = 35;
     ctx.clearRect(0,0,w,h);
-    ctx.strokeStyle = 'rgba(0,229,255,0.15)'; ctx.lineWidth = 1;
+    
+    // Grid lines
+    ctx.strokeStyle = 'rgba(0,229,255,0.1)'; ctx.lineWidth = 1;
     ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
+
     const maxLoss = Math.max(...losses, 0.01);
     ctx.beginPath();
     losses.forEach((l, i) => {
@@ -322,19 +411,21 @@ json.dumps(result)
       const [px, py] = mapPt(nx, ny, w, h, pad);
       if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     });
-    ctx.strokeStyle = '#00e5ff'; ctx.lineWidth = 2; ctx.stroke();
-    ctx.fillStyle = '#a0aec0'; ctx.font = '11px Inter, sans-serif';
-    ctx.fillText('epochs →', w-pad-50, h-8);
+    ctx.strokeStyle = '#00e5ff'; ctx.lineWidth = 2.5; ctx.stroke();
+    
+    document.getElementById('finalLoss').textContent = `Loss: ${losses[losses.length-1].toFixed(4)}`;
   }
 
   function drawScatter(trainPts, testPts, w0, w1, b){
     const c = document.getElementById('scatterCanvas');
     const ctx = c.getContext('2d');
-    const w = c.width, h = c.height, pad = 30;
+    const w = c.width, h = c.height, pad = 35;
     ctx.clearRect(0,0,w,h);
-    ctx.strokeStyle = 'rgba(0,229,255,0.15)'; ctx.lineWidth = 1;
+    
+    ctx.strokeStyle = 'rgba(0,229,255,0.1)'; ctx.lineWidth = 1;
     ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
 
+    // Decision boundary line
     ctx.setLineDash([5,4]);
     ctx.beginPath();
     if (Math.abs(w1) > 1e-6){
@@ -348,25 +439,24 @@ json.dumps(result)
     ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.stroke();
     ctx.setLineDash([]);
 
+    // Train points
     trainPts.forEach(p => {
       const [px, py] = mapPt(p.x, p.y, w, h, pad);
-      ctx.beginPath(); ctx.arc(px, py, 3.5, 0, Math.PI*2);
+      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI*2);
       ctx.fillStyle = p.label === 1 ? '#ff5470' : '#00e5ff';
-      ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.globalAlpha = 0.5; ctx.fill(); ctx.globalAlpha = 1;
     });
 
+    // Test points
     testPts.forEach(p => {
       const [px, py] = mapPt(p.x, p.y, w, h, pad);
       ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI*2);
       ctx.fillStyle = p.label === 1 ? '#ff5470' : '#00e5ff';
       ctx.fill();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = p.pred === p.label ? '#00e5ff' : '#ffffff';
+      ctx.strokeStyle = p.pred === p.label ? '#00f5d4' : '#ffffff';
       ctx.stroke();
     });
-
-    ctx.fillStyle = '#a0aec0'; ctx.font = '11px Inter, sans-serif';
-    ctx.fillText('engagement →', w-pad-75, h-8);
   }
 
   function renderConfusion(conf){
@@ -378,34 +468,74 @@ json.dumps(result)
     `;
   }
 
+  function runInference(){
+    const eng = parseFloat(document.getElementById('infEngSlider').value);
+    const delay = parseFloat(document.getElementById('infDelaySlider').value);
+    
+    document.getElementById('infEngVal').textContent = eng.toFixed(1);
+    document.getElementById('infDelayVal').textContent = delay.toFixed(1);
+
+    if(!modelWeights.mins) return;
+    
+    // Normalize inputs using model's min/max bounds
+    const normEng = (eng - modelWeights.mins[0]) / (modelWeights.maxs[0] - modelWeights.mins[0] + 1e-9);
+    const normDelay = (delay - modelWeights.mins[1]) / (modelWeights.maxs[1] - modelWeights.mins[1] + 1e-9);
+
+    const z = modelWeights.w[0]*normEng + modelWeights.w[1]*normDelay + modelWeights.b;
+    const prob = 1 / (1 + Math.exp(-Math.max(min(z, 60), -60)));
+    const probPct = (prob * 100).toFixed(1);
+
+    const valEl = document.getElementById('infProbVal');
+    const badgeEl = document.getElementById('infBadgeVal');
+    
+    valEl.textContent = `${probPct}%`;
+    if(prob >= 0.5){
+      badgeEl.textContent = 'High Churn Risk';
+      badgeEl.className = 'inf-badge churn';
+      valEl.style.color = 'var(--coral)';
+    } else {
+      badgeEl.textContent = 'Account Retained';
+      badgeEl.className = 'inf-badge retained';
+      valEl.style.color = 'var(--cyan)';
+    }
+  }
+
+  function min(a,b){ return a<b?a:b; }
+
   async function runTraining(){
     const btn = document.getElementById('trainBtn');
     const lr = parseFloat(document.getElementById('lrSlider').value);
     const epochs = parseInt(document.getElementById('epochsSlider').value);
     btn.disabled = true;
     btn.textContent = 'Training…';
-    document.getElementById('statusLine').textContent = `Executing gradient descent (${epochs} epochs)...`;
+    document.getElementById('statusLine').textContent = `Executing batch gradient descent across ${epochs} epochs...`;
 
-    await new Promise(r => setTimeout(r, 30));
+    await new Promise(r => setTimeout(r, 40));
 
     pyodide.globals.set('LR', lr);
     pyodide.globals.set('EPOCHS', epochs);
     const resultJson = pyodide.runPython(TRAIN_CODE);
     const result = JSON.parse(resultJson);
 
+    modelWeights = result;
+
     document.getElementById('labResults').style.display = 'block';
     document.getElementById('accVal').textContent = (result.accuracy*100).toFixed(1) + '%';
+    document.getElementById('precVal').textContent = (result.precision*100).toFixed(1) + '%';
+    document.getElementById('recVal').textContent = (result.recall*100).toFixed(1) + '%';
     document.getElementById('timeVal').textContent = result.elapsed_ms + ' ms';
+    
     document.getElementById('equationText').textContent =
-      `z = ${result.w[0].toFixed(3)}·engagement + ${result.w[1].toFixed(3)}·delay + ${result.b.toFixed(3)}   —   decision boundary at sigmoid(z) ≥ 0.5`;
+      `z = (${result.w[0].toFixed(3)} · norm_engagement) + (${result.w[1].toFixed(3)} · norm_delay) + (${result.b.toFixed(3)})  —  sigmoid(z) ≥ 0.5 decision boundary`;
 
     drawLoss(result.losses);
     drawScatter(result.train_points, result.test_points, result.w[0], result.w[1], result.b);
     renderConfusion(result.confusion);
+    runInference();
 
-    document.getElementById('statusLine').textContent = `Trained on ${result.train_points.length} samples, validated on ${result.test_points.length}.`;
+    document.getElementById('statusLine').textContent = `Training completed successfully on ${result.train_points.length} samples in ${result.elapsed_ms}ms.`;
     btn.disabled = false;
-    btn.textContent = 'Train Again';
+    btn.textContent = 'Retrain Model';
   }
 
   document.getElementById('lrSlider').addEventListener('input', e => {
@@ -418,6 +548,5 @@ json.dumps(result)
 
   boot();
 </script>
-
 </body>
 </html>
