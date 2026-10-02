@@ -3,121 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glow Studio — Booking system</title>
+<title>Vanguard Studio — Kinetic Reservation Matrix</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/booking-system-demo.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Glow Studio — Booking system">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/booking-system-demo.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Vanguard Studio — Kinetic Reservation Matrix">
+<meta property="og:description" content="High-performance appointment scheduling architecture by BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --rose:#ffdab9; /* Peach Puff accent */
-    --rose-light:rgba(255, 218, 185, 0.05);
-    --charcoal:#ffffff;
-    --muted:#a0aec0;
-    --bg:#0a0f16; /* Deep dark tech background */
-    --card:rgba(255, 255, 255, 0.02);
-    --line:rgba(0, 229, 255, 0.15);
-    --green:#00e5ff; /* Aqua accent */
+  :root {
+    --bg: #050508;
+    --surface: rgba(18, 14, 28, 0.75);
+    --surface-sunken: rgba(8, 6, 14, 0.85);
+    --line: rgba(168, 85, 247, 0.22);
+    --border-hover: rgba(236, 72, 153, 0.6);
+    
+    --ink: #fdf4ff;
+    --muted: #a78bfa;
+    --faint: #6b21a8;
+    
+    --purple: #a855f7;
+    --purple-soft: rgba(168, 85, 247, 0.12);
+    --pink: #ec4899;
+    --pink-soft: rgba(236, 72, 153, 0.12);
+    --cyan: #06b6d4;
+    
+    --radius: 20px;
+    --shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-  body{background:var(--bg);color:var(--charcoal); overflow-x:hidden;}
 
-  /* Cyber Background Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(255,218,185,0.04), transparent 60%);}
-
-  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1080px;margin:0 auto; border-bottom:1px solid var(--line);}
-  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px; color:#fff;}
-  .brand span{color:var(--rose);}
-  .back-link{font-size:13px;color:var(--muted);text-decoration:none; transition: color 0.3s;}
-  .back-link:hover{color:var(--rose);}
-
-  .layout{max-width:1080px;margin:0 auto;padding:40px 32px 60px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);}
-  .card-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:20px; color:#fff;}
-
-  /* CALENDAR */
-  .cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-  .cal-nav button{background:rgba(255,255,255,0.05);border:1px solid var(--line);border-radius:6px;width:32px;height:32px;cursor:pointer;color:#fff; transition: all 0.2s;}
-  .cal-nav button:hover{border-color:var(--rose); color:var(--rose);}
-  .cal-month{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px; color:var(--rose);}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
-  .cal-dow{font-size:11px;color:var(--muted);padding:6px 0;font-weight:600; font-family:'JetBrains Mono',monospace;}
-  .cal-day{
-    aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;
-    font-size:13px;cursor:pointer;position:relative; transition: all 0.2s; border: 1px solid transparent;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: var(--bg); color: var(--ink); font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+    background-image: 
+      radial-gradient(circle at 12% 18%, rgba(168,85,247,0.08), transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(236,72,153,0.07), transparent 45%),
+      var(--bg);
   }
-  .cal-day.muted{color:rgba(255,255,255,0.15);cursor:default;}
-  .cal-day:not(.muted):hover{background:var(--rose-light); border-color:var(--rose);}
-  .cal-day.selected{background:var(--rose);color:#0a0f16;font-weight:700; box-shadow: 0 0 15px rgba(255,218,185,0.3);}
-  .cal-day.has-booking::after{
-    content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--green);
+
+  .grid-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.2;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
   }
-  .cal-day.selected.has-booking::after{background:#0a0f16;}
 
-  .slots-title{font-size:13px;color:var(--muted);margin:22px 0 10px; font-family:'JetBrains Mono',monospace;}
-  .slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-  .slot{
-    border:1px solid var(--line);border-radius:8px;padding:10px 4px;text-align:center;font-size:12px;
-    cursor:pointer;background:rgba(255,255,255,0.02); color:#fff; transition: all 0.2s;
+  header {
+    display: flex; justify-content: space-between; align-items: center; padding: 22px 36px;
+    max-width: 1160px; margin: 0 auto; border-bottom: 1px solid var(--line);
+    background: rgba(5,5,8,0.85); backdrop-filter: blur(16px); position: sticky; top: 0; z-index: 10;
   }
-  .slot.taken{color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.01);cursor:not-allowed;text-decoration:line-through;border-color:transparent;}
-  .slot.selected{background:var(--rose);color:#0a0f16;border-color:var(--rose); font-weight:700; box-shadow: 0 0 15px rgba(255,218,185,0.3);}
-  .slot:not(.taken):not(.selected):hover{border-color:var(--rose); color:var(--rose);}
+  .brand { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: #fff; }
+  .brand span { color: var(--pink); text-shadow: 0 0 15px rgba(236,72,153,0.5); }
+  .back-link { font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color 0.3s; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .back-link:hover { color: var(--pink); }
 
-  .book-btn{
-    width:100%;margin-top:24px;background:var(--rose);color:#0a0f16;border:none;padding:13px;
-    border-radius:8px;font-weight:700;font-size:14px;cursor:pointer; transition: transform 0.2s, opacity 0.2s;
+  .layout { max-width: 1160px; margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 32px; backdrop-filter: blur(20px); box-shadow: var(--shadow);
+    transform-style: preserve-3d; will-change: transform; transition: border-color 0.3s ease;
   }
-  .book-btn:hover:not(:disabled){transform: translateY(-2px); opacity: 0.9;}
-  .book-btn:disabled{background:rgba(255,255,255,0.05); color:var(--muted); cursor:not-allowed; border: 1px solid var(--line);}
+  .card:hover { border-color: var(--border-hover); }
+  .card-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 18px; margin-bottom: 24px; color: #fff; letter-spacing: -0.01em; }
 
-  /* SIDEBAR */
-  .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
-  .stat-mini{background:var(--rose-light);border:1px solid var(--line);border-radius:10px;padding:16px;}
-  .stat-mini .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--rose);}
-  .stat-mini .l{font-size:11px;color:var(--muted);margin-top:4px; text-transform: uppercase; letter-spacing: 0.5px;}
-
-  .appt-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
-  .appt-item:last-child{border-bottom:none;}
-  .appt-name{font-weight:600; color:#fff;}
-  .appt-service{font-size:11.5px;color:var(--muted); margin-top:2px;}
-  .appt-time{font-size:12.5px;color:var(--green);font-weight:600; font-family:'JetBrains Mono',monospace;}
-
-  .confirm-box{
-    display:none;margin-top:16px;background:rgba(0,229,255,0.05);border:1px solid var(--green);border-radius:10px;padding:16px;font-size:13px; color:#fff;
+  /* Calendar Module */
+  .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .cal-nav button {
+    background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 10px; width: 36px; height: 36px;
+    cursor: pointer; color: #fff; transition: all 0.25s; font-size: 16px; font-weight: 700; display: grid; place-items: center;
   }
-  .confirm-box.show{display:block; animation: fadeIn 0.3s;}
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-  .confirm-box .c-title{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--green);margin-bottom:6px; font-size:14px;}
-
-  footer{padding:32px;text-align:center;font-size:12px;color:var(--muted); border-top:1px solid var(--line); margin-top:40px; font-family:'JetBrains Mono',monospace;}
-
-  @media (max-width:800px){
-    .layout{grid-template-columns:1fr;}
-    .slots-grid{grid-template-columns:repeat(3,1fr);}
+  .cal-nav button:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-soft); transform: scale(1.05); }
+  .cal-month { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: var(--pink); text-transform: uppercase; letter-spacing: 1.5px; }
+  
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+  .cal-dow { font-size: 11px; color: var(--muted); padding: 8px 0; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+  
+  .cal-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 12px;
+    font-size: 13.5px; cursor: pointer; position: relative; transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border: 1px solid var(--line); background: rgba(255,255,255,0.02); font-weight: 600;
   }
+  .cal-day.muted { color: rgba(255,255,255,0.12); cursor: default; background: transparent; border-color: transparent; }
+  .cal-day:not(.muted):hover { background: var(--pink-soft); border-color: var(--pink); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(236,72,153,0.2); }
+  .cal-day.selected { background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; font-weight: 800; border-color: transparent; box-shadow: 0 0 25px rgba(236,72,153,0.5); transform: scale(1.06); }
+  .cal-day.has-booking::after {
+    content: ''; position: absolute; bottom: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+  }
+  .cal-day.selected.has-booking::after { background: #fff; box-shadow: 0 0 8px #fff; }
+
+  .slots-title { font-size: 12px; color: var(--muted); margin: 28px 0 12px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .slots-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 600px) { .slots-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .slot {
+    border: 1px solid var(--line); border-radius: 10px; padding: 12px 6px; text-align: center; font-size: 12.5px;
+    cursor: pointer; background: rgba(255,255,255,0.02); color: #fff; transition: all 0.25s; font-family: 'JetBrains Mono', monospace; font-weight: 600;
+  }
+  .slot.taken { color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.01); cursor: not-allowed; text-decoration: line-through; border-color: transparent; }
+  .slot.selected { background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; border-color: transparent; font-weight: 700; box-shadow: 0 0 20px rgba(236,72,153,0.4); transform: scale(1.04); }
+  .slot:not(.taken):not(.selected):hover { border-color: var(--pink); color: var(--pink); background: var(--pink-soft); transform: translateY(-2px); }
+
+  .book-btn {
+    width: 100%; margin-top: 28px; background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; border: none; padding: 15px;
+    border-radius: 12px; font-weight: 800; font-size: 13.5px; cursor: pointer; transition: all 0.25s;
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 0 25px rgba(236,72,153,0.3);
+  }
+  .book-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(236,72,153,0.5); opacity: 0.95; }
+  .book-btn:disabled { background: rgba(255,255,255,0.04); color: var(--muted); cursor: not-allowed; border: 1px solid var(--line); box-shadow: none; }
+
+  /* Sidebar */
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+  .stat-mini { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 14px; padding: 18px; position: relative; overflow: hidden; }
+  .stat-mini::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--pink); }
+  .stat-mini .v { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 22px; color: var(--pink); }
+  .stat-mini .l { font-size: 11px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; }
+
+  .appt-list { display: flex; flex-direction: column; gap: 12px; }
+  .appt-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 12px; font-size: 13.5px; transition: border-color 0.2s; }
+  .appt-item:hover { border-color: var(--purple); }
+  .appt-name { font-weight: 700; color: #fff; }
+  .appt-service { font-size: 11.5px; color: var(--muted); margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+  .appt-time { font-size: 12.5px; color: var(--cyan); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+  .confirm-box {
+    display: none; margin-top: 20px; background: rgba(6,182,212,0.06); border: 1px solid var(--cyan); border-radius: 12px; padding: 18px; font-size: 13.5px; color: #fff; box-shadow: 0 0 20px rgba(6,182,212,0.15);
+  }
+  .confirm-box.show { display: block; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .confirm-box .c-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: var(--cyan); margin-bottom: 6px; font-size: 15px; letter-spacing: -0.01em; }
+
+  footer { padding: 36px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 48px; font-family: 'JetBrains Mono', monospace; backdrop-filter: blur(16px); }
 </style>
 </head>
 <body>
-<div class="scan"></div>
+<div class="grid-bg"></div>
 
 <header>
-  <div class="brand">Glow <span>Studio</span></div>
-  <a href="index.html" class="back-link">← Back to portfolio</a>
+  <div class="brand">Vanguard <span>Studio</span></div>
+  <a href="index.html" class="back-link">← Portfolio Hub</a>
 </header>
 
 <div class="layout">
-  <div class="card">
-    <div class="card-title">Book an appointment</div>
+  <div class="card" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.05">
+    <div class="card-title">Reserve Time Slot</div>
 
     <div class="cal-nav">
       <button onclick="shiftMonth(-1)">‹</button>
@@ -126,33 +161,35 @@
     </div>
     <div class="cal-grid" id="calGrid"></div>
 
-    <div class="slots-title">Available times — <span id="selectedDateLabel" style="color:var(--rose);">select a date</span></div>
+    <div class="slots-title">Available slots — <span id="selectedDateLabel" style="color:var(--pink);">select date</span></div>
     <div class="slots-grid" id="slotsGrid"></div>
 
-    <button class="book-btn" id="bookBtn" disabled onclick="confirmBooking()">Confirm booking</button>
+    <button class="book-btn" id="bookBtn" disabled onclick="confirmBooking()">Confirm Reservation</button>
 
     <div class="confirm-box" id="confirmBox">
-      <div class="c-title">✓ Booking confirmed</div>
-      <div id="confirmText" style="color:var(--muted); line-height:1.5;"></div>
+      <div class="c-title">✓ Reservation Confirmed</div>
+      <div id="confirmText" style="color:var(--muted); line-height:1.6;"></div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">Today at a glance</div>
+  <div class="card" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.05">
+    <div class="card-title">Daily Telemetry</div>
     <div class="stat-row">
-      <div class="stat-mini"><div class="v">6</div><div class="l">Appointments</div></div>
-      <div class="stat-mini"><div class="v">Rs 24,500</div><div class="l">Revenue</div></div>
+      <div class="stat-mini"><div class="v">6</div><div class="l">Bookings</div></div>
+      <div class="stat-mini"><div class="v">$840</div><div class="l">Revenue</div></div>
     </div>
 
-    <div class="card-title" style="font-size:14px; margin-bottom:12px;">Upcoming appointments</div>
-    <div class="appt-item"><div><div class="appt-name">Ayesha Malik</div><div class="appt-service">Haircut & style</div></div><div class="appt-time">10:00 AM</div></div>
-    <div class="appt-item"><div><div class="appt-name">Fatima Noor</div><div class="appt-service">Facial treatment</div></div><div class="appt-time">11:30 AM</div></div>
-    <div class="appt-item"><div><div class="appt-name">Sana Raza</div><div class="appt-service">Manicure</div></div><div class="appt-time">1:00 PM</div></div>
-    <div class="appt-item"><div><div class="appt-name">Hira Ahmed</div><div class="appt-service">Hair color</div></div><div class="appt-time">2:30 PM</div></div>
+    <div class="card-title" style="font-size:15px; margin-bottom:14px;">Active Queue</div>
+    <div class="appt-list">
+      <div class="appt-item"><div><div class="appt-name">Ayesha Malik</div><div class="appt-service">Neural Styling</div></div><div class="appt-time">10:00 AM</div></div>
+      <div class="appt-item"><div><div class="appt-name">Fatima Noor</div><div class="appt-service">Bio-Facial</div></div><div class="appt-time">11:30 AM</div></div>
+      <div class="appt-item"><div><div class="appt-name">Sana Raza</div><div class="appt-service">Aesthetic Care</div></div><div class="appt-time">1:00 PM</div></div>
+      <div class="appt-item"><div><div class="appt-name">Hira Ahmed</div><div class="appt-service">Color Matrix</div></div><div class="appt-time">2:30 PM</div></div>
+    </div>
   </div>
 </div>
 
-<footer>Concept booking system by BrightStack Co. — designed for portfolio purposes.</footer>
+<footer>Vanguard Studio — Engineered by BrightStack Co.</footer>
 
 <!-- 3D Card Hover Effect Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
@@ -190,7 +227,7 @@
     });
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
-    for(let i=0;i<firstDay;i++){
+    for(let i=0; i<firstDay; i++){
       const el = document.createElement('div');
       el.className = 'cal-day muted';
       grid.appendChild(el);
@@ -199,9 +236,7 @@
       const el = document.createElement('div');
       el.className = 'cal-day' + (bookedDays.includes(d) ? ' has-booking' : '') + (d===selectedDay ? ' selected' : '');
       el.textContent = d;
-      if(d >= 1){
-        el.onclick = () => selectDay(d);
-      }
+      el.onclick = () => selectDay(d);
       grid.appendChild(el);
     }
   }
@@ -242,16 +277,16 @@
 
   function confirmBooking(){
     document.getElementById('confirmText').textContent =
-      'Appointment successfully reserved for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '. Notification dispatched to client records.';
+      'Slot successfully reserved for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '. Dispatch telemetry logged successfully.';
     document.getElementById('confirmBox').classList.add('show');
   }
 
   function shiftMonth(dir){
     currentMonth += dir;
-    if(currentMonth > 11){currentMonth = 0; currentYear++;}
-    if(currentMonth < 0){currentMonth = 11; currentYear--;}
+    if(currentMonth > 11){ currentMonth = 0; currentYear++; }
+    if(currentMonth < 0){ currentMonth = 11; currentYear--; }
     selectedDay = null;
-    document.getElementById('selectedDateLabel').textContent = 'select a date';
+    document.getElementById('selectedDateLabel').textContent = 'select date';
     document.getElementById('slotsGrid').innerHTML = '';
     document.getElementById('bookBtn').disabled = true;
     renderCalendar();
