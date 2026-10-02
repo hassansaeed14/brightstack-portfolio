@@ -45,7 +45,8 @@
   @media(max-width:900px){.system{grid-template-columns:repeat(2,1fr);}}
   .sys-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;}
   .sys-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;}
-  .btn{display:inline-block;padding:9px 16px;border-radius:9px;font-size:13.5px;font-weight:600;font-family:'Inter',sans-serif;border:none;cursor:pointer;}
+  .btn{display:inline-block;padding:9px 16px;border-radius:9px;font-size:13.5px;font-weight:600;font-family:'Inter',sans-serif;border:none;cursor:pointer; transition: opacity 0.2s;}
+  .btn:hover{opacity:0.9;}
   .btn-primary{background:var(--indigo);color:#fff;}
   .btn-ghost{background:var(--indigo-dim);color:var(--indigo);}
   .btn-row{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
@@ -56,7 +57,8 @@
   .tag-row{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
   .field{width:100%;}
   .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500;}
-  .field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px;font-family:'Inter',sans-serif;background:#fafafd;}
+  .field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px;font-family:'Inter',sans-serif;background:#fafafd; outline:none; transition: border-color 0.2s;}
+  .field input:focus{border-color:var(--indigo);}
   .card-mini{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fafafd;}
   .card-mini .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
   .card-mini .row:last-child{margin-bottom:0;}
@@ -73,6 +75,7 @@
     border-radius:20px;
     overflow:hidden;
     margin-bottom:24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
   }
   @media(max-width:760px){.proto{grid-template-columns:1fr;}}
   .screen-nav{
@@ -86,6 +89,7 @@
     padding:10px 10px;border-radius:8px;cursor:pointer;
     font-size:13.5px;font-weight:500;color:var(--muted);
     margin-bottom:2px;
+    transition: all 0.15s;
   }
   .nav-item .num{
     width:20px;height:20px;border-radius:6px;background:var(--line);color:var(--muted);
@@ -127,24 +131,24 @@
 
   <div class="eyebrow">UI/UX — Standard package</div>
   <h1>Nomad — Freelancer Invoicing</h1>
-  <p class="lede">A clickable prototype for freelancers who bill multiple clients and need to see who's paid, who's late, and what's due — without opening a spreadsheet. Built on a small reusable design system so every screen shares one visual language.</p>
+  <p class="lede">A fully interactive clickable prototype for freelancers who bill multiple clients and need to see who's paid, who's late, and what's due — with real-time calculations and dynamic screen flows.</p>
 
   <div class="meta-row">
-    <span class="pill"><strong>Deliverable</strong> — 10 clickable screens</span>
-    <span class="pill"><strong>System</strong> — reusable components</span>
-    <span class="pill"><strong>Fidelity</strong> — high-fidelity</span>
+    <span class="pill"><strong>Deliverable</strong> — 10 interactive screens</span>
+    <span class="pill"><strong>System</strong> — reusable component kit</span>
+    <span class="pill"><strong>Fidelity</strong> — high-fidelity prototype</span>
     <span class="pill"><strong>Timeline</strong> — 7-day delivery</span>
   </div>
 
   <div class="section-label">Design system</div>
-  <p class="section-sub">The component kit built first, then applied consistently across all ten screens — so the prototype is a working system, not ten one-off compositions.</p>
+  <p class="section-sub">The component kit built first, then applied consistently across all ten screens — ensuring absolute visual and functional harmony.</p>
 
   <div class="system">
     <div class="sys-card">
       <div class="sys-title">Buttons</div>
       <div class="btn-row">
-        <button class="btn btn-primary">Create invoice</button>
-        <button class="btn btn-ghost">View details</button>
+        <button class="btn btn-primary" onclick="showScreen(2, document.querySelectorAll('.nav-item')[2])">Create invoice</button>
+        <button class="btn btn-ghost" onclick="showScreen(3, document.querySelectorAll('.nav-item')[3])">View details</button>
       </div>
     </div>
     <div class="sys-card">
@@ -159,7 +163,7 @@
       <div class="sys-title">Form field</div>
       <div class="field">
         <label>Client name</label>
-        <input type="text" placeholder="Riverside Studio" readonly>
+        <input type="text" value="Riverside Studio" id="sysClientInput">
       </div>
     </div>
     <div class="sys-card">
@@ -173,9 +177,9 @@
   </div>
 
   <div class="section-label">Clickable prototype</div>
-  <p class="section-sub">Ten screens, wired together. Click through the flow on the left — dashboard, invoice creation, client list, payment status, and settings.</p>
+  <p class="section-sub">Ten screens, fully wired with interactive state. Test out invoice creation, dynamic calculation, and client profiles below.</p>
 
-  <div class="hint">↳ Click a screen name to move through the flow</div>
+  <div class="hint">↳ Click any screen name in the flow sidebar to navigate</div>
 
   <div class="proto">
     <div class="screen-nav">
@@ -194,9 +198,9 @@
 
     <div class="screen-stage">
       <div id="screen-0" class="stage-inner screen-panel">
-        <div class="app-header"><div><div class="app-title">Overview</div><div class="app-sub">Wednesday, August 1</div></div><button class="btn btn-primary">+ New invoice</button></div>
+        <div class="app-header"><div><div class="app-title">Overview</div><div class="app-sub">Wednesday, August 1</div></div><button class="btn btn-primary" onclick="showScreen(2, document.querySelectorAll('.nav-item')[2])">+ New invoice</button></div>
         <div class="kpi-row">
-          <div class="kpi"><div class="kpi-label">Outstanding</div><div class="kpi-val">$4,120</div></div>
+          <div class="kpi"><div class="kpi-label">Outstanding</div><div class="kpi-val" id="dashOutstanding">$4,120</div></div>
           <div class="kpi"><div class="kpi-label">Paid this month</div><div class="kpi-val">$2,860</div></div>
           <div class="kpi"><div class="kpi-label">Overdue</div><div class="kpi-val">$640</div></div>
         </div>
@@ -207,8 +211,8 @@
       </div>
 
       <div id="screen-1" class="stage-inner screen-panel" style="display:none;">
-        <div class="app-header"><div><div class="app-title">All invoices</div><div class="app-sub">12 total · 3 need attention</div></div><button class="btn btn-ghost">Filter</button></div>
-        <div class="invoice-row"><div><div class="invoice-name">Riverside Studio</div><div class="invoice-sub">INV-014</div></div><span class="invoice-amt">$1,200</span></div>
+        <div class="app-header"><div><div class="app-title">All invoices</div><div class="app-sub">12 total · 3 need attention</div></div><button class="btn btn-ghost" onclick="alert('Filter toggled successfully.')">Filter</button></div>
+        <div class="invoice-row"><div><div class="invoice-name">Riverside Studio</div><div class="invoice-sub">INV-014</div></div><span class="invoice-amt" id="listAmt1">$1,200</span></div>
         <div class="invoice-row"><div><div class="invoice-name">Halden & Co.</div><div class="invoice-sub">INV-013</div></div><span class="invoice-amt">$640</span></div>
         <div class="invoice-row"><div><div class="invoice-name">Marlow Digital</div><div class="invoice-sub">INV-012</div></div><span class="invoice-amt">$2,860</span></div>
         <div class="invoice-row"><div><div class="invoice-name">Fenwick Labs</div><div class="invoice-sub">INV-011</div></div><span class="invoice-amt">$980</span></div>
@@ -217,23 +221,23 @@
 
       <div id="screen-2" class="stage-inner screen-panel" style="display:none;">
         <div class="app-header"><div><div class="app-title">New invoice</div><div class="app-sub">Step 1 of 2</div></div></div>
-        <div class="field" style="margin-bottom:14px;"><label>Client</label><input type="text" placeholder="Select a client" readonly></div>
-        <div class="field" style="margin-bottom:14px;"><label>Item description</label><input type="text" placeholder="Homepage redesign — final phase" readonly></div>
-        <div class="field" style="margin-bottom:20px;"><label>Amount</label><input type="text" placeholder="$1,200.00" readonly></div>
-        <button class="btn btn-primary">Continue to review</button>
-        <div class="caption">Two steps, not five — description and amount are the only fields that vary invoice to invoice.</div>
+        <div class="field" style="margin-bottom:14px;"><label>Client</label><input type="text" id="formClient" value="Riverside Studio"></div>
+        <div class="field" style="margin-bottom:14px;"><label>Item description</label><input type="text" id="formDesc" value="Homepage redesign — final phase"></div>
+        <div class="field" style="margin-bottom:20px;"><label>Amount ($)</label><input type="number" id="formAmount" value="1200" oninput="updateInvoiceAmount(this.value)"></div>
+        <button class="btn btn-primary" onclick="showScreen(3, document.querySelectorAll('.nav-item')[3])">Continue to review</button>
+        <div class="caption">Live calculation enabled — changes instantly update summary and invoice lists.</div>
       </div>
 
       <div id="screen-3" class="stage-inner screen-panel" style="display:none;">
-        <div class="app-header"><div><div class="app-title">INV-014</div><div class="app-sub">Riverside Studio</div></div><span class="tag pending">Pending</span></div>
+        <div class="app-header"><div><div class="app-title">INV-014</div><div class="app-sub" id="reviewClient">Riverside Studio</div></div><span class="tag pending">Pending</span></div>
         <div class="card-mini" style="margin-bottom:16px;">
-          <div class="row"><span class="label">Subtotal</span><span class="value">$1,200</span></div>
-          <div class="row"><span class="label">Tax</span><span class="value">$0</span></div>
-          <div class="row"><span class="label">Total due</span><span class="value">$1,200</span></div>
+          <div class="row"><span class="label">Subtotal</span><span class="value" id="revSub">$1,200</span></div>
+          <div class="row"><span class="label">Tax (0%)</span><span class="value">$0</span></div>
+          <div class="row"><span class="label">Total due</span><span class="value" id="revTotal">$1,200</span></div>
         </div>
-        <button class="btn btn-primary" style="margin-right:8px;">Send reminder</button>
-        <button class="btn btn-ghost">Download PDF</button>
-        <div class="caption">Reminder is the primary action here — this screen is reached most often when a payment is overdue.</div>
+        <button class="btn btn-primary" style="margin-right:8px;" onclick="alert('Payment reminder sent to client!')">Send reminder</button>
+        <button class="btn btn-ghost" onclick="alert('PDF downloaded successfully.')">Download PDF</button>
+        <div class="caption">Reminder is the primary action here — values sync automatically from the creation step.</div>
       </div>
 
       <div id="screen-4" class="stage-inner screen-panel" style="display:none;">
@@ -245,7 +249,7 @@
       </div>
 
       <div id="screen-5" class="stage-inner screen-panel" style="display:none;">
-        <div class="app-header"><div><div class="app-title">Clients</div><div class="app-sub">8 active</div></div><button class="btn btn-primary">+ Add client</button></div>
+        <div class="app-header"><div><div class="app-title">Clients</div><div class="app-sub">8 active</div></div><button class="btn btn-primary" onclick="showScreen(7, document.querySelectorAll('.nav-item')[7])">+ Add client</button></div>
         <div class="client-chip"><div class="avatar">RS</div><div><div class="invoice-name">Riverside Studio</div><div class="invoice-sub">2 open invoices</div></div></div>
         <div class="client-chip"><div class="avatar">H&</div><div><div class="invoice-name">Halden & Co.</div><div class="invoice-sub">1 overdue</div></div></div>
         <div class="client-chip"><div class="avatar">MD</div><div><div class="invoice-name">Marlow Digital</div><div class="invoice-sub">Up to date</div></div></div>
@@ -256,7 +260,7 @@
         <div class="app-header"><div class="avatar" style="width:44px;height:44px;font-size:15px;">RS</div><div style="margin-left:12px;"><div class="app-title" style="font-size:17px;">Riverside Studio</div><div class="app-sub">Client since Feb 2026</div></div></div>
         <div class="kpi-row" style="grid-template-columns:1fr 1fr;">
           <div class="kpi"><div class="kpi-label">Total billed</div><div class="kpi-val">$8,400</div></div>
-          <div class="kpi"><div class="kpi-label">Open balance</div><div class="kpi-val">$1,200</div></div>
+          <div class="kpi"><div class="kpi-label">Open balance</div><div class="kpi-val" id="clientOpenBal">$1,200</div></div>
         </div>
         <div class="invoice-row"><div><div class="invoice-name">INV-014</div><div class="invoice-sub">Due Aug 6</div></div><span class="tag pending">Pending</span></div>
         <div class="caption">Every client gets a lightweight profile — history without needing a separate CRM.</div>
@@ -264,10 +268,10 @@
 
       <div id="screen-7" class="stage-inner screen-panel" style="display:none;">
         <div class="app-header"><div><div class="app-title">Add client</div></div></div>
-        <div class="field" style="margin-bottom:14px;"><label>Business name</label><input type="text" placeholder="Fenwick Labs" readonly></div>
-        <div class="field" style="margin-bottom:14px;"><label>Contact email</label><input type="text" placeholder="billing@fenwicklabs.com" readonly></div>
-        <div class="field" style="margin-bottom:20px;"><label>Default payment terms</label><input type="text" placeholder="Net 14" readonly></div>
-        <button class="btn btn-primary">Save client</button>
+        <div class="field" style="margin-bottom:14px;"><label>Business name</label><input type="text" id="newClientName" placeholder="Fenwick Labs"></div>
+        <div class="field" style="margin-bottom:14px;"><label>Contact email</label><input type="text" id="newClientEmail" placeholder="billing@fenwicklabs.com"></div>
+        <div class="field" style="margin-bottom:20px;"><label>Default payment terms</label><input type="text" id="newClientTerms" value="Net 14"></div>
+        <button class="btn btn-primary" onclick="saveNewClient()">Save client</button>
         <div class="caption">Payment terms set once here, then defaults into every future invoice for this client.</div>
       </div>
 
@@ -276,17 +280,17 @@
           <div class="icon"></div>
           <div style="font-weight:600;color:var(--ink);margin-bottom:6px;">No invoices yet</div>
           <div style="font-size:13.5px;">Create your first invoice to start tracking payments.</div>
-          <button class="btn btn-primary" style="margin-top:16px;">Create invoice</button>
+          <button class="btn btn-primary" style="margin-top:16px;" onclick="showScreen(2, document.querySelectorAll('.nav-item')[2])">Create invoice</button>
         </div>
         <div class="caption">The empty state still points to one clear action — never a dead end.</div>
       </div>
 
       <div id="screen-9" class="stage-inner screen-panel" style="display:none;">
         <div class="app-header"><div><div class="app-title">Settings</div></div></div>
-        <div class="field" style="margin-bottom:14px;"><label>Business name</label><input type="text" placeholder="Hassan Saeed — Design" readonly></div>
-        <div class="field" style="margin-bottom:14px;"><label>Default currency</label><input type="text" placeholder="USD" readonly></div>
-        <div class="field" style="margin-bottom:20px;"><label>Invoice numbering</label><input type="text" placeholder="INV-0XX" readonly></div>
-        <button class="btn btn-ghost">Save changes</button>
+        <div class="field" style="margin-bottom:14px;"><label>Business name</label><input type="text" value="Hassan Saeed — Design"></div>
+        <div class="field" style="margin-bottom:14px;"><label>Default currency</label><input type="text" value="USD"></div>
+        <div class="field" style="margin-bottom:20px;"><label>Invoice numbering</label><input type="text" value="INV-0XX"></div>
+        <button class="btn btn-ghost" onclick="alert('Settings saved successfully!')">Save changes</button>
         <div class="caption">Same field component from the system, reused instead of redesigned for a fourth time.</div>
       </div>
     </div>
@@ -304,7 +308,24 @@
     document.querySelectorAll('.screen-panel').forEach(p => p.style.display = 'none');
     document.getElementById('screen-' + i).style.display = 'block';
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
+    if(el) el.classList.add('active');
+  }
+
+  function updateInvoiceAmount(val){
+    const num = parseFloat(val) || 0;
+    const formatted = '$' + num.toLocaleString();
+    document.getElementById('listAmt1').textContent = formatted;
+    document.getElementById('revSub').textContent = formatted;
+    document.getElementById('revTotal').textContent = formatted;
+    document.getElementById('dashOutstanding').textContent = '$' + (2920 + num).toLocaleString();
+    document.getElementById('clientOpenBal').textContent = formatted;
+  }
+
+  function saveNewClient(){
+    const name = document.getElementById('newClientName').value;
+    if(!name){ alert('Please enter a business name.'); return; }
+    alert('Client "' + name + '" saved successfully!');
+    showScreen(5, document.querySelectorAll('.nav-item')[5]);
   }
 </script>
 </body>
