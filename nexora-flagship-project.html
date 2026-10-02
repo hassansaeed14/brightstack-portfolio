@@ -16,119 +16,132 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#111827;
-    --paper:#F9FAFB;
-    --violet:#6D4AFF;
-    --violet-light:#EFEAFF;
-    --teal:#0EA5A5;
-    --amber:#E8A32C;
-    --red:#E5484D;
-    --line:#E5E7EB;
-    --card:#FFFFFF;
-    --muted:#6B7280;
+    --ink:#ffffff;
+    --paper:#0a0f16;
+    --violet:#00e5ff;
+    --violet-light:rgba(0,229,255,0.08);
+    --teal:#00e5ff;
+    --amber:#ffdab9;
+    --red:#ff4d4d;
+    --line:rgba(0,229,255,0.15);
+    --card:rgba(255,255,255,0.02);
+    --muted:#a0aec0;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6; overflow-x:hidden;}
   section{scroll-margin-top:70px;}
+
+  /* Cyber Scan Effect */
+  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
 
   /* NAV */
   header{
-    position:sticky;top:0;background:rgba(249,250,251,0.9);backdrop-filter:blur(8px);
+    position:sticky;top:0;background:rgba(5,8,13,0.85);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);z-index:10;
   }
   .nav-inner{max-width:1120px;margin:0 auto;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;}
-  .brand{font-family:'Sora',sans-serif;font-weight:700;font-size:18px;}
+  .brand{font-family:'Sora',sans-serif;font-weight:700;font-size:18px; color:#fff;}
   .brand span{color:var(--violet);}
-  nav a{margin-left:26px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;}
-  .back-link{font-size:13px;color:var(--muted);text-decoration:none;}
+  nav a{margin-left:26px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none; transition: color 0.2s;}
+  nav a:hover{color:#fff;}
+  .back-link{font-size:13px;color:var(--muted);text-decoration:none; font-family:'JetBrains Mono',monospace;}
+  .back-link:hover{color:var(--violet);}
 
   /* HERO */
   .hero{text-align:center;max-width:760px;margin:0 auto;padding:64px 32px 40px;}
-  .eyebrow{display:inline-block;background:var(--violet-light);color:var(--violet);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:22px;}
-  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:44px;line-height:1.15;margin-bottom:18px;}
-  .hero p{color:var(--muted);font-size:16px;max-width:540px;margin:0 auto 28px;}
+  .eyebrow{display:inline-block;background:var(--violet-light);border:1px solid var(--line);color:var(--violet);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:22px; font-family:'JetBrains Mono',monospace;}
+  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:42px;line-height:1.15;margin-bottom:18px; color:#fff;}
+  .hero p{color:var(--muted);font-size:16px;max-width:540px;margin:0 auto 28px; line-height:1.7;}
   .btn-row{display:flex;gap:12px;justify-content:center;}
-  .btn-primary{background:var(--violet);color:#fff;padding:13px 26px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;border:none;cursor:pointer;}
-  .btn-outline{border:1px solid var(--line);padding:13px 26px;border-radius:8px;font-weight:600;font-size:14px;color:var(--ink);text-decoration:none;background:#fff;}
+  .btn-primary{background:var(--violet);color:#0a0f16;padding:13px 26px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
+  .btn-primary:hover{transform: translateY(-2px); opacity: 0.9;}
+  .btn-outline{border:1px solid var(--line);padding:13px 26px;border-radius:8px;font-weight:600;font-size:14px;color:#fff;text-decoration:none;background:var(--card); backdrop-filter: blur(10px); transition: all 0.2s;}
+  .btn-outline:hover{border-color:var(--violet);}
 
   .stack-note{max-width:900px;margin:0 auto;padding:0 32px 56px;text-align:center;}
   .stack-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
-  .stack-pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);}
+  .stack-pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted); backdrop-filter: blur(10px); font-family:'JetBrains Mono',monospace;}
 
   /* SECTION SHELL */
   .section{max-width:1080px;margin:0 auto;padding:64px 32px;}
   .section-head{margin-bottom:32px;}
   .section-head .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-bottom:10px;}
-  .section-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:28px;margin-bottom:10px;}
+  .section-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:28px;margin-bottom:10px; color:#fff;}
   .section-head p{color:var(--muted);font-size:14px;max-width:600px;}
 
   /* APP PREVIEW (full-stack + UI/UX) */
-  .app-shell{background:var(--ink);border-radius:16px;padding:0;overflow:hidden;}
-  .app-topbar{background:#1A2130;padding:12px 20px;display:flex;gap:6px;}
-  .dot{width:10px;height:10px;border-radius:50%;background:#374151;}
+  .app-shell{background:#05080d;border:1px solid var(--line);border-radius:16px;padding:0;overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5);}
+  .app-topbar{background:rgba(255,255,255,0.02);padding:12px 20px;display:flex;gap:6px; border-bottom:1px solid var(--line);}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.1);}
   .app-body{display:flex;min-height:420px;}
-  .app-sidebar{width:180px;background:#171E2B;padding:20px 0;flex-shrink:0;}
-  .app-side-link{padding:10px 20px;font-size:13px;color:#9CA6B8;}
-  .app-side-link.active{background:#232C3E;color:#fff;border-left:3px solid var(--violet);}
-  .app-main{flex:1;background:#FAFAFB;padding:26px 28px;color:var(--ink);}
+  .app-sidebar{width:180px;background:rgba(0,0,0,0.3);padding:20px 0;flex-shrink:0; border-right:1px solid var(--line);}
+  .app-side-link{padding:10px 20px;font-size:13px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  .app-side-link.active{background:rgba(0,229,255,0.08);color:#fff;border-left:3px solid var(--violet);}
+  .app-main{flex:1;background:rgba(5,8,13,0.5);padding:26px 28px;color:var(--ink);}
   .app-topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-  .app-topline h3{font-size:16px;font-weight:700;}
-  .client-badge{font-size:12px;color:var(--muted);}
+  .app-topline h3{font-size:16px;font-weight:700; color:#fff;}
+  .client-badge{font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
   .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
-  .kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;}
-  .kpi .kv{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;}
-  .kpi .kl{font-size:11px;color:var(--muted);margin-top:2px;}
-  .proj-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px; backdrop-filter: blur(10px);}
+  .kpi .kv{font-family:'Sora',sans-serif;font-weight:700;font-size:20px; color:var(--violet);}
+  .kpi .kl{font-size:11px;color:var(--muted);margin-top:2px; font-family:'JetBrains Mono',monospace;}
+  .proj-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px; color:#fff;}
   .proj-row:last-child{border-bottom:none;}
-  .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;}
-  .status-pill.active{background:#E3F5F1;color:var(--teal);}
-  .status-pill.review{background:#FCF1DE;color:var(--amber);}
-  .status-pill.done{background:#EFEAFF;color:var(--violet);}
+  .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px; font-family:'JetBrains Mono',monospace;}
+  .status-pill.active{background:rgba(0,229,255,0.1);color:var(--teal); border:1px solid rgba(0,229,255,0.2);}
+  .status-pill.review{background:rgba(255,218,185,0.1);color:var(--amber); border:1px solid rgba(255,218,185,0.2);}
+  .status-pill.done{background:rgba(0,229,255,0.15);color:var(--violet); border:1px solid rgba(0,229,255,0.3);}
 
   /* API SECTION */
-  .api-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;}
+  .api-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);}
   .api-row{display:flex;gap:16px;align-items:end;flex-wrap:wrap;margin-bottom:20px;}
-  .api-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+  .api-field label{display:block;font-size:11.5px;color:var(--muted);margin-bottom:6px;font-weight:600; font-family:'JetBrains Mono',monospace;}
   .api-field input, .api-field select{
-    padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;
-    background:var(--paper);width:130px;
+    padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;
+    background:rgba(0,0,0,0.3);color:#fff;width:130px; outline: none; transition: border-color 0.2s;
   }
-  .swap-btn{background:none;border:1px solid var(--line);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:14px;}
-  .convert-btn{background:var(--violet);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
-  .api-result{background:var(--violet-light);border-radius:10px;padding:18px;font-size:14px;min-height:24px;}
+  .api-field input:focus, .api-field select:focus{border-color:var(--violet);}
+  .swap-btn{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:14px; color:#fff; transition: border-color 0.2s;}
+  .swap-btn:hover{border-color:var(--violet);}
+  .convert-btn{background:var(--violet);color:#0a0f16;border:none;padding:11px 22px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
+  .convert-btn:hover{transform: translateY(-2px); opacity: 0.9;}
+  .api-result{background:rgba(0,229,255,0.05);border:1px solid var(--line);border-radius:10px;padding:18px;font-size:14px;min-height:24px; color:#fff;}
   .api-result .big{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:var(--violet);}
-  .api-note{font-size:12px;color:var(--muted);margin-top:12px;}
+  .api-note{font-size:12px;color:var(--muted);margin-top:12px; font-family:'JetBrains Mono',monospace;}
 
   /* AI INSIGHTS */
-  .insight-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;}
+  .insight-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);}
   .insight-input-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
-  .insight-input-row select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:var(--paper);flex:1;min-width:160px;}
-  .score-bars{display:grid;gap:12px;}
+  .insight-input-row select{padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:rgba(0,0,0,0.3);color:#fff;flex:1;min-width:160px; outline: none;}
+  .insight-input-row select:focus{border-color:var(--violet);}
+  .score-bars{display:grid;gap:14px;}
   .score-row{display:flex;align-items:center;gap:12px;font-size:13px;}
-  .score-label{width:150px;flex-shrink:0;color:var(--muted);}
-  .score-track{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden;}
-  .score-fill{height:100%;background:var(--teal);border-radius:6px;}
-  .score-num{width:40px;text-align:right;font-weight:600;}
-  .verdict{margin-top:18px;padding:14px 16px;border-radius:10px;font-size:13px;}
-  .verdict.high{background:#E3F5F1;color:#0D7A6E;}
-  .verdict.medium{background:#FCF1DE;color:#946200;}
-  .verdict.low{background:#FBE9E7;color:#B23A2E;}
+  .score-label{width:160px;flex-shrink:0;color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  .score-track{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden; border:1px solid var(--line);}
+  .score-fill{height:100%;background:var(--teal);border-radius:6px; box-shadow: 0 0 8px var(--teal);}
+  .score-num{width:40px;text-align:right;font-weight:600; color:#fff; font-family:'JetBrains Mono',monospace;}
+  .verdict{margin-top:20px;padding:14px 16px;border-radius:10px;font-size:13px; font-family:'JetBrains Mono',monospace;}
+  .verdict.high{background:rgba(0,229,255,0.1);color:#00e5ff; border:1px solid rgba(0,229,255,0.3);}
+  .verdict.medium{background:rgba(255,218,185,0.1);color:#ffdab9; border:1px solid rgba(255,218,185,0.3);}
+  .verdict.low{background:rgba(255,77,77,0.1);color:#ff4d4d; border:1px solid rgba(255,77,77,0.3);}
 
   /* DESIGN SYSTEM */
   .ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
-  .ds-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;}
-  .ds-card h3{font-size:14px;font-weight:600;margin-bottom:16px;}
+  .ds-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
+  .ds-card h3{font-size:14px;font-weight:600;margin-bottom:16px; color:#fff; font-family:'JetBrains Mono',monospace;}
   .color-swatches{display:flex;gap:10px;flex-wrap:wrap;}
-  .swatch{width:56px;text-align:center;}
-  .swatch-box{height:44px;border-radius:8px;margin-bottom:6px;}
+  .swatch{width:62px;text-align:center;}
+  .swatch-box{height:44px;border-radius:8px;margin-bottom:6px; border:1px solid var(--line);}
   .swatch span{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
-  .type-sample .t1{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px;}
-  .type-sample .t2{font-family:'Sora',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px;}
+  .type-sample .t1{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px; color:#fff;}
+  .type-sample .t2{font-family:'Sora',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px; color:#fff;}
   .type-sample .t3{font-size:13px;color:var(--muted);}
   .btn-showcase{display:flex;gap:10px;flex-wrap:wrap;}
   .comp-showcase{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 
-  footer{padding:32px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:20px;}
+  footer{padding:32px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--line);margin-top:20px; font-family:'JetBrains Mono',monospace;}
 
   @media (max-width:800px){
     h1{font-size:30px;}
@@ -140,48 +153,47 @@
 </style>
 </head>
 <body>
+<div class="scan"></div>
 
 <header>
   <div class="nav-inner">
     <div class="brand">nex<span>ora</span></div>
     <nav>
       <a href="#app">Platform</a>
-      <a href="#api">Live tools</a>
-      <a href="#insights">AI insights</a>
-      <a href="#design">Design system</a>
+      <a href="#api">Live Tools</a>
+      <a href="#insights">AI Insights</a>
+      <a href="#design">Design System</a>
     </nav>
-    <a href="index.html" class="back-link">← Back to portfolio</a>
+    <a href="index.html" class="back-link">← Portfolio</a>
   </div>
 </header>
 
 <section class="hero">
-  <div class="eyebrow">Flagship portfolio project</div>
-  <h1>One platform. Every skill. Built to show what BrightStack Co. actually delivers.</h1>
-  <p>Nexora is a concept client & project management platform for agencies — combining a marketed product front-end, a working full-stack dashboard, a real live API integration, and a rule-based AI insights engine, all in one cohesive build.</p>
+  <div class="eyebrow">// Flagship Architectural Build</div>
+  <h1>Unified Agency Management Platform.</h1>
+  <p>Nexora demonstrates full-stack capability: marketed product presentation, functional dashboard logic, real-time public API consumption, and rule-based diagnostic intelligence.</p>
   <div class="btn-row">
-    <a href="#app" class="btn-primary">Explore the platform</a>
-    <a href="#design" class="btn-outline">View design system</a>
+    <a href="#app" class="btn-primary">Explore Platform</a>
+    <a href="#design" class="btn-outline">Design System</a>
   </div>
 </section>
 
 <div class="stack-note">
   <div class="stack-row">
-    <div class="stack-pill">Web design</div>
-    <div class="stack-pill">HTML5 / CSS3</div>
-    <div class="stack-pill">JavaScript</div>
-    <div class="stack-pill">Full-stack app structure</div>
-    <div class="stack-pill">Live API integration</div>
-    <div class="stack-pill">UI/UX design system</div>
-    <div class="stack-pill">Rule-based AI logic</div>
-    <div class="stack-pill">Responsive design</div>
+    <div class="stack-pill">UI/UX Architecture</div>
+    <div class="stack-pill">HTML5 / CSS3 / ES6</div>
+    <div class="stack-pill">Full-Stack Schema</div>
+    <div class="stack-pill">Frankfurter REST API</div>
+    <div class="stack-pill">Diagnostic Heuristics</div>
+    <div class="stack-pill">Responsive Design</div>
   </div>
 </div>
 
 <section class="section" id="app">
   <div class="section-head">
-    <div class="tag">// 01 — FULL-STACK APPLICATION</div>
-    <h2>Agency dashboard</h2>
-    <p>A working admin view of the kind of internal tool most agencies eventually need: client roster, project status, and revenue at a glance.</p>
+    <div class="tag">// 01 — FULL-STACK WORKSPACE</div>
+    <h2>Operations Dashboard</h2>
+    <p>Simulated agency administration panel tracking client pipelines, active project deliverables, and quarterly financial yield.</p>
   </div>
   <div class="app-shell">
     <div class="app-topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
@@ -195,18 +207,18 @@
       </div>
       <div class="app-main">
         <div class="app-topline">
-          <h3>Agency overview</h3>
-          <div class="client-badge">BrightStack Co. · 12 active clients</div>
+          <h3>Agency Performance Overview</h3>
+          <div class="client-badge">// BrightStack Co. · 12 Active Clients</div>
         </div>
         <div class="kpi-row">
-          <div class="kpi"><div class="kv">Rs 612,000</div><div class="kl">revenue this quarter</div></div>
-          <div class="kpi"><div class="kv">9</div><div class="kl">active projects</div></div>
-          <div class="kpi"><div class="kv">3</div><div class="kl">awaiting client review</div></div>
+          <div class="kpi"><div class="kv">Rs 612,000</div><div class="kl">Quarterly Revenue</div></div>
+          <div class="kpi"><div class="kv">9</div><div class="kl">Active Sprints</div></div>
+          <div class="kpi"><div class="kv">3</div><div class="kl">Pending Review</div></div>
         </div>
-        <div class="proj-row"><span>Noor Bakehouse — website redesign</span><span class="status-pill active">In progress</span></div>
-        <div class="proj-row"><span>Glow Studio — booking system</span><span class="status-pill review">In review</span></div>
-        <div class="proj-row"><span>Ledgerly — landing page</span><span class="status-pill done">Delivered</span></div>
-        <div class="proj-row"><span>Kamran Traders — inventory dashboard</span><span class="status-pill active">In progress</span></div>
+        <div class="proj-row"><span>Noor Bakehouse — E-Commerce Redesign</span><span class="status-pill active">In Progress</span></div>
+        <div class="proj-row"><span>Glow Studio — Booking Engine</span><span class="status-pill review">In Review</span></div>
+        <div class="proj-row"><span>Ledgerly — Conversion Landing Page</span><span class="status-pill done">Delivered</span></div>
+        <div class="proj-row"><span>Kamran Traders — Inventory Analytics</span><span class="status-pill active">In Progress</span></div>
       </div>
     </div>
   </div>
@@ -215,8 +227,8 @@
 <section class="section" id="api">
   <div class="section-head">
     <div class="tag">// 02 — LIVE API INTEGRATION</div>
-    <h2>Real-time currency converter</h2>
-    <p>Agencies billing international clients need to quote in different currencies. This pulls live exchange rates from a public financial data API in real time — not mock data.</p>
+    <h2>Real-Time Currency Exchange</h2>
+    <p>Consumes live financial rates from public foreign exchange APIs to quote multi-currency client contracts accurately.</p>
   </div>
   <div class="api-panel">
     <div class="api-row">
@@ -243,18 +255,18 @@
           <option value="GBP">GBP</option>
         </select>
       </div>
-      <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+      <button class="convert-btn" onclick="convertCurrency()">Convert Live</button>
     </div>
-    <div class="api-result" id="apiResult">Click convert to fetch a live exchange rate.</div>
-    <div class="api-note">Live data from frankfurter.app (European Central Bank rates), fetched directly in your browser when you click convert.</div>
+    <div class="api-result" id="apiResult">Click convert to fetch live exchange telemetry.</div>
+    <div class="api-note">// Powered by frankfurter.app (European Central Bank real-time financial feeds)</div>
   </div>
 </section>
 
 <section class="section" id="insights">
   <div class="section-head">
-    <div class="tag">// 03 — AI-ASSISTED INSIGHTS</div>
-    <h2>Client health scoring</h2>
-    <p>A rule-based scoring engine — the same category of logic used in the automation demo elsewhere in this portfolio — applied here to flag which clients need attention before they churn.</p>
+    <div class="tag">// 03 — DIAGNOSTIC HEURISTICS</div>
+    <h2>Client Health Scoring Engine</h2>
+    <p>Rule-based algorithmic telemetry analyzing retention markers, payment velocity, and engagement frequency to preemptively flag churn risks.</p>
   </div>
   <div class="insight-panel">
     <div class="insight-input-row">
@@ -271,114 +283,121 @@
 
 <section class="section" id="design">
   <div class="section-head">
-    <div class="tag">// 04 — UI/UX DESIGN SYSTEM</div>
-    <h2>Design tokens used across this project</h2>
-    <p>A consistent, documented design system — the same discipline applied on the UI/UX case study elsewhere in this portfolio — kept it visually cohesive across every screen above.</p>
+    <div class="tag">// 04 — DESIGN SYSTEM TOKENS</div>
+    <h2>Architecture Design Tokens</h2>
+    <p>Standardized typography, color primitives, and component states ensuring brand and functional consistency across all product surfaces.</p>
   </div>
   <div class="ds-grid">
     <div class="ds-card">
-      <h3>Color palette</h3>
+      <h3>Color Palette Primitives</h3>
       <div class="color-swatches">
-        <div class="swatch"><div class="swatch-box" style="background:#6D4AFF;"></div><span>#6D4AFF</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#0EA5A5;"></div><span>#0EA5A5</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#111827;"></div><span>#111827</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#E8A32C;"></div><span>#E8A32C</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#EFEAFF;border:1px solid #E5E7EB;"></div><span>#EFEAFF</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#00e5ff;"></div><span>#00e5ff</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#0a0f16; border:1px solid rgba(0,229,255,0.3);"></div><span>#0a0f16</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#ffffff;"></div><span>#ffffff</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:#ffdab9;"></div><span>#ffdab9</span></div>
+        <div class="swatch"><div class="swatch-box" style="background:rgba(0,229,255,0.08);"></div><span>Glass</span></div>
       </div>
     </div>
     <div class="ds-card">
-      <h3>Typography</h3>
+      <h3>Typography Hierarchy</h3>
       <div class="type-sample">
-        <div class="t1">Sora — display</div>
-        <div class="t2">Sora medium — headings</div>
-        <div class="t3">Inter — body text, used for all paragraph and UI copy across the platform.</div>
+        <div class="t1">Sora — Display Heading</div>
+        <div class="t2">Sora Medium — Section Title</div>
+        <div class="t3">Inter — Functional body text and UI telemetry controls.</div>
       </div>
     </div>
     <div class="ds-card">
-      <h3>Buttons</h3>
+      <h3>Action Buttons</h3>
       <div class="btn-showcase">
-        <button class="btn-primary">Primary action</button>
-        <a href="#" class="btn-outline">Secondary</a>
+        <button class="btn-primary">Primary Action</button>
+        <a href="#" class="btn-outline">Secondary Link</a>
       </div>
     </div>
     <div class="ds-card">
-      <h3>Status components</h3>
+      <h3>State Badges</h3>
       <div class="comp-showcase">
         <span class="status-pill active">Active</span>
-        <span class="status-pill review">In review</span>
+        <span class="status-pill review">In Review</span>
         <span class="status-pill done">Delivered</span>
       </div>
     </div>
   </div>
 </section>
 
-<footer>Flagship concept project by BrightStack Co. — combines web design, full-stack structure, live API integration, rule-based AI logic, and a documented UI/UX design system in one build, for portfolio purposes.</footer>
+<footer>BrightStack Co. · Nexora Flagship Architecture · Full-Stack Integration Concept</footer>
 
+<!-- 3D Card Hover Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-// Live currency API integration (frankfurter.app — free, no key required)
-function swapCurrencies(){
-  const from = document.getElementById('fromCurrency');
-  const to = document.getElementById('toCurrency');
-  const temp = from.value;
-  from.value = to.value;
-  to.value = temp;
-}
-
-async function convertCurrency(){
-  const amount = document.getElementById('amountInput').value;
-  const from = document.getElementById('fromCurrency').value;
-  const to = document.getElementById('toCurrency').value;
-  const resultBox = document.getElementById('apiResult');
-  resultBox.innerHTML = 'Fetching live rate…';
-  try{
-    const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
-    const data = await res.json();
-    const converted = data.rates[to];
-    resultBox.innerHTML = `<span class="big">${amount} ${from} = ${converted.toFixed(2)} ${to}</span><br>Rate fetched live just now.`;
-  }catch(e){
-    resultBox.innerHTML = 'Could not fetch a live rate right now — the public API may be temporarily unavailable. Try again in a moment.';
-  }
-}
-
-// Rule-based client health scoring
-const clients = [
-  { name:'Noor Bakehouse', payment:90, engagement:80, satisfaction:85, responsiveness:75 },
-  { name:'Kamran Traders', payment:60, engagement:40, satisfaction:55, responsiveness:35 },
-  { name:'Sadiq Motors', payment:95, engagement:90, satisfaction:92, responsiveness:88 }
-];
-
-function scoreClient(){
-  const idx = document.getElementById('clientSelect').value;
-  const c = clients[idx];
-  const bars = document.getElementById('scoreBars');
-  bars.innerHTML = '';
-  const metrics = [
-    {label:'Payment reliability', value:c.payment},
-    {label:'Engagement', value:c.engagement},
-    {label:'Satisfaction signals', value:c.satisfaction},
-    {label:'Responsiveness', value:c.responsiveness}
-  ];
-  metrics.forEach(m=>{
-    const row = document.createElement('div');
-    row.className = 'score-row';
-    row.innerHTML = `<div class="score-label">${m.label}</div><div class="score-track"><div class="score-fill" style="width:${m.value}%"></div></div><div class="score-num">${m.value}</div>`;
-    bars.appendChild(row);
+  VanillaTilt.init(document.querySelectorAll(".app-shell, .api-panel, .insight-panel, .ds-card, .kpi"), {
+    max: 2,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.03,
   });
-  const avg = (c.payment + c.engagement + c.satisfaction + c.responsiveness) / 4;
-  const verdict = document.getElementById('verdictBox');
-  if(avg >= 75){
-    verdict.className = 'verdict high';
-    verdict.textContent = `Healthy account (score ${avg.toFixed(0)}/100) — no action needed, consider for case study or referral request.`;
-  } else if(avg >= 50){
-    verdict.className = 'verdict medium';
-    verdict.textContent = `Needs attention (score ${avg.toFixed(0)}/100) — engagement or responsiveness dropping, worth a check-in call.`;
-  } else {
-    verdict.className = 'verdict low';
-    verdict.textContent = `At risk (score ${avg.toFixed(0)}/100) — multiple weak signals, prioritize outreach before renewal.`;
-  }
-}
 
-scoreClient();
+  function swapCurrencies(){
+    const from = document.getElementById('fromCurrency');
+    const to = document.getElementById('toCurrency');
+    const temp = from.value;
+    from.value = to.value;
+    to.value = temp;
+  }
+
+  async function convertCurrency(){
+    const amount = document.getElementById('amountInput').value;
+    const from = document.getElementById('fromCurrency').value;
+    const to = document.getElementById('toCurrency').value;
+    const resultBox = document.getElementById('apiResult');
+    resultBox.innerHTML = 'Fetching real-time exchange telemetry…';
+    try{
+      const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
+      const data = await res.json();
+      const converted = data.rates[to];
+      resultBox.innerHTML = `<span class="big">${amount} ${from} = ${converted.toFixed(2)} ${to}</span><br>// Telemetry synchronized via ECB live feeds.`;
+    }catch(e){
+      resultBox.innerHTML = 'API connection unavailable — verify network status or retry telemetry query.';
+    }
+  }
+
+  const clients = [
+    { name:'Noor Bakehouse', payment:90, engagement:80, satisfaction:85, responsiveness:75 },
+    { name:'Kamran Traders', payment:60, engagement:40, satisfaction:55, responsiveness:35 },
+    { name:'Sadiq Motors', payment:95, engagement:90, satisfaction:92, responsiveness:88 }
+  ];
+
+  function scoreClient(){
+    const idx = document.getElementById('clientSelect').value;
+    const c = clients[idx];
+    const bars = document.getElementById('scoreBars');
+    bars.innerHTML = '';
+    const metrics = [
+      {label:'Payment Reliability', value:c.payment},
+      {label:'Sprint Engagement', value:c.engagement},
+      {label:'Satisfaction Signals', value:c.satisfaction},
+      {label:'Responsiveness', value:c.responsiveness}
+    ];
+    metrics.forEach(m=>{
+      const row = document.createElement('div');
+      row.className = 'score-row';
+      row.innerHTML = `<div class="score-label">${m.label}</div><div class="score-track"><div class="score-fill" style="width:${m.value}%"></div></div><div class="score-num">${m.value}</div>`;
+      bars.appendChild(row);
+    });
+    const avg = (c.payment + c.engagement + c.satisfaction + c.responsiveness) / 4;
+    const verdict = document.getElementById('verdictBox');
+    if(avg >= 75){
+      verdict.className = 'verdict high';
+      verdict.textContent = `// HEALTHY ACCOUNT (Score ${avg.toFixed(0)}/100) — Optimal retention metrics. Eligible for case study outreach.`;
+    } else if(avg >= 50){
+      verdict.className = 'verdict medium';
+      verdict.textContent = `// MODERATE RISK (Score ${avg.toFixed(0)}/100) — Engagement velocity declining. Recommend proactive check-in call.`;
+    } else {
+      verdict.className = 'verdict low';
+      verdict.textContent = `// HIGH CHURN RISK (Score ${avg.toFixed(0)}/100) — Multiple negative signals. Urgent executive intervention required.`;
+    }
+  }
+
+  scoreClient();
 </script>
 
 </body>
