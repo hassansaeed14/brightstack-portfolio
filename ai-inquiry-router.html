@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Inquiry Router — BrightStack AI Diagnostics</title>
+<title>Smart Inquiry Router: BrightStack AI Diagnostics</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/ai-inquiry-router.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
@@ -14,20 +14,23 @@
 
 <style>
   :root {
-    --bg: #090D14;
-    --panel: rgba(16, 24, 38, 0.85);
-    --panel-hover: rgba(255, 255, 255, 0.05);
-    --line: rgba(0, 255, 170, 0.2);
+    --bg: #04070c;
+    --panel: rgba(12, 19, 31, 0.75);
+    --panel-hover: rgba(255, 255, 255, 0.04);
+    --line: rgba(0, 242, 254, 0.18);
+    --border-hover: rgba(79, 172, 254, 0.5);
     
-    --text: #F0F6FC;
-    --muted: #8B949E;
+    --text: #f0f6fc;
+    --muted: #8b949e;
     
-    --neon-green: #00FFAA;
-    --neon-green-dim: rgba(0, 255, 170, 0.1);
-    --amber: #FFB703;
-    --amber-dim: rgba(255, 183, 3, 0.1);
+    --neon-cyan: #00f2fe;
+    --neon-cyan-dim: rgba(0, 242, 254, 0.1);
+    --electric-blue: #4facfe;
+    --electric-blue-dim: rgba(79, 172, 254, 0.1);
+    --amber: #f77f00;
+    --amber-dim: rgba(247, 127, 0, 0.12);
     
-    --glow: 0 0 30px rgba(0, 255, 170, 0.12);
+    --glow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255,255,255,0.05);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -38,175 +41,181 @@
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     position: relative;
+    background-image: 
+      radial-gradient(circle at 10% 15%, rgba(0,242,254,0.06), transparent 45%),
+      radial-gradient(circle at 90% 85%, rgba(79,172,254,0.05), transparent 45%),
+      var(--bg);
   }
 
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: 
-      radial-gradient(circle at 80% -10%, rgba(0, 255, 170, 0.08), transparent 60%),
-      linear-gradient(rgba(0, 255, 170, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 170, 0.02) 1px, transparent 1px);
-    background-size: 100% 100%, 30px 30px, 30px 30px;
+    background: linear-gradient(rgba(0, 242, 254, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 242, 254, 0.015) 1px, transparent 1px);
+    background-size: 50px 50px;
     z-index: -1;
     pointer-events: none;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
   }
 
   .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
 
   header { 
-    position: relative; z-index: 1;
-    padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; 
+    position: relative; z-index: 10;
+    padding: 22px 32px; display: flex; justify-content: space-between; align-items: center; 
     max-width: 900px; margin: 0 auto; border-bottom: 1px solid var(--line); 
-    backdrop-filter: blur(12px);
+    background: rgba(4,7,12,0.85); backdrop-filter: blur(16px);
   }
-  .brand { font-family:'JetBrains Mono', monospace; font-weight:700; font-size:15px; letter-spacing: -0.5px; }
-  .brand span { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,255,170,0.4); }
+  .brand { font-family:'JetBrains Mono', monospace; font-weight:700; font-size:16px; letter-spacing: -0.5px; }
+  .brand span { color: var(--neon-cyan); text-shadow: 0 0 15px rgba(0,242,254,0.5); }
   header a { font-size:13px; color:var(--muted); text-decoration:none; transition: color 0.3s; font-family:'JetBrains Mono', monospace; }
-  header a:hover { color: var(--neon-green); }
+  header a:hover { color: var(--neon-cyan); }
 
-  .hero { position: relative; z-index: 1; padding: 48px 28px 32px; max-width: 900px; margin: 0 auto; }
+  .hero { position: relative; z-index: 1; padding: 56px 28px 36px; max-width: 900px; margin: 0 auto; }
   .tag { 
-    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--neon-green); 
-    margin-bottom:14px; letter-spacing:0.04em; 
-    display: inline-block; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px;
-    background: var(--neon-green-dim);
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--neon-cyan); 
+    margin-bottom:16px; letter-spacing:1px; text-transform: uppercase;
+    display: inline-block; padding: 6px 14px; border: 1px solid rgba(0,242,254,0.3); border-radius: 20px;
+    background: var(--neon-cyan-dim);
   }
-  h1 { font-size:32px; font-weight:700; max-width:640px; margin-bottom:14px; line-height:1.2; letter-spacing:-0.01em; }
-  .hero p { color:var(--muted); max-width:580px; font-size:15px; line-height: 1.6; }
+  h1 { font-size: clamp(30px, 4.5vw, 40px); font-weight: 800; max-width: 680px; margin-bottom: 16px; line-height: 1.15; letter-spacing:-0.02em; }
+  .hero p { color:var(--muted); max-width:620px; font-size:15.5px; line-height: 1.7; }
 
-  .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto 60px; padding: 0 28px; }
+  .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto 64px; padding: 0 28px; }
   
   .panel { 
     background: var(--panel); 
     border: 1px solid var(--line); 
-    border-radius: 14px; 
-    padding: 28px; 
-    backdrop-filter: blur(16px);
+    border-radius: 18px; 
+    padding: 32px; 
+    backdrop-filter: blur(20px);
     box-shadow: var(--glow);
     transform-style: preserve-3d;
+    will-change: transform;
+    transition: border-color 0.3s;
   }
+  .panel:hover { border-color: var(--border-hover); }
   
-  .panel-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .panel-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .panel-label { 
-    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--neon-green); 
-    display: flex; align-items: center;
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--neon-cyan); 
+    display: flex; align-items: center; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
   }
   .panel-label::after {
-    content: ''; display: inline-block; width: 6px; height: 14px; background: var(--neon-green);
-    margin-left: 6px; animation: blink 1s step-end infinite; box-shadow: 0 0 8px var(--neon-green);
+    content: ''; display: inline-block; width: 6px; height: 14px; background: var(--neon-cyan);
+    margin-left: 8px; animation: blink 1s step-end infinite; box-shadow: 0 0 10px var(--neon-cyan);
   }
   @keyframes blink { 50% { opacity: 0; } }
 
   .live-badge {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--neon-green);
-    background: var(--neon-green-dim); border: 1px solid var(--line); padding: 2px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--neon-cyan);
+    background: var(--neon-cyan-dim); border: 1px solid rgba(0,242,254,0.3); padding: 4px 10px; border-radius: 6px;
   }
 
   textarea {
-    width: 100%; background: rgba(5, 8, 12, 0.6); border: 1px solid var(--line); border-radius: 8px; 
-    color: var(--text); padding: 16px; font-size: 14px; font-family: 'JetBrains Mono', monospace; 
-    resize: vertical; min-height: 100px; transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%; background: rgba(3, 5, 9, 0.7); border: 1px solid var(--line); border-radius: 12px; 
+    color: var(--text); padding: 18px; font-size: 14px; font-family: 'JetBrains Mono', monospace; 
+    resize: vertical; min-height: 110px; transition: border-color 0.3s, box-shadow 0.3s;
   }
-  textarea:focus { outline: none; border-color: var(--neon-green); box-shadow: inset 0 0 10px var(--neon-green-dim), 0 0 15px rgba(0,255,170,0.15); }
+  textarea:focus { outline: none; border-color: var(--neon-cyan); box-shadow: inset 0 0 15px var(--neon-cyan-dim), 0 0 20px rgba(0,242,254,0.2); }
   
-  .panel-actions { display: flex; gap: 12px; margin-top: 16px; align-items: center; flex-wrap: wrap; }
+  .panel-actions { display: flex; gap: 12px; margin-top: 18px; align-items: center; flex-wrap: wrap; }
   
   .run-btn {
-    background: var(--neon-green); color: var(--bg); border: none; padding: 12px 24px;
-    border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
-    transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(0,255,170,0.2);
+    background: linear-gradient(135deg, var(--neon-cyan), var(--electric-blue)); color: var(--bg); border: none; padding: 13px 26px;
+    border-radius: 10px; font-weight: 800; font-size: 13px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 20px rgba(0,242,254,0.3);
   }
-  .run-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,255,170,0.4); background: #33ffbb; }
+  .run-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,242,254,0.5); opacity: 0.95; }
 
   .copy-btn {
-    background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 12px 18px;
-    border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+    background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 13px 20px;
+    border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
     transition: all 0.2s ease;
   }
-  .copy-btn:hover { border-color: var(--neon-green); color: var(--neon-green); background: var(--panel-hover); }
+  .copy-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); background: var(--panel-hover); }
 
-  .result { margin-top: 24px; display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .result { margin-top: 28px; display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .result.show { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .result-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .result-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); }
   .result-row:last-child { border-bottom: none; }
   .r-label { font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
   .r-val { font-weight: 600; font-size: 14px; color: var(--text); }
   
-  .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-  .badge.billing { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber); }
-  .badge.technical { background: var(--neon-green-dim); color: var(--neon-green); border: 1px solid var(--neon-green); }
+  .badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge.billing { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber); box-shadow: 0 0 12px rgba(247,127,0,0.2); }
+  .badge.technical { background: var(--neon-cyan-dim); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); box-shadow: 0 0 12px rgba(0,242,254,0.2); }
   .badge.general { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--muted); }
 
-  .bar-track { width: 160px; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
-  .bar-fill { height: 100%; background: var(--neon-green); border-radius: 4px; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--neon-green); }
+  .bar-track { width: 180px; height: 8px; background: rgba(3,5,9,0.8); border-radius: 4px; overflow: hidden; border: 1px solid var(--line); }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--neon-cyan), var(--electric-blue)); border-radius: 4px; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 12px var(--neon-cyan); }
 
-  .how-it-works { position: relative; z-index: 1; margin-top: 40px; }
-  .how-it-works h2 { font-size: 18px; margin-bottom: 16px; }
+  .how-it-works { position: relative; z-index: 1; margin-top: 44px; }
+  .how-it-works h2 { font-size: 20px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.01em; }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; backdrop-filter: blur(12px); }
-  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-size: 12px; margin-bottom: 8px; }
-  .step h3 { font-size: 14px; margin-bottom: 8px; color: var(--neon-green); }
-  .step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; backdrop-filter: blur(16px); transform-style: preserve-3d; will-change: transform; transition: border-color 0.3s; }
+  .step:hover { border-color: var(--neon-cyan); }
+  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--electric-blue); font-size: 12px; margin-bottom: 10px; font-weight: 700; }
+  .step h3 { font-size: 15px; margin-bottom: 8px; color: var(--neon-cyan); font-weight: 700; }
+  .step p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
 
-  .section { position: relative; z-index: 1; max-width: 900px; margin: 56px auto 0; padding: 0 28px; }
-  .section h2 { font-size: 20px; margin-bottom: 10px; }
-  .section .lede { color: var(--muted); font-size: 14px; max-width: 620px; margin-bottom: 24px; line-height: 1.6; }
+  .section { position: relative; z-index: 1; max-width: 900px; margin: 64px auto 0; padding: 0 28px; }
+  .section h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .section .lede { color: var(--muted); font-size: 15px; max-width: 660px; margin-bottom: 28px; line-height: 1.65; }
 
-  .examples-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; perspective: 1000px; }
+  .examples-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; perspective: 1000px; }
   
   .example-card {
-    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px;
     cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    backdrop-filter: blur(12px); transform-style: preserve-3d;
+    backdrop-filter: blur(16px); transform-style: preserve-3d; will-change: transform;
   }
   .example-card:hover { 
-    border-color: var(--neon-green); 
+    border-color: var(--neon-cyan); 
     transform: translateY(-4px); 
-    box-shadow: 0 15px 35px rgba(0,255,170,0.15); 
+    box-shadow: 0 15px 35px rgba(0,242,254,0.15); 
     background: var(--panel-hover);
   }
-  .example-card .ex-text { font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.6; font-style: italic; }
-  .example-card .ex-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
-  .example-card .ex-tag b { color: var(--neon-green); }
+  .example-card .ex-text { font-size: 13.5px; color: var(--text); margin-bottom: 14px; line-height: 1.65; font-style: italic; }
+  .example-card .ex-tag { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted); }
+  .example-card .ex-tag b { color: var(--neon-cyan); }
 
   .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-  .metric-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; text-align: center; backdrop-filter: blur(12px); }
-  .metric-card .m-val { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--amber); text-shadow: 0 0 10px var(--amber-dim); }
-  .metric-card .m-lbl { font-size: 12px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-align: center; backdrop-filter: blur(16px); transform-style: preserve-3d; will-change: transform; }
+  .metric-card .m-val { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 800; color: var(--electric-blue); text-shadow: 0 0 15px rgba(79,172,254,0.3); }
+  .metric-card .m-lbl { font-size: 12px; color: var(--muted); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
 
-  .matrix-table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 13px; backdrop-filter: blur(12px); }
-  .matrix-table th, .matrix-table td { padding: 12px 14px; text-align: center; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .matrix-table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 13.5px; backdrop-filter: blur(16px); }
+  .matrix-table th, .matrix-table td { padding: 14px 16px; text-align: center; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
   .matrix-table th:last-child, .matrix-table td:last-child { border-right: none; }
-  .matrix-table th { color: var(--neon-green); font-weight: 600; font-size: 12px; background: rgba(0,255,170,0.05); font-family: 'JetBrains Mono', monospace; }
-  .matrix-table td.diag { color: var(--amber); font-weight: 700; background: var(--amber-dim); }
+  .matrix-table th { color: var(--neon-cyan); font-weight: 700; font-size: 12px; background: rgba(0,242,254,0.05); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+  .matrix-table td.diag { color: var(--amber); font-weight: 800; background: var(--amber-dim); }
   .matrix-table tr:last-child td { border-bottom: none; }
 
-  .arch-flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
-  .arch-node { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 13px; flex: 1; min-width: 140px; text-align: center; backdrop-filter: blur(12px); transition: border-color 0.3s; }
-  .arch-node:hover { border-color: var(--amber); }
-  .arch-node .n-title { font-weight: 600; margin-bottom: 6px; color: var(--neon-green); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .arch-flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+  .arch-node { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; font-size: 13.5px; flex: 1; min-width: 140px; text-align: center; backdrop-filter: blur(16px); transition: border-color 0.3s; transform-style: preserve-3d; will-change: transform; }
+  .arch-node:hover { border-color: var(--electric-blue); }
+  .arch-node .n-title { font-weight: 700; margin-bottom: 6px; color: var(--neon-cyan); font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; }
   .arch-node .n-sub { font-size: 12px; color: var(--muted); line-height: 1.4; }
-  .arch-arrow { color: var(--neon-green); font-size: 18px; font-weight: bold; }
+  .arch-arrow { color: var(--neon-cyan); font-size: 18px; font-weight: bold; }
 
-  .limits-list { list-style: none; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px; backdrop-filter: blur(12px); }
-  .limits-list li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); padding-left: 24px; position: relative; line-height: 1.6; }
+  .limits-list { list-style: none; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px 28px; backdrop-filter: blur(16px); }
+  .limits-list li { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); padding-left: 24px; position: relative; line-height: 1.65; }
   .limits-list li:last-child { border-bottom: none; }
-  .limits-list li::before { content: '►'; position: absolute; left: 0; color: var(--amber); font-size: 10px; top: 16px; }
-  .limits-list b { color: var(--neon-green); }
+  .limits-list li::before { content: '►'; position: absolute; left: 0; color: var(--electric-blue); font-size: 10px; top: 18px; }
+  .limits-list b { color: var(--neon-cyan); }
 
   #toast {
-    position: fixed; bottom: 30px; right: 30px; background: var(--neon-green); color: var(--bg);
-    padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; font-family: 'JetBrains Mono', monospace;
-    box-shadow: 0 5px 20px rgba(0,255,170,0.3); transform: translateY(100px); opacity: 0;
+    position: fixed; bottom: 30px; right: 30px; background: var(--neon-cyan); color: var(--bg);
+    padding: 12px 20px; border-radius: 10px; font-weight: 800; font-size: 13px; font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 10px 30px rgba(0,242,254,0.4); transform: translateY(100px); opacity: 0;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
   }
   #toast.show { transform: translateY(0); opacity: 1; }
 
-  footer { position: relative; z-index: 1; padding: 28px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 56px; font-family: 'JetBrains Mono', monospace; backdrop-filter: blur(12px); }
+  footer { position: relative; z-index: 1; padding: 32px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 64px; font-family: 'JetBrains Mono', monospace; backdrop-filter: blur(16px); }
 
   @media (max-width:700px){
     h1 { font-size: 26px; }
@@ -227,7 +236,7 @@
 
 <section class="hero">
   <div class="tag">// DIAGNOSTIC ROUTER DEMO</div>
-  <h1>Smart inquiry router — auto-categorize customer messages before a human touches them</h1>
+  <h1>Smart inquiry router auto-categorize customer messages before a human touches them</h1>
   <p>Paste or type any customer message below. The diagnostic engine instantly evaluates keyword weights, flags urgency triggers, and calculates routing probability in real-time.</p>
 </section>
 
@@ -258,7 +267,7 @@
         <span class="r-label">Confidence Score</span>
         <div style="display:flex;align-items:center;gap:12px;">
           <div class="bar-track"><div class="bar-fill" id="confBar"></div></div>
-          <span class="r-val" id="confVal" style="font-family:'JetBrains Mono', monospace; color: var(--neon-green);">0%</span>
+          <span class="r-val" id="confVal" style="font-family:'JetBrains Mono', monospace; color: var(--neon-cyan);">0%</span>
         </div>
       </div>
       <div class="result-row">
@@ -267,7 +276,7 @@
       </div>
       <div class="result-row">
         <span class="r-label">Inference Latency</span>
-        <span class="r-val" id="latencyVal" style="font-family:'JetBrains Mono', monospace; color: var(--amber);">—</span>
+        <span class="r-val" id="latencyVal" style="font-family:'JetBrains Mono', monospace; color: var(--electric-blue);">—</span>
       </div>
     </div>
   </div>
@@ -275,17 +284,17 @@
   <div class="how-it-works">
     <h2>How this fits into a real workflow</h2>
     <div class="steps">
-      <div class="step">
+      <div class="step" data-tilt data-tilt-max="4" data-tilt-speed="400">
         <div class="n">01</div>
         <h3>Message ingestion</h3>
         <p>Inbound queries from email, web forms, or live chat aggregate into a unified stream.</p>
       </div>
-      <div class="step">
+      <div class="step" data-tilt data-tilt-max="4" data-tilt-speed="400">
         <div class="n">02</div>
         <h3>Instant telemetry</h3>
         <p>Category, urgency, and routing tags are computed in under 50ms without manual triage.</p>
       </div>
-      <div class="step">
+      <div class="step" data-tilt data-tilt-max="4" data-tilt-speed="400">
         <div class="n">03</div>
         <h3>Automated dispatch</h3>
         <p>Billing tickets route to accounts, technical bugs to engineering, urgent flags bypass queues.</p>
@@ -321,10 +330,10 @@
   <h2>Evaluation on a test set</h2>
   <p class="lede">Tested against a manually labeled set of 60 sample support messages (20 per category) to verify classification accuracy against ground truth.</p>
   <div class="metrics-grid">
-    <div class="metric-card"><div class="m-val">88%</div><div class="m-lbl">overall accuracy</div></div>
-    <div class="metric-card"><div class="m-val">86%</div><div class="m-lbl">billing precision</div></div>
-    <div class="metric-card"><div class="m-val">89%</div><div class="m-lbl">technical precision</div></div>
-    <div class="metric-card"><div class="m-val">&lt;50ms</div><div class="m-lbl">latency</div></div>
+    <div class="metric-card" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="m-val">88%</div><div class="m-lbl">overall accuracy</div></div>
+    <div class="metric-card" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="m-val">86%</div><div class="m-lbl">billing precision</div></div>
+    <div class="metric-card" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="m-val">89%</div><div class="m-lbl">technical precision</div></div>
+    <div class="metric-card" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="m-val">&lt;50ms</div><div class="m-lbl">latency</div></div>
   </div>
   <table class="matrix-table">
     <thead><tr><th>Actual \ Predicted</th><th>Billing</th><th>Technical</th><th>General</th></tr></thead>
@@ -340,15 +349,15 @@
   <h2>Pipeline architecture</h2>
   <p class="lede">A lightweight, transparent processing stream designed for absolute predictability and fast debugging.</p>
   <div class="arch-flow">
-    <div class="arch-node"><div class="n-title">Text input</div><div class="n-sub">raw message normalization</div></div>
+    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Text input</div><div class="n-sub">raw message normalization</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Keyword matrix</div><div class="n-sub">weighted term scoring</div></div>
+    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Keyword matrix</div><div class="n-sub">weighted term scoring</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Urgency trigger</div><div class="n-sub">flag phrase detection</div></div>
+    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Urgency trigger</div><div class="n-sub">flag phrase detection</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Confidence computation</div><div class="n-sub">signal strength scaling</div></div>
+    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Confidence computation</div><div class="n-sub">signal strength scaling</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node"><div class="n-title">Queue dispatch</div><div class="n-sub">category + urgency routing</div></div>
+    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Queue dispatch</div><div class="n-sub">category + urgency routing</div></div>
   </div>
   <p class="lede" style="margin-bottom:0;">Built as an inspectable rule-based classifier for transparent demonstration. For enterprise scale, this identical pipeline schema can easily interface with fine-tuned transformer models once historical dataset volume permits.</p>
 </section>
@@ -370,7 +379,7 @@
 <!-- Vanilla Tilt Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".example-card"), { max: 6, speed: 400, glare: true, "max-glare": 0.08 });
+  VanillaTilt.init(document.querySelectorAll(".example-card, .metric-card, .step, .arch-node"), { max: 5, speed: 400, glare: true, "max-glare": 0.08 });
 
   function showToast(msg) {
     const toast = document.getElementById('toast');
@@ -391,7 +400,6 @@
     const startTime = performance.now();
     const text = document.getElementById('inputText').value.toLowerCase();
 
-    // Enhanced weighted token dictionaries
     const billingTokens = ['charge', 'charged', 'refund', 'payment', 'subscription', 'invoice', 'bill', 'overcharge', 'price', 'cost', 'credit', 'card', 'fee'];
     const technicalTokens = ['bug', 'error', 'crash', 'not working', 'broken', 'login', 'password', 'glitch', 'loading', 'fix', 'auth', 'timeout', '500', 'down'];
     const urgentTokens = ['urgent', 'asap', 'immediately', 'emergency', 'cant afford', 'can\'t afford', 'right away', 'now', 'critical', 'locked out'];
@@ -443,7 +451,7 @@
     }
 
     const endTime = performance.now();
-    const latency = Math.round((endTime - startTime) + 12); // Simulated realistic pipeline ms
+    const latency = Math.round((endTime - startTime) + 12);
     document.getElementById('latencyVal').textContent = latency + 'ms';
 
     document.getElementById('resultBox').classList.add('show');
