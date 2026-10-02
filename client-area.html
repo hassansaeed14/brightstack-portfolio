@@ -3,608 +3,255 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Client Portal — BrightStack Co.</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/client-area.html">
+<title>Sign In — BrightStack Co.</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/signin.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Client Portal — BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/client-area.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Sign In — BrightStack Co.">
+<meta property="og:description" content="Secure sign in to BrightStack client portal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0f16; --card:rgba(255,255,255,0.02); --ink:#ffffff; --muted:#a0aec0; --ink-faint:#718096;
-    --line:rgba(0,229,255,0.15); --line-soft:rgba(255,255,255,0.04);
-    --indigo:#00e5ff; --indigo-dim:rgba(0,229,255,0.08); --indigo-line:rgba(0,229,255,0.3);
-    --signal:#ffdab9; --green:#00e5ff; --green-dim:rgba(0,229,255,0.1);
-    --amber:#ffdab9; --amber-dim:rgba(255,218,185,0.08); --red:#ff4d4d; --red-dim:rgba(255,77,77,0.1);
+  :root {
+    --bg: #05070b;
+    --bg-soft: #080c13;
+    --text: #f8fafc;
+    --muted: #8e9aad;
+    --cyan: #00e5ff;
+    --cyan-soft: rgba(0, 229, 255, 0.15);
+    --peach: #ffd8bd;
+    --purple: #8b5cf6;
+    --glass: rgba(10, 15, 24, 0.65);
+    --border: rgba(255,255,255,0.085);
+    --border-hover: rgba(0,229,255,0.38);
+    --max-width: 440px;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --red: #ff4d4d;
   }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased; overflow-x:hidden;}
   
-  /* Cyber Background Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
-
-  a{color:inherit;text-decoration:none;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-
-  /* ---------- gate states ---------- */
-  .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;}
-  .gate-inner{max-width:380px;background:var(--card);border:1px solid var(--line);padding:32px;border-radius:16px; backdrop-filter: blur(12px);}
-  .gate h2{font-family:'Space Grotesk',sans-serif;font-size:21px;margin:0 0 10px; color:#fff;}
-  .gate p{color:var(--muted);font-size:14.5px;margin:0 0 22px;}
-  .gate-btn{display:inline-block;background:var(--indigo);color:#0a0f16;padding:12px 26px;border-radius:8px;font-weight:700;font-size:14px; box-shadow: 0 0 15px rgba(0,229,255,0.3); transition: transform 0.2s;}
-  .gate-btn:hover{transform: translateY(-2px);}
-  .spin{width:22px;height:22px;border:2px solid var(--line);border-top-color:var(--indigo);border-radius:50%;margin:0 auto 14px;animation:spin .7s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-
-  /* ---------- shell ---------- */
-  #portal{display:none;min-height:100vh;}
-  .shell{display:flex;min-height:100vh;}
-
-  .sidebar{
-    width:252px;flex-shrink:0;background:#05080d;border-right:1px solid var(--line);
-    display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 75% 20%, rgba(0,229,255,0.07), transparent 30%),
+      radial-gradient(circle at 20% 70%, rgba(139,92,246,0.06), transparent 30%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-x: hidden;
   }
-  .side-top{padding:22px 22px 18px;border-bottom:1px solid var(--line-soft);}
-  .side-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em; color:#fff;}
-  .side-logo span{color:var(--indigo);}
-  .side-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-top:3px;}
 
-  .side-profile{display:flex;align-items:center;gap:11px;padding:18px 22px;border-bottom:1px solid var(--line-soft);}
-  .avatar{width:38px;height:38px;border-radius:50%;background:var(--indigo-dim);object-fit:cover;flex-shrink:0;border:1px solid var(--line);}
-  .side-name{font-size:13.5px;font-weight:600;line-height:1.25; color:#fff;}
-  .side-email{font-size:11.5px;color:var(--muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px; font-family:'JetBrains Mono',monospace;}
-
-  .side-nav{padding:14px 12px;flex:1;display:flex;flex-direction:column;gap:4px;}
-  .side-link{
-    display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;
-    font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer; transition: all 0.2s;
+  .background {
+    position: fixed; inset: 0; pointer-events: none; z-index: -10; overflow: hidden;
   }
-  .side-link:hover{background:rgba(255,255,255,0.03);color:#fff;}
-  .side-link.active{background:var(--indigo-dim);color:var(--indigo);font-weight:600; border: 1px solid var(--line);}
-  .side-link svg{width:16px;height:16px;flex-shrink:0;}
-  .side-badge{margin-left:auto;font-size:10.5px;font-weight:700;background:var(--indigo);color:#0a0f16;border-radius:20px;padding:1px 7px;}
-  .side-foot{padding:12px;border-top:1px solid var(--line-soft);}
-  .side-link.logout{color:var(--muted);}
-  .side-link.logout:hover{background:var(--red-dim);color:var(--red);}
-
-  /* ---------- main ---------- */
-  .main{flex:1;min-width:0;}
-  .topbar{
-    background:rgba(5,8,13,0.8); backdrop-filter: blur(10px); border-bottom:1px solid var(--line);padding:0 40px;
-    display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:5;
+  .grid {
+    position: absolute; inset: 0; opacity: 0.23;
+    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
   }
-  .topbar h1{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin:0; color:#fff;}
-  .topbar-back{font-size:13px;color:var(--muted); transition: color 0.3s;}
-  .topbar-back:hover{color:var(--indigo);}
-  .content{padding:32px 40px 60px;max-width:860px;}
-  .panel{display:none;}
-  .panel.active{display:block;animation:fade .25s ease;}
-  @keyframes fade{from{opacity:0;transform:translateY(4px);}}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:20px;overflow:hidden; backdrop-filter: blur(12px);}
-  .card-head{padding:18px 22px;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .card-head h2{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin:0; color:#fff;}
-  .card-head .hint{font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .card-body{padding:22px;}
-
-  .link-btn{background:none;border:none;font-size:12.5px;font-weight:600;color:var(--indigo);cursor:pointer;font-family:inherit;padding:0;}
-  .link-btn:hover{text-decoration:underline;}
-
-  /* ---------- status timeline ---------- */
-  .status-now{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-  .status-dot{width:9px;height:9px;border-radius:50%;background:var(--indigo);flex-shrink:0;box-shadow:0 0 10px var(--indigo);}
-  .status-text{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600; color:#fff;}
-  .track{display:flex;gap:0;}
-  .stage{flex:1;position:relative;padding-top:22px;}
-  .stage::before{
-    content:'';position:absolute;top:6px;left:0;right:0;height:2px;background:var(--line);
+  .orb {
+    position: absolute; width: 400px; height: 400px; border-radius: 50%; filter: blur(100px); opacity: 0.08;
   }
-  .stage:first-child::before{left:50%;}
-  .stage:last-child::before{right:50%;}
-  .stage-node{
-    position:absolute;top:1px;left:50%;transform:translateX(-50%);
-    width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--line);z-index:1;
+  .orb.one { top: -150px; right: -100px; background: var(--cyan); }
+  .orb.two { bottom: -150px; left: -100px; background: var(--purple); }
+
+  .auth-card {
+    width: 100%;
+    max-width: var(--max-width);
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  .stage.done::before{background:var(--indigo);}
-  .stage.done .stage-node{background:var(--indigo);border-color:var(--indigo); box-shadow: 0 0 8px var(--indigo);}
-  .stage.current .stage-node{background:var(--bg);border-color:var(--indigo);box-shadow:0 0 10px var(--indigo);}
-  .stage-label{font-size:11.5px;text-align:center;color:var(--muted);font-weight:500;}
-  .stage.done .stage-label, .stage.current .stage-label{color:#fff;font-weight:600;}
-  @media(max-width:620px){.stage-label{font-size:10px;}}
 
-  /* ---------- brief ---------- */
-  .brief-view dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
-  .brief-view .full{grid-column:1/-1;}
-  .brief-view dt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-  .brief-view dd{margin:0;font-size:14px; color:#fff;}
-  .field{margin-bottom:14px;}
-  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px; font-family:'JetBrains Mono',monospace;}
-  .input, textarea.input{
-    width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;
-    font-size:14px;font-family:inherit;background:rgba(255,255,255,0.03);color:var(--ink); outline: none; transition: border-color 0.2s;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 28px;
+    color: var(--text);
   }
-  .input:focus{border-color:var(--indigo); box-shadow: 0 0 10px rgba(0,229,255,0.2);}
-  textarea.input{resize:vertical;}
-  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  @media(max-width:620px){.row-2, .brief-view dl{grid-template-columns:1fr;}}
-
-  .btn{background:var(--indigo);color:#0a0f16;border:none;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
-  .btn:hover{transform: translateY(-2px); opacity: 0.9;}
-  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line); box-shadow:none;}
-  .btn.ghost:hover{background:rgba(255,255,255,0.03);color:#fff; border-color:var(--indigo);}
-  .btn.danger{background:var(--red); color:#fff; box-shadow: 0 0 15px rgba(255,77,77,0.3);}
-  .btn-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
-  .save-note{font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-
-  /* ---------- empty states ---------- */
-  .empty{text-align:center;padding:34px 20px;color:var(--muted);}
-  .empty svg{width:30px;height:30px;margin-bottom:10px;opacity:.5;}
-  .empty p{margin:0;font-size:13.5px;}
-
-  /* ---------- messages ---------- */
-  .thread{padding:20px 22px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;}
-  .day-sep{text-align:center;font-size:11px;color:var(--muted);margin:14px 0 10px; font-family:'JetBrains Mono',monospace;}
-  .msg{max-width:76%;padding:11px 15px;font-size:13.8px;line-height:1.5;border-radius:14px;}
-  .msg.them{background:rgba(255,255,255,0.03);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px; color:#fff;}
-  .msg.me{background:var(--indigo);color:#0a0f16;font-weight:500;align-self:flex-end;border-bottom-right-radius:5px; box-shadow: 0 0 15px rgba(0,229,255,0.2);}
-  .msg-meta{font-size:10.5px;color:var(--muted);margin-top:3px; font-family:'JetBrains Mono',monospace;}
-  .msg-meta.me{align-self:flex-end;}
-  .msg-meta.them{align-self:flex-start;}
-  .composer{display:flex;gap:9px;padding:16px 22px;border-top:1px solid var(--line-soft);background:rgba(255,255,255,0.01);}
-
-  /* ---------- complaints ---------- */
-  .c-item{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px; background:rgba(255,255,255,0.01);}
-  .c-item:last-child{margin-bottom:0;}
-  .c-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;}
-  .c-status{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--amber-dim);color:var(--amber); font-family:'JetBrains Mono',monospace;}
-  .c-status.resolved{background:var(--green-dim);color:var(--green);}
-  .c-date{font-size:11px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .c-text{font-size:13.5px; color:#fff;}
-
-  .notice{font-size:12.5px;padding:10px 14px;border-radius:8px;margin-bottom:16px;display:none; font-family:'JetBrains Mono',monospace;}
-  .notice.warn{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber);display:block;}
-  .notice.err{background:var(--red-dim);color:var(--red);border:1px solid var(--red);display:block;}
-
-  @media(max-width:860px){
-    .shell{flex-direction:column;}
-    .sidebar{width:100%;height:auto;position:static;flex-direction:column;}
-    .side-nav{flex-direction:row;overflow-x:auto;padding:10px;}
-    .side-link{white-space:nowrap;}
-    .side-foot{border-top:none;padding:0 10px 10px;}
-    .topbar, .content{padding-left:20px;padding-right:20px;}
+  .brand-mark {
+    width: 32px; height: 32px; display: grid; place-items: center;
+    border-radius: 10px; background: linear-gradient(135deg, var(--cyan), #4ddfff);
+    color: #001014; font-size: 14px; font-weight: 800;
   }
+  .brand span { color: var(--cyan); }
+
+  h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .subtitle { color: var(--muted); font-size: 13.5px; margin-bottom: 24px; line-height: 1.5; }
+
+  .social-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    margin-bottom: 20px;
+  }
+  .social-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+  .social-btn svg { width: 18px; height: 18px; }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 20px;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; border-bottom: 1px solid var(--border);
+  }
+  .divider::before { margin-right: 12px; }
+  .divider::after { margin-left: 12px; }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block; font-size: 12px; font-weight: 600; color: var(--muted);
+    margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px; color: var(--text);
+    font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .input:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,229,255,0.15); }
+
+  .submit-btn {
+    width: 100%; background: var(--cyan); color: #001014; border: none;
+    padding: 13px; border-radius: 10px; font-weight: 700; font-size: 14px;
+    cursor: pointer; transition: transform 0.3s var(--ease), background 0.3s ease;
+    margin-top: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .submit-btn:hover { background: var(--peach); transform: translateY(-2px); box-shadow: 0 0 25px rgba(255,216,189,0.3); }
+
+  .error-msg {
+    background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.3);
+    color: var(--red); padding: 10px 14px; border-radius: 8px; font-size: 12.5px;
+    margin-bottom: 16px; display: none; font-family: 'JetBrains Mono', monospace;
+  }
+
+  .back-home {
+    display: block; text-align: center; margin-top: 24px; color: var(--muted);
+    font-size: 12px; font-family: 'JetBrains Mono', monospace; transition: color 0.3s;
+  }
+  .back-home:hover { color: var(--cyan); }
 </style>
 </head>
 <body>
-<div class="scan"></div>
 
-<div class="gate" id="loadingGate">
-  <div class="gate-inner">
-    <div class="spin"></div>
-    <p class="mono" style="font-size:12.5px; color:var(--muted);">Authenticating secure portal session…</p>
-  </div>
+<div class="background">
+  <div class="grid"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
 </div>
 
-<div class="gate" id="signedOutGate" style="display:none;">
-  <div class="gate-inner">
-    <h2>Authentication Required</h2>
-    <p>Sign in to monitor live project deliverables, communicate with developers, and view scope specifications.</p>
-    <a href="signin.html" class="gate-btn">Sign in to Portal →</a>
-  </div>
+<div class="auth-card">
+  <a href="index.html" class="brand">
+    <div class="brand-mark">B</div>
+    Bright<span>Stack</span>
+  </a>
+
+  <h1>Client Sign In</h1>
+  <p class="subtitle">Access your portal to monitor live milestones and manage project specifications.</p>
+
+  <div class="error-msg" id="errorMsg"></div>
+
+  <button class="social-btn" id="googleBtn">
+    <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.8 7.3l3.7 2.9C6.4 7.2 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/><path fill="#FBBC05" d="M5.5 10.2c-.2.7-.4 1.5-.4 2.3s.2 1.6.4 2.3L1.8 17.7C1.1 16.3 0.7 14.7 0.7 13s.4-3.3 1.1-4.7l3.7 2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.6-2.2-6.5-5.2L1.8 16C3.7 19.7 7.5 23 12 23z"/></svg>
+    Continue with Google
+  </button>
+
+  <div class="divider">or continue with email</div>
+
+  <form id="emailForm">
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" id="email" class="input" placeholder="name@example.com" required>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" class="input" placeholder="••••••••" required>
+    </div>
+    <button type="submit" class="submit-btn" id="submitBtn">Sign In</button>
+  </form>
+
+  <a href="index.html" class="back-link back-home">← Back to portfolio</a>
 </div>
-
-<div id="portal">
-  <div class="shell">
-
-    <aside class="sidebar">
-      <div class="side-top">
-        <div class="side-logo">Bright<span>Stack</span></div>
-        <div class="side-sub">Client Portal</div>
-      </div>
-      <div class="side-profile">
-        <img class="avatar" id="sideAvatar" src="" alt="">
-        <div style="min-width:0;">
-          <div class="side-name" id="sideName">–</div>
-          <div class="side-email" id="sideEmail">–</div>
-        </div>
-      </div>
-      <nav class="side-nav">
-        <div class="side-link active" data-panel="project">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h11"/></svg>
-          My Project
-        </div>
-        <div class="side-link" data-panel="messages">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/></svg>
-          Messages <span class="side-badge" id="msgBadge" style="display:none;">0</span>
-        </div>
-        <div class="side-link" data-panel="complaint">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l9 16H3z"/><path d="M12 9v4M12 16h.01"/></svg>
-          Raise an Issue
-        </div>
-        <div class="side-link" data-panel="profile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>
-          Account Profile
-        </div>
-      </nav>
-      <div class="side-foot">
-        <div class="side-link logout" id="logoutLink">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 12H4M9 7l-5 5 5 5"/><path d="M14 4h5v16h-5"/></svg>
-          Sign Out
-        </div>
-      </div>
-    </aside>
-
-    <main class="main">
-      <div class="topbar">
-        <h1 id="panelTitle">My Project</h1>
-        <a href="index.html" class="topbar-back">← Back to portfolio</a>
-      </div>
-
-      <div class="content">
-        <div class="notice" id="notice"></div>
-
-        <!-- PROJECT -->
-        <section class="panel active" id="panel-project">
-          <div class="card">
-            <div class="card-head"><h2>Project Milestone Status</h2><span class="hint" id="statusHint"></span></div>
-            <div class="card-body">
-              <div class="status-now">
-                <span class="status-dot" id="statusDot"></span>
-                <span class="status-text" id="statusText">Synchronizing status…</span>
-              </div>
-              <div class="track" id="track"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-head">
-              <h2>Project Brief & Scope</h2>
-              <button class="link-btn" id="briefToggle" style="display:none;">Edit Specification</button>
-            </div>
-            <div class="card-body">
-              <div id="briefEmpty" class="empty" style="display:none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>
-                <p>No project brief submitted yet. Add parameters to initiate technical scoping.</p>
-              </div>
-              <div class="brief-view" id="briefView" style="display:none;">
-                <dl>
-                  <div class="full"><dt>// Project Title</dt><dd id="vTitle"></dd></div>
-                  <div class="full"><dt>// Description</dt><dd id="vDesc"></dd></div>
-                  <div><dt>// Budget Allocation</dt><dd id="vBudget"></dd></div>
-                  <div><dt>// Target Timeline</dt><dd id="vTimeline"></dd></div>
-                </dl>
-              </div>
-              <div id="briefForm">
-                <div class="field"><label>Project Title</label><input type="text" id="bTitle" class="input" placeholder="e.g. Fintech Mobile App UI"></div>
-                <div class="field"><label>Project Scope Description</label><textarea id="bDesc" rows="3" class="input" placeholder="Describe core feature requirements…"></textarea></div>
-                <div class="row-2" style="margin-bottom:16px;">
-                  <div><label class="field" style="margin:0;">Budget</label><input type="text" id="bBudget" class="input" placeholder="e.g. $1,500"></div>
-                  <div><label class="field" style="margin:0;">Timeline</label><input type="text" id="bTimeline" class="input" placeholder="e.g. 3 Weeks"></div>
-                </div>
-                <div class="btn-row">
-                  <button class="btn" id="briefSave">Save Brief</button>
-                  <button class="btn ghost" id="briefCancel" style="display:none;">Cancel</button>
-                  <span class="save-note" id="briefNote"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- MESSAGES -->
-        <section class="panel" id="panel-messages">
-          <div class="card">
-            <div class="card-head"><h2>Developer Comm Hub</h2><span class="hint">Response time < 24 hours</span></div>
-            <div class="thread" id="thread"></div>
-            <div class="composer">
-              <input type="text" id="msgInput" class="input" placeholder="Type message to development lead…" onkeydown="if(event.key==='Enter') window.sendMsg();">
-              <button class="btn" onclick="window.sendMsg()">Send</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- COMPLAINT -->
-        <section class="panel" id="panel-complaint">
-          <div class="card">
-            <div class="card-head"><h2>Escalate Issue</h2></div>
-            <div class="card-body">
-              <p style="font-size:13.5px;color:var(--muted);margin:0 0 16px;">Use this channel for critical delivery blockers, missed scope deliverables, or dispute resolution. Handled directly by senior leadership.</p>
-              <div class="field"><textarea id="cText" rows="4" class="input" placeholder="Detail the issue and proposed resolution…"></textarea></div>
-              <div class="btn-row">
-                <button class="btn danger" id="cSubmit">Submit Escalation</button>
-                <span class="save-note" id="cNote"></span>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-head"><h2>Escalation History</h2></div>
-            <div class="card-body" id="cList"></div>
-          </div>
-        </section>
-
-        <!-- PROFILE -->
-        <section class="panel" id="panel-profile">
-          <div class="card">
-            <div class="card-head"><h2>Client Account Details</h2></div>
-            <div class="card-body">
-              <div class="brief-view">
-                <dl>
-                  <div><dt>// Name</dt><dd id="pName">–</dd></div>
-                  <div><dt>// Email</dt><dd id="pEmail">–</dd></div>
-                  <div><dt>// Authentication Provider</dt><dd id="pProvider">–</dd></div>
-                  <div><dt>// Account Creation</dt><dd id="pSince">–</dd></div>
-                </dl>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-head"><h2>Direct Channels</h2></div>
-            <div class="card-body">
-              <p style="font-size:13.5px;color:var(--muted);margin:0 0 14px;">Portal messaging is optimized for ongoing builds. For initiating new contracts or formal audits:</p>
-              <div class="btn-row">
-                <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn ghost">Open Fiverr Contract</a>
-                <a href="mailto:19hsnkhan@gmail.com?subject=Formal%20Audit" class="btn ghost">Email Direct Inquiry</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </main>
-  </div>
-</div>
-
-<!-- 3D Card Hover Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
-  VanillaTilt.init(document.querySelectorAll(".card"), {
-    max: 3,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.04,
-  });
-</script>
 
 <script type="module">
-  import { auth, db } from './firebase-config.js';
-  import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-  import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  import { auth } from './firebase-config.js';
+  import {
+    signInWithPopup, GoogleAuthProvider,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword
+  } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-  let uid = null, ref = null, editingBrief = false;
+  const errorEl = document.getElementById('errorMsg');
 
-  const STAGES = ['Enquiry','Scoping','In Progress','Review','Delivered'];
-  function stageIndex(status){
-    const s = (status || '').toLowerCase();
-    if (/deliver|complete|done|shipped|launched/.test(s)) return 4;
-    if (/review|feedback|revision|qa/.test(s)) return 3;
-    if (/progress|building|development|design|underway|started/.test(s)) return 2;
-    if (/scop|quote|proposal|planning|brief/.test(s)) return 1;
-    if (/enquir|inquir|new|no active/.test(s)) return 0;
-    return -1;
+  function showError(msg) {
+    errorEl.textContent = msg;
+    errorEl.style.display = 'block';
   }
 
-  const esc = s => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
-  const fmtDate = ts => new Date(ts).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
-  const fmtTime = ts => new Date(ts).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
-
-  /* ---------- navigation ---------- */
-  document.querySelectorAll('.side-link[data-panel]').forEach(link => {
-    link.addEventListener('click', () => {
-      document.querySelectorAll('.side-link[data-panel]').forEach(l => l.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      link.classList.add('active');
-      const id = link.dataset.panel;
-      document.getElementById('panel-' + id).classList.add('active');
-      document.getElementById('panelTitle').textContent = link.textContent.trim().replace(/\d+$/,'').trim();
-      if (id === 'messages') document.getElementById('msgBadge').style.display = 'none';
-    });
-  });
-  document.getElementById('logoutLink').addEventListener('click', () => signOut(auth).then(()=>location.href='index.html'));
-
-  /* ---------- renderers ---------- */
-  function renderStatus(status){
-    const txt = status || 'No active project assigned';
-    document.getElementById('statusText').textContent = txt;
-    const idx = stageIndex(txt);
-    document.getElementById('statusHint').textContent = idx >= 0 ? `Stage ${idx+1} of ${STAGES.length}` : '';
-    document.getElementById('statusDot').style.background = idx >= 4 ? 'var(--indigo)' : 'var(--green)';
-    document.getElementById('track').innerHTML = STAGES.map((s,i) => {
-      const cls = idx < 0 ? '' : i < idx ? 'done' : i === idx ? 'done current' : '';
-      return `<div class="stage ${cls}"><div class="stage-node"></div><div class="stage-label">${s}</div></div>`;
-    }).join('');
-  }
-
-  function renderBrief(brief){
-    const has = brief && brief.title;
-    document.getElementById('briefEmpty').style.display = (!has && !editingBrief) ? 'block' : 'none';
-    document.getElementById('briefView').style.display = (has && !editingBrief) ? 'block' : 'none';
-    document.getElementById('briefForm').style.display = (!has || editingBrief) ? 'block' : 'none';
-    document.getElementById('briefToggle').style.display = has ? 'inline' : 'none';
-    document.getElementById('briefToggle').textContent = editingBrief ? 'Cancel' : 'Edit Specification';
-    document.getElementById('briefCancel').style.display = (has && editingBrief) ? 'inline-block' : 'none';
-    if (has){
-      document.getElementById('vTitle').textContent = brief.title;
-      document.getElementById('vDesc').textContent = brief.description || '—';
-      document.getElementById('vBudget').textContent = brief.budget || '—';
-      document.getElementById('vTimeline').textContent = brief.timeline || '—';
-      document.getElementById('bTitle').value = brief.title || '';
-      document.getElementById('bDesc').value = brief.description || '';
-      document.getElementById('bBudget').value = brief.budget || '';
-      document.getElementById('bTimeline').value = brief.timeline || '';
+  document.getElementById('googleBtn').addEventListener('click', async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      location.href = 'client-area.html';
+    } catch (err) {
+      showError(err.message);
     }
-  }
-
-  function renderThread(messages){
-    const el = document.getElementById('thread');
-    if (!messages || !messages.length){
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4z"/></svg><p>No messages recorded. Transmit project inquiries here.</p></div>`;
-      return;
-    }
-    let lastDay = '';
-    el.innerHTML = messages.map(m => {
-      const day = fmtDate(m.timestamp);
-      const sep = day !== lastDay ? `<div class="day-sep">${day}</div>` : '';
-      lastDay = day;
-      const mine = m.from !== 'admin';
-      return `${sep}<div class="msg ${mine?'me':'them'}">${esc(m.text)}</div>
-              <div class="msg-meta ${mine?'me':'them'}">${mine?'You':'BrightStack'} · ${fmtTime(m.timestamp)}</div>`;
-    }).join('');
-    el.scrollTop = el.scrollHeight;
-  }
-
-  function renderComplaints(list){
-    const el = document.getElementById('cList');
-    if (!list || !list.length){
-      el.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg><p>No active escalations logged.</p></div>`;
-      return;
-    }
-    el.innerHTML = list.slice().reverse().map(c => `
-      <div class="c-item">
-        <div class="c-top">
-          <span class="c-status ${c.status==='resolved'?'resolved':''}">${esc(c.status || 'open')}</span>
-          <span class="c-date">${fmtDate(c.timestamp)}</span>
-        </div>
-        <div class="c-text">${esc(c.text)}</div>
-      </div>`).join('');
-  }
-
-  function notify(msg, type){
-    const n = document.getElementById('notice');
-    n.className = 'notice ' + (type || 'warn');
-    n.textContent = msg;
-  }
-  function clearNotice(){ document.getElementById('notice').className = 'notice'; }
-
-  /* ---------- actions ---------- */
-  const withTimeout = (p, ms = 10000) => Promise.race([
-    p,
-    new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
-  ]);
-
-  window.sendMsg = async () => {
-    const i = document.getElementById('msgInput');
-    const text = i.value.trim();
-    if (!text || !ref) return;
-    i.value = '';
-    try{
-      await withTimeout(updateDoc(ref, { messages: arrayUnion({from:'client', text, timestamp: Date.now()}) }));
-      renderThread((await getDoc(ref)).data().messages);
-      clearNotice();
-    }catch(e){
-      i.value = text;
-      notify("Transmission failed. Ad-blockers or privacy extensions may interfere with database calls.", 'err');
-    }
-  };
-
-  document.getElementById('briefToggle').addEventListener('click', async () => {
-    editingBrief = !editingBrief;
-    renderBrief((await getDoc(ref)).data().projectBrief);
-  });
-  document.getElementById('briefCancel').addEventListener('click', async () => {
-    editingBrief = false;
-    renderBrief((await getDoc(ref)).data().projectBrief);
   });
 
-  document.getElementById('briefSave').addEventListener('click', async () => {
-    const title = document.getElementById('bTitle').value.trim();
-    const description = document.getElementById('bDesc').value.trim();
-    const note = document.getElementById('briefNote');
-    if (!title || !description){ note.textContent = 'Title and description required.'; return; }
-    note.textContent = 'Synchronizing…';
-    try{
-      const brief = {title, description, budget:document.getElementById('bBudget').value.trim(), timeline:document.getElementById('bTimeline').value.trim(), submittedAt: Date.now()};
-      await updateDoc(ref, { projectBrief: brief });
-      editingBrief = false;
-      renderBrief(brief);
-      note.textContent = 'Synced successfully.';
-      setTimeout(()=>note.textContent='', 2500);
-    }catch(e){ note.textContent = "Sync failed — check connection."; }
-  });
-
-  document.getElementById('cSubmit').addEventListener('click', async () => {
-    const t = document.getElementById('cText');
-    const note = document.getElementById('cNote');
-    if (!t.value.trim()){ note.textContent = 'Escalation details required.'; return; }
-    note.textContent = 'Transmitting…';
-    try{
-      await updateDoc(ref, { complaints: arrayUnion({text:t.value.trim(), status:'open', timestamp: Date.now()}) });
-      t.value = '';
-      renderComplaints((await getDoc(ref)).data().complaints);
-      note.textContent = "Logged — management notified.";
-      setTimeout(()=>note.textContent='', 3500);
-    }catch(e){ note.textContent = "Transmission failed."; }
-  });
-
-  /* ---------- boot ---------- */
-  onAuthStateChanged(auth, async (user) => {
-    document.getElementById('loadingGate').style.display = 'none';
-    if (!user){ document.getElementById('signedOutGate').style.display = 'flex'; return; }
-
-    uid = user.uid;
-    ref = doc(db, 'clients', uid);
-    document.getElementById('portal').style.display = 'block';
-
-    const name = user.displayName || (user.email || '').split('@')[0] || 'Client';
-    document.getElementById('sideAvatar').src = user.photoURL || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(name);
-    document.getElementById('sideName').textContent = name;
-    document.getElementById('sideEmail').textContent = user.email || '';
-    document.getElementById('pName').textContent = name;
-    document.getElementById('pEmail').textContent = user.email || '';
-    const prov = (user.providerData[0]?.providerId || 'password');
-    document.getElementById('pProvider').textContent = prov.includes('google') ? 'Google' : prov.includes('github') ? 'GitHub' : 'Email & Password';
-    if (user.metadata?.creationTime) document.getElementById('pSince').textContent = fmtDate(new Date(user.metadata.creationTime).getTime());
-
-    load();
-  });
-
-  async function load(attempt = 1){
-    try{
-      let snap = await getDoc(ref);
-      if (!snap.exists()){
-        await setDoc(ref, {
-          name: auth.currentUser.displayName || auth.currentUser.email || 'New Client',
-          email: auth.currentUser.email || '',
-          projectStatus: 'No active project assigned',
-          messages: []
-        });
-        snap = await getDoc(ref);
-      }
-      const d = snap.data() || {};
-      clearNotice();
-      renderStatus(d.projectStatus);
-      renderBrief(d.projectBrief);
-      renderThread(d.messages);
-      renderComplaints(d.complaints);
-      const unread = (d.messages || []).filter(m => m.from === 'admin').length;
-      if (unread){ const b = document.getElementById('msgBadge'); b.textContent = unread; b.style.display = 'inline'; }
-    }catch(err){
-      const transient = ['unavailable','deadline-exceeded','resource-exhausted','internal','cancelled'].includes(err.code);
-      if (transient && attempt < 3){
-        document.getElementById('statusText').textContent = 'Reconnecting…';
-        await new Promise(r => setTimeout(r, attempt * 1200));
-        return load(attempt + 1);
-      }
-      console.error('Portal load failed:', err);
-      if (transient){
-        document.getElementById('statusText').textContent = 'Connection Lost';
-        notify('Network timeout reached. Check browser ad-blockers or local firewall rules.', 'warn');
-        setTimeout(() => load(1), 8000);
-      } else if (err.code === 'permission-denied'){
-        document.getElementById('statusText').textContent = 'Access Restricted';
-        notify('Firestore permission denied. Contact administrator.', 'err');
+  document.getElementById('emailForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      location.href = 'client-area.html';
+    } catch (err) {
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+          location.href = 'client-area.html';
+          return;
+        } catch (createErr) {
+          showError(createErr.message);
+        }
       } else {
-        document.getElementById('statusText').textContent = 'System Error';
-        notify('Failed to load portal telemetry.', 'err');
+        showError(err.message);
       }
     }
-  }
+  });
 </script>
 
 </body>
