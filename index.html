@@ -1,501 +1,903 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BrightStack Co. — Web design & product studio</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BrightStack Co. — Web design &amp; product studio">
-<meta property="og:description" content="BrightStack Co. designs and builds websites, dashboards, booking systems, and AI-powered tools for small businesses and startups.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="BrightStack Co. designs and builds websites, dashboards, booking systems, and AI-powered tools for small businesses and startups.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#F4F7FF;
-    --ink-soft:#9CA7BC;
-    --paper:#070A12;
-    --paper-2:#101521;
-    --surface:#0D121D;
-    --line:rgba(255,255,255,.10);
-    --signal:#C9FF63;
-    --signal-ink:#172100;
-    --indigo:#8E8CFF;
-    --indigo-soft:rgba(142,140,255,.12);
-    --cyan:#63E6FF;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;scroll-padding-top:90px;}
-  body{
-    background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;
-    overflow-x:hidden;
-    background-image:radial-gradient(circle at 72% 9%,rgba(91,77,255,.17),transparent 27%),radial-gradient(circle at 8% 32%,rgba(99,230,255,.07),transparent 24%);
-  }
-  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,#000,transparent 82%);}
-  a{color:inherit;text-decoration:none;}
-  button,input,textarea{font:inherit;}
-  :focus-visible{outline:3px solid var(--signal);outline-offset:4px;}
-  .skip-link{position:fixed;left:16px;top:12px;z-index:9999;background:var(--signal);color:var(--signal-ink);padding:10px 14px;border-radius:99px;transform:translateY(-160%);font-weight:700;}
-  .skip-link:focus{transform:translateY(0);}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
-  .mono{font-family:'JetBrains Mono',monospace;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;max-width:1180px;margin:0 auto;position:relative;z-index:20;}
-  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.04em;display:flex;align-items:center;gap:10px;}
-  .logo::before{content:'';width:27px;height:27px;border-radius:8px;background:linear-gradient(145deg,var(--signal),var(--cyan));box-shadow:inset -7px -7px 15px rgba(0,0,0,.2),0 0 25px rgba(201,255,99,.18);transform:rotate(-8deg);}
-  .logo span{color:var(--signal);}
-  nav{display:flex;align-items:center;gap:28px;padding:7px 8px 7px 22px;background:rgba(13,18,29,.72);border:1px solid var(--line);border-radius:99px;backdrop-filter:blur(18px);box-shadow:0 10px 38px rgba(0,0,0,.2);}
-  nav a{font-size:13px;font-weight:500;color:var(--ink-soft);transition:color .2s ease;}
-  nav a:hover{color:var(--ink);}
-  .nav-cta{background:var(--ink);color:#0A0D14;padding:9px 17px;border-radius:99px;font-weight:700;}
-  .nav-cta:hover{background:var(--signal);color:var(--signal-ink);}
+  <title>BrightStack Co. — Creative Digital Studio</title>
 
-  .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(420px,.95fr);align-items:center;gap:64px;min-height:690px;padding:86px 32px 110px;max-width:1180px;margin:0 auto;position:relative;}
-  .hero::after{content:'';position:absolute;width:540px;height:540px;right:-100px;top:40px;border:1px solid rgba(255,255,255,.06);border-radius:50%;pointer-events:none;}
-  .hero-text{position:relative;z-index:2;}
-  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-bottom:23px;font-family:'JetBrains Mono',monospace;background:rgba(201,255,99,.07);border:1px solid rgba(201,255,99,.2);padding:7px 12px;border-radius:99px;}
-  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(48px,5.4vw,74px);line-height:.99;letter-spacing:-.055em;margin-bottom:27px;max-width:720px;}
-  h1 .gradient-word{display:block;color:transparent;background:linear-gradient(105deg,#fff 8%,var(--indigo) 48%,var(--cyan));background-clip:text;-webkit-background-clip:text;}
-  .hero-text>p{font-size:17px;max-width:570px;color:var(--ink-soft);margin-bottom:34px;line-height:1.75;}
-  .btn-row{display:flex;gap:13px;align-items:center;flex-wrap:wrap;}
-  .btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:49px;padding:13px 22px;border-radius:99px;font-weight:700;font-size:14px;transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease;}
-  .btn-primary{background:var(--signal);color:var(--signal-ink);border:1px solid var(--signal);box-shadow:0 10px 30px rgba(201,255,99,.12);}
-  .btn-primary:hover{background:#D7FF8C;transform:translateY(-2px);box-shadow:0 14px 35px rgba(201,255,99,.2);}
-  .btn-secondary{color:var(--ink);border:1px solid var(--line);background:rgba(255,255,255,.035);}
-  .btn-secondary:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.07);transform:translateY(-2px);}
-  .hero-proof{display:flex;gap:24px;align-items:center;margin-top:34px;color:var(--ink-soft);font-size:12px;}
-  .hero-proof span{display:flex;align-items:center;gap:7px;}
-  .hero-proof span::before{content:'✓';color:var(--signal);font-weight:800;}
+  <meta
+    name="description"
+    content="BrightStack Co. creates digital products, websites, web applications, UI/UX experiences and intelligent automation systems."
+  >
 
-  /* Lightweight CSS 3D scene — no canvas, model downloads, or framework. */
-  .hero-visual{height:490px;position:relative;display:grid;place-items:center;perspective:1100px;z-index:1;isolation:isolate;}
-  .hero-visual::before{content:'';position:absolute;width:390px;height:390px;border-radius:50%;background:radial-gradient(circle at 38% 32%,rgba(142,140,255,.44),rgba(77,67,206,.16) 42%,transparent 68%);filter:blur(2px);animation:breathe 5s ease-in-out infinite;}
-  .hero-visual::after{content:'';position:absolute;width:360px;height:90px;bottom:22px;border-radius:50%;background:rgba(0,0,0,.65);filter:blur(28px);z-index:-1;}
-  .scene-ring{position:absolute;width:390px;height:390px;border-radius:50%;border:1px solid rgba(142,140,255,.25);transform:rotateX(68deg) rotateZ(-14deg);box-shadow:0 0 50px rgba(142,140,255,.08),inset 0 0 50px rgba(142,140,255,.06);}
-  .scene-ring::before,.scene-ring::after{content:'';position:absolute;border-radius:50%;background:var(--signal);box-shadow:0 0 18px var(--signal);width:7px;height:7px;}
-  .scene-ring::before{top:42px;left:50px}.scene-ring::after{bottom:25px;right:82px;background:var(--cyan);box-shadow:0 0 18px var(--cyan);}
-  .scene-core{width:350px;height:350px;position:relative;transform-style:preserve-3d;transform:rotateX(7deg) rotateY(-8deg);transition:transform .14s ease-out;}
-  .stack-card{position:absolute;width:272px;min-height:126px;padding:20px 21px;background:linear-gradient(145deg,rgba(26,33,50,.96),rgba(11,15,25,.95));border:1px solid rgba(255,255,255,.14);border-radius:19px;box-shadow:0 24px 65px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08);font-family:'JetBrains Mono',monospace;backdrop-filter:blur(10px);opacity:0;animation:cardIn .8s cubic-bezier(.2,.8,.2,1) forwards,floatCard 6s ease-in-out infinite;}
-  .stack-card .tag{font-size:10px;color:var(--cyan);letter-spacing:.09em;text-transform:uppercase;margin-bottom:12px;}
-  .stack-card .label{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
-  .stack-card .dot-row{display:flex;gap:5px;margin-bottom:14px;}
-  .stack-card .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);}
-  .c1{top:10px;left:2px;z-index:1;transform:translateZ(-60px) rotateZ(-7deg);animation-delay:.05s;}
-  .c2{top:112px;right:-8px;z-index:2;transform:translateZ(15px) rotateZ(4deg);animation-delay:.18s;}
-  .c3{top:229px;left:10px;z-index:3;transform:translateZ(80px) rotateZ(-3deg);animation-delay:.31s;background:linear-gradient(145deg,#26265F,#12142D);border-color:rgba(142,140,255,.5);}
-  .c3 .tag{color:var(--signal)}
-  .card-spark{position:absolute;width:72px;height:72px;right:13px;bottom:10px;border-radius:20px;background:linear-gradient(145deg,rgba(201,255,99,.25),rgba(99,230,255,.05));transform:rotate(12deg);border:1px solid rgba(201,255,99,.18);}
-  .card-spark::after{content:'↗';display:grid;place-items:center;height:100%;font:22px 'Space Grotesk';color:var(--signal);}
-  @keyframes cardIn{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
-  @keyframes floatCard{0%,100%{margin-top:0}50%{margin-top:-8px}}
-  @keyframes breathe{50%{transform:scale(1.06);opacity:.78}}
+  <link
+    rel="canonical"
+    href="https://hassansaeed14.github.io/brightstack-portfolio/"
+  >
 
-  .section{padding:92px 32px;max-width:1180px;margin:0 auto;}
-  .section-head{margin-bottom:42px;max-width:650px;}
-  .section-head .eyebrow{margin-bottom:16px;}
-  .section-head h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(31px,4vw,46px);line-height:1.08;letter-spacing:-.04em;margin-bottom:15px;}
-  .section-head p{color:var(--ink-soft);font-size:15px;max-width:590px;}
-  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
-  .work-grid .work-card:last-child:nth-child(odd){grid-column:1/-1;}
-  .work-card{background:linear-gradient(145deg,rgba(18,24,37,.92),rgba(10,14,22,.92));border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;}
-  .work-card:hover{transform:translateY(-6px);border-color:rgba(142,140,255,.4);box-shadow:0 24px 55px rgba(0,0,0,.25);}
-  .chrome{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025);}
-  .chrome .dots{display:flex;gap:6px}.chrome .dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18)}
-  .chrome .url{font:10.5px 'JetBrains Mono',monospace;color:#727E94;background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:99px;padding:4px 10px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .work-body{padding:25px 25px 27px}.work-tags{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}.work-tag{font:10px 'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;background:var(--indigo-soft);color:#B8B7FF;padding:5px 9px;border:1px solid rgba(142,140,255,.13);border-radius:99px;}
-  .work-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;margin-bottom:8px;letter-spacing:-.02em}.work-card p{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px}.work-link{font-size:13px;font-weight:700;color:var(--signal);display:inline-flex;align-items:center;gap:6px}.work-link .arrow{transition:transform .2s}.work-link:hover .arrow{transform:translateX(4px)}
-  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}.cap-cell{background:var(--paper-2);padding:27px 22px}.cap-cell .mono{font-size:11px;color:var(--signal);margin-bottom:10px;display:block}.cap-cell h4{font:600 16px 'Space Grotesk';margin-bottom:8px}.cap-cell p{font-size:13px;color:var(--ink-soft)}
-  .cta-band{background:linear-gradient(120deg,#171A39,#111725 55%,#17231B);color:var(--ink);padding:60px 44px;border:1px solid rgba(255,255,255,.1);border-radius:24px;max-width:1116px;margin:0 auto 80px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;box-shadow:0 30px 70px rgba(0,0,0,.3)}
-  .cta-band h2{font:600 30px 'Space Grotesk';margin-bottom:10px;letter-spacing:-.03em}.cta-band p{color:var(--ink-soft);font-size:14px;max-width:540px}
-  footer{padding:36px 32px 48px;text-align:center;font-size:12px;color:#69758B;border-top:1px solid var(--line)}
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-  @media(max-width:900px){
-    header{padding:18px 24px;align-items:flex-start}.logo{margin-top:7px}nav{gap:16px;flex-wrap:wrap;border-radius:20px;justify-content:flex-end;max-width:70%}
-    .hero{grid-template-columns:1fr;padding:60px 24px 80px;gap:25px}.hero-text{text-align:center}.hero-text>p{margin-left:auto;margin-right:auto}.btn-row,.hero-proof{justify-content:center}.hero-visual{height:460px;width:min(100%,500px);margin:auto}.hero::after{right:50%;transform:translateX(50%);top:auto;bottom:20px}
-    .section{padding:70px 24px}.cap-grid{grid-template-columns:repeat(2,1fr)}.tier-grid{grid-template-columns:repeat(2,1fr)}
-  }
-  @media(max-width:620px){
-    header{display:block;padding:17px 18px}.logo{margin:0 0 15px}nav{max-width:none;width:100%;padding:10px 12px;gap:8px 16px;justify-content:flex-start;border-radius:15px}nav a{font-size:12px}.nav-cta{margin-left:auto}
-    .hero{padding:48px 18px 65px;min-height:auto}.hero::after{width:400px;height:400px}h1{font-size:42px}.hero-text>p{font-size:15px}.hero-proof{gap:9px 18px;flex-wrap:wrap}.hero-visual{height:400px;transform:scale(.88);margin:-12px auto;width:100%}.scene-core{transform:rotateX(7deg) rotateY(-8deg) scale(.9)}
-    .section{padding:58px 18px}.work-grid{grid-template-columns:1fr}.work-grid .work-card:last-child:nth-child(odd){grid-column:auto}.cap-grid{grid-template-columns:1fr}.btn-primary,.btn-secondary{padding:12px 17px}.cta-band{padding:36px 21px;border-radius:18px;margin:0 18px 58px}.cta-band h2{font-size:25px}.wrap{padding-left:18px!important;padding-right:18px!important}.service-tabs{flex-wrap:nowrap!important;overflow-x:auto;padding-bottom:7px}.service-tab{white-space:nowrap;flex-shrink:0}.tier-grid{grid-template-columns:1fr!important}.section-head h2{font-size:32px}
-  }
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stack-card,.hero-visual::before{animation:none;opacity:1}.scene-core{transition:none!important}.btn-primary,.btn-secondary,.work-card{transition:none}}
-</style>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Spline Viewer -->
+  <script
+    type="module"
+    src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js">
+  </script>
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080c13;
+      --text: #f8fafc;
+      --muted: #8e9aad;
+      --cyan: #00e5ff;
+      --cyan-soft: rgba(0, 229, 255, 0.15);
+      --peach: #ffd8bd;
+      --purple: #8b5cf6;
+      --border: rgba(255,255,255,0.085);
+      --border-hover: rgba(0,229,255,0.38);
+      --max-width: 1280px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(0,229,255,0.07), transparent 30%),
+        radial-gradient(circle at 20% 70%, rgba(139,92,246,0.06), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    ::selection {
+      background: var(--cyan);
+      color: #001014;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -10;
+      overflow: hidden;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.23;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    .orb {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.09;
+    }
+
+    .orb.one { top: -250px; right: -120px; background: var(--cyan); }
+    .orb.two { bottom: -300px; left: -150px; background: var(--purple); }
+
+    header {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100% - 40px), var(--max-width));
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 0 24px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(5,7,11,0.66);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      z-index: 100;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(5,7,11,0.9);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), #4ddfff);
+      color: #001014;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 0 25px rgba(0,229,255,0.2);
+    }
+
+    .brand span {
+      color: var(--cyan);
+      text-shadow: 0 0 20px rgba(0,229,255,0.3);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    nav a {
+      position: relative;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      transition: color 0.25s ease;
+    }
+
+    nav a:not(.nav-cta)::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 1px;
+      background: var(--cyan);
+      transition: width 0.3s var(--ease);
+    }
+
+    nav a:hover { color: var(--text); }
+    nav a:not(.nav-cta):hover::after { width: 100%; }
+
+    .nav-cta {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--cyan);
+      color: #001014;
+      font-weight: 700;
+      box-shadow: 0 0 25px rgba(0,229,255,0.14);
+      transition: transform 0.3s var(--ease), background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      background: var(--peach);
+      box-shadow: 0 0 35px rgba(255,216,189,0.2);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      color: white;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 180px 48px 100px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      width: 58%;
+      pointer-events: none;
+    }
+
+    .hero-content a,
+    .hero-content button {
+      pointer-events: auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(0,229,255,0.17);
+      border-radius: 999px;
+      background: rgba(0,229,255,0.055);
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.02em;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(48px, 6.3vw, 88px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 .highlight {
+      display: block;
+      color: var(--peach);
+      text-shadow: 0 0 35px rgba(255,216,189,0.13);
+    }
+
+    .hero-description {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .primary-btn, .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 21px;
+      border-radius: 13px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: transform 0.3s var(--ease), border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .primary-btn {
+      background: var(--cyan);
+      color: #001014;
+      box-shadow: 0 12px 35px rgba(0,229,255,0.12);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      background: #69edff;
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.035);
+      color: var(--text);
+      backdrop-filter: blur(10px);
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .spline-stage {
+      position: absolute;
+      top: 80px;
+      right: -80px;
+      width: 64%;
+      height: calc(100vh - 80px);
+      min-height: 650px;
+      z-index: 2;
+      pointer-events: auto;
+      transform: translate3d(var(--mouse-x, 0px), var(--mouse-y, 0px), 0);
+      transition: transform 1.2s var(--ease);
+    }
+
+    .spline-stage::before {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.11), rgba(139,92,246,0.04) 40%, transparent 70%);
+      filter: blur(20px);
+      pointer-events: none;
+    }
+
+    spline-viewer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .scene-label {
+      position: absolute;
+      right: 90px;
+      bottom: 90px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(5,7,11,0.55);
+      backdrop-filter: blur(15px);
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      pointer-events: none;
+    }
+
+    .scene-label strong { color: var(--cyan); font-weight: 500; }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 42px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #657083;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      z-index: 5;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: #657083;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: "";
+      position: absolute;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--cyan);
+      animation: scrollLine 2s infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+
+    .section {
+      position: relative;
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 110px 48px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 34px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-heading h2 { font-size: 30px; letter-spacing: -0.035em; }
+    .section-heading span { color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .collection-card {
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 30px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(18,25,38,0.72), rgba(9,13,21,0.62));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+      transition: transform 0.5s var(--ease), border-color 0.4s ease, box-shadow 0.5s ease;
+    }
+
+    .collection-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -90px;
+      top: -90px;
+      border-radius: 50%;
+      background: var(--cyan);
+      opacity: 0.04;
+      filter: blur(30px);
+      transition: transform 0.5s var(--ease), opacity 0.4s ease;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-hover);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.32), 0 0 35px rgba(0,229,255,0.07);
+    }
+
+    .collection-card:hover::before { transform: scale(2.5); opacity: 0.09; }
+
+    .c-number { color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-bottom: 25px; }
+    .c-tag { display: block; color: var(--peach); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .collection-card h3 { font-size: 23px; letter-spacing: -0.025em; margin-bottom: 9px; }
+    .collection-card p { max-width: 460px; color: var(--muted); font-size: 13.5px; line-height: 1.7; }
+    .c-link { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; transition: gap 0.35s var(--ease), color 0.3s ease; }
+    .collection-card:hover .c-link { gap: 15px; color: var(--peach); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: rgba(12,17,27,0.62);
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+      transition: transform 0.4s var(--ease), border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .project-card::after {
+      content: "↗";
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      color: #475366;
+      font-size: 20px;
+      transition: color 0.3s ease, transform 0.3s var(--ease);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,229,255,0.28);
+      background: rgba(15,23,36,0.78);
+    }
+
+    .project-card:hover::after { color: var(--cyan); transform: translate(3px,-3px); }
+    .project-card h4 { font-size: 17px; margin-bottom: 7px; }
+    .project-card p { max-width: 500px; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+
+    .cta {
+      position: relative;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background: radial-gradient(circle at center, rgba(0,229,255,0.08), transparent 55%), rgba(10,15,24,0.55);
+      backdrop-filter: blur(18px);
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,229,255,0.08);
+      animation: rotateOrb 18s linear infinite;
+    }
+
+    @keyframes rotateOrb {
+      from { transform: rotate(0deg) scale(0.8); }
+      to { transform: rotate(360deg) scale(1.1); }
+    }
+
+    .cta-content { position: relative; z-index: 2; }
+    .cta small { display: block; color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-bottom: 15px; }
+    .cta h2 { max-width: 700px; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 22px; }
+    .cta p { max-width: 540px; margin: 0 auto 28px; color: var(--muted); font-size: 14px; }
+
+    footer {
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 40px 48px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+    }
+
+    .footer-brand { color: var(--text); }
+    .footer-brand span { color: var(--cyan); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1000px) {
+      header { width: calc(100% - 28px); top: 12px; }
+      nav { gap: 17px; }
+      .hero { padding-left: 30px; padding-right: 30px; }
+      .section { padding-left: 30px; padding-right: 30px; }
+      .spline-stage { right: -160px; width: 68%; }
+      .hero-content { width: 62%; }
+    }
+
+    @media (max-width: 768px) {
+      header { height: 62px; padding: 0 12px 0 15px; }
+      .brand { font-size: 16px; }
+      .brand-mark { width: 29px; height: 29px; }
+      nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        padding: 18px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(5,7,11,0.94);
+        backdrop-filter: blur(25px);
+      }
+      nav.open { display: flex; }
+      nav a { padding: 5px; }
+      .nav-cta { text-align: center; }
+      .menu-btn { display: block; }
+      .hero {
+        min-height: auto;
+        padding: 120px 22px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .hero-content { width: 100%; z-index: 6; }
+      .hero h1 { font-size: clamp(44px, 13vw, 68px); }
+      .hero-description { font-size: 14px; max-width: 500px; }
+      .hero-actions { flex-wrap: wrap; }
+      .spline-stage {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        height: 430px;
+        min-height: 0;
+        margin-top: -25px;
+        transform: none !important;
+      }
+      .spline-stage::before { width: 300px; height: 300px; }
+      .scene-label { right: 15px; bottom: 25px; }
+      .scroll-indicator { display: none; }
+      .section { padding: 75px 22px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .collections-grid, .projects-grid { grid-template-columns: 1fr; }
+      .collection-card { min-height: 250px; }
+      .cta { min-height: 330px; padding: 30px 20px; }
+      footer { padding: 30px 22px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<main id="main-content">
 
-<header>
-  <div class="logo">Bright<span>Stack</span> Co.</div>
-  <nav>
-    <a href="ask-brightstack.html">Ask BrightStack</a>
-    <a href="#projects">Projects</a>
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <span id="adminNavSlot" style="display:none;"></span>
-    <span id="authNavSlot"><a href="signin.html">Sign in</a></span>
-    <a href="#contact" class="nav-cta">Start a project</a>
-  </nav>
-</header>
-
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-text">
-    <div class="eyebrow">Independent digital product studio</div>
-    <h1 id="hero-title">Ideas, engineered into <span class="gradient-word">digital advantage.</span></h1>
-    <p>I'm Hassan Saeed. I design and build polished websites, focused web apps, and practical AI automations that help ambitious businesses move faster.</p>
-    <div class="btn-row">
-      <a href="#projects" class="btn-primary">Explore selected work <span aria-hidden="true">↗</span></a>
-      <a href="#contact" class="btn-secondary">Start a conversation</a>
-    </div>
-    <div class="hero-proof" aria-label="Service highlights">
-      <span>Strategy to launch</span>
-      <span>Built for every screen</span>
-      <span>Fast by default</span>
-    </div>
+  <div class="background">
+    <div class="grid"></div>
+    <div class="noise"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
   </div>
-  <div class="hero-visual" aria-label="A three-dimensional stack representing websites, digital products, and automation">
-    <div class="scene-ring" aria-hidden="true"></div>
-    <div class="scene-core" id="sceneCore">
-      <div class="stack-card c1">
-        <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="tag">01 / Experience</div>
-        <div class="label">Conversion-first websites</div>
-        <span class="card-spark" aria-hidden="true"></span>
+
+  <header id="navbar">
+    <a href="index.html" class="brand">
+      <div class="brand-mark">B</div>
+      Bright<span>Stack</span>
+    </a>
+    <nav id="mainNav">
+      <a href="ask-brightstack.html">Ask BrightStack</a>
+      <a href="#collections">Collections</a>
+      <a href="#projects">Projects</a>
+      <span id="authNavSlot"><a href="signin.html">Sign in</a></span>
+      <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="nav-cta">Hire Me</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">
+          <span class="status-dot"></span>
+          BRIGHTSTACK // DIGITAL STUDIO
+        </div>
+        <h1>
+          We build
+          <span class="highlight">digital experiences.</span>
+        </h1>
+        <p class="hero-description">
+          Websites, web applications, intelligent automation and interactive interfaces designed to turn ideas into products people actually want to use.
+        </p>
+        <div class="hero-actions">
+          <a href="#collections" class="primary-btn">
+            Explore our work
+            <span>→</span>
+          </a>
+          <a href="ask-brightstack.html" class="secondary-btn">
+            Ask BrightStack
+          </a>
+        </div>
       </div>
-      <div class="stack-card c2">
-        <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="tag">02 / Product</div>
-        <div class="label">Web apps that feel effortless</div>
-        <span class="card-spark" aria-hidden="true"></span>
+
+      <!-- Spline 3D Interactive Scene -->
+      <div class="spline-stage" id="splineStage">
+        <spline-viewer url="https://prod.spline.design/401875e7-6d8e-4027-9632-7a243433f3a1/scene.splinecode"></spline-viewer>
+        <div class="scene-label">
+          <span class="status-dot"></span>
+          <strong>3D</strong> INTERACTIVE SCENE
+        </div>
       </div>
-      <div class="stack-card c3">
-        <div class="dot-row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="tag">03 / Intelligence</div>
-        <div class="label">Useful AI, thoughtfully applied</div>
-        <span class="card-spark" aria-hidden="true"></span>
+
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        SCROLL TO EXPLORE
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="section" id="projects" aria-labelledby="projects-title">
-  <div class="section-head">
-    <div class="eyebrow">Selected work</div>
-    <h2 id="projects-title">Four projects, four different business problems.</h2>
-    <p>A focused selection of independent concepts and technical demonstrations. Every demo opens publicly—no account required.</p>
-  </div>
-  <div class="work-grid">
-    <article class="work-card">
-      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">nexora-flagship-project.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Independent concept</span><span class="work-tag">Full-stack</span></div><h3>Nexora — Agency Platform</h3><p>A concept platform exploring how agencies can track projects, currency conversion, and account health in one focused workspace.</p><a href="nexora-flagship-project.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
-    </article>
-    <article class="work-card">
-      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">noor-bakehouse.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Independent concept</span><span class="work-tag">Business website</span></div><h3>Noor Bakehouse</h3><p>A storefront concept for a local bakery, designed around quick menu discovery and a clear route from browsing to ordering.</p><a href="noor-bakehouse.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
-    </article>
-    <article class="work-card">
-      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">booking-system-demo.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Technical demonstration</span><span class="work-tag">Scheduling</span></div><h3>Glow Studio — Salon Booking</h3><p>A three-step booking flow that demonstrates date selection, availability rules, and confirmation without requiring an account.</p><a href="booking-system-demo.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
-    </article>
-    <article class="work-card">
-      <div class="chrome"><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div><div class="url">ember-oak-ai-assistant.html</div></div>
-      <div class="work-body"><div class="work-tags"><span class="work-tag">Local AI simulation</span><span class="work-tag">Lead workflow</span></div><h3>Ember &amp; Oak — Concierge</h3><p>A transparent local simulation of a product concierge and lead-scoring workflow, with a documented path to secure server-side AI integration.</p><a href="ember-oak-ai-assistant.html" class="work-link">View public demo <span class="arrow">→</span></a></div>
-    </article>
-  </div>
-  <div class="btn-row" style="margin-top:28px;">
-    <a class="btn-secondary" href="web-design-collection.html">Explore website collection</a>
-    <a class="btn-secondary" href="web-apps-collection.html">Explore app collection</a>
-    <a class="btn-secondary" href="ai-automation-collection.html">Explore AI labs</a>
-  </div>
-</section>
-
-<section class="wrap" style="padding:0 32px 64px;">
-  <div class="cta-band" style="margin:0;max-width:none;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);">
-    <div>
-      <div class="eyebrow" style="margin-bottom:14px;">New · interactive</div>
-      <h2 style="color:var(--ink);">Don't just read about the work — ask about it.</h2>
-      <p style="color:var(--ink-soft);">A small local assistant indexed on this portfolio. Ask it what Nexora is built with, what my skills are, or how to reach me — it answers from what's actually here, and says so honestly when it doesn't know.</p>
-    </div>
-    <a href="ask-brightstack.html" class="btn-primary">Ask BrightStack →</a>
-  </div>
-</section>
-
-<section class="section" id="services">
-  <div class="section-head">
-    <div class="eyebrow">Services</div>
-    <h2>Pick a category, then a package.</h2>
-    <p>Every service comes in three tiers — pick the one that matches your scope and budget. Prices are a starting point; every project gets scoped properly before we start.</p>
-  </div>
-
-  <div class="service-tabs" id="serviceTabs">
-    <button class="service-tab active" data-cat="web">Web Design</button>
-    <button class="service-tab" data-cat="app">Web Apps & Dashboards</button>
-    <button class="service-tab" data-cat="uiux">UI/UX Design</button>
-    <button class="service-tab" data-cat="ai">AI & Automation</button>
-  </div>
-
-  <div class="tier-grid" id="tierGrid">
-    <!-- populated by JS -->
-  </div>
-
-  <p style="font-size:12.5px;color:var(--ink-soft);margin-top:20px;">Every tier here is backed by a real project in the Projects section above — see the work before you pick a package.</p>
-</section>
-
-<style>
-  .service-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
-  .service-tab{
-    background:var(--paper-2);border:1px solid var(--line);padding:10px 18px;border-radius:8px;
-    font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink-soft);
-  }
-  .service-tab.active{background:var(--ink);color:var(--paper-2);border-color:var(--ink);}
-  .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .tier-card{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:26px 22px;display:flex;flex-direction:column;}
-  .tier-card.featured{border-color:var(--indigo);box-shadow:0 12px 28px rgba(60,62,232,0.1);position:relative;}
-  .tier-featured-tag{
-    position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--indigo);color:#fff;
-    font-size:11px;font-weight:600;padding:4px 12px;border-radius:12px;
-  }
-  .tier-name{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--indigo);margin-bottom:10px;}
-  .tier-price{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;margin-bottom:4px;}
-  .tier-delivery{font-size:12.5px;color:var(--ink-soft);margin-bottom:16px;}
-  .tier-features{list-style:none;flex:1;margin-bottom:20px;}
-  .tier-features li{font-size:13.5px;padding:8px 0;border-top:1px solid var(--line);color:var(--ink-soft);}
-  .tier-features li:first-child{border-top:none;}
-  .tier-see{
-    display:block;text-align:center;font-size:12.5px;font-weight:600;color:var(--indigo);
-    margin-bottom:10px;text-decoration:none;
-  }
-  .tier-see:hover{text-decoration:underline;}
-  .tier-btn{
-    text-align:center;background:var(--paper);border:1px solid var(--line);padding:11px;border-radius:8px;
-    font-weight:600;font-size:13.5px;color:var(--ink);
-  }
-  .tier-card.featured .tier-btn{background:var(--indigo);color:#fff;border-color:var(--indigo);}
-  @media (max-width:900px){ .tier-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:620px){
-    .tier-grid{grid-template-columns:1fr;gap:16px;}
-    .tier-card{padding:22px 20px;}
-    .tier-price{font-size:26px;}
-  }
-</style>
-
-<script>
-  const SERVICE_TIERS = {
-    web: [
-      { name:'Basic', price:'$80', delivery:'3-day delivery', features:['1-page landing site','Mobile responsive','Contact form','1 round of revisions'] , featured:false},
-      { name:'Standard', price:'$180', delivery:'5–7 day delivery', features:['Up to 5 pages','Custom sections & content layout','Basic on-page SEO','2 rounds of revisions'], featured:true },
-      { name:'Premium', price:'$350+', delivery:'10–14 day delivery', features:['Full multi-page site','Custom design system','Booking/ordering integration','Unlimited revisions'], featured:false }
-    ],
-    app: [
-      { name:'Basic', price:'$150', delivery:'5-day delivery', features:['Single dashboard screen','Static or mock data','Responsive layout'], featured:false },
-      { name:'Standard', price:'$350', delivery:'10-day delivery', features:['Live database-backed data','Basic authentication','Multiple views/tables'], featured:true },
-      { name:'Premium', price:'$600+', delivery:'3-week delivery', features:['Full-stack app + live API','Admin panel included','Real-time data updates'], featured:false }
-    ],
-    uiux: [
-      { name:'Basic', price:'$70', delivery:'3-day delivery', features:['3–5 wireframe screens','One design concept','Figma file delivered'], featured:false },
-      { name:'Standard', price:'$180', delivery:'7-day delivery', features:['8–12 clickable screens','Reusable design system','Interactive prototype'], featured:true },
-      { name:'Premium', price:'$320', delivery:'10–12 day delivery', features:['Full case study: research → UI','High-fidelity prototype','Usability notes included'], featured:false }
-    ],
-    ai: [
-      { name:'Basic', price:'$120', delivery:'5-day delivery', features:['Rule-based classifier/chatbot','Single-use case','Basic accuracy report'], featured:false },
-      { name:'Standard', price:'$280', delivery:'10-day delivery', features:['Trained model on real data','Results dashboard','Documented limitations'], featured:true },
-      { name:'Premium', price:'$500+', delivery:'3-week delivery', features:['Full AI tool + live inference','API integration','Admin controls included'], featured:false }
-    ]
-  };
-
-  const TIER_HUBS = {
-    web:'web-design-collection.html',
-    app:'web-apps-collection.html',
-    uiux:'uiux-collection.html',
-    ai:'ai-automation-collection.html'
-  };
-
-  function renderTiers(cat){
-    const grid = document.getElementById('tierGrid');
-    const hub = TIER_HUBS[cat];
-    grid.innerHTML = SERVICE_TIERS[cat].map(t => `
-      <div class="tier-card ${t.featured ? 'featured' : ''}">
-        ${t.featured ? '<div class="tier-featured-tag">Most popular</div>' : ''}
-        <div class="tier-name">${t.name}</div>
-        <div class="tier-price">${t.price}</div>
-        <div class="tier-delivery">${t.delivery}</div>
-        <ul class="tier-features">${t.features.map(f => `<li>${f}</li>`).join('')}</ul>
-        <a href="${hub}" class="tier-see">See ${t.name.toLowerCase()}-tier examples →</a>
-        <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="tier-btn">Get started</a>
+    <!-- Collections Section -->
+    <section class="section reveal" id="collections">
+      <div class="section-heading">
+        <h2>Explore Collections</h2>
+        <span>// 04 CATEGORIES</span>
       </div>
-    `).join('');
-  }
+      <div class="collections-grid">
+        <a href="web-design-collection.html" class="collection-card">
+          <div>
+            <div class="c-number">01</div>
+            <span class="c-tag">Aesthetic & Marketing</span>
+            <h3>Web Design Collection</h3>
+            <p>Landing pages, brand storefronts and high-conversion marketing layouts crafted with strong visual direction.</p>
+          </div>
+          <div class="c-link">Browse collection <span>→</span></div>
+        </a>
 
-  document.querySelectorAll('#serviceTabs .service-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('#serviceTabs .service-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      renderTiers(tab.dataset.cat);
-    });
-  });
+        <a href="web-apps-collection.html" class="collection-card">
+          <div>
+            <div class="c-number">02</div>
+            <span class="c-tag">Functional & Full-Stack</span>
+            <h3>Web Apps & Dashboards</h3>
+            <p>Interactive portals, operations dashboards and API-powered applications built around real workflows.</p>
+          </div>
+          <div class="c-link">Browse collection <span>→</span></div>
+        </a>
 
-  renderTiers('web');
-</script>
-<section class="section" id="about">
-  <div class="section-head">
-    <div class="eyebrow">About</div>
-    <h2>The person behind BrightStack.</h2>
-    <p>Founder of BrightStack Co., with hands-on experience across machine learning and UI/UX through two structured industry internships.</p>
-  </div>
-  <div class="work-grid" style="grid-template-columns:repeat(2,1fr);">
-    <div class="work-card">
-      <div class="work-body">
-        <div class="work-tags"><span class="work-tag">Dec 2025 – Mar 2026</span></div>
-        <h3>ML Engineer Intern</h3>
-        <p>novaXccelerate — a hybrid, mentored internship applying machine learning to real, industry-led projects rather than theory alone.</p>
+        <a href="uiux-collection.html" class="collection-card">
+          <div>
+            <div class="c-number">03</div>
+            <span class="c-tag">Wireframes & Flow</span>
+            <h3>UI/UX Design Collection</h3>
+            <p>Mobile prototypes, user journeys and information architecture designed around clarity and usability.</p>
+          </div>
+          <div class="c-link">Browse collection <span>→</span></div>
+        </a>
+
+        <a href="ai-automation-collection.html" class="collection-card">
+          <div>
+            <div class="c-number">04</div>
+            <span class="c-tag">Intelligent Systems</span>
+            <h3>AI & Automation Labs</h3>
+            <p>Rule-based systems, intelligent assistants, automation workflows and practical AI prototypes.</p>
+          </div>
+          <div class="c-link">Browse collection <span>→</span></div>
+        </a>
       </div>
-    </div>
-    <div class="work-card">
-      <div class="work-body">
-        <div class="work-tags"><span class="work-tag">Jul 2024 – Oct 2024</span></div>
-        <h3>UI/UX Design Intern</h3>
-        <p>novaXccelerate — user-centered interfaces and wireframes; a practical foundation in user flows and information hierarchy.</p>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section reveal" id="projects">
+      <div class="section-heading">
+        <h2>Featured Projects</h2>
+        <span>// DIRECT DEMOS</span>
       </div>
-    </div>
-  </div>
-  <div class="btn-row" style="margin-top:24px;flex-wrap:wrap;gap:10px;">
-    <span class="work-tag">JavaScript</span>
-    <span class="work-tag">HTML5 / CSS3</span>
-    <span class="work-tag">Python</span>
-    <span class="work-tag">WordPress</span>
-    <span class="work-tag">API Integration</span>
-    <span class="work-tag">Machine Learning</span>
-    <span class="work-tag">UI/UX Design</span>
-  </div>
-</section>
-
-<div class="cta-band" id="contact" style="flex-direction:column;align-items:stretch;gap:28px;">
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
-    <div>
-      <h2>Have a project in mind?</h2>
-      <p>Message us on Fiverr to talk through scope and timeline. Email is reserved for support complaints, not new project inquiries.</p>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="btn-primary" style="background:#1DBF73;color:#04341F;">Message us on Fiverr →</a>
-      <a href="mailto:19hsnkhan@gmail.com?subject=Complaint" class="btn-secondary" style="background:transparent;border:1px solid #3A4557;color:var(--paper);">File a complaint by email</a>
-    </div>
-  </div>
-
-  <div style="background:rgba(255,255,255,0.04);border:1px solid #2D3646;border-radius:10px;padding:20px 22px;">
-    <div class="mono" style="font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Or send a quick message</div>
-    <form id="leadForm">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px;">
-        <div><label for="leadName" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">Your name</label><input type="text" id="leadName" name="name" autocomplete="name" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;"></div>
-        <div><label for="leadEmail" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">Email address</label><input type="email" id="leadEmail" name="email" autocomplete="email" required style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;"></div>
+      <div class="projects-grid">
+        <a href="nexora-flagship-project.html" class="project-card">
+          <h4>Nexora — Agency Platform</h4>
+          <p>Full-stack dashboard featuring currency conversion and account health scoring.</p>
+        </a>
+        <a href="ai-inquiry-router.html" class="project-card">
+          <h4>Smart Inquiry Router</h4>
+          <p>Interactive support ticket classification engine with real-time confidence telemetry.</p>
+        </a>
+        <a href="booking-system-demo.html" class="project-card">
+          <h4>Glow Studio — Booking System</h4>
+          <p>Seamless multi-step salon appointment scheduling and availability flow.</p>
+        </a>
+        <a href="noor-bakehouse.html" class="project-card">
+          <h4>Noor Bakehouse Storefront</h4>
+          <p>Conversion-focused local bakery website built for quick menu discovery.</p>
+        </a>
       </div>
-      <label for="leadMessage" style="display:block;font-size:12px;margin-bottom:5px;color:#D8DEE8;">What are you building?</label>
-      <textarea id="leadMessage" name="message" required minlength="10" rows="3" style="width:100%;padding:11px 13px;border-radius:6px;border:1px solid #3A4557;background:#151B25;color:#fff;font-size:13.5px;font-family:inherit;margin-bottom:10px;resize:vertical;"></textarea>
-      <button id="leadSubmitBtn" type="submit" class="btn-primary" style="border:none;cursor:pointer;">Send message</button>
-      <p style="font-size:11.5px;color:#9AA4B2;margin-top:10px;">Your details are used only to respond to this enquiry.</p>
-      <div id="leadStatus" role="status" aria-live="polite" class="mono" style="font-size:12px;color:#9AA4B2;margin-top:10px;"></div>
-    </form>
-  </div>
-</div>
+    </section>
 
-</main>
-<footer>
-  BrightStack Co. · Hassan Saeed · Mansehra, Pakistan · <span class="mono">est. 2024</span>
-</footer>
+    <!-- CTA Section -->
+    <section class="section reveal">
+      <div class="cta">
+        <div class="cta-content">
+          <small>// HAVE AN IDEA?</small>
+          <h2>Let's build something worth remembering.</h2>
+          <p>Tell us what you're trying to build. We'll turn the rough idea into a practical digital experience.</p>
+          <a href="ask-brightstack.html" class="primary-btn">
+            Start a conversation
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<script>
-  // A tiny progressive-enhancement tilt replaces a heavyweight 3D library.
-  (() => {
-    const visual = document.querySelector('.hero-visual');
-    const scene = document.getElementById('sceneCore');
-    if (!visual || !scene || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return;
-    visual.addEventListener('pointermove', (event) => {
-      const rect = visual.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - .5;
-      const y = (event.clientY - rect.top) / rect.height - .5;
-      scene.style.transform = `rotateX(${7 - y * 12}deg) rotateY(${-8 + x * 16}deg)`;
-    });
-    visual.addEventListener('pointerleave', () => {
-      scene.style.transform = 'rotateX(7deg) rotateY(-8deg)';
-    });
-  })();
-</script>
+  <footer>
+    <div class="footer-brand">Bright<span>Stack</span> Co.</div>
+    <div>Hassan Saeed · Mansehra, Pakistan</div>
+    <div>est. 2024</div>
+  </footer>
 
-<script type="module">
-  import { auth, db, ADMIN_UID } from './firebase-config.js';
-  import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-  import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  <!-- Firebase Auth Slot Integration -->
+  <script type="module">
+    import { auth } from './firebase-config.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-
-  onAuthStateChanged(auth, (user) => {
-    const slot = document.getElementById('authNavSlot');
-    const adminSlot = document.getElementById('adminNavSlot');
-    if (slot){
-      slot.innerHTML = user
-        ? `<a href="client-area.html">My Client Area</a>`
-        : `<a href="signin.html">Sign in</a>`;
-    }
-    if (adminSlot){
-      if (user && user.uid === ADMIN_UID){
-        adminSlot.style.display = 'inline';
-        adminSlot.innerHTML = `<a href="admin.html" style="color:var(--indigo);">Admin</a>`;
+    onAuthStateChanged(auth, (user) => {
+      const slot = document.getElementById('authNavSlot');
+      if (!slot) return;
+      if (user) {
+        slot.innerHTML = `<a href="client-area.html">Client Portal</a>`;
       } else {
-        adminSlot.style.display = 'none';
-        adminSlot.innerHTML = '';
+        slot.innerHTML = `<a href="signin.html">Sign in</a>`;
       }
-    }
-  });
+    });
+  </script>
 
-  document.getElementById('leadForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const name = document.getElementById('leadName').value.trim();
-    const email = document.getElementById('leadEmail').value.trim();
-    const message = document.getElementById('leadMessage').value.trim();
-    const statusEl = document.getElementById('leadStatus');
-    if (!name || !email || !message){
-      statusEl.textContent = 'Fill in your name, email, and a message first.';
-      return;
-    }
-    const btn = document.getElementById('leadSubmitBtn');
-    statusEl.textContent = 'Sending…';
-    btn.disabled = true;
-
-    // Firestore queues writes locally when the connection is down, and addDoc's
-    // promise then never settles — so race it against a timeout rather than
-    // leaving the visitor staring at "Sending…" indefinitely.
-    let timedOut = false;
-    const timeout = new Promise((_, reject) =>
-      setTimeout(() => { timedOut = true; reject(new Error('timeout')); }, 10000)
-    );
-
-    try {
-      await Promise.race([
-        addDoc(collection(db, 'leads'), {
-          name, email, message, source: 'website', status: 'new', createdAt: serverTimestamp()
-        }),
-        timeout
-      ]);
-      document.getElementById('leadName').value = '';
-      document.getElementById('leadEmail').value = '';
-      document.getElementById('leadMessage').value = '';
-      statusEl.textContent = "Sent — we'll get back to you soon.";
-    } catch(err){
-      if (timedOut){
-        statusEl.innerHTML = "Couldn't confirm your message was sent — it may still arrive. If you use an ad-blocker or privacy extension it may be blocking this form. You can also reach us directly on <a href=\"https://www.fiverr.com/brightstackco\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--signal);text-decoration:underline;\">Fiverr</a>.";
+  <!-- Interactions & Parallax -->
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 30) {
+        navbar.classList.add('scrolled');
       } else {
-        statusEl.textContent = 'Something went wrong — please try again, or message us on Fiverr.';
+        navbar.classList.remove('scrolled');
       }
-    } finally {
-      btn.disabled = false;
-    }
-  });
-</script>
+    }, { passive: true });
 
+    const menuBtn = document.getElementById('menuBtn');
+    const mainNav = document.getElementById('mainNav');
+    menuBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+    });
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => { mainNav.classList.remove('open'); });
+    });
+
+    const splineStage = document.getElementById('splineStage');
+    let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
+
+    window.addEventListener('mousemove', (event) => {
+      mouseX = (event.clientX / window.innerWidth - 0.5) * 24;
+      mouseY = (event.clientY / window.innerHeight - 0.5) * 18;
+    }, { passive: true });
+
+    function animateParallax() {
+      currentX += (mouseX - currentX) * 0.035;
+      currentY += (mouseY - currentY) * 0.035;
+      if (window.innerWidth > 768) {
+        splineStage.style.setProperty('--mouse-x', `${currentX}px`);
+        splineStage.style.setProperty('--mouse-y', `${currentY}px`);
+      }
+      requestAnimationFrame(animateParallax);
+    }
+    animateParallax();
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealElements.forEach(element => observer.observe(element));
+  </script>
 </body>
 </html>
