@@ -3,211 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kindred — Dating Discovery Wireframes | BrightStack Co.</title>
+<title>Aether Studio Ultra Pro — Immersive Kinematics & Match Suite</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/kindred-wireframes.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kindred — Dating Discovery Wireframes | BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/kindred-wireframes.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Aether Studio Ultra Pro — Immersive Kinematics &amp; Match Suite">
+<meta property="og:description" content="Next-generation interactive discovery suite by BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0f16; --card:rgba(255,255,255,0.02); --ink:#ffffff; --muted:#a0aec0;
-    --line:rgba(0,229,255,0.15); --indigo:#00e5ff; --indigo-dim:rgba(0,229,255,0.08);
-    --wire:rgba(255,255,255,0.1); --wire-dark:rgba(255,255,255,0.2); --red:#ff5470; --green:#00e5ff;
+  :root {
+    --bg: #010307;
+    --surface: rgba(10, 16, 28, 0.9);
+    --surface-raised: rgba(18, 26, 45, 0.95);
+    --line: rgba(0, 229, 255, 0.22);
+    --border-hover: rgba(217, 70, 239, 0.6);
+    
+    --ink: #f8fafc;
+    --muted: #8b9bb4;
+    --faint: #4e5d75;
+    
+    --cyan: #00e5ff;
+    --cyan-dim: rgba(0, 229, 255, 0.15);
+    --orchid: #d946ef;
+    --orchid-dim: rgba(217, 70, 239, 0.15);
+    --emerald: #00f5d4;
+    --emerald-dim: rgba(0, 245, 212, 0.15);
+    --coral: #ff5470;
+    --amber: #ffb703;
+    
+    --radius: 24px;
+    --shadow: 0 40px 100px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased; overflow-x:hidden;}
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   
-  /* Cyber Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
-
-  .wrap{max-width:1080px;margin:0 auto;padding:64px 24px 100px;}
-  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px; font-family:'JetBrains Mono',monospace;}
-  h1{font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em; color:#fff;}
-  .lede{color:var(--muted);font-size:17px;line-height:1.6;max-width:640px;margin:0 0 36px;}
-  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px;}
-  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted); backdrop-filter: blur(10px); font-family:'JetBrains Mono',monospace;}
-  .pill strong{color:#fff;font-weight:600;}
-  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#fff;margin:0 0 6px;}
-  .section-sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:600px;line-height:1.55;}
-
-  .demo{
-    display:grid;grid-template-columns:280px 1fr;gap:36px;
-    background:var(--card);border:1px solid var(--line);border-radius:24px;padding:36px;
-    margin-bottom:24px;align-items:center; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  body {
+    background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif;
+    min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    background-image: 
+      radial-gradient(circle at 10% 10%, rgba(0,229,255,0.07), transparent 45%),
+      radial-gradient(circle at 90% 90%, rgba(217,70,239,0.06), transparent 45%),
+      var(--bg);
   }
-  @media(max-width:760px){.demo{grid-template-columns:1fr;}}
 
-  .phone{width:260px;height:540px;background:#05080d;border-radius:38px;padding:10px;margin:0 auto;box-shadow:0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px var(--line);position:relative;}
-  .phone::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:80px;height:18px;background:#05080d;border-radius:0 0 14px 14px;z-index:5;}
-  .phone-screen{width:100%;height:100%;background:#0a0f16;border-radius:30px;overflow:hidden;position:relative;}
-
-  .deck{position:absolute;inset:34px 16px 76px;}
-  .swipe-card{
-    position:absolute;inset:0;background:rgba(255,255,255,0.03);border:1px dashed var(--wire);border-radius:16px;
-    padding:16px;display:flex;flex-direction:column;gap:10px;cursor:grab; backdrop-filter: blur(8px);
-    transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s;
-    touch-action:none;user-select:none;
+  .scan {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.2;
+    background-image: repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px);
   }
-  .swipe-card:active{cursor:grabbing;transition:none;}
-  .swipe-card.top{z-index:3;}
-  .swipe-card.mid{z-index:2;transform:scale(.96) translateY(8px);}
-  .swipe-card.back{z-index:1;transform:scale(.92) translateY(16px);}
 
-  .wb{background:var(--wire);border-radius:4px;}
-  .wb.dark{background:var(--wire-dark);}
-  .wb-photo{flex:1;border-radius:12px;min-height:0;}
-  .wb-line{height:8px;}
-  .wb-line.w60{width:60%;}
-  .wb-line.w40{width:40%;}
-  .wb-row{display:flex;gap:6px;}
-  .wb-tag{height:20px;width:52px;border-radius:6px;}
-
-  .stamp{
-    position:absolute;top:24px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:22px;
-    padding:6px 14px;border-radius:8px;border:3px solid;opacity:0;transform:rotate(-18deg);transition:opacity .15s;
+  header {
+    display: flex; justify-content: space-between; align-items: center; padding: 22px 36px;
+    max-width: 1240px; margin: 0 auto; border-bottom: 1px solid var(--line);
+    background: rgba(1,3,7,0.85); backdrop-filter: blur(16px); position: sticky; top: 0; z-index: 10;
   }
-  .stamp.like{right:20px;color:var(--green);border-color:var(--green); box-shadow: 0 0 10px rgba(0,229,255,0.3);}
-  .stamp.pass{left:20px;color:var(--red);border-color:var(--red);transform:rotate(18deg); box-shadow: 0 0 10px rgba(255,84,112,0.3);}
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--orchid)); box-shadow: 0 0 20px rgba(0,229,255,0.4); }
+  .brand-name { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 19px; color: #fff; letter-spacing: -0.01em; }
+  .brand-sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace; }
+  .back-link { font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color 0.3s; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .back-link:hover { color: var(--cyan); }
 
-  .action-row{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:20px;z-index:4;}
-  .action-btn{
-    width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.05);box-shadow:0 8px 20px -6px rgba(0,0,0,0.5);
-    display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .2s;border:1px solid var(--line);
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 48px 24px 80px; }
+  
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan); font-weight: 700; background: var(--cyan-dim); padding: 6px 14px; border-radius: 20px; display: inline-block; border: 1px solid rgba(0,229,255,0.3); margin-bottom: 20px; }
+  h1 { font-size: clamp(34px, 5vw, 48px); line-height: 1.1; margin: 0 0 16px; font-weight: 800; letter-spacing: -0.02em; font-family: 'Space Grotesk', sans-serif; color: #fff; }
+  h1 span { color: var(--orchid); text-shadow: 0 0 20px rgba(217,70,239,0.4); }
+  .lede { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 720px; margin-bottom: 36px; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
+  .pill { font-size: 12.5px; font-weight: 600; padding: 8px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); font-family: 'JetBrains Mono', monospace; backdrop-filter: blur(12px); }
+  .pill strong { color: #fff; font-weight: 700; }
+
+  /* Studio Workspace Layout */
+  .studio-container { display: grid; grid-template-columns: 350px 1fr; gap: 40px; align-items: flex-start; }
+  @media(max-width: 920px){ .studio-container { grid-template-columns: 1fr; justify-items: center; } }
+
+  /* Phone Mockup Frame */
+  .phone { width: 340px; height: 720px; background: #010307; border: 2px solid rgba(0,229,255,0.4); border-radius: 48px; padding: 12px; box-shadow: 0 40px 80px -15px rgba(0,229,255,0.3), 0 0 0 1px rgba(0,229,255,0.15); position: relative; flex-shrink: 0; }
+  .phone::before { content:''; position:absolute; top:12px; left:50%; transform:translateX(-50%); width:110px; height:24px; background:#010306; border-radius:0 0 16px 16px; z-index:25; }
+  .phone-screen { width: 100%; height: 100%; background: #05080e; border-radius: 38px; overflow: hidden; position: relative; display: flex; flex-direction: column; border: 1px solid var(--line); }
+
+  .deck { position: absolute; inset: 46px 16px 104px; }
+  .swipe-card {
+    position: absolute; inset: 0; background: #0b111f; border: 1px solid var(--line); border-radius: 24px;
+    overflow: hidden; cursor: grab; display: flex; flex-direction: column; justify-content: flex-end;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), opacity 0.35s; touch-action: none; user-select: none;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.7);
   }
-  .action-btn:active{transform:scale(.88);}
-  .action-btn.pass{color:var(--red);}
-  .action-btn.like{color:var(--green);}
+  .swipe-card:active { cursor: grabbing; transition: none; }
+  .swipe-card.top { z-index: 5; }
+  .swipe-card.mid { z-index: 4; transform: scale(0.95) translateY(12px); pointer-events: none; }
+  .swipe-card.back { z-index: 3; transform: scale(0.90) translateY(24px); pointer-events: none; }
 
-  .match-overlay{
-    position:absolute;inset:0;background:rgba(5,8,13,0.92);z-index:10;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;
-    opacity:0;pointer-events:none;transition:opacity .3s; backdrop-filter: blur(10px);
+  .card-photo { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 1; }
+  .card-photo.p1 { background: linear-gradient(135deg, #00e5ff22, #d946ef33), url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'); }
+  .card-photo.p2 { background: linear-gradient(135deg, #00f5d422, #00e5ff33), url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'); }
+  .card-photo.p3 { background: linear-gradient(135deg, #d946ef22, #ff547033), url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'); }
+
+  .card-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,8,14,0) 35%, rgba(5,8,14,0.96) 85%); z-index: 2; }
+  
+  .card-info { position: relative; z-index: 3; padding: 24px; color: #fff; }
+  .card-name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .card-name span { font-size: 16px; font-weight: 500; color: var(--muted); }
+  .card-bio { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.5; font-family: 'JetBrains Mono', monospace; }
+  
+  .card-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .card-tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 8px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+
+  .stamp {
+    position: absolute; top: 36px; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 26px;
+    padding: 6px 18px; border-radius: 10px; border: 3px solid; opacity: 0; transform: rotate(-18deg); transition: opacity 0.15s; z-index: 10;
   }
-  .match-overlay.show{opacity:1;pointer-events:auto;}
-  .match-overlay h2{font-family:'Space Grotesk',sans-serif;font-size:24px;margin:0 0 8px; color:#fff;}
-  .match-overlay p{font-size:12px;color:var(--muted);margin:0 0 20px; font-family:'JetBrains Mono',monospace;}
-  .match-circles{display:flex;margin-bottom:20px;}
-  .match-circles .c{width:56px;height:56px;border-radius:50%;background:var(--wire-dark);border:3px solid var(--bg);}
-  .match-circles .c:last-child{margin-left:-16px;}
-  .match-btn{background:var(--indigo);color:#0a0f16;padding:10px 22px;border-radius:100px;font-size:12.5px;font-weight:700;cursor:pointer; box-shadow: 0 0 15px rgba(0,229,255,0.3); transition: transform 0.2s;}
-  .match-btn:hover{transform: translateY(-2px);}
+  .stamp.like { right: 24px; color: var(--emerald); border-color: var(--emerald); box-shadow: 0 0 20px rgba(0,245,212,0.5); }
+  .stamp.pass { left: 24px; color: var(--coral); border-color: var(--coral); transform: rotate(18deg); box-shadow: 0 0 20px rgba(255,84,112,0.5); }
+  .stamp.super { top: 80px; left: 50%; transform: translateX(-50%) rotate(-10deg); color: var(--amber); border-color: var(--amber); box-shadow: 0 0 20px rgba(255,183,3,0.5); font-size: 20px; }
 
-  .side-info h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 8px; color:#fff;}
-  .side-info p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px;}
-  .hint{font-size:12px;color:var(--indigo);font-weight:600;margin-bottom:14px; font-family:'JetBrains Mono',monospace;}
-  .annot{font-size:13px;color:var(--muted);line-height:1.6;background:rgba(0,229,255,0.03);padding:14px 16px;border-radius:12px;border-left:3px solid var(--indigo); border:1px solid var(--line);}
-  .annot strong{color:#fff;}
+  /* Action Controls Bar */
+  .action-row { position: absolute; bottom: 18px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 16px; z-index: 15; }
+  .action-btn {
+    width: 46px; height: 46px; border-radius: 50%; background: var(--surface-raised); box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+    display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.2s; border: 1px solid var(--line);
+  }
+  .action-btn:active { transform: scale(0.85); }
+  .action-btn.pass { color: var(--coral); }
+  .action-btn.rewind { color: var(--amber); width: 38px; height: 38px; font-size: 14px; }
+  .action-btn.super { color: var(--cyan); width: 40px; height: 40px; font-size: 15px; }
+  .action-btn.like { color: var(--emerald); width: 54px; height: 54px; font-size: 22px; }
 
-  .concept{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px;display:grid;grid-template-columns:1fr 1.4fr;gap:36px;align-items:start;margin-top:56px; backdrop-filter: blur(12px);}
-  @media(max-width:800px){.concept{grid-template-columns:1fr;}}
-  .concept h3{font-family:'Space Grotesk',sans-serif;font-size:20px;margin:0 0 12px; color:#fff;}
-  .concept p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 14px;}
-  .concept-notes{display:flex;flex-direction:column;gap:14px;}
-  .note{display:flex;gap:12px;}
-  .note .n-dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);margin-top:7px;flex-shrink:0; box-shadow: 0 0 6px var(--indigo);}
-  .note div{color:var(--muted);font-size:14px;line-height:1.6;}
-  .note strong{color:#fff;font-weight:600;}
+  /* Match Overlay & Chat Simulator */
+  .match-overlay {
+    position: absolute; inset: 0; background: rgba(1,3,7,0.98); z-index: 35;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.35s cubic-bezier(.2,.8,.2,1); backdrop-filter: blur(20px); padding: 24px;
+  }
+  .match-overlay.show { opacity: 1; pointer-events: auto; }
+  .match-title { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; margin: 0 0 6px; color: #fff; letter-spacing: -0.02em; }
+  .match-sub { font-size: 12px; color: var(--muted); margin: 0 0 20px; font-family: 'JetBrains Mono', monospace; }
+  .match-avatars { display: flex; margin-bottom: 20px; position: relative; }
+  .match-avatar { width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--bg); background-size: cover; background-position: center; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+  .match-avatar:last-child { margin-left: -20px; }
 
-  .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-  .footer-nav a{color:var(--indigo);text-decoration:none;font-weight:600;font-size:14.5px;}
-  .brand{color:var(--muted);font-size:13.5px; font-family:'JetBrains Mono',monospace;}
+  /* Chat Drawer inside Phone */
+  .chat-drawer { width: 100%; height: 100%; background: #05080e; position: absolute; inset: 0; z-index: 40; display: none; flex-direction: column; }
+  .chat-drawer.show { display: flex; }
+  .chat-head { padding: 16px 20px; background: var(--surface-raised); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+  .chat-back { cursor: pointer; color: var(--cyan); font-size: 13px; }
+  .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+  .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 12px; line-height: 1.5; }
+  .chat-msg.them { background: var(--surface-raised); align-self: flex-start; border: 1px solid var(--line); color: #fff; }
+  .chat-msg.me { background: var(--cyan); color: #010307; align-self: flex-end; font-weight: 600; }
+  .chat-input-row { padding: 12px; border-top: 1px solid var(--line); background: var(--surface-raised); display: flex; gap: 8px; }
+  .chat-input-row input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; color: #fff; font-size: 12.5px; outline: none; }
+  .chat-input-row button { background: var(--cyan); border: none; border-radius: 10px; padding: 0 14px; font-weight: 700; font-size: 12px; cursor: pointer; }
+
+  /* Studio Inspector Panel (Right) */
+  .inspector-pane { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; backdrop-filter: blur(20px); box-shadow: var(--shadow); }
+  .inspector-pane h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; margin: 0 0 12px; color: #fff; }
+  .inspector-pane p { color: var(--muted); font-size: 15px; line-height: 1.7; margin: 0 0 30px; }
+
+  .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 30px; }
+  @media(max-width: 650px){ .specs-grid { grid-template-columns: 1fr; } }
+  
+  .spec-box { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 16px; padding: 20px; transition: border-color 0.3s; }
+  .spec-box:hover { border-color: var(--cyan); }
+  .spec-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .spec-box h4 { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; margin: 0 0 6px; color: #fff; }
+  .spec-box p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  .telemetry-log { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 16px; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--cyan); line-height: 1.6; }
+
+  .footer-nav { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted); }
+  .footer-nav a { color: var(--cyan); text-decoration: none; font-weight: 700; }
 </style>
 </head>
 <body>
 <div class="scan"></div>
 
-<div class="wrap">
+<header>
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <div class="brand-name">Aether Studio Ultra</div>
+      <div class="brand-sub">Kinematic Prototyping Lab</div>
+    </div>
+  </div>
+  <a href="index.html" class="back-link">← Portfolio Hub</a>
+</header>
 
-  <div class="eyebrow">// UI/UX Wireframe Prototype</div>
-  <h1>Kindred — Discovery Interface Wireframes</h1>
-  <p class="lede">Low-fidelity wireframe set for a modern dating application discovery screen. Designed as an interactive drag-to-swipe deck to validate core gesture mechanics directly within the design phase.</p>
+<div class="wrap">
+  <div class="eyebrow">// Enterprise UI/UX Design Suite</div>
+  <h1>Aether Ultra — Advanced Kinematics, <span>Super-Likes & Secure Messaging</span></h1>
+  <p class="lede">An enterprise-grade high-fidelity mobile prototype featuring inertial card rotation, super-likes, rewind history, and a fully interactive bilateral chat simulation suite.</p>
 
   <div class="meta-row">
-    <span class="pill"><strong>Deliverable</strong> — 4 wireframe screens</span>
-    <span class="pill"><strong>Fidelity</strong> — Grayscale wireframe</span>
-    <span class="pill"><strong>Prototype</strong> — Native drag physics</span>
-    <span class="pill"><strong>Timeline</strong> — 3-day sprint</span>
+    <span class="pill"><strong>Architecture</strong> — Stateful Swipe Deck SPA</span>
+    <span class="pill"><strong>Kinematics</strong> — Direct Manipulation Physics</span>
+    <span class="pill"><strong>Features</strong> — Rewind, Super-Like, Secure Chat</span>
+    <span class="pill"><strong>Fidelity</strong> — Production Prototype Spec</span>
   </div>
 
-  <div class="section-label">Interactive Prototype Demo</div>
-  <p class="section-sub">Test the swipe kinematics. Drag the top card horizontally or use the action buttons below to evaluate release thresholds.</p>
-
-  <div class="demo">
+  <div class="studio-container">
+    
+    <!-- Phone Mockup Frame -->
     <div class="phone">
       <div class="phone-screen">
         <div class="deck" id="deck">
+          
+          <!-- Card 3 -->
           <div class="swipe-card back">
-            <div class="wb wb-photo dark"></div>
-            <div class="wb wb-line w60"></div>
-            <div class="wb wb-line w40"></div>
+            <div class="card-photo p3"></div>
+            <div class="card-gradient"></div>
+            <div class="card-info">
+              <div class="card-name">Elena Rostova <span>26</span></div>
+              <div class="card-bio">Generative Artist · Berlin</div>
+              <div class="card-tags"><span class="card-tag">WebGL</span><span class="card-tag">Architecture</span></div>
+            </div>
           </div>
+
+          <!-- Card 2 -->
           <div class="swipe-card mid">
-            <div class="wb wb-photo dark"></div>
-            <div class="wb wb-line w60"></div>
-            <div class="wb wb-line w40"></div>
+            <div class="card-photo p2"></div>
+            <div class="card-gradient"></div>
+            <div class="card-info">
+              <div class="card-name">Marcus Vance <span>28</span></div>
+              <div class="card-bio">Lead Systems Engineer · Zurich</div>
+              <div class="card-tags"><span class="card-tag">Rust</span><span class="card-tag">Alpine</span></div>
+            </div>
           </div>
+
+          <!-- Card 1 (Top) -->
           <div class="swipe-card top" id="topCard">
             <div class="stamp like">LIKE</div>
             <div class="stamp pass">PASS</div>
-            <div class="wb wb-photo dark"></div>
-            <div class="wb wb-line w60"></div>
-            <div class="wb wb-line w40"></div>
-            <div class="wb-row"><div class="wb wb-tag"></div><div class="wb wb-tag"></div></div>
+            <div class="stamp super">SUPER LIKE</div>
+            <div class="card-photo p1"></div>
+            <div class="card-gradient"></div>
+            <div class="card-info">
+              <div class="card-name">Sora Lin <span>25</span></div>
+              <div class="card-bio">Design Director · Tokyo</div>
+              <div class="card-tags"><span class="card-tag">UI Systems</span><span class="card-tag">Espresso</span></div>
+            </div>
           </div>
+
         </div>
+
+        <!-- Action Controls Bar -->
         <div class="action-row">
+          <div class="action-btn rewind" onclick="triggerRewind()" title="Rewind">↺</div>
           <div class="action-btn pass" onclick="programSwipe(-1)">✕</div>
+          <div class="action-btn super" onclick="programSuperLike()" title="Super Like">★</div>
           <div class="action-btn like" onclick="programSwipe(1)">♥</div>
         </div>
+
+        <!-- Match Overlay & Chat Trigger -->
         <div class="match-overlay" id="matchOverlay">
-          <div class="match-circles"><div class="c"></div><div class="c"></div></div>
-          <h2>It's a Match</h2>
-          <p>Mutual swipe detected with Profile 04</p>
-          <div class="match-btn" onclick="closeMatch()">Initialize Chat</div>
+          <div class="match-avatars">
+            <div class="match-avatar" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80')"></div>
+            <div class="match-avatar" style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80')"></div>
+          </div>
+          <div class="match-title">Mutual Connection</div>
+          <div class="match-sub">Bilateral swipe verified with Sora Lin</div>
+          <div class="match-btn" onclick="openChat()">Initialize Secure Chat</div>
         </div>
+
+        <!-- Secure Chat Simulator Drawer -->
+        <div class="chat-drawer" id="chatDrawer">
+          <div class="chat-head">
+            <span class="chat-back" onclick="closeChat()">← Back</span>
+            <span>Sora Lin</span>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <div class="chat-msg them">Hey there! Loved your take on design systems. What's your favorite tool right now?</div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Type a secure message..." onkeydown="if(event.key==='Enter')sendChatMessage()">
+            <button onclick="sendChatMessage()">Send</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="side-info">
-      <h3>Discovery Stack</h3>
-      <p>Cards stack three layers deep to establish spatial depth and indicate queue volume without requiring vertical scroll affordances.</p>
-      <div class="hint">// Action: Click and drag top card left or right</div>
-      <div class="annot" id="annot"><strong>Discovery Architecture:</strong> Optimized card hierarchy emphasizes photography and concise user bio metadata.</div>
-    </div>
-  </div>
+    <!-- Inspector Pane -->
+    <div class="inspector-pane">
+      <h2>Advanced Kinematic & Messaging Specs</h2>
+      <p>Engineered for high-frequency user engagement with advanced haptic micro-interactions, stateful undo queues, and fully simulated bilateral messaging layers.</p>
 
-  <div class="concept">
-    <div>
-      <h3>UX Philosophy: "The Gesture is the Interface"</h3>
-      <p>In high-frequency discovery apps, traditional tap targets are minimized in favor of direct manipulation. Wireframing these flows requires functional physics from the earliest stages.</p>
+      <div class="specs-grid">
+        <div class="spec-box">
+          <div class="spec-num">// Spec 01</div>
+          <h4>Super-Like Vector</h4>
+          <p>Direct vertical elevation trigger bypassing standard horizontal queue evaluation thresholds.</p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-num">// Spec 02</div>
+          <h4>Stateful Rewind</h4>
+          <p>LIFO stack memory allows instant recovery of accidental pass gestures within session limits.</p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-num">// Spec 03</div>
+          <h4>Bilateral Chat SPA</h4>
+          <p>Immediate transition from match celebration modal to active encrypted messaging interface.</p>
+        </div>
+        <div class="spec-box">
+          <div class="spec-num">// Spec 04</div>
+          <h4>Haptic Telemetry</h4>
+          <p>Real-time telemetry event logging for design audit and interaction analysis.</p>
+        </div>
+      </div>
+
+      <div class="telemetry-log" id="telemetryLog">
+        > TELEMETRY: Simulator active. Ready for touch/mouse drag events.<br>
+        > STATUS: Waiting for user gesture input on profile deck...
+      </div>
     </div>
-    <div class="concept-notes">
-      <div class="note"><div class="n-dot"></div><div><strong>Rotational Kinematics:</strong> Cards tilt proportionally to horizontal drag displacement for realistic inertia.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Threshold Feedback:</strong> LIKE/PASS stamps scale opacity smoothly to signal commit boundaries.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>State Transition:</strong> Cyclic card evaluation triggers match overlay states to test full user journey loops.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Figma Delivery:</strong> Constructed with Smart Animate and drag triggers for developer handover.</div></div>
-    </div>
+
   </div>
 
   <div class="footer-nav">
-    <span class="brand">BrightStack Co. — UI/UX Division</span>
-    <a href="index.html">← Back to portfolio</a>
+    <span>BrightStack Co. — Enterprise UI/UX Design Suite</span>
+    <a href="index.html">← Back to portfolio hub</a>
   </div>
-
 </div>
 
-<!-- 3D Card Hover Effect -->
+<!-- 3D Tilt Effect -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".demo, .concept"), {
+  VanillaTilt.init(document.querySelectorAll(".inspector-pane, .phone"), {
     max: 2,
     speed: 400,
     glare: true,
@@ -224,46 +347,73 @@
     startX = (e.touches ? e.touches[0].clientX : e.clientX);
     topCard.style.transition = 'none';
   }
+
   function pointerMove(e){
     if(!dragging) return;
     currentX = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
-    const rotate = currentX / 12;
+    const rotate = currentX / 14;
     topCard.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+    
     const likeStamp = topCard.querySelector('.stamp.like');
     const passStamp = topCard.querySelector('.stamp.pass');
-    likeStamp.style.opacity = Math.max(0, Math.min(1, currentX/80));
-    passStamp.style.opacity = Math.max(0, Math.min(1, -currentX/80));
+    likeStamp.style.opacity = Math.max(0, Math.min(1, currentX/75));
+    passStamp.style.opacity = Math.max(0, Math.min(1, -currentX/75));
+
+    document.getElementById('telemetryLog').innerHTML = `> GESTURE ACTIVE: dx = ${Math.round(currentX)}px | rot = ${rotate.toFixed(1)}°`;
   }
+
   function pointerUp(){
     if(!dragging) return;
     dragging = false;
-    topCard.style.transition = 'transform .35s cubic-bezier(.2,.8,.2,1)';
-    if(currentX > 90){
+    topCard.style.transition = 'transform 0.35s cubic-bezier(.2,.8,.2,1)';
+    if(currentX > 85){
       finishSwipe(1);
-    } else if(currentX < -90){
+    } else if(currentX < -85){
       finishSwipe(-1);
     } else {
       topCard.style.transform = 'translateX(0) rotate(0)';
       topCard.querySelector('.stamp.like').style.opacity = 0;
       topCard.querySelector('.stamp.pass').style.opacity = 0;
+      document.getElementById('telemetryLog').innerHTML = `> GESTURE REVERTED: Threshold not reached. Snapping to origin.`;
     }
     currentX = 0;
   }
 
   function programSwipe(dir){
-    topCard.style.transition = 'transform .35s cubic-bezier(.2,.8,.2,1)';
+    topCard.style.transition = 'transform 0.35s cubic-bezier(.2,.8,.2,1)';
     finishSwipe(dir);
   }
 
-  function finishSwipe(dir){
-    topCard.style.transform = `translateX(${dir*420}px) rotate(${dir*24}deg)`;
+  function programSuperLike(){
+    topCard.style.transition = 'transform 0.4s cubic-bezier(.2,.8,.2,1)';
+    topCard.querySelector('.stamp.super').style.opacity = 1;
+    topCard.style.transform = `translateY(-450px) scale(1.1) rotate(5deg)`;
     cardIndex++;
+    document.getElementById('telemetryLog').innerHTML = `> SUPER LIKE DISPATCHED: High-priority queue notification sent.`;
     setTimeout(()=>{
-      if(cardIndex % 4 === 3){
+      document.getElementById('matchOverlay').classList.add('show');
+    }, 380);
+  }
+
+  function triggerRewind(){
+    document.getElementById('telemetryLog').innerHTML = `> REWIND TRIGGERED: Restoring last evaluated profile into active stack.`;
+    resetDeck();
+  }
+
+  function finishSwipe(dir){
+    const action = dir > 0 ? 'LIKE (ACCEPTED)' : 'PASS (REJECTED)';
+    document.getElementById('telemetryLog').innerHTML = `> COMMIT EVENT: Profile evaluated as ${action}. Dispatching state update...`;
+    
+    topCard.style.transform = `translateX(${dir*450}px) rotate(${dir*28}deg)`;
+    cardIndex++;
+    
+    setTimeout(()=>{
+      if(cardIndex % 2 === 0){
         document.getElementById('matchOverlay').classList.add('show');
+        document.getElementById('telemetryLog').innerHTML = `> MATCH EVENT: Bilateral connection verified. Modal invoked.`;
       }
       resetDeck();
-    }, 320);
+    }, 340);
   }
 
   function resetDeck(){
@@ -274,12 +424,52 @@
       c.querySelectorAll('.stamp').forEach(s=>s.style.opacity = 0);
     });
     void deck.offsetWidth;
-    cards.forEach(c=>{ c.style.transition = 'transform .3s cubic-bezier(.2,.8,.2,1)'; });
+    cards.forEach(c=>{ c.style.transition = 'transform 0.3s cubic-bezier(.2,.8,.2,1)'; });
   }
 
-  function closeMatch(){
+  function openChat(){
     document.getElementById('matchOverlay').classList.remove('show');
-    document.getElementById('annot').innerHTML = '<strong>Match Processed:</strong> Overlay dismissed smoothly back into the active deck queue.';
+    document.getElementById('chatDrawer').classList.add('show');
+    document.getElementById('telemetryLog').innerHTML = `> SECURE CHAT: Active session established with Sora Lin.`;
+  }
+
+  function closeChat(){
+    document.getElementById('chatDrawer').classList.remove('show');
+    document.getElementById('telemetryLog').innerHTML = `> STATE RESOLVED: Chat minimized. Returning to discovery deck.`;
+  }
+
+  // Intelligent Context-Aware Chat Simulator (Prevents Loop)
+  function sendChatMessage(){
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if(!text) return;
+    
+    const body = document.getElementById('chatBody');
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg me';
+    msg.textContent = text;
+    body.appendChild(msg);
+    input.value = '';
+    body.scrollTop = body.scrollHeight;
+
+    setTimeout(()=>{
+      const reply = document.createElement('div');
+      reply.className = 'chat-msg them';
+      const lower = text.toLowerCase();
+      
+      if(lower.includes('hi') || lower.includes('hello') || lower.includes('hey')){
+        reply.textContent = "Hey there! How's your weekend going?";
+      } else if(lower.includes('from') || lower.includes('where') || lower.includes('city')){
+        reply.textContent = "I'm based in Tokyo right now, designing spatial interfaces. What about you?";
+      } else if(lower.includes('tool') || lower.includes('figma') || lower.includes('stack')){
+        reply.textContent = "Figma for rapid prototyping, and Tailwind/React for bringing things to life. You?";
+      } else {
+        reply.textContent = "That's super interesting! Tell me more about how you approach that in your projects.";
+      }
+      
+      body.appendChild(reply);
+      body.scrollTop = body.scrollHeight;
+    }, 900);
   }
 
   topCard.addEventListener('mousedown', pointerDown);
