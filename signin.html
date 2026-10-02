@@ -9,127 +9,178 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sign in — BrightStack Co.">
 <meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/signin.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#1B2430; --ink-soft:#4B5568; --paper:#EEF1F4; --paper-2:#FFFFFF;
-    --line:#D4DAE1; --signal:#FFC93C; --signal-ink:#2A2005; --indigo:#3C3EE8; --indigo-soft:#EEEEFD;
+  :root {
+    --bg: #05070b;
+    --bg-soft: #080c13;
+    --text: #f8fafc;
+    --muted: #8e9aad;
+    --cyan: #00e5ff;
+    --cyan-soft: rgba(0, 229, 255, 0.15);
+    --peach: #ffd8bd;
+    --purple: #8b5cf6;
+    --glass: rgba(10, 15, 24, 0.65);
+    --border: rgba(255,255,255,0.085);
+    --border-hover: rgba(0,229,255,0.38);
+    --max-width: 440px;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --red: #ff4d4d;
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;
-    min-height:100vh;display:flex;flex-direction:column;
-    background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:64px 64px;
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 75% 20%, rgba(0,229,255,0.07), transparent 30%),
+      radial-gradient(circle at 20% 70%, rgba(139,92,246,0.06), transparent 30%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-x: hidden;
   }
-  a{color:inherit;text-decoration:none;}
-  .mono{font-family:'JetBrains Mono',monospace;}
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:26px 32px;max-width:1000px;margin:0 auto;width:100%;}
-  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
-  .logo span{color:var(--indigo);}
-  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
-  .back-link:hover{color:var(--ink);}
-
-  .wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 32px 60px;}
-  .card{
-    background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:36px;
-    max-width:400px;width:100%;box-shadow:0 20px 50px rgba(27,36,48,0.06);
+  .background {
+    position: fixed; inset: 0; pointer-events: none; z-index: -10; overflow: hidden;
   }
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin-bottom:8px;}
-  .card p.sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:24px;}
-
-  .oauth-row{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
-  .auth-provider-btn{
-    padding:12px 16px;border-radius:8px;border:1px solid var(--line);background:#fff;font-weight:600;
-    font-size:13.5px;cursor:pointer;text-align:center;color:var(--ink);
+  .grid {
+    position: absolute; inset: 0; opacity: 0.23;
+    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
   }
-  .auth-provider-btn:hover{border-color:var(--indigo);color:var(--indigo);}
-
-  .divider{display:flex;align-items:center;gap:12px;margin-bottom:22px;color:var(--ink-soft);font-size:12px;}
-  .divider::before, .divider::after{content:'';flex:1;height:1px;background:var(--line);}
-
-  .field{margin-bottom:14px;}
-  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
-  .field input{
-    width:100%;border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:14px;font-family:inherit;
+  .orb {
+    position: absolute; width: 400px; height: 400px; border-radius: 50%; filter: blur(100px); opacity: 0.08;
   }
-  .field input:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo);}
+  .orb.one { top: -150px; right: -100px; background: var(--cyan); }
+  .orb.two { bottom: -150px; left: -100px; background: var(--purple); }
 
-  .primary-btn{
-    width:100%;background:var(--indigo);color:#fff;border:none;padding:12px;border-radius:8px;
-    font-weight:600;font-size:14px;cursor:pointer;margin-top:4px;
+  header {
+    position: absolute; top: 24px; left: 32px; right: 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1000px; margin: 0 auto; width: calc(100% - 64px);
   }
-  .primary-btn:hover{background:#2f31c9;}
+  .logo { font-weight: 800; font-size: 18px; }
+  .logo span { color: var(--cyan); text-shadow: 0 0 20px rgba(0,229,255,0.3); }
+  .back-link { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); transition: color 0.3s; }
+  .back-link:hover { color: var(--cyan); }
 
-  .toggle-row{text-align:center;margin-top:16px;font-size:13px;color:var(--ink-soft);}
-  .toggle-row button{background:none;border:none;color:var(--indigo);font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;}
+  .card {
+    width: 100%;
+    max-width: var(--max-width);
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+    margin-top: 40px;
+  }
 
-  #authStatus{font-size:12.5px;color:var(--ink-soft);margin-top:14px;text-align:center;min-height:16px;}
-  #authStatus.error{color:#C4453A;}
+  h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .card p.sub { font-size: 13.5px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
 
-  footer{padding:20px 32px 30px;text-align:center;font-size:12.5px;color:var(--ink-soft);}
+  .oauth-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .auth-provider-btn {
+    width: 100%;
+    padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); font-weight: 600;
+    font-size: 13.5px; cursor: pointer; text-align: center; color: var(--text);
+    transition: all 0.3s var(--ease);
+  }
+  .auth-provider-btn:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-soft); transform: translateY(-2px); }
 
-  @media (max-width:560px){
-    body{overflow-x:hidden;}
-    header{padding:18px;}
-    .wrap{padding:12px 18px 40px;}
-    .card{padding:26px 20px;border-radius:12px;}
-    h1{font-size:19px;}
-    .card p.sub{font-size:13px;}
-    .auth-provider-btn{padding:13px 14px;}
-    footer{padding:16px 18px 26px;font-size:11.5px;}
+  .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--muted); font-size: 11.5px; font-family: 'JetBrains Mono', monospace; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 11.5px; font-weight: 600; color: var(--muted); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; }
+  .field input {
+    width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+    font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text);
+    outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .field input:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,229,255,0.15); }
+
+  .primary-btn {
+    width: 100%; background: var(--cyan); color: #05070b; border: none; padding: 13px; border-radius: 10px;
+    font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px;
+    transition: all 0.3s var(--ease);
+  }
+  .primary-btn:hover { background: var(--peach); transform: translateY(-2px); box-shadow: 0 0 25px rgba(255,216,189,0.3); }
+
+  .toggle-row { text-align: center; margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .toggle-row button { background: none; border: none; color: var(--cyan); font-weight: 600; cursor: pointer; font-size: 13px; font-family: inherit; transition: color 0.3s; }
+  .toggle-row button:hover { color: var(--peach); text-decoration: underline; }
+
+  #authStatus { font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center; min-height: 16px; font-family: 'JetBrains Mono', monospace; }
+  #authStatus.error { color: var(--red); }
+
+  footer { padding: 24px 32px 10px; text-align: center; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; max-width: 500px; line-height: 1.5; }
+
+  @media (max-width: 560px) {
+    header { left: 18px; right: 18px; width: calc(100% - 36px); top: 16px; }
+    .card { padding: 26px 20px; border-radius: var(--radius-md); }
+    h1 { font-size: 21px; }
   }
 </style>
 </head>
 <body>
+
+<div class="background">
+  <div class="grid"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+</div>
 
 <header>
   <div class="logo">Bright<span>Stack</span> Co.</div>
   <a href="index.html" class="back-link">← Back to portfolio</a>
 </header>
 
-<div class="wrap">
-  <div class="card">
-    <h1 id="formTitle">Sign in to BrightStack</h1>
-    <p class="sub">Access your client area — project status, messages, and complaints.</p>
+<div class="card">
+  <h1 id="formTitle">Sign in to BrightStack</h1>
+  <p class="sub">Access your client area — project status, messages, and deliverables.</p>
 
-    <div class="oauth-row">
-      <button class="auth-provider-btn" onclick="signInOAuth('google')">Continue with Google</button>
-      <button class="auth-provider-btn" onclick="signInOAuth('facebook')">Continue with Facebook</button>
-    </div>
-
-    <div class="divider">or with email</div>
-
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="emailInput" placeholder="you@example.com">
-    </div>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" id="passwordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter') submitEmailAuth();">
-    </div>
-    <button class="primary-btn" id="emailSubmitBtn" onclick="submitEmailAuth()">Sign in</button>
-
-    <div class="toggle-row" id="toggleRow">
-      Don't have an account? <button onclick="toggleMode()">Create one</button>
-    </div>
-
-    <div id="authStatus"></div>
+  <div class="oauth-row">
+    <button class="auth-provider-btn" onclick="signInOAuth('google')">Continue with Google</button>
   </div>
+
+  <div class="divider">or with email</div>
+
+  <div class="field">
+    <label>Email</label>
+    <input type="email" id="emailInput" placeholder="you@example.com">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" id="passwordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter') submitEmailAuth();">
+  </div>
+  <button class="primary-btn" id="emailSubmitBtn" onclick="submitEmailAuth()">Sign in</button>
+
+  <div class="toggle-row" id="toggleRow">
+    Don't have an account? <button onclick="toggleMode()">Create one</button>
+  </div>
+
+  <div id="authStatus"></div>
 </div>
 
 <footer>Your password is handled directly by Firebase Authentication — BrightStack never sees or stores it in plain text.</footer>
 
 <script type="module">
-  import { auth, db, googleProvider, facebookProvider } from './firebase-config.js';
+  import { auth, db, googleProvider } from './firebase-config.js';
   import {
     signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword,
-    signInWithEmailAndPassword, updateProfile
+    signInWithEmailAndPassword
   } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
   import { doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
@@ -173,7 +224,7 @@
     statusEl.className = '';
     statusEl.textContent = 'Opening ' + name + ' sign-in…';
     try {
-      const provider = name === 'google' ? googleProvider : facebookProvider;
+      const provider = googleProvider;
       const result = await signInWithPopup(auth, provider);
       await ensureClientDoc(result.user);
       redirectAfterAuth();
@@ -222,7 +273,6 @@
     }
   };
 
-  // If already signed in, skip straight through
   onAuthStateChanged(auth, (user) => {
     if (user) redirectAfterAuth();
   });
