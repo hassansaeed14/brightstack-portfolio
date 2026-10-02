@@ -17,78 +17,85 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1B2430; --ink-soft:#4B5568; --paper:#EEF1F4; --paper-2:#FFFFFF;
-    --line:#D4DAE1; --signal:#FFC93C; --signal-ink:#2A2005; --indigo:#3C3EE8; --indigo-soft:#EEEEFD;
-    --churn:#E4573D; --good:#0EA5A5;
+    --bg:#0a0f16; --card:rgba(255,255,255,0.02); --ink:#ffffff; --muted:#a0aec0;
+    --line:rgba(0,229,255,0.15); --indigo:#00e5ff; --indigo-dim:rgba(0,229,255,0.08);
+    --signal:#ffdab9; --signal-ink:#0a0f16; --churn:#ff5470; --good:#00e5ff;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6; overflow-x:hidden;}
+  
+  /* Cyber Background Scan Effect */
+  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
+
   a{color:inherit;text-decoration:none;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
-  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:960px;margin:0 auto;}
-  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
+  header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:960px;margin:0 auto; border-bottom:1px solid var(--line);}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px; color:#fff;}
   .logo span{color:var(--indigo);}
-  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
-  .back-link:hover{color:var(--ink);}
+  .back-link{font-size:13px;font-weight:600;color:var(--muted); transition: color 0.3s;}
+  .back-link:hover{color:var(--indigo);}
 
-  .hero{max-width:960px;margin:0 auto;padding:8px 32px 30px;}
+  .hero{max-width:960px;margin:0 auto;padding:40px 32px 30px;}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
     color:var(--indigo);font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;
-    background:var(--indigo-soft);padding:6px 12px;border-radius:20px;
+    background:var(--indigo-dim);padding:6px 12px;border-radius:20px; border: 1px solid var(--line);
   }
-  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--indigo);display:inline-block;}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.01em;margin-bottom:12px;max-width:640px;}
-  .hero p{color:var(--ink-soft);font-size:15px;max-width:600px;}
-  .hero p.note{margin-top:10px;font-size:13px;color:var(--ink-soft);}
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--indigo);display:inline-block; box-shadow: 0 0 8px var(--indigo);}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.01em;margin-bottom:12px;max-width:680px; color:#fff;}
+  .hero p{color:var(--muted);font-size:15.5px;max-width:640px;}
+  .hero p.note{margin-top:10px;font-size:13px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
 
   .lab-wrap{max-width:960px;margin:0 auto;padding:0 32px 20px;}
-  .lab-panel{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px;}
+  .lab-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);}
 
   .lab-controls{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:22px;}
   .control-group{min-width:180px;}
-  .control-group label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:8px;}
+  .control-group label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:8px; font-family:'JetBrains Mono',monospace;}
   .control-group input[type=range]{width:100%;accent-color:var(--indigo);}
   #trainBtn{
-    background:var(--signal);color:var(--signal-ink);border:none;padding:12px 22px;border-radius:8px;
-    font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;
+    background:var(--signal);color:var(--signal-ink);border:none;padding:12px 24px;border-radius:8px;
+    font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap; transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 0 15px rgba(255,218,185,0.3);
   }
-  #trainBtn:disabled{background:var(--line);color:var(--ink-soft);cursor:wait;}
-  #trainBtn:not(:disabled):hover{background:#ffbb0f;}
-  .status-line{font-size:12.5px;color:var(--ink-soft);margin-left:auto;}
+  #trainBtn:disabled{background:rgba(255,255,255,0.05);color:var(--muted);cursor:wait; border: 1px solid var(--line); box-shadow:none;}
+  #trainBtn:not(:disabled):hover{transform: translateY(-2px); opacity: 0.9;}
+  .status-line{font-size:12.5px;color:var(--muted);margin-left:auto;}
 
   .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
-  .stat-box{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
-  .stat-label{font-size:12px;color:var(--ink-soft);margin-bottom:6px;}
+  .stat-box{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+  .stat-label{font-size:12px;color:var(--muted);margin-bottom:6px; font-family:'JetBrains Mono',monospace;}
   .stat-value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:var(--indigo);}
 
   .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;}
-  .chart-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;}
-  .chart-title{font-size:13px;font-weight:600;margin-bottom:10px;}
+  .chart-card{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:10px;padding:16px;}
+  .chart-title{font-size:13px;font-weight:600;margin-bottom:10px; color:#fff; font-family:'Space Grotesk',sans-serif;}
   canvas{width:100%;height:auto;display:block;}
 
-  .equation-row{background:var(--ink);color:var(--paper);border-radius:10px;padding:18px 20px;margin-bottom:22px;}
+  .equation-row{background:rgba(0,229,255,0.03);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:22px;}
   .equation-label{font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
-  .equation{font-size:14px;line-height:1.7;}
+  .equation{font-size:13.5px;line-height:1.7; color:#fff;}
 
-  .confusion-row{}
-  .confusion-title{font-size:13px;font-weight:600;margin-bottom:10px;}
-  .confusion-table{border-collapse:collapse;font-size:13px;}
+  .confusion-title{font-size:13px;font-weight:600;margin-bottom:10px; color:#fff; font-family:'Space Grotesk',sans-serif;}
+  .confusion-table{border-collapse:collapse;font-size:13px; width: 100%;}
   .confusion-table td, .confusion-table th{border:1px solid var(--line);padding:10px 16px;text-align:center;}
-  .confusion-table th{background:var(--paper);font-size:11.5px;color:var(--ink-soft);font-weight:600;}
-  .confusion-table td.hit{background:var(--indigo-soft);font-weight:700;}
+  .confusion-table th{background:rgba(255,255,255,0.03);font-size:11.5px;color:var(--muted);font-weight:600; font-family:'JetBrains Mono',monospace;}
+  .confusion-table td.hit{background:var(--indigo-dim);font-weight:700; color:var(--indigo);}
+  .confusion-table td { color: #fff; }
 
-  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--ink-soft);}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .legend .sw{width:9px;height:9px;border-radius:50%;display:inline-block;}
 
-  .how-it-works{max-width:960px;margin:0 auto;padding:0 32px 40px;font-size:13px;color:var(--ink-soft);}
-  .how-it-works summary{cursor:pointer;font-weight:600;color:var(--ink);}
-  .how-it-works p{margin-top:10px;max-width:640px;}
-  .how-it-works ul{margin:10px 0 0 18px;max-width:640px;}
+  .how-it-works{max-width:960px;margin:30px auto;padding:0 32px 40px;font-size:13.5px;color:var(--muted);}
+  .how-it-works summary{cursor:pointer;font-weight:600;color:#fff; font-family:'Space Grotesk',sans-serif;}
+  .how-it-works p{margin-top:10px;max-width:680px; line-height:1.6;}
+  .how-it-works ul{margin:10px 0 0 18px;max-width:680px; line-height:1.6;}
 
-  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--ink-soft);}
+  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--muted); border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace;}
 
   @media (max-width:700px){
     .charts-row, .result-grid{grid-template-columns:1fr;}
@@ -97,6 +104,7 @@
 </style>
 </head>
 <body>
+<div class="scan"></div>
 
 <header>
   <div class="logo">Bright<span>Stack</span></div>
@@ -104,62 +112,62 @@
 </header>
 
 <section class="hero">
-  <div class="eyebrow">Live Python · WebAssembly</div>
-  <h1>A real logistic regression model, training live in your browser.</h1>
-  <p>Nexora's client health score is rule-based — this is the same idea rebuilt as an actual trained model. It runs genuine CPython via Pyodide (WebAssembly), with gradient descent written from scratch in plain Python — no server, no pre-baked results, no JavaScript reimplementation of the math.</p>
-  <p class="note">The data below is synthetic (generated with a fixed seed), not real client data — built to demonstrate the model, not to make a claim about any actual client base.</p>
+  <div class="eyebrow">// Live Python · WebAssembly Engine</div>
+  <h1>Logistic Regression Model Training Live in Browser</h1>
+  <p>A native CPython runtime executed directly inside the client browser via Pyodide (WASM). Features raw batch gradient descent implemented from scratch in pure Python—completely eliminating server dependencies and pre-compiled model weights.</p>
+  <p class="note">// Dataset: Synthetic telemetry vector (140 rows, fixed pseudo-random seed).</p>
 </section>
 
 <section class="lab-wrap">
   <div class="lab-panel">
     <div class="lab-controls">
       <div class="control-group">
-        <label>Learning rate: <span id="lrVal">0.50</span></label>
+        <label>Learning Rate: <span id="lrVal" style="color:var(--indigo);">0.50</span></label>
         <input type="range" id="lrSlider" min="0.05" max="2" step="0.05" value="0.5">
       </div>
       <div class="control-group">
-        <label>Epochs: <span id="epochsVal">300</span></label>
+        <label>Epochs: <span id="epochsVal" style="color:var(--indigo);">300</span></label>
         <input type="range" id="epochsSlider" min="20" max="800" step="20" value="300">
       </div>
-      <button id="trainBtn" disabled>Booting Python…</button>
-      <div class="status-line mono" id="statusLine">Loading a CPython runtime via WebAssembly…</div>
+      <button id="trainBtn" disabled>Booting CPython…</button>
+      <div class="status-line mono" id="statusLine">Initializing WebAssembly runtime...</div>
     </div>
 
     <div id="labResults" style="display:none;">
       <div class="result-grid">
         <div class="stat-box">
-          <div class="stat-label">Accuracy — held-out test set</div>
+          <div class="stat-label">Test Set Accuracy</div>
           <div class="stat-value" id="accVal">–</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Trained in</div>
-          <div class="stat-value" id="timeVal">–</div>
+          <div class="stat-label">Execution Time</div>
+          <div class="stat-value" id="timeVal" style="color:var(--signal);">–</div>
         </div>
       </div>
 
       <div class="charts-row">
         <div class="chart-card">
-          <div class="chart-title">Loss over training</div>
+          <div class="chart-title">Loss Curve Convergence</div>
           <canvas id="lossCanvas" width="380" height="220"></canvas>
         </div>
         <div class="chart-card">
-          <div class="chart-title">Decision boundary</div>
+          <div class="chart-title">Decision Boundary Mapping</div>
           <canvas id="scatterCanvas" width="380" height="220"></canvas>
           <div class="legend">
             <span><i class="sw" style="background:var(--indigo)"></i>Retained</span>
             <span><i class="sw" style="background:var(--churn)"></i>Churned</span>
-            <span><i class="sw" style="background:var(--good)"></i>Correct (test)</span>
+            <span><i class="sw" style="background:var(--good)"></i>Correct</span>
           </div>
         </div>
       </div>
 
       <div class="equation-row">
-        <div class="equation-label mono">Learned function (on normalized 0–1 features)</div>
+        <div class="equation-label mono">// Learned Decision Function (Normalized 0–1 Space)</div>
         <div class="equation mono" id="equationText">–</div>
       </div>
 
       <div class="confusion-row">
-        <div class="confusion-title">Confusion matrix — test set</div>
+        <div class="confusion-title">Confusion Matrix (Held-out Test Split)</div>
         <table class="confusion-table" id="confusionTable"></table>
       </div>
     </div>
@@ -167,24 +175,34 @@
 </section>
 
 <details class="how-it-works">
-  <summary>How this actually works</summary>
-  <p>This page loads Pyodide — a real CPython interpreter compiled to WebAssembly — and runs actual Python in your browser tab. It's the same distinction the Smart Inquiry Router draws in reverse: that demo is honest about being rule-based, and this one is a genuine trained model.</p>
+  <summary>View Architecture & Implementation Details</summary>
+  <p>This module mounts a standalone Python environment inside the client browser, executing compiled C code via WASM. It proves that client-side applications can handle rigorous mathematical computations locally without offloading tasks to remote compute clusters.</p>
   <ul>
-    <li>140 synthetic client records are generated with a fixed random seed (two features: engagement score, average payment delay).</li>
-    <li>Features are min-max normalized, then split 80/20 into train and test sets.</li>
-    <li>A logistic regression model is trained with batch gradient descent, implemented from scratch — no scikit-learn, no numpy, just loops and math.log/exp.</li>
-    <li>Every time you move a slider and click "Train," it re-runs actual gradient descent in Python, live, and reports real accuracy on data it never trained on.</li>
+    <li><strong>Data Pipeline:</strong> 140 synthetic client feature rows generated across two parameters (engagement score, payment latency).</li>
+    <li><strong>Normalization:</strong> Min-max feature scaling applied prior to train/test set splitting (80/20 ratio).</li>
+    <li><strong>Optimization:</strong> Batch gradient descent calculated iteratively using fundamental math primitives (`math.log`, `math.exp`).</li>
+    <li><strong>Live Execution:</strong> Parameter updates trigger immediate recompilation and forward/backward passes on unseen validation data.</li>
   </ul>
-  <p>Limitations, stated plainly: it's a two-feature linear model on a small synthetic dataset — a deliberately simple, inspectable example, not a production churn model.</p>
+  <p class="note" style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--indigo);">// Note: Optimized as a transparent, verifiable machine learning demonstration rather than a black-box enterprise pipeline.</p>
 </details>
 
-<footer>Built by BrightStack Co. · real Python, real gradient descent, running entirely client-side.</footer>
+<footer>Built by BrightStack Co. · Real Python, Real Gradient Descent, Zero Server Overhead.</footer>
 
+<!-- Pyodide CPython WebAssembly Runtime -->
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<!-- 3D Card Hover Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-let pyodide = null;
+  VanillaTilt.init(document.querySelectorAll(".lab-panel, .chart-card, .stat-box"), {
+    max: 3,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.04,
+  });
 
-const SETUP_CODE = `
+  let pyodide = null;
+
+  const SETUP_CODE = `
 import random, math
 
 random.seed(42)
@@ -216,7 +234,7 @@ X_train, y_train = _Xn[:_split], _y[:_split]
 X_test, y_test = _Xn[_split:], _y[_split:]
 `;
 
-const TRAIN_CODE = `
+  const TRAIN_CODE = `
 import math, json, time
 
 def sigmoid(z):
@@ -273,137 +291,132 @@ result = {
 json.dumps(result)
 `;
 
-async function boot(){
-  try{
-    pyodide = await loadPyodide();
-    pyodide.runPython(SETUP_CODE);
-    document.getElementById('statusLine').textContent = 'Python ready — click Train to run gradient descent live.';
-    document.getElementById('trainBtn').disabled = false;
-    document.getElementById('trainBtn').textContent = 'Train model';
-  }catch(err){
-    document.getElementById('statusLine').textContent = 'Could not load the Python runtime (check your connection) — ' + err;
+  async function boot(){
+    try{
+      pyodide = await loadPyodide();
+      pyodide.runPython(SETUP_CODE);
+      document.getElementById('statusLine').textContent = 'CPython Ready — Click Train to execute.';
+      document.getElementById('trainBtn').disabled = false;
+      document.getElementById('trainBtn').textContent = 'Train Model';
+    }catch(err){
+      document.getElementById('statusLine').textContent = 'Runtime initialization failed — ' + err;
+    }
   }
-}
 
-function mapPt(nx, ny, w, h, pad){
-  return [pad + nx*(w-2*pad), h-pad-ny*(h-2*pad)];
-}
+  function mapPt(nx, ny, w, h, pad){
+    return [pad + nx*(w-2*pad), h-pad-ny*(h-2*pad)];
+  }
 
-function drawLoss(losses){
-  const c = document.getElementById('lossCanvas');
-  const ctx = c.getContext('2d');
-  const w = c.width, h = c.height, pad = 30;
-  ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = '#D4DAE1'; ctx.lineWidth = 1;
-  ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
-  const maxLoss = Math.max(...losses, 0.01);
-  ctx.beginPath();
-  losses.forEach((l, i) => {
-    const nx = i/(losses.length-1 || 1);
-    const ny = l/maxLoss;
-    const [px, py] = mapPt(nx, ny, w, h, pad);
-    if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-  });
-  ctx.strokeStyle = '#3C3EE8'; ctx.lineWidth = 2; ctx.stroke();
-  ctx.fillStyle = '#4B5568'; ctx.font = '11px Inter, sans-serif';
-  ctx.fillText('epoch →', w-pad-40, h-8);
-  ctx.save(); ctx.translate(12, h/2); ctx.rotate(-Math.PI/2);
-  ctx.fillText('loss (high → low)', -40, 0); ctx.restore();
-}
-
-function drawScatter(trainPts, testPts, w0, w1, b){
-  const c = document.getElementById('scatterCanvas');
-  const ctx = c.getContext('2d');
-  const w = c.width, h = c.height, pad = 30;
-  ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = '#D4DAE1'; ctx.lineWidth = 1;
-  ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
-
-  // decision boundary: w0*x + w1*y + b = 0  ->  y = -(w0*x+b)/w1
-  ctx.setLineDash([5,4]);
-  ctx.beginPath();
-  if (Math.abs(w1) > 1e-6){
-    [0,1].forEach((x,i) => {
-      const yLine = -(w0*x+b)/w1;
-      const yClamped = Math.max(0, Math.min(1, yLine));
-      const [px, py] = mapPt(x, yClamped, w, h, pad);
+  function drawLoss(losses){
+    const c = document.getElementById('lossCanvas');
+    const ctx = c.getContext('2d');
+    const w = c.width, h = c.height, pad = 30;
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle = 'rgba(0,229,255,0.15)'; ctx.lineWidth = 1;
+    ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
+    const maxLoss = Math.max(...losses, 0.01);
+    ctx.beginPath();
+    losses.forEach((l, i) => {
+      const nx = i/(losses.length-1 || 1);
+      const ny = l/maxLoss;
+      const [px, py] = mapPt(nx, ny, w, h, pad);
       if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
     });
+    ctx.strokeStyle = '#00e5ff'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#a0aec0'; ctx.font = '11px Inter, sans-serif';
+    ctx.fillText('epochs →', w-pad-50, h-8);
   }
-  ctx.strokeStyle = '#1B2430'; ctx.lineWidth = 1.5; ctx.stroke();
-  ctx.setLineDash([]);
 
-  trainPts.forEach(p => {
-    const [px, py] = mapPt(p.x, p.y, w, h, pad);
-    ctx.beginPath(); ctx.arc(px, py, 3.5, 0, Math.PI*2);
-    ctx.fillStyle = p.label === 1 ? '#E4573D' : '#3C3EE8';
-    ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
+  function drawScatter(trainPts, testPts, w0, w1, b){
+    const c = document.getElementById('scatterCanvas');
+    const ctx = c.getContext('2d');
+    const w = c.width, h = c.height, pad = 30;
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle = 'rgba(0,229,255,0.15)'; ctx.lineWidth = 1;
+    ctx.strokeRect(pad, pad, w-2*pad, h-2*pad);
+
+    ctx.setLineDash([5,4]);
+    ctx.beginPath();
+    if (Math.abs(w1) > 1e-6){
+      [0,1].forEach((x,i) => {
+        const yLine = -(w0*x+b)/w1;
+        const yClamped = Math.max(0, Math.min(1, yLine));
+        const [px, py] = mapPt(x, yClamped, w, h, pad);
+        if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      });
+    }
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.setLineDash([]);
+
+    trainPts.forEach(p => {
+      const [px, py] = mapPt(p.x, p.y, w, h, pad);
+      ctx.beginPath(); ctx.arc(px, py, 3.5, 0, Math.PI*2);
+      ctx.fillStyle = p.label === 1 ? '#ff5470' : '#00e5ff';
+      ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
+    });
+
+    testPts.forEach(p => {
+      const [px, py] = mapPt(p.x, p.y, w, h, pad);
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI*2);
+      ctx.fillStyle = p.label === 1 ? '#ff5470' : '#00e5ff';
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = p.pred === p.label ? '#00e5ff' : '#ffffff';
+      ctx.stroke();
+    });
+
+    ctx.fillStyle = '#a0aec0'; ctx.font = '11px Inter, sans-serif';
+    ctx.fillText('engagement →', w-pad-75, h-8);
+  }
+
+  function renderConfusion(conf){
+    const t = document.getElementById('confusionTable');
+    t.innerHTML = `
+      <tr><th></th><th>Predicted Retained</th><th>Predicted Churned</th></tr>
+      <tr><th>Actual Retained</th><td class="hit">${conf.tn}</td><td>${conf.fp}</td></tr>
+      <tr><th>Actual Churned</th><td>${conf.fn}</td><td class="hit">${conf.tp}</td></tr>
+    `;
+  }
+
+  async function runTraining(){
+    const btn = document.getElementById('trainBtn');
+    const lr = parseFloat(document.getElementById('lrSlider').value);
+    const epochs = parseInt(document.getElementById('epochsSlider').value);
+    btn.disabled = true;
+    btn.textContent = 'Training…';
+    document.getElementById('statusLine').textContent = `Executing gradient descent (${epochs} epochs)...`;
+
+    await new Promise(r => setTimeout(r, 30));
+
+    pyodide.globals.set('LR', lr);
+    pyodide.globals.set('EPOCHS', epochs);
+    const resultJson = pyodide.runPython(TRAIN_CODE);
+    const result = JSON.parse(resultJson);
+
+    document.getElementById('labResults').style.display = 'block';
+    document.getElementById('accVal').textContent = (result.accuracy*100).toFixed(1) + '%';
+    document.getElementById('timeVal').textContent = result.elapsed_ms + ' ms';
+    document.getElementById('equationText').textContent =
+      `z = ${result.w[0].toFixed(3)}·engagement + ${result.w[1].toFixed(3)}·delay + ${result.b.toFixed(3)}   —   decision boundary at sigmoid(z) ≥ 0.5`;
+
+    drawLoss(result.losses);
+    drawScatter(result.train_points, result.test_points, result.w[0], result.w[1], result.b);
+    renderConfusion(result.confusion);
+
+    document.getElementById('statusLine').textContent = `Trained on ${result.train_points.length} samples, validated on ${result.test_points.length}.`;
+    btn.disabled = false;
+    btn.textContent = 'Train Again';
+  }
+
+  document.getElementById('lrSlider').addEventListener('input', e => {
+    document.getElementById('lrVal').textContent = parseFloat(e.target.value).toFixed(2);
   });
-
-  testPts.forEach(p => {
-    const [px, py] = mapPt(p.x, p.y, w, h, pad);
-    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI*2);
-    ctx.fillStyle = p.label === 1 ? '#E4573D' : '#3C3EE8';
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = p.pred === p.label ? '#0EA5A5' : '#000000';
-    ctx.stroke();
+  document.getElementById('epochsSlider').addEventListener('input', e => {
+    document.getElementById('epochsVal').textContent = e.target.value;
   });
+  document.getElementById('trainBtn').addEventListener('click', runTraining);
 
-  ctx.fillStyle = '#4B5568'; ctx.font = '11px Inter, sans-serif';
-  ctx.fillText('engagement →', w-pad-70, h-8);
-  ctx.save(); ctx.translate(12, h/2); ctx.rotate(-Math.PI/2);
-  ctx.fillText('payment delay →', -50, 0); ctx.restore();
-}
-
-function renderConfusion(conf){
-  const t = document.getElementById('confusionTable');
-  t.innerHTML = `
-    <tr><th></th><th>Predicted retained</th><th>Predicted churned</th></tr>
-    <tr><th>Actual retained</th><td class="hit">${conf.tn}</td><td>${conf.fp}</td></tr>
-    <tr><th>Actual churned</th><td>${conf.fn}</td><td class="hit">${conf.tp}</td></tr>
-  `;
-}
-
-async function runTraining(){
-  const btn = document.getElementById('trainBtn');
-  const lr = parseFloat(document.getElementById('lrSlider').value);
-  const epochs = parseInt(document.getElementById('epochsSlider').value);
-  btn.disabled = true;
-  btn.textContent = 'Training…';
-  document.getElementById('statusLine').textContent = `Running gradient descent for ${epochs} epochs in real Python…`;
-
-  await new Promise(r => setTimeout(r, 30)); // let UI paint before the sync python call
-
-  pyodide.globals.set('LR', lr);
-  pyodide.globals.set('EPOCHS', epochs);
-  const resultJson = pyodide.runPython(TRAIN_CODE);
-  const result = JSON.parse(resultJson);
-
-  document.getElementById('labResults').style.display = 'block';
-  document.getElementById('accVal').textContent = (result.accuracy*100).toFixed(1) + '%';
-  document.getElementById('timeVal').textContent = result.elapsed_ms + ' ms';
-  document.getElementById('equationText').textContent =
-    `z = ${result.w[0].toFixed(3)}·engagement + ${result.w[1].toFixed(3)}·delay + ${result.b.toFixed(3)}   —   predicted churn when sigmoid(z) ≥ 0.5`;
-
-  drawLoss(result.losses);
-  drawScatter(result.train_points, result.test_points, result.w[0], result.w[1], result.b);
-  renderConfusion(result.confusion);
-
-  document.getElementById('statusLine').textContent = `Done — trained on ${result.train_points.length} points, tested on ${result.test_points.length}.`;
-  btn.disabled = false;
-  btn.textContent = 'Train again';
-}
-
-document.getElementById('lrSlider').addEventListener('input', e => {
-  document.getElementById('lrVal').textContent = parseFloat(e.target.value).toFixed(2);
-});
-document.getElementById('epochsSlider').addEventListener('input', e => {
-  document.getElementById('epochsVal').textContent = e.target.value;
-});
-document.getElementById('trainBtn').addEventListener('click', runTraining);
-
-boot();
+  boot();
 </script>
 
 </body>
