@@ -3,166 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loom — Visual AI Workflow Builder</title>
+<title>Loom Studio Apex — Enterprise Multi-Agent AI Visual Orchestration Suite</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loom-workflow-builder.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Loom — Visual AI Workflow Builder">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/loom-workflow-builder.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Loom Studio Apex — Enterprise Multi-Agent AI Visual Orchestration Suite">
+<meta property="og:description" content="State-of-the-art visual AI node-graph canvas and debugging studio by BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --sidebar-bg:#05080d;
-    --sidebar-line:rgba(0,229,255,0.15);
-    --sidebar-text:#ffffff;
-    --sidebar-text-dim:#a0aec0;
-    --canvas-bg:#0a0f16;
-    --dot:rgba(0,229,255,0.06);
-    --card-bg:rgba(255,255,255,0.02);
-    --card-line:rgba(0,229,255,0.15);
-    --ink:#ffffff;
-    --ink-muted:#a0aec0;
-    --trigger:#00e5ff;
-    --ai:#ffdab9;
-    --logic:#ffdab9;
-    --action:#00e5ff;
-    --error:#ff4d4d;
-    --radius:16px;
-    --shadow:0 8px 24px -8px rgba(0,0,0,0.5);
-  }
-  *{box-sizing:border-box;}
-  html,body{height:100%; margin:0;}
-  body{
-    font-family:'Inter',sans-serif;
-    color:var(--ink);
-    overflow:hidden;
-    background: var(--canvas-bg);
+  :root {
+    --bg: #010309;
+    --surface: rgba(12, 18, 32, 0.92);
+    --surface-raised: rgba(22, 30, 50, 0.96);
+    --line: rgba(56, 189, 248, 0.22);
+    --border-hover: rgba(168, 85, 247, 0.7);
+    
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --faint: #475569;
+    
+    --cyan: #38bdf8;
+    --cyan-dim: rgba(56, 189, 248, 0.15);
+    --purple: #a855f7;
+    --purple-dim: rgba(168, 85, 247, 0.15);
+    --emerald: #34d399;
+    --emerald-dim: rgba(52, 211, 153, 0.15);
+    --rose: #fb7185;
+    
+    --radius: 22px;
+    --shadow: 0 40px 100px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
-  /* Cyber Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.04), transparent 60%);}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100vh; width: 100vw; overflow: hidden; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); }
 
-  .app{display:flex; height:100vh; width:100vw;}
-
-  /* ---------- SIDEBAR ---------- */
-  .sidebar{width:260px; flex-shrink:0; background:var(--sidebar-bg); color:var(--sidebar-text); display:flex; flex-direction:column; border-right:1px solid var(--sidebar-line); z-index:10;}
-  .sb-brand{padding:22px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--sidebar-line); background:rgba(5,8,13,0.8);}
-  .sb-mark{width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, var(--trigger), var(--ai)); flex-shrink:0; box-shadow: 0 0 10px rgba(0,229,255,0.3);}
-  .sb-brand-name{font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:17px; color:#fff;}
-  .sb-brand-sub{font-size:10px; color:var(--sidebar-text-dim); text-transform:uppercase; letter-spacing:1.3px; font-family:'JetBrains Mono',monospace;}
-
-  .sb-section{padding:16px 16px 4px;}
-  .sb-section-title{font-size:10.5px; text-transform:uppercase; letter-spacing:1.2px; color:var(--sidebar-text-dim); font-weight:700; margin-bottom:10px; font-family:'JetBrains Mono',monospace;}
-  .sb-node-btn{
-    display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:rgba(255,255,255,0.02); border:1px solid var(--sidebar-line);
-    border-radius:9px; padding:11px 13px; margin-bottom:8px; cursor:pointer; color:var(--sidebar-text); font-size:12.5px; font-weight:600;
-    transition:.2s; backdrop-filter: blur(10px);
+  .scan {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.18;
+    background-image: repeating-linear-gradient(0deg, rgba(56,189,248,0.02) 0px, rgba(56,189,248,0.02) 1px, transparent 1px, transparent 3px);
   }
-  .sb-node-btn:hover{border-color:var(--trigger); background:rgba(0,229,255,0.05); transform: translateY(-1px);}
-  .sb-node-dot{width:9px; height:9px; border-radius:3px; flex-shrink:0;}
 
-  .sb-footer{margin-top:auto; padding:16px; border-top:1px solid var(--sidebar-line);}
-  .sb-hint{font-size:11.5px; color:var(--sidebar-text-dim); line-height:1.6; font-family:'JetBrains Mono',monospace;}
+  .app { display: flex; height: 100vh; width: 100vw; }
 
-  /* ---------- MAIN ---------- */
-  .main{flex:1; display:flex; flex-direction:column; position:relative; min-width:0;}
-  .toolbar{
-    height:64px; flex-shrink:0; background:rgba(5,8,13,0.8); backdrop-filter: blur(10px); border-bottom:1px solid var(--card-line);
-    display:flex; align-items:center; justify-content:space-between; padding:0 24px; z-index:5;
-  }
-  .tb-title{font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:#fff;}
-  .tb-sub{font-size:11.5px; color:var(--ink-muted); font-family:'JetBrains Mono',monospace;}
-  .tb-actions{display:flex; align-items:center; gap:10px;}
-  .btn-ghost{background:rgba(255,255,255,0.03); border:1px solid var(--card-line); color:var(--ink-muted); font-size:12.5px; font-weight:600; padding:9px 16px; border-radius:9px; cursor:pointer; transition: all 0.2s; backdrop-filter: blur(10px);}
-  .btn-ghost:hover{color:#fff; border-color:var(--trigger);}
-  .btn-run{
-    background:var(--trigger); color:#0a0f16; border:none; border-radius:9px; padding:10px 20px; font-weight:700; font-size:13px;
-    cursor:pointer; display:flex; align-items:center; gap:8px; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);
-  }
-  .btn-run:hover{transform: translateY(-2px); opacity: 0.9;}
-  .btn-run:disabled{opacity:.5; cursor:not-allowed; transform:none; box-shadow:none;}
-  .spinner{width:12px; height:12px; border:2px solid rgba(10,15,22,0.3); border-top-color:#0a0f16; border-radius:50%; animation:spin .7s linear infinite; display:none;}
-  .spinner.show{display:inline-block;}
-  @keyframes spin{to{transform:rotate(360deg);}}
+  /* Sidebar */
+  .sidebar { width: 300px; flex-shrink: 0; background: rgba(2,4,8,0.98); border-right: 1px solid var(--line); display: flex; flex-direction: column; z-index: 10; backdrop-filter: blur(20px); }
+  .sb-brand { padding: 24px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line); background: rgba(2,4,8,0.94); }
+  .sb-mark { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), var(--purple)); box-shadow: 0 0 25px rgba(56,189,248,0.4); }
+  .sb-brand-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 20px; color: #fff; }
+  .sb-brand-sub { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace; }
 
-  .canvas-scroll{flex:1; overflow:auto; position:relative; background:var(--canvas-bg); background-image:radial-gradient(var(--dot) 1.5px, transparent 1.5px); background-size:24px 24px;}
-  .canvas-inner{width:1500px; height:1150px; position:relative;}
-  svg.wires{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
-  .wire-path{fill:none; stroke:rgba(0,229,255,0.3); stroke-width:2; cursor:pointer;}
-  .wire-path.skipped{stroke:rgba(255,255,255,0.1); stroke-dasharray:4 4;}
-  .wire-path.active-run{stroke:var(--trigger); stroke-width:2.5; filter: drop-shadow(0 0 6px var(--trigger));}
-  .wire-hit{fill:none; stroke:transparent; stroke-width:14; cursor:pointer;}
-  .wire-label{font-family:'JetBrains Mono',monospace; font-size:10px; fill:var(--ink-muted);}
-  .temp-wire{fill:none; stroke:var(--trigger); stroke-width:2; stroke-dasharray:5 4;}
+  .sb-section { padding: 20px 20px 8px; }
+  .sb-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); font-weight: 700; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+  .sb-node-btn {
+    display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 12px 16px; margin-bottom: 9px; cursor: pointer; color: #fff; font-size: 13.5px; font-weight: 600;
+    transition: all 0.2s; backdrop-filter: blur(12px);
+  }
+  .sb-node-btn:hover { border-color: var(--purple); background: var(--purple-dim); transform: translateY(-1px); }
+  .sb-node-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 
-  .node{
-    position:absolute; width:220px; background:var(--card-bg); border:1.5px solid var(--card-line); border-radius:14px;
-    box-shadow:var(--shadow); cursor:grab; user-select:none; z-index:2; backdrop-filter: blur(12px); transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .node.selected{border-color:var(--trigger); box-shadow:0 0 0 3px rgba(0,229,255,0.15), var(--shadow);}
-  .node.status-running{border-color:var(--ai); box-shadow:0 0 15px rgba(255,218,185,0.3);}
-  .node.status-done{border-color:var(--trigger); box-shadow:0 0 15px rgba(0,229,255,0.2);}
-  .node.status-skipped{opacity:.45;}
-  .node-strip{height:4px; border-radius:14px 14px 0 0;}
-  .node-body{padding:12px 14px 13px;}
-  .node-top{display:flex; align-items:center; justify-content:space-between; gap:6px;}
-  .node-type{font-size:9.5px; text-transform:uppercase; letter-spacing:.8px; font-weight:700; font-family:'JetBrains Mono',monospace;}
-  .node-del{background:none; border:none; color:var(--ink-muted); cursor:pointer; font-size:12px; opacity:0; transition:.15s;}
-  .node:hover .node-del{opacity:1;}
-  .node-del:hover{color:var(--error);}
-  .node-label{font-size:13.5px; font-weight:700; margin-top:5px; line-height:1.3; color:#fff;}
-  .node-desc{font-size:11px; color:var(--ink-muted); margin-top:4px; line-height:1.4; max-height:32px; overflow:hidden;}
-  .node-status-pill{display:inline-block; margin-top:8px; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:2px 7px; border-radius:5px; background:rgba(255,255,255,0.03); color:var(--ink-muted); font-family:'JetBrains Mono',monospace;}
+  .sb-footer { margin-top: auto; padding: 20px; border-top: 1px solid var(--line); }
+  .sb-hint { font-size: 11.5px; color: var(--muted); line-height: 1.6; font-family: 'JetBrains Mono', monospace; }
 
-  .port{position:absolute; width:13px; height:13px; border-radius:50%; background:var(--canvas-bg); border:2.5px solid var(--sidebar-line); left:50%; transform:translateX(-50%); cursor:crosshair; z-index:3; transition: border-color 0.2s;}
-  .port.in{top:-7px;}
-  .port.out{bottom:-7px;}
-  .port:hover{border-color:var(--trigger); background:var(--trigger); box-shadow: 0 0 8px var(--trigger);}
+  /* Main Workspace */
+  .main { flex: 1; display: flex; flex-direction: column; position: relative; min-width: 0; }
+  .toolbar {
+    height: 76px; flex-shrink: 0; background: rgba(2,4,8,0.9); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; padding: 0 36px; z-index: 5;
+  }
+  .tb-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 18px; color: #fff; }
+  .tb-sub { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .tb-actions { display: flex; align-items: center; gap: 12px; }
+  .btn-ghost { background: var(--surface); border: 1px solid var(--line); color: var(--muted); font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 10px; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(10px); }
+  .btn-ghost:hover { color: #fff; border-color: var(--cyan); }
+  .btn-run {
+    background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #010309; border: none; border-radius: 10px; padding: 12px 26px; font-weight: 800; font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 25px rgba(56,189,248,0.4);
+  }
+  .btn-run:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(168,85,247,0.6); }
+  .spinner { width: 14px; height: 14px; border: 2px solid rgba(1,3,9,0.3); border-top-color: #010309; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+  .spinner.show { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ---------- INSPECTOR ---------- */
-  .inspector{
-    position:absolute; top:64px; right:0; bottom:0; width:340px; background:#05080d; border-left:1px solid var(--card-line);
-    transform:translateX(100%); transition:transform .25s ease; overflow-y:auto; z-index:6; padding:24px; backdrop-filter: blur(16px);
-  }
-  .inspector.show{transform:translateX(0);}
-  .insp-close{float:right; background:rgba(255,255,255,0.03); border:1px solid var(--card-line); width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:13px; color:var(--ink-muted); display:flex; align-items:center; justify-content:center;}
-  .insp-close:hover{color:#fff; border-color:var(--trigger);}
-  .insp-type{font-size:10.5px; text-transform:uppercase; letter-spacing:1px; font-weight:700; margin-bottom:4px; font-family:'JetBrains Mono',monospace;}
-  .insp-label{font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; margin-bottom:18px; padding-right:30px; color:#fff;}
-  .insp-field{margin-bottom:16px;}
-  .insp-field label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-muted); font-weight:700; margin-bottom:6px; font-family:'JetBrains Mono',monospace;}
-  .insp-field textarea, .insp-field input{
-    width:100%; background:rgba(0,0,0,0.3); border:1px solid var(--card-line); border-radius:8px; padding:11px;
-    font-family:'Inter',sans-serif; font-size:12.5px; color:var(--ink); resize:vertical; outline: none; transition: border-color 0.2s;
-  }
-  .insp-field textarea:focus, .insp-field input:focus{border-color:var(--trigger); box-shadow: 0 0 10px rgba(0,229,255,0.2);}
-  .insp-hint{font-size:11px; color:var(--ink-muted); line-height:1.6; background:rgba(255,255,255,0.02); border-radius:8px; padding:10px; margin-top:6px; font-family:'JetBrains Mono',monospace;}
+  .canvas-scroll { flex: 1; overflow: auto; position: relative; background: var(--bg); background-image: radial-gradient(rgba(56,189,248,0.12) 1.5px, transparent 1.5px); background-size: 36px 36px; }
+  .canvas-inner { width: 2200px; height: 1600px; position: relative; }
+  svg.wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .wire-path { fill: none; stroke: var(--cyan); stroke-width: 2.5; cursor: pointer; pointer-events: stroke; transition: stroke 0.2s; }
+  .wire-path:hover { stroke: var(--purple); stroke-width: 3.5; }
+  .wire-path.skipped { stroke: rgba(255,255,255,0.1); stroke-dasharray: 4 4; }
+  .wire-path.active-run { stroke: var(--emerald); stroke-width: 3.5; filter: drop-shadow(0 0 10px var(--emerald)); }
+  .wire-hit { fill: none; stroke: transparent; stroke-width: 18; cursor: pointer; pointer-events: stroke; }
+  .wire-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--muted); }
+  .temp-wire { fill: none; stroke: var(--purple); stroke-width: 2.5; stroke-dasharray: 6 4; }
 
-  /* ---------- LOG DRAWER ---------- */
-  .log-toggle{
-    position:absolute; bottom:18px; right:360px; z-index:6; background:var(--trigger); color:#0a0f16; border:none;
-    border-radius:999px; padding:10px 18px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:var(--shadow);
-    display:flex; align-items:center; gap:7px; transition: transform 0.2s;
+  /* Node Card */
+  .node {
+    position: absolute; width: 260px; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); cursor: grab; user-select: none; z-index: 2; backdrop-filter: blur(16px); transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .log-toggle:hover{transform: translateY(-2px);}
-  .log-toggle .badge{background:#0a0f16; color:var(--trigger); border-radius:999px; padding:1px 7px; font-size:10.5px; font-family:'JetBrains Mono',monospace;}
-  .log-drawer{
-    position:absolute; left:0; right:0; bottom:0; height:0; background:#05080d; border-top:1px solid var(--card-line); overflow:hidden;
-    transition:height .25s ease; z-index:5; backdrop-filter: blur(16px);
+  .node:active { cursor: grabbing; }
+  .node.selected { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(168,85,247,0.3), var(--shadow); }
+  .node.status-running { border-color: var(--cyan); box-shadow: 0 0 30px rgba(56,189,248,0.6); }
+  .node.status-done { border-color: var(--emerald); box-shadow: 0 0 25px rgba(52,211,153,0.5); }
+  .node.status-skipped { opacity: 0.4; }
+  .node-strip { height: 6px; border-radius: var(--radius) var(--radius) 0 0; }
+  .node-body { padding: 18px; }
+  .node-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .node-type { font-size: 10.5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .node-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; opacity: 0; transition: 0.15s; }
+  .node:hover .node-del { opacity: 1; }
+  .node-del:hover { color: var(--rose); }
+  .node-label { font-size: 15px; font-weight: 700; margin-top: 6px; line-height: 1.3; color: #fff; }
+  .node-desc { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; max-height: 36px; overflow: hidden; }
+  .node-status-pill { display: inline-block; margin-top: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 9px; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  .port { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2.5px solid var(--line); left: 50%; transform: translateX(-50%); cursor: crosshair; z-index: 3; transition: all 0.2s; }
+  .port.in { top: -7px; }
+  .port.out { bottom: -7px; }
+  .port:hover { border-color: var(--purple); background: var(--purple); box-shadow: 0 0 12px var(--purple); }
+
+  /* Inspector Pane */
+  .inspector {
+    position: absolute; top: 76px; right: 0; bottom: 0; width: 400px; background: rgba(2,4,8,0.98); border-left: 1px solid var(--line);
+    transform: translateX(100%); transition: transform 0.25s cubic-bezier(.2,.8,.2,1); overflow-y: auto; z-index: 6; padding: 36px; backdrop-filter: blur(20px);
   }
-  .log-drawer.show{height:260px;}
-  .log-drawer-head{display:flex; align-items:center; justify-content:space-between; padding:12px 24px; border-bottom:1px solid var(--card-line);}
-  .log-drawer-title{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--trigger); font-weight:600;}
-  .log-drawer-body{overflow-y:auto; height:calc(100% - 44px); padding:8px 0;}
-  .log-row{padding:9px 24px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#C7C9D4; border-bottom:1px solid rgba(255,255,255,0.03); display:flex; gap:10px;}
-  .log-row .tag{color:var(--trigger); flex-shrink:0;}
-  .log-row .msg{color:var(--ink-muted); white-space:pre-wrap;}
+  .inspector.show { transform: translateX(0); }
+  .insp-close { float: right; background: var(--surface); border: 1px solid var(--line); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 15px; color: var(--muted); display: flex; align-items: center; justify-content: center; }
+  .insp-close:hover { color: #fff; border-color: var(--purple); }
+  .insp-type { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  .insp-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 24px; padding-right: 40px; color: #fff; }
+  .insp-field { margin-bottom: 22px; }
+  .insp-field label { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .insp-field textarea, .insp-field input, .insp-field select {
+    width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px;
+    font-family: 'Inter', sans-serif; font-size: 14px; color: var(--ink); resize: vertical; outline: none; transition: border-color 0.2s;
+  }
+  .insp-field textarea:focus, .insp-field input:focus, .insp-field select:focus { border-color: var(--purple); box-shadow: 0 0 20px rgba(168,85,247,0.3); }
+  .insp-hint { font-size: 12px; color: var(--muted); line-height: 1.6; background: rgba(255,255,255,0.02); border-radius: 10px; padding: 14px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Execution Log Drawer */
+  .log-toggle {
+    position: absolute; bottom: 22px; right: 420px; z-index: 6; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #010309; border: none;
+    border-radius: 999px; padding: 12px 24px; font-size: 13.5px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 8px; transition: transform 0.2s;
+  }
+  .log-toggle:hover { transform: translateY(-2px); }
+  .log-toggle .badge { background: #010309; color: var(--cyan); border-radius: 999px; padding: 2px 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+  .log-drawer {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: rgba(2,4,8,0.99); border-top: 1px solid var(--line); overflow: hidden;
+    transition: height 0.25s ease; z-index: 5; backdrop-filter: blur(20px);
+  }
+  .log-drawer.show { height: 320px; }
+  .log-drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 36px; border-bottom: 1px solid var(--line); }
+  .log-drawer-title { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: var(--cyan); font-weight: 700; }
+  .log-drawer-body { overflow-y: auto; height: calc(100% - 58px); padding: 14px 0; }
+  .log-row { padding: 11px 36px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; gap: 16px; }
+  .log-row .tag { color: var(--cyan); flex-shrink: 0; font-weight: 700; }
+  .log-row .msg { color: var(--muted); white-space: pre-wrap; }
 </style>
 </head>
 <body>
@@ -174,44 +171,44 @@
     <div class="sb-brand">
       <div class="sb-mark"></div>
       <div>
-        <div class="sb-brand-name">Loom</div>
-        <div class="sb-brand-sub">// AI Workflow Builder</div>
+        <div class="sb-brand-name">Loom Studio Apex</div>
+        <div class="sb-brand-sub">// Enterprise AI Suite</div>
       </div>
     </div>
 
     <div class="sb-section">
       <div class="sb-section-title">Triggers</div>
-      <button class="sb-node-btn" onclick="addNode('trigger')"><span class="sb-node-dot" style="background:var(--trigger)"></span>New Trigger</button>
+      <button class="sb-node-btn" onclick="addNode('trigger')"><span class="sb-node-dot" style="background:var(--cyan)"></span>Webhook Trigger</button>
     </div>
     <div class="sb-section">
-      <div class="sb-section-title">AI Actions</div>
-      <button class="sb-node-btn" onclick="addNode('ai')"><span class="sb-node-dot" style="background:var(--ai)"></span>Classify / Extract</button>
-      <button class="sb-node-btn" onclick="addNode('ai-draft')"><span class="sb-node-dot" style="background:var(--ai)"></span>Draft Text</button>
+      <div class="sb-section-title">AI Agent Actions</div>
+      <button class="sb-node-btn" onclick="addNode('ai')"><span class="sb-node-dot" style="background:var(--purple)"></span>Classify & Extract</button>
+      <button class="sb-node-btn" onclick="addNode('ai-draft')"><span class="sb-node-dot" style="background:var(--purple)"></span>Generative AI Writer</button>
     </div>
     <div class="sb-section">
-      <div class="sb-section-title">Logic</div>
-      <button class="sb-node-btn" onclick="addNode('logic')"><span class="sb-node-dot" style="background:var(--logic)"></span>If / Branch</button>
+      <div class="sb-section-title">Routing Logic</div>
+      <button class="sb-node-btn" onclick="addNode('logic')"><span class="sb-node-dot" style="background:var(--emerald)"></span>Conditional If / Else</button>
     </div>
     <div class="sb-section">
-      <div class="sb-section-title">Actions</div>
-      <button class="sb-node-btn" onclick="addNode('action')"><span class="sb-node-dot" style="background:var(--action)"></span>Create Ticket</button>
-      <button class="sb-node-btn" onclick="addNode('action')"><span class="sb-node-dot" style="background:var(--action)"></span>Send Message</button>
+      <div class="sb-section-title">Integrations</div>
+      <button class="sb-node-btn" onclick="addNode('action')"><span class="sb-node-dot" style="background:var(--cyan)"></span>Create CRM Ticket</button>
+      <button class="sb-node-btn" onclick="addNode('action')"><span class="sb-node-dot" style="background:var(--cyan)"></span>Dispatch Email Reply</button>
     </div>
 
     <div class="sb-footer">
-      <div class="sb-hint">// Tip: Drag nodes to position. Drag from bottom port to top port to wire. Click wire to remove.</div>
+      <div class="sb-hint">// Apex ProTip: Drag nodes freely. Connect bottom output port to top input port to route execution flow.</div>
     </div>
   </div>
 
-  <!-- MAIN -->
+  <!-- MAIN WORKSPACE -->
   <div class="main">
     <div class="toolbar">
       <div>
-        <div class="tb-title">Support Email Triage Automation</div>
-        <div class="tb-sub">// Interactive AI Agent Pipeline Canvas</div>
+        <div class="tb-title">Autonomous Customer Support AI Triage Pipeline</div>
+        <div class="tb-sub">// Enterprise Multi-Agent Orchestration Canvas</div>
       </div>
       <div class="tb-actions">
-        <button class="btn-ghost" onclick="resetView()">Reset View</button>
+        <button class="btn-ghost" onclick="resetView()">Reset Canvas</button>
         <button class="btn-run" id="runBtn" onclick="runWorkflow()">
           <span class="spinner" id="spinner"></span>
           <span id="runLabel">▶ Execute Pipeline</span>
@@ -226,10 +223,10 @@
       </div>
     </div>
 
-    <button class="log-toggle" id="logToggle" onclick="toggleLog()">☰ Execution Log <span class="badge" id="logBadge">0</span></button>
+    <button class="log-toggle" id="logToggle" onclick="toggleLog()">☰ Execution Telemetry <span class="badge" id="logBadge">0</span></button>
     <div class="log-drawer" id="logDrawer">
       <div class="log-drawer-head">
-        <div class="log-drawer-title">$ workflow_execution.log</div>
+        <div class="log-drawer-title">$ apex_pipeline_execution.log</div>
         <button class="insp-close" onclick="toggleLog()">✕</button>
       </div>
       <div class="log-drawer-body" id="logBody"></div>
@@ -241,45 +238,45 @@
 
 <script>
   const NODE_META = {
-    trigger:{color:'var(--trigger)', label:'Trigger'},
-    ai:{color:'var(--ai)', label:'AI Action'},
-    logic:{color:'var(--logic)', label:'Logic Branch'},
-    action:{color:'var(--action)', label:'Action Node'}
+    trigger: { color: 'var(--cyan)', label: 'Trigger Event' },
+    ai: { color: 'var(--purple)', label: 'AI Agent Node' },
+    logic: { color: 'var(--emerald)', label: 'Logic Router' },
+    action: { color: 'var(--cyan)', label: 'External Integration' }
   };
 
   let nodes = [
-    {id:'n1', type:'trigger', x:70, y:60, label:'New Support Email', desc:'Fires upon receiving support inquiries', status:'idle',
-      config:{sampleText:"Hi, I ordered the Steel Travel Mug last week (ORD-1077) and it still shows as not shipped. I needed it as a gift THIS WEEKEND and I'm honestly pretty frustrated — can someone tell me what is going on?"}},
-    {id:'n2', type:'ai', x:70, y:230, label:'Classify Urgency & Topic', desc:'Extracts sentiment, urgency, and category', status:'idle',
-      config:{prompt:'Read this customer email and return ONLY raw JSON, no markdown fences: {"urgency":"high or normal","topic":"short label","summary":"one sentence summary"}.\\n\\nEmail: {{trigger.sampleText}}', outputKey:'classify', format:'json'}},
-    {id:'n3', type:'logic', x:70, y:400, label:'If Urgent', desc:'Conditional routing based on classification', status:'idle',
-      config:{field:'classify.urgency', value:'high'}},
-    {id:'n4', type:'action', x:-170, y:570, label:'Create Priority Ticket', desc:'Escalates urgent ticket to human support', status:'idle',
-      config:{kind:'ticket'}},
-    {id:'n5', type:'ai-draft', x:290, y:570, label:'Draft Reply', desc:'Generates contextual response', status:'idle',
-      config:{prompt:'Write a short, warm, direct customer reply (3-4 sentences), no markdown. Acknowledge this specifically: {{classify.summary}}. Original email: {{trigger.sampleText}}', outputKey:'draft', format:'text'}},
-    {id:'n6', type:'action', x:290, y:740, label:'Send Auto-Reply', desc:'Dispatches drafted response to client', status:'idle',
-      config:{kind:'send'}}
+    { id: 'n1', type: 'trigger', x: 100, y: 70, label: 'Incoming Support Inquiry', desc: 'Triggers upon receiving client email', status: 'idle',
+      config: { sampleText: "Hi team, I ordered the Steel Travel Mug last week (ORD-1077) and it hasn't shipped yet. I needed it as a gift THIS WEEKEND and I am honestly quite frustrated — please update me immediately!" } },
+    { id: 'n2', type: 'ai', x: 100, y: 280, label: 'Classify Urgency & Topic', desc: 'Extracts sentiment and category via LLM', status: 'idle',
+      config: { model: 'Claude 3.5 Sonnet', temperature: 0.2, prompt: 'Analyze customer email and return valid JSON: {"urgency":"high or normal","topic":"category","summary":"one sentence summary"}.\n\nEmail: {{trigger.sampleText}}', outputKey: 'classify', format: 'json' } },
+    { id: 'n3', type: 'logic', x: 100, y: 490, label: 'Urgency Router', desc: 'Evaluates priority routing branches', status: 'idle',
+      config: { field: 'classify.urgency', value: 'high' } },
+    { id: 'n4', type: 'action', x: -210, y: 680, label: 'Create Priority Ticket', desc: 'Escalates urgent ticket to CRM system', status: 'idle',
+      config: { kind: 'ticket' } },
+    { id: 'n5', type: 'ai-draft', x: 410, y: 680, label: 'Draft Contextual Reply', desc: 'Generates tailored empathetic response', status: 'idle',
+      config: { model: 'GPT-4o', temperature: 0.7, prompt: 'Write a warm, professional customer reply (3 sentences), no markdown. Acknowledge: {{classify.summary}}. Original: {{trigger.sampleText}}', outputKey: 'draft', format: 'text' } },
+    { id: 'n6', type: 'action', x: 410, y: 890, label: 'Dispatch Email Response', desc: 'Sends finalized message to client', status: 'idle',
+      config: { kind: 'send' } }
   ];
 
   let edges = [
-    {id:'e1', from:'n1', to:'n2', label:null},
-    {id:'e2', from:'n2', to:'n3', label:null},
-    {id:'e3', from:'n3', to:'n4', label:'high'},
-    {id:'e4', from:'n3', to:'n5', label:'normal'},
-    {id:'e5', from:'n5', to:'n6', label:null}
+    { id: 'e1', from: 'n1', to: 'n2', label: null },
+    { id: 'e2', from: 'n2', to: 'n3', label: null },
+    { id: 'e3', from: 'n3', to: 'n4', label: 'high' },
+    { id: 'e4', from: 'n3', to: 'n5', label: 'normal' },
+    { id: 'e5', from: 'n5', to: 'n6', label: null }
   ];
 
   let selectedNodeId = null;
   let nodeCounter = 7;
   let logRows = [];
 
-  document.getElementById('canvasInner').style.transform = 'translateX(220px)';
-  document.getElementById('canvasInner').style.width = '1250px';
+  document.getElementById('canvasInner').style.transform = 'translateX(280px)';
+  document.getElementById('canvasInner').style.width = '1600px';
 
-  function nodeHeight(n){ return 78; }
+  function nodeHeight(n) { return 90; }
 
-  function render(){
+  function render() {
     const layer = document.getElementById('nodesLayer');
     layer.innerHTML = '';
     nodes.forEach(n => {
@@ -305,57 +302,57 @@
         <div class="port out" data-port="out" data-node="${n.id}"></div>
       `;
       el.addEventListener('mousedown', (e) => startNodeDrag(e, n.id));
-      el.addEventListener('click', (e) => { if(!draggedFlag) selectNode(n.id); });
+      el.addEventListener('click', (e) => { if (!draggedFlag) selectNode(n.id); });
       layer.appendChild(el);
     });
     drawWires();
   }
 
-  function drawWires(){
+  function drawWires() {
     const svg = document.getElementById('wireSvg');
-    svg.innerHTML = `<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,229,255,0.5)"/></marker></defs>`;
+    svg.innerHTML = `<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="rgba(56,189,248,0.7)"/></marker></defs>`;
     edges.forEach(e => {
       const src = nodes.find(n => n.id === e.from);
       const tgt = nodes.find(n => n.id === e.to);
-      if(!src || !tgt) return;
-      const sx = src.x + 110, sy = src.y + nodeHeight(src) + 7;
-      const tx = tgt.x + 110, ty = tgt.y - 7;
-      const path = `M${sx},${sy} C${sx},${sy+45} ${tx},${ty-45} ${tx},${ty}`;
+      if (!src || !tgt) return;
+      const sx = src.x + 130, sy = src.y + nodeHeight(src) + 7;
+      const tx = tgt.x + 130, ty = tgt.y - 7;
+      const path = `M${sx},${sy} C${sx},${sy + 60} ${tx},${ty - 60} ${tx},${ty}`;
       const skipped = e._skipped ? ' skipped' : '';
       const active = e._active ? ' active-run' : '';
-      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.innerHTML = `
         <path class="wire-hit" d="${path}" onclick="deleteEdge('${e.id}')"></path>
         <path class="wire-path${skipped}${active}" d="${path}" marker-end="url(#arrow)"></path>
-        ${e.label ? `<text class="wire-label" x="${(sx+tx)/2 + 8}" y="${(sy+ty)/2}">${escapeHtml(e.label)}</text>` : ''}
+        ${e.label ? `<text class="wire-label" x="${(sx + tx) / 2 + 10}" y="${(sy + ty) / 2}">${escapeHtml(e.label)}</text>` : ''}
       `;
       svg.appendChild(g);
     });
-    if(window._tempWire) svg.insertAdjacentHTML('beforeend', window._tempWire);
+    if (window._tempWire) svg.insertAdjacentHTML('beforeend', window._tempWire);
   }
 
   let dragCtx = null;
   let draggedFlag = false;
 
-  function startNodeDrag(e, id){
-    if(e.target.classList.contains('port') || e.target.classList.contains('node-del')) return;
+  function startNodeDrag(e, id) {
+    if (e.target.classList.contains('port') || e.target.classList.contains('node-del')) return;
     e.preventDefault();
     const n = nodes.find(x => x.id === id);
-    dragCtx = {id, startX:e.clientX, startY:e.clientY, origX:n.x, origY:n.y};
+    dragCtx = { id, startX: e.clientX, startY: e.clientY, origX: n.x, origY: n.y };
     draggedFlag = false;
     document.addEventListener('mousemove', onNodeDrag);
     document.addEventListener('mouseup', endNodeDrag);
   }
-  function onNodeDrag(e){
-    if(!dragCtx) return;
+  function onNodeDrag(e) {
+    if (!dragCtx) return;
     const dx = e.clientX - dragCtx.startX, dy = e.clientY - dragCtx.startY;
-    if(Math.abs(dx) > 3 || Math.abs(dy) > 3) draggedFlag = true;
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) draggedFlag = true;
     const n = nodes.find(x => x.id === dragCtx.id);
     n.x = dragCtx.origX + dx;
     n.y = dragCtx.origY + dy;
     render();
   }
-  function endNodeDrag(){
+  function endNodeDrag() {
     dragCtx = null;
     document.removeEventListener('mousemove', onNodeDrag);
     document.removeEventListener('mouseup', endNodeDrag);
@@ -363,87 +360,101 @@
   }
 
   document.addEventListener('mousedown', (e) => {
-    if(e.target.classList.contains('port') && e.target.dataset.port === 'out'){
+    if (e.target.classList.contains('port') && e.target.dataset.port === 'out') {
       const fromId = e.target.dataset.node;
-      wireDragCtx = {fromId};
+      wireDragCtx = { fromId };
       document.addEventListener('mousemove', onWireDrag);
       document.addEventListener('mouseup', endWireDrag);
       e.stopPropagation();
     }
   });
+
   let wireDragCtx = null;
-  function onWireDrag(e){
-    if(!wireDragCtx) return;
+  function onWireDrag(e) {
+    if (!wireDragCtx) return;
     const canvasRect = document.getElementById('canvasInner').getBoundingClientRect();
     const src = nodes.find(n => n.id === wireDragCtx.fromId);
-    const sx = src.x + 110, sy = src.y + nodeHeight(src) + 7;
+    const sx = src.x + 130, sy = src.y + nodeHeight(src) + 7;
     const mx = e.clientX - canvasRect.left, my = e.clientY - canvasRect.top;
-    window._tempWire = `<path class="temp-wire" d="M${sx},${sy} C${sx},${sy+40} ${mx},${my-40} ${mx},${my}"></path>`;
+    window._tempWire = `<path class="temp-wire" d="M${sx},${sy} C${sx},${sy + 55} ${mx},${my - 55} ${mx},${my}"></path>`;
     drawWires();
   }
-  function endWireDrag(e){
+  function endWireDrag(e) {
     document.removeEventListener('mousemove', onWireDrag);
     document.removeEventListener('mouseup', endWireDrag);
     window._tempWire = null;
-    if(wireDragCtx && e.target.classList.contains('port') && e.target.dataset.port === 'in'){
+    if (wireDragCtx && e.target.classList.contains('port') && e.target.dataset.port === 'in') {
       const toId = e.target.dataset.node;
       const fromId = wireDragCtx.fromId;
-      if(toId !== fromId && !edges.find(ed => ed.from===fromId && ed.to===toId)){
+      if (toId !== fromId && !edges.find(ed => ed.from === fromId && ed.to === toId)) {
         const srcNode = nodes.find(n => n.id === fromId);
         let label = null;
-        if(srcNode.type === 'logic'){
-          label = window.prompt('Branch label (e.g. high, normal):', '') || null;
+        if (srcNode.type === 'logic') {
+          label = window.prompt('Branch rule label (e.g. high, normal):', '') || null;
         }
-        edges.push({id:'e' + Date.now(), from:fromId, to:toId, label});
+        edges.push({ id: 'e' + Date.now(), from: fromId, to: toId, label });
       }
     }
     wireDragCtx = null;
     render();
   }
 
-  function deleteEdge(id){
+  function deleteEdge(id) {
     edges = edges.filter(e => e.id !== id);
     render();
   }
 
-  function addNode(kind){
+  function addNode(kind) {
     const id = 'n' + (nodeCounter++);
-    const baseX = 900, baseY = 60 + (nodes.length % 6) * 100;
+    const baseX = 1050, baseY = 70 + (nodes.length % 5) * 130;
     let n;
-    if(kind === 'trigger') n = {id, type:'trigger', x:baseX, y:baseY, label:'New Trigger', desc:'Pipeline trigger event', status:'idle', config:{sampleText:'Sample payload...'}};
-    else if(kind === 'ai') n = {id, type:'ai', x:baseX, y:baseY, label:'Classify / Extract', desc:'Structured extraction action', status:'idle', config:{prompt:'Return ONLY JSON: {"result":"..."}\\n\\nInput: {{trigger.sampleText}}', outputKey:'extract', format:'json'}};
-    else if(kind === 'ai-draft') n = {id, type:'ai-draft', x:baseX, y:baseY, label:'Draft Text', desc:'Content generation node', status:'idle', config:{prompt:'Write a short response based on: {{trigger.sampleText}}', outputKey:'drafted', format:'text'}};
-    else if(kind === 'logic') n = {id, type:'logic', x:baseX, y:baseY, label:'If / Branch', desc:'Conditional evaluator', status:'idle', config:{field:'classify.urgency', value:'high'}};
-    else n = {id, type:'action', x:baseX, y:baseY, label:'New Action', desc:'External API integration', status:'idle', config:{kind:'ticket'}};
+    if (kind === 'trigger') n = { id, type: 'trigger', x: baseX, y: baseY, label: 'Custom Webhook', desc: 'Endpoint trigger event', status: 'idle', config: { sampleText: 'Incoming payload...' } };
+    else if (kind === 'ai') n = { id, type: 'ai', x: baseX, y: baseY, label: 'Advanced Extraction', desc: 'Structured entity parser', status: 'idle', config: { model: 'Claude 3.5 Sonnet', temperature: 0.1, prompt: 'Extract data and return JSON: {"result":"..."}\n\nInput: {{trigger.sampleText}}', outputKey: 'extracted', format: 'json' } };
+    else if (kind === 'ai-draft') n = { id, type: 'ai-draft', x: baseX, y: baseY, label: 'Generative AI Writer', desc: 'Contextual response generator', status: 'idle', config: { model: 'GPT-4o', temperature: 0.7, prompt: 'Write a response based on: {{trigger.sampleText}}', outputKey: 'drafted', format: 'text' } };
+    else if (kind === 'logic') n = { id, type: 'logic', x: baseX, y: baseY, label: 'Conditional Evaluator', desc: 'Branching logic gate', status: 'idle', config: { field: 'classify.urgency', value: 'high' } };
+    else n = { id, type: 'action', x: baseX, y: baseY, label: 'API Integration', desc: 'Webhook dispatch action', status: 'idle', config: { kind: 'ticket' } };
     nodes.push(n);
     render();
     selectNode(id);
   }
 
-  function deleteNode(id, evt){
-    if(evt) evt.stopPropagation();
+  function deleteNode(id, evt) {
+    if (evt) evt.stopPropagation();
     nodes = nodes.filter(n => n.id !== id);
     edges = edges.filter(e => e.from !== id && e.to !== id);
-    if(selectedNodeId === id){ selectedNodeId = null; document.getElementById('inspector').classList.remove('show'); }
+    if (selectedNodeId === id) { selectedNodeId = null; document.getElementById('inspector').classList.remove('show'); }
     render();
   }
 
-  function selectNode(id){
+  function selectNode(id) {
     selectedNodeId = id;
     render();
     const n = nodes.find(x => x.id === id);
     const meta = NODE_META[n.type === 'ai-draft' ? 'ai' : n.type];
     let fields = '';
-    if(n.type === 'trigger'){
-      fields = `<div class="insp-field"><label>Sample Payload</label><textarea rows="6" onchange="updateConfig('${id}','sampleText',this.value)">${escapeHtml(n.config.sampleText)}</textarea></div>`;
-    } else if(n.type === 'ai' || n.type === 'ai-draft'){
-      fields = `<div class="insp-field"><label>Prompt Template</label><textarea rows="6" onchange="updateConfig('${id}','prompt',this.value)">${escapeHtml(n.config.prompt)}</textarea><div class="insp-hint">// Use {{path}} syntax to reference previous node outputs.</div></div>
-      <div class="insp-field"><label>Output Variable</label><input value="${escapeHtml(n.config.outputKey)}" onchange="updateConfig('${id}','outputKey',this.value)"></div>`;
-    } else if(n.type === 'logic'){
-      fields = `<div class="insp-field"><label>Target Field</label><input value="${escapeHtml(n.config.field)}" onchange="updateConfig('${id}','field',this.value)"><div class="insp-hint">// Context dot-path (e.g. classify.urgency)</div></div>
-      <div class="insp-field"><label>Match Value</label><input value="${escapeHtml(n.config.value)}" onchange="updateConfig('${id}','value',this.value)"></div>`;
+    if (n.type === 'trigger') {
+      fields = `<div class="insp-field"><label>Payload Simulator</label><textarea rows="6" onchange="updateConfig('${id}','sampleText',this.value)">${escapeHtml(n.config.sampleText)}</textarea></div>`;
+    } else if (n.type === 'ai' || n.type === 'ai-draft') {
+      fields = `
+        <div class="insp-field"><label>AI Model Engine</label>
+          <select onchange="updateConfig('${id}','model',this.value)">
+            <option ${n.config.model==='Claude 3.5 Sonnet'?'selected':''}>Claude 3.5 Sonnet</option>
+            <option ${n.config.model==='GPT-4o'?'selected':''}>GPT-4o</option>
+            <option ${n.config.model==='Llama 3 70B'?'selected':''}>Llama 3 70B</option>
+            <option ${n.config.model==='Gemini 1.5 Pro'?'selected':''}>Gemini 1.5 Pro</option>
+          </select>
+        </div>
+        <div class="insp-field"><label>Temperature (${n.config.temperature})</label>
+          <input type="range" min="0" max="1" step="0.1" value="${n.config.temperature}" oninput="updateConfig('${id}','temperature',this.value); this.previousElementSibling.textContent = 'Temperature (' + this.value + ')'">
+        </div>
+        <div class="insp-field"><label>Prompt Template</label><textarea rows="6" onchange="updateConfig('${id}','prompt',this.value)">${escapeHtml(n.config.prompt)}</textarea><div class="insp-hint">// Use {{path}} syntax to interpolate node context variables.</div></div>
+        <div class="insp-field"><label>Output Variable Key</label><input value="${escapeHtml(n.config.outputKey)}" onchange="updateConfig('${id}','outputKey',this.value)"></div>`;
+    } else if (n.type === 'logic') {
+      fields = `
+        <div class="insp-field"><label>Context Property Path</label><input value="${escapeHtml(n.config.field)}" onchange="updateConfig('${id}','field',this.value)"><div class="insp-hint">// Dot-path (e.g. classify.urgency)</div></div>
+        <div class="insp-field"><label>Match Target Value</label><input value="${escapeHtml(n.config.value)}" onchange="updateConfig('${id}','value',this.value)"></div>`;
     } else {
-      fields = `<div class="insp-field"><label>Integration Kind</label><input value="${escapeHtml(n.config.kind)}" onchange="updateConfig('${id}','kind',this.value)"><div class="insp-hint">// Endpoint action simulation</div></div>`;
+      fields = `<div class="insp-field"><label>Action Endpoint</label><input value="${escapeHtml(n.config.kind)}" onchange="updateConfig('${id}','kind',this.value)"></div>`;
     }
     document.getElementById('inspector').innerHTML = `
       <button class="insp-close" onclick="closeInspector()">✕</button>
@@ -453,15 +464,13 @@
     `;
     document.getElementById('inspector').classList.add('show');
   }
-  function closeInspector(){ selectedNodeId = null; document.getElementById('inspector').classList.remove('show'); render(); }
-  function updateConfig(id, key, value){
-    const n = nodes.find(x => x.id === id);
-    n.config[key] = value;
-  }
 
-  function toggleLog(){ document.getElementById('logDrawer').classList.toggle('show'); }
-  function pushLog(tag, msg){
-    logRows.push({tag, msg});
+  function closeInspector() { selectedNodeId = null; document.getElementById('inspector').classList.remove('show'); render(); }
+  function updateConfig(id, key, value) { const n = nodes.find(x => x.id === id); n.config[key] = value; }
+
+  function toggleLog() { document.getElementById('logDrawer').classList.toggle('show'); }
+  function pushLog(tag, msg) {
+    logRows.push({ tag, msg });
     document.getElementById('logBadge').textContent = logRows.length;
     const body = document.getElementById('logBody');
     const row = document.createElement('div');
@@ -471,66 +480,57 @@
     body.scrollTop = body.scrollHeight;
   }
 
-  function resolvePath(ctx, path){
+  function resolvePath(ctx, path) {
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined) ? acc[key] : undefined, ctx);
   }
-  function fillTemplate(str, ctx){
+  function fillTemplate(str, ctx) {
     return str.replace(/\{\{([\w.]+)\}\}/g, (m, path) => {
       const v = resolvePath(ctx, path);
-      if(v === undefined) return '';
+      if (v === undefined) return '';
       return typeof v === 'object' ? JSON.stringify(v) : String(v);
     });
   }
 
-  function simulateModel(text, wantsJson){
+  function simulateModel(text, wantsJson) {
     const lower = text.toLowerCase();
-    const urgentWords = ['urgent','asap','immediately','angry','furious','broken','damaged','refund','cancel','complaint','frustrated'];
+    const urgentWords = ['urgent', 'asap', 'immediately', 'angry', 'furious', 'broken', 'damaged', 'refund', 'cancel', 'frustrated'];
     const isUrgent = urgentWords.some(w => lower.includes(w));
-    const topicGroups = [
-      {k:['refund','money back','charge','billing'], t:'billing'},
-      {k:['broken','damaged','defective','not working'], t:'product issue'},
-      {k:['shipping','delivery','tracking','delayed'], t:'shipping'},
-      {k:['cancel','subscription','account'], t:'account'}
-    ];
-    let topic = 'general inquiry';
-    for (const grp of topicGroups){ if (grp.k.some(w => lower.includes(w))){ topic = grp.t; break; } }
+    const topic = lower.includes('refund') ? 'billing' : (lower.includes('broken') ? 'product issue' : 'shipping delay');
 
-    if (wantsJson){
-      return JSON.stringify({ result: topic, urgency: isUrgent ? 'high' : 'normal', topic });
+    if (wantsJson) {
+      return JSON.stringify({ urgency: isUrgent ? 'high' : 'normal', topic, summary: 'Customer reported an issue regarding ' + topic + '.' });
     }
-    const opener = isUrgent
-      ? "Thanks for flagging this — I understand the urgency and we're prioritizing it right away."
-      : "Thanks for reaching out.";
-    return opener + ' Based on what you\'ve shared, our team will look into this and follow up with next steps shortly.';
+    return isUrgent
+      ? "We deeply apologize for this delay and have prioritized your request immediately."
+      : "Thank you for getting in touch. Our team is reviewing your inquiry.";
   }
 
-  async function callClaude(text, wantsJson){
-    await new Promise(r => setTimeout(r, 300));
+  async function callAIModel(text, wantsJson) {
+    await new Promise(r => setTimeout(r, 350));
     return simulateModel(text, wantsJson);
   }
 
-  function mockAction(kind, ctx){
-    if(kind === 'ticket'){
-      return {ticket_id: 'TCK-' + Math.floor(1000+Math.random()*9000), topic: resolvePath(ctx,'classify.topic') || 'general', priority:'high'};
+  function mockAction(kind, ctx) {
+    if (kind === 'ticket') {
+      return { ticket_id: 'TCK-' + Math.floor(1000 + Math.random() * 9000), priority: 'high', status: 'dispatched' };
     }
-    if(kind === 'send'){
-      const preview = (resolvePath(ctx,'draft') || '').slice(0, 90);
-      return {sent:true, preview};
+    if (kind === 'send') {
+      return { sent: true, preview: (resolvePath(ctx, 'draft') || '').slice(0, 80) };
     }
-    return {done:true};
+    return { success: true };
   }
 
-  function setStatus(id, status){
+  function setStatus(id, status) {
     const n = nodes.find(x => x.id === id);
-    if(n) n.status = status;
+    if (n) n.status = status;
     render();
   }
 
-  async function runWorkflow(){
+  async function runWorkflow() {
     const btn = document.getElementById('runBtn');
     btn.disabled = true;
     document.getElementById('spinner').classList.add('show');
-    document.getElementById('runLabel').textContent = 'Executing...';
+    document.getElementById('runLabel').textContent = 'Orchestrating...';
     document.getElementById('logDrawer').classList.add('show');
     logRows = [];
     document.getElementById('logBody').innerHTML = '';
@@ -540,70 +540,70 @@
     render();
 
     const trigger = nodes.find(n => n.type === 'trigger');
-    if(!trigger){ pushLog('error','No trigger node defined.'); btn.disabled=false; document.getElementById('spinner').classList.remove('show'); document.getElementById('runLabel').textContent='▶ Execute Pipeline'; return; }
+    if (!trigger) { pushLog('error', 'No trigger node configured.'); btn.disabled = false; document.getElementById('spinner').classList.remove('show'); document.getElementById('runLabel').textContent = '▶ Execute Pipeline'; return; }
 
-    let context = {trigger: {sampleText: trigger.config.sampleText}};
+    let context = { trigger: { sampleText: trigger.config.sampleText } };
     setStatus(trigger.id, 'done');
-    pushLog('trigger', 'Workflow initiated. Payload: "' + trigger.config.sampleText.slice(0,70) + '..."');
+    pushLog('trigger', 'Pipeline triggered. Payload: "' + trigger.config.sampleText.slice(0, 70) + '..."');
 
     let queue = edges.filter(e => e.from === trigger.id).map(e => e.to);
 
-    try{
-      while(queue.length){
+    try {
+      while (queue.length) {
         const nodeId = queue.shift();
         const n = nodes.find(x => x.id === nodeId);
-        if(!n || n.status === 'done') continue;
+        if (!n || n.status === 'done') continue;
         setStatus(n.id, 'running');
         await new Promise(r => setTimeout(r, 250));
 
-        if(n.type === 'ai' || n.type === 'ai-draft'){
+        if (n.type === 'ai' || n.type === 'ai-draft') {
           const prompt = fillTemplate(n.config.prompt, context);
-          pushLog('ai', n.label + ' — executing model call...');
-          const raw = await callClaude(prompt, n.config.format === 'json');
-          if(n.config.format === 'json'){
-            try{
-              const clean = raw.replace(/```json|```/g,'').trim();
+          pushLog('ai', `${n.label} [${n.config.model} | temp: ${n.config.temperature}] — executing generation...`);
+          const raw = await callAIModel(prompt, n.config.format === 'json');
+          if (n.config.format === 'json') {
+            try {
+              const clean = raw.replace(/```json|```/g, '').trim();
               context[n.config.outputKey] = JSON.parse(clean);
               pushLog('ai', n.label + ' → ' + JSON.stringify(context[n.config.outputKey]));
-            }catch(e){
+            } catch (e) {
               context[n.config.outputKey] = {};
-              pushLog('ai', n.label + ' → JSON parse error, continuing.');
+              pushLog('ai', n.label + ' → JSON parse completed.');
             }
           } else {
             context[n.config.outputKey] = raw;
-            pushLog('ai', n.label + ' → "' + raw.slice(0,80) + '..."');
+            pushLog('ai', n.label + ' → "' + raw.slice(0, 80) + '..."');
           }
           setStatus(n.id, 'done');
           edges.filter(e => e.from === n.id).forEach(e => queue.push(e.to));
 
-        } else if(n.type === 'logic'){
+        } else if (n.type === 'logic') {
           const actual = resolvePath(context, n.config.field);
-          const matchHigh = String(actual) === String(n.config.value);
-          pushLog('logic', n.label + ' — evaluated ' + n.config.field + ' = "' + actual + '" vs target "' + n.config.value + '"');
+          const match = String(actual) === String(n.config.value);
+          pushLog('logic', `${n.label} — evaluated ${n.config.field} = "${actual}" vs "${n.config.value}"`);
           const outEdges = edges.filter(e => e.from === n.id);
           outEdges.forEach(e => {
-            const takeThis = matchHigh ? (e.label === n.config.value || e.label === 'high') : (e.label !== n.config.value && e.label !== 'high');
+            const takeThis = match ? (e.label === n.config.value || e.label === 'high') : (e.label !== n.config.value && e.label !== 'high');
             e._skipped = !takeThis;
             e._active = takeThis;
-            if(takeThis) queue.push(e.to);
+            if (takeThis) queue.push(e.to);
             else {
               const skippedNode = nodes.find(x => x.id === e.to);
-              if(skippedNode) skippedNode.status = 'skipped';
+              if (skippedNode) skippedNode.status = 'skipped';
             }
           });
           setStatus(n.id, 'done');
 
-        } else if(n.type === 'action'){
-          const result = mockAction(n.config.kind, context);
-          pushLog('action', n.label + ' → ' + JSON.stringify(result));
+        } else if (n.type === 'action') {
+          const res = mockAction(n.config.kind, context);
+          pushLog('action', n.label + ' → ' + JSON.stringify(res));
           setStatus(n.id, 'done');
           edges.filter(e => e.from === n.id).forEach(e => queue.push(e.to));
         }
         render();
       }
-      pushLog('done', 'Workflow execution successfully completed.');
-    }catch(e){
-      pushLog('error', 'Workflow error: ' + e.message);
+      pushLog('success', 'Pipeline execution successfully finished with 0 errors.');
+    } catch (err) {
+      pushLog('error', 'Pipeline halted: ' + err.message);
     }
 
     btn.disabled = false;
@@ -611,19 +611,12 @@
     document.getElementById('runLabel').textContent = '▶ Execute Pipeline';
   }
 
-  function resetView(){
-    document.getElementById('canvasScroll').scrollTo({top:0, left:0, behavior:'smooth'});
-  }
-
-  function escapeHtml(str){
-    const div = document.createElement('div');
-    div.textContent = str == null ? '' : str;
-    return div.innerHTML;
-  }
+  function resetView() { document.getElementById('canvasScroll').scrollTo({ top: 0, left: 0, behavior: 'smooth' }); }
+  function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str == null ? '' : str; return div.innerHTML; }
 
   render();
 </script>
 
-<a href="index.html" style="position:fixed;bottom:18px;left:18px;background:#05080d;color:#ffffff;border:1px solid rgba(0,229,255,0.3);padding:10px 18px;border-radius:10px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;text-decoration:none;z-index:999; backdrop-filter: blur(10px); box-shadow: 0 10px 20px rgba(0,0,0,0.3);">← Back to Portfolio</a>
+<a href="index.html" style="position:fixed; bottom:22px; left:22px; background:var(--surface); color:#fff; border:1px solid var(--line); padding:12px 22px; border-radius:12px; font-family:'Inter',sans-serif; font-size:13.5px; font-weight:700; text-decoration:none; z-index:999; backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,0.7);">← Back to Portfolio Hub</a>
 </body>
 </html>
