@@ -5,17 +5,22 @@ own inline `<style>` block — open any one of them directly and it works.
 
 ## Theme — "Aqua Blue × Peach Puff"
 
-The whole site sits on a two-pole colour axis: **aqua** (`#5FD9E8`) for the
-primary/cool side, **peach puff** (`#FFDAB9`) for the warm accent.
+The whole site sits on a two-pole colour axis: **aqua `#00E5FF`** for the
+primary/cool side, **peach puff `#FFDAB9`** for the warm accent.
+
+These are shared with `ask-brightstack.html`, `admin.html` and the `ai-*.html`
+pages, which carry the same identity as `--aqua` / `--peach`. **Keep them in
+sync** — they are the whole brand.
 
 Homepage tokens live in the `:root` block at the top of `index.html`:
 
 | Token | Value | Used for |
 | --- | --- | --- |
-| `--paper` | `#04161B` | page background |
-| `--paper-2` | `#0A242C` | raised panels, tier cards |
-| `--signal` | `#5FD9E8` | primary CTAs, links, eyebrows |
-| `--indigo` / `--peach-200` | `#FFD3B0` / `#FFDAB9` | warm accent, tags |
+| `--paper` | `#0A0F16` | page background |
+| `--paper-2` | `#121926` | raised panels, tier cards |
+| `--signal` / `--aqua-400` | `#00E5FF` | primary CTAs, links, eyebrows |
+| `--peach-200` / `--indigo` | `#FFDAB9` / `#FFD3B0` | warm accent, tags |
+| `--ink` / `--ink-soft` | `#FFFFFF` / `#A0AEC0` | text, secondary text |
 | `--glass` / `--glass-line` | translucent | the tilting project cards |
 
 ### Re-theming the other 36 pages

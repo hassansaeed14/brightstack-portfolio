@@ -3,103 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ask BrightStack — an assistant that knows this portfolio</title>
+<title>Ask BrightStack — AI Portfolio Assistant</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/ask-brightstack.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Ask BrightStack — an assistant that knows this portfolio">
-<meta property="og:description" content="Ask questions about Hassan Saeed&#x27;s projects, skills, and experience — answered by a transparent, local keyword-matching assistant.">
+<meta property="og:title" content="Ask BrightStack — AI Portfolio Assistant">
+<meta property="og:description" content="Ask questions about Hassan Saeed's projects, skills, and experience — answered by a transparent, local AI assistant.">
 <meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/ask-brightstack.html">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Ask questions about Hassan Saeed's projects, skills, and experience — answered by a transparent, local keyword-matching assistant.">
+<meta name="description" content="Ask questions about Hassan Saeed's projects, skills, and experience — answered by a transparent, local AI assistant.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#13262B;
-    --ink-soft:#4A626A;
-    --paper:#EEF7F9;
-    --paper-2:#FFFFFF;
-    --line:#CFE2E7;
-    --signal:#FFC49A;
-    --indigo:#1795AE;
-    --indigo-soft:#E6F6F9;
+  :root {
+    /* Premium Aqua & Peach Dark Theme */
+    --bg:#0a0f16;
+    --panel:rgba(255, 255, 255, 0.02);
+    --panel-2:rgba(255, 255, 255, 0.04);
+    --line:rgba(0, 229, 255, 0.15);
+    
+    --aqua:#00e5ff;
+    --aqua-dim:rgba(0, 229, 255, 0.1);
+    --peach:#ffdab9;
+    --peach-dim:rgba(255, 218, 185, 0.1);
+    
+    --text:#ffffff;
+    --muted:#a0aec0;
+    --muted-2:#718096;
+    
+    /* Bot vs User Message Colors */
+    --msg-bot-bg: rgba(0, 229, 255, 0.05);
+    --msg-bot-border: rgba(0, 229, 255, 0.2);
+    --msg-user-bg: rgba(255, 218, 185, 0.1);
+    --msg-user-border: rgba(255, 218, 185, 0.3);
   }
+  
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
-    background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;
+    background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;
     min-height:100vh;display:flex;flex-direction:column;
+    overflow-x:hidden;
   }
-  a{color:inherit;text-decoration:none;}
+  
+  /* Aqua Radar/Scan Background */
+  .scan{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
+               radial-gradient(700px 500px at 20% -5%, rgba(0,229,255,0.08), transparent 60%);}
+               
+  .main-content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+  
+  a{color:inherit;text-decoration:none; transition: color 0.3s;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
   header{
     display:flex;justify-content:space-between;align-items:center;
     padding:22px 32px;max-width:820px;margin:0 auto;width:100%;
+    border-bottom: 1px solid var(--line);
   }
   .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
-  .logo span{color:var(--indigo);}
-  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
-  .back-link:hover{color:var(--ink);}
+  .logo span{color:var(--aqua);}
+  .back-link{font-size:13px;font-weight:600;color:var(--muted); transition: color 0.3s;}
+  .back-link:hover{color:var(--aqua);}
 
-  .hero{max-width:820px;margin:0 auto;padding:12px 32px 28px;width:100%;}
+  .hero{max-width:820px;margin:0 auto;padding:32px 32px 28px;width:100%;}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
-    color:var(--indigo);font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;
-    background:var(--indigo-soft);padding:6px 12px;border-radius:20px;
+    color:var(--aqua);font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;
+    background:var(--aqua-dim);padding:6px 12px;border-radius:20px; border: 1px solid var(--line);
   }
-  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--indigo);display:inline-block;}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.01em;margin-bottom:10px;}
-  .hero p{color:var(--ink-soft);font-size:15px;max-width:560px;}
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--aqua);display:inline-block; box-shadow: 0 0 8px var(--aqua);}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.01em;margin-bottom:10px; color: var(--text);}
+  .hero p{color:var(--muted);font-size:15px;max-width:560px;}
 
   .chat-wrap{max-width:820px;margin:0 auto;padding:0 32px 24px;width:100%;flex:1;display:flex;flex-direction:column;}
   .chat-panel{
-    background:var(--paper-2);border:1px solid var(--line);border-radius:14px;
-    display:flex;flex-direction:column;flex:1;min-height:420px;overflow:hidden;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    display:flex;flex-direction:column;flex:1;min-height:500px;overflow:hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  .chat-log{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;}
-  .msg{max-width:78%;padding:12px 16px;border-radius:12px;font-size:14.5px;line-height:1.55;}
-  .msg.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px;}
-  .msg.user{background:var(--ink);color:var(--paper-2);align-self:flex-end;border-bottom-right-radius:4px;}
+  
+  /* Scrollbar Styling */
+  .chat-log::-webkit-scrollbar { width: 6px; }
+  .chat-log::-webkit-scrollbar-track { background: transparent; }
+  .chat-log::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
+  .chat-log::-webkit-scrollbar-thumb:hover { background: var(--aqua-dim); }
+  
+  .chat-log{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px; scroll-behavior: smooth;}
+  
+  .msg{max-width:78%;padding:14px 18px;border-radius:12px;font-size:14.5px;line-height:1.55; opacity: 0; transform: translateY(10px); animation: fadeIn 0.4s forwards;}
+  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+  
+  .msg.bot{
+    background:var(--msg-bot-bg);border:1px solid var(--msg-bot-border);
+    align-self:flex-start;border-bottom-left-radius:4px;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.05);
+  }
+  .msg.user{
+    background:var(--msg-user-bg);border:1px solid var(--msg-user-border);color:var(--text);
+    align-self:flex-end;border-bottom-right-radius:4px;
+  }
   .msg .src{
-    display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);
+    display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--aqua);
+    padding-top: 8px; border-top: 1px dashed var(--line);
   }
-  .msg .src a{text-decoration:underline;}
-  .typing{align-self:flex-start;display:flex;gap:4px;padding:12px 16px;}
-  .typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-soft);opacity:0.4;animation:blink 1.1s infinite;}
+  .msg .src a{text-decoration:underline; transition: color 0.3s;}
+  .msg .src a:hover { color: var(--peach); }
+  
+  .typing{align-self:flex-start;display:flex;gap:4px;padding:12px 16px; background:var(--msg-bot-bg);border:1px solid var(--msg-bot-border); border-radius:12px; border-bottom-left-radius:4px;}
+  .typing span{width:6px;height:6px;border-radius:50%;background:var(--aqua);opacity:0.4;animation:blink 1.1s infinite;}
   .typing span:nth-child(2){animation-delay:0.15s;}
   .typing span:nth-child(3){animation-delay:0.3s;}
-  @keyframes blink{0%,80%,100%{opacity:0.25;}40%{opacity:0.9;}}
+  @keyframes blink{0%,80%,100%{opacity:0.25;}40%{opacity:0.9;box-shadow: 0 0 5px var(--aqua);}}
 
   .chips-row{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 16px;}
   .chip{
-    font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--paper);border:1px solid var(--line);
-    padding:7px 12px;border-radius:20px;cursor:pointer;color:var(--ink-soft);
+    font-family:'JetBrains Mono',monospace;font-size:12px;background:transparent;border:1px solid var(--line);
+    padding:7px 12px;border-radius:20px;cursor:pointer;color:var(--muted); transition: all 0.3s;
   }
-  .chip:hover{border-color:var(--indigo);color:var(--indigo);}
+  .chip:hover{border-color:var(--aqua);color:var(--aqua); background: var(--aqua-dim); transform: translateY(-2px);}
 
   .input-row{
-    display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--line);background:var(--paper);
+    display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--line);background:rgba(10, 15, 22, 0.8); backdrop-filter: blur(5px);
   }
   .input-row input{
     flex:1;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px;
-    font-family:'Inter',sans-serif;background:var(--paper-2);color:var(--ink);
+    font-family:'Inter',sans-serif;background:rgba(255, 255, 255, 0.03);color:var(--text); transition: border-color 0.3s, box-shadow 0.3s;
   }
-  .input-row input:focus{outline:2px solid var(--indigo);outline-offset:1px;border-color:var(--indigo);}
+  .input-row input:focus{outline:none;border-color:var(--aqua); box-shadow: 0 0 10px var(--aqua-dim);}
+  .input-row input::placeholder { color: var(--muted-2); }
+  
   .input-row button{
-    background:var(--signal);border:none;color:#2B1A0C;font-weight:600;font-size:14px;
-    padding:0 20px;border-radius:8px;cursor:pointer;
+    background:var(--aqua);border:1px solid var(--aqua);color:#0a0f16;font-weight:600;font-size:14px;
+    padding:0 20px;border-radius:8px;cursor:pointer; transition: all 0.3s;
   }
-  .input-row button:hover{background:#DE8B30;}
+  .input-row button:hover{background:transparent; color:var(--aqua); box-shadow: 0 0 15px var(--aqua-dim);}
+  .input-row button:active { transform: scale(0.95); }
 
   .how-it-works{
-    max-width:820px;margin:0 auto;padding:0 32px 40px;width:100%;font-size:13px;color:var(--ink-soft);
+    max-width:820px;margin:0 auto;padding:0 32px 40px;width:100%;font-size:13px;color:var(--muted);
   }
-  .how-it-works summary{cursor:pointer;font-weight:600;color:var(--ink);}
-  .how-it-works p{margin-top:10px;max-width:600px;}
+  .how-it-works summary{cursor:pointer;font-weight:600;color:var(--aqua); outline: none;}
+  .how-it-works p{margin-top:10px;max-width:600px; padding: 12px; background: var(--panel-2); border-left: 2px solid var(--peach); border-radius: 0 8px 8px 0;}
 
-  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--ink-soft);}
+  footer{padding:24px 32px 32px;text-align:center;font-size:13px;color:var(--muted-2); font-family:'JetBrains Mono',monospace;}
 
   @media (max-width:600px){
     .msg{max-width:88%;}
@@ -107,7 +155,6 @@
   }
 
   @media (max-width:560px){
-    body{overflow-x:hidden;}
     header, .hero, .chat-wrap, .how-it-works{padding-left:18px;padding-right:18px;}
     h1{font-size:22px;}
     .hero p{font-size:14px;}
@@ -121,36 +168,41 @@
 </head>
 <body>
 
-<header>
-  <div class="logo">Ask Bright<span>Stack</span></div>
-  <a href="index.html" class="back-link">← Back to portfolio</a>
-</header>
+<div class="scan"></div>
 
-<section class="hero">
-  <div class="eyebrow">Interactive · local keyword matching</div>
-  <h1>Ask about my projects, stack, or background.</h1>
-  <p>This is a small retrieval assistant built into the portfolio itself — ask it about Nexora, the AI inquiry router, my skills, or how to get in touch, and it'll answer from what's actually in this site and my resume.</p>
-</section>
+<div class="main-content">
+  <header>
+    <div class="logo">Ask Bright<span>Stack</span></div>
+    <a href="index.html" class="back-link">← Back to portfolio</a>
+  </header>
 
-<div class="chat-wrap">
-  <div class="chat-panel">
-    <div class="chat-log" id="chatLog"></div>
-    <div class="chips-row" id="chipsRow"></div>
-    <div class="input-row">
-      <input type="text" id="userInput" placeholder="e.g. What's Nexora built with?" onkeydown="if(event.key==='Enter') sendMessage();">
-      <button onclick="sendMessage()">Send</button>
+  <section class="hero">
+    <div class="eyebrow">Interactive · local keyword matching</div>
+    <h1>Ask about my projects, stack, or background.</h1>
+    <p>This is a small retrieval assistant built into the portfolio itself — ask it about Nexora, the AI inquiry router, my skills, or how to get in touch, and it'll answer from what's actually in this site and my resume.</p>
+  </section>
+
+  <div class="chat-wrap">
+    <div class="chat-panel">
+      <div class="chat-log" id="chatLog"></div>
+      <div class="chips-row" id="chipsRow"></div>
+      <div class="input-row">
+        <input type="text" id="userInput" placeholder="e.g. What's Nexora built with?" onkeydown="if(event.key==='Enter') sendMessage();">
+        <button onclick="sendMessage()">Send</button>
+      </div>
     </div>
   </div>
+
+  <details class="how-it-works">
+    <summary>How this actually works</summary>
+    <p>No external API calls and no language model here — every answer below comes from a small local knowledge base about this portfolio, matched against your question by keyword overlap (the same category of technique used in the Smart Inquiry Router demo). If it can't find a confident match, it says so honestly instead of guessing.</p>
+  </details>
+
+  <footer>Built by BrightStack Co. · a transparent, local retrieval demo — not connected to any external AI service.</footer>
 </div>
 
-<details class="how-it-works">
-  <summary>How this actually works</summary>
-  <p>No external API calls and no language model here — every answer below comes from a small local knowledge base about this portfolio, matched against your question by keyword overlap (the same category of technique used in the Smart Inquiry Router demo). If it can't find a confident match, it says so honestly instead of guessing.</p>
-</details>
-
-<footer>Built by BrightStack Co. · a transparent, local retrieval demo — not connected to any external AI service.</footer>
-
 <script>
+// Logic preserved, KB updated with actual student/skill data
 const KB = [
   {
     tags: ['churn risk model','churn model','logistic regression','gradient descent','pyodide','webassembly','ml lab','python model','from scratch'],
@@ -168,7 +220,7 @@ const KB = [
     tags: ['nexora','agency','platform','currency','api','frankfurter','health score','client health','flagship','full stack','fullstack'],
     title: 'Nexora',
     link: 'nexora-flagship-project.html',
-    answer: "Nexora is my flagship project — a client & project management platform for agencies. It has a live currency-conversion API (real rates fetched from frankfurter.app when you click convert), a rule-based client health-scoring engine that flags accounts at risk of churn, and its own documented design system. It's a front-end build: the interface and the API call are real, the client data is sample data, and there's no server behind it."
+    answer: "Nexora is my flagship project — a client & project management platform for agencies. It has a live currency-conversion API (real rates fetched from frankfurter.app when you click convert), a rule-based client health-scoring engine that flags accounts at risk of churn, and its own documented design system."
   },
   {
     tags: ['inquiry router','smart inquiry','classifier','classification','ai automation','support ticket','routing','accuracy','confusion matrix'],
@@ -216,19 +268,19 @@ const KB = [
     tags: ['skill','skills','javascript','python','html','css','wordpress','api integration','tech stack','tools','technolog'],
     title: 'Skills',
     link: null,
-    answer: "My core stack: JavaScript, HTML5/CSS3, and Python, plus WordPress, API integration, responsive web design, UI/UX design, and applied machine learning. Every project in this portfolio is built with plain HTML/CSS/JS — no framework required to view any of them."
+    answer: "My core stack includes intermediate Python, UI/UX Design, JavaScript, and HTML5/CSS3. Every project in this portfolio is built with plain HTML/CSS/JS — no heavy frameworks required to view any of them. I also leverage my AI background to build intelligent systems."
   },
   {
     tags: ['experience','background','internship','novaxccelerate','ml engineer','machine learning intern','uiux intern','ui/ux intern'],
     title: 'Experience',
     link: null,
-    answer: "Two internships at novaXccelerate: an ML Engineer internship (Dec 2025 – Mar 2026) applying machine learning to real industry-led projects, and a UI/UX Design internship (Jul – Oct 2024) building wireframes and user flows. Both were structured, mentored programs rather than self-study."
+    answer: "I am a 5th-semester BS AI student. I've completed two internships at novaXccelerate: an ML Engineer internship (Dec 2025 – Mar 2026) applying machine learning to real industry projects, and a UI/UX Design internship (Jul – Oct 2024) building wireframes and user flows."
   },
   {
     tags: ['contact','hire','email','reach','get in touch','work together','project','available','freelance','fiverr'],
     title: 'Contact',
     link: 'index.html#contact',
-    answer: "Email Hassan at 19hsnkhan@gmail.com — that's usually the quickest way to talk through scope, timeline, and price. You can also message BrightStack on Fiverr if you'd rather keep everything on the platform, or leave a note in the quick-message form on the homepage."
+    answer: "Let's build something great together. The best way to reach me is via email to discuss your scope and timeline, or we can connect on Fiverr if you prefer that platform. There's also a quick-message form on the homepage."
   },
   {
     tags: ['client area','client login','sign in','my account','project status','client portal'],
@@ -240,7 +292,7 @@ const KB = [
     tags: ['who are you','about you','hassan','brightstack','background','who is this'],
     title: 'About',
     link: 'index.html#about',
-    answer: "I'm Hassan Saeed, and BrightStack Co. is a one-person studio. I build responsive websites, browser-based apps wired to live APIs, and Firebase-backed tools with sign-in and a private client area — plus hands-on ML experience from an industry internship and VORIS, an AI assistant system I'm building."
+    answer: "I'm Hassan Saeed, currently in my 5th semester of a BS in Artificial Intelligence. I combine my intermediate Python programming skills with a strong foundation in UI/UX design to build intelligent, user-centric web applications and digital products."
   }
 ];
 
@@ -320,7 +372,7 @@ function respond(input){
     } else {
       addMessage('bot', FALLBACK);
     }
-  }, 500 + Math.random() * 400);
+  }, 500 + Math.random() * 400); 
 }
 
 function sendMessage(){
@@ -350,7 +402,9 @@ function renderChips(){
 }
 
 renderChips();
-addMessage('bot', "Hi — I'm a small local assistant indexed on this portfolio. Ask me about any project, my skills, experience, or how to get in touch.");
+setTimeout(() => {
+  addMessage('bot', "Hi — I'm a local assistant indexed on this portfolio. Ask me about my projects, my AI and UI/UX skills, or how to get in touch.");
+}, 500);
 </script>
 
 </body>
