@@ -3,69 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — BrightStack Co.</title>
+<title>Admin Dashboard — BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/admin.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Admin — BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
+<meta property="og:title" content="Admin Dashboard — BrightStack Co.">
+<meta property="og:description" content="Secure administrative command center for BrightStack Co.">
 <meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/admin.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Premium Dark Theme Variables */
-    --ink: #FFFFFF; 
-    --ink-soft: #A0AEC0; 
-    --paper: #0A0F16; /* Deep dark background */
-    --paper-2: rgba(255, 255, 255, 0.03); /* Glassy card background */
-    --line: rgba(0, 229, 255, 0.2); /* Subtle aqua border */
-    --signal: #ffdab9; /* Peach puff */
-    --signal-ink: #000000; 
-    --indigo: #00E5FF; /* Aqua blue */
-    --indigo-soft: rgba(0, 229, 255, 0.1);
+    --ink: #F0F6FC; 
+    --ink-soft: #8B949E; 
+    --paper: #0D1117; /* Deep Charcoal */
+    --paper-card: #161B22; /* Elevated Charcoal */
+    --paper-2: rgba(255, 255, 255, 0.03); 
+    --line: rgba(0, 255, 102, 0.2); /* Electric Lime border tint */
+    --signal: #00FF66; /* Electric Lime */
+    --signal-ink: #0D1117; 
+    --indigo: #00FF66; /* Electric Lime primary accent */
+    --indigo-soft: rgba(0, 255, 102, 0.1);
+    --danger: #FF5555;
   }
   
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
   a{color:inherit;text-decoration:none; transition: color 0.3s ease;}
-  a:hover {color: var(--indigo);}
+  a:hover {color: var(--signal);}
   .mono{font-family:'JetBrains Mono',monospace;}
 
   header{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;max-width:1000px;margin:0 auto;}
   .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
-  .logo span{color:var(--indigo);}
-  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .logo span{color:var(--signal);}
+  .back-link{font-size:13px;font-weight:600;color:var(--ink-soft); transition: color 0.3s;}
+  .back-link:hover{color:var(--signal);}
 
   .wrap{max-width:1000px;margin:0 auto;padding:12px 32px 60px;}
   #blockedState, #loadingState{text-align:center;padding:100px 20px;color:var(--ink-soft);}
 
   #adminState{display:none;}
-  .tabs{display:flex;gap:8px;margin-bottom:22px;}
+  
+  /* Quick Stats Bar */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px;}
+  .stat-card{background:var(--paper-card);border:1px solid var(--line);border-radius:10px;padding:16px;box-shadow: 0 4px 20px rgba(0,0,0,0.3);}
+  .stat-label{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.5px;}
+  .stat-value{font-size:24px;font-weight:700;font-family:'Space Grotesk',sans-serif;color:var(--signal);margin-top:4px;}
+
+  /* Search & Filter Toolbar */
+  .toolbar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .search-input{
+    flex:1;background:var(--paper-card);border:1px solid var(--line);border-radius:8px;
+    padding:10px 14px;color:var(--ink);font-size:13.5px;font-family:'Inter',sans-serif;outline:none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .search-input:focus { border-color: var(--signal); box-shadow: 0 0 10px rgba(0,255,102,0.15); }
+
+  .tabs{display:flex;gap:8px;}
   .tab-btn{
-    background:var(--paper-2);border:1px solid var(--line);padding:10px 18px;border-radius:8px;
+    background:var(--paper-card);border:1px solid var(--line);padding:10px 18px;border-radius:8px;
     font-weight:600;font-size:13.5px;cursor:pointer;color:var(--ink-soft);
     transition: all 0.3s ease;
   }
-  .tab-btn:hover { border-color: var(--indigo); color: var(--ink); }
-  .tab-btn.active{background:var(--indigo);color:var(--signal-ink);border-color:var(--indigo);}
+  .tab-btn:hover { border-color: var(--signal); color: var(--ink); }
+  .tab-btn.active{background:var(--signal);color:var(--signal-ink);border-color:var(--signal);box-shadow: 0 0 15px rgba(0,255,102,0.25);}
 
   /* Smooth Panel Transition */
   .panel{display:none; opacity: 0; transition: opacity 0.4s ease-in-out;}
   .panel.active{display:block; opacity: 1;}
 
-  /* 3D Card Hover Effect */
+  /* Card Styles */
   .lead-card, .client-card{
-    background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px;
+    background:var(--paper-card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    backdrop-filter: blur(10px);
   }
   .lead-card:hover, .client-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.08); /* Soft aqua glow */
-    border-color: var(--indigo);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 255, 102, 0.08);
+    border-color: var(--signal);
   }
 
   .lead-top, .client-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
@@ -73,24 +89,37 @@
   .lead-meta{font-size:12px;color:var(--ink-soft);}
   .lead-msg{font-size:14px;margin-top:8px;}
   
-  /* Inputs styling for Dark Theme */
   .status-select{
-    background: transparent; color: var(--ink);
+    background: var(--paper); color: var(--ink);
     border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:12.5px;font-family:'JetBrains Mono',monospace;
+    outline: none; cursor: pointer;
   }
-  .status-select option { background: var(--paper); color: var(--ink); }
+  .status-select option { background: var(--paper-card); color: var(--ink); }
   
   .empty-state{text-align:center;color:var(--ink-soft);padding:40px 0;font-size:14px;}
 
-  .client-status-row{display:flex;gap:10px;align-items:center;margin-top:10px;}
-  .client-status-row input{flex:1;background: transparent;color: var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:13px;}
-  .client-status-row button{background:var(--indigo);color:var(--signal-ink);border:none;padding:8px 14px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer; transition: transform 0.2s;}
+  .client-status-row{display:flex;gap:10px;align-items:center;margin-top:12px;}
+  .client-status-row input{flex:1;background: var(--paper);color: var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:13px;outline:none;}
+  .client-status-row input:focus { border-color: var(--signal); }
+  .client-status-row button{background:var(--signal);color:var(--signal-ink);border:none;padding:8px 14px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;}
+  .client-status-row button:hover { box-shadow: 0 0 10px rgba(0,255,102,0.3); }
   .client-status-row button:active { transform: scale(0.95); }
 
   .client-msg-row{display:flex;gap:10px;margin-top:10px;}
-  .client-msg-row input{flex:1;background: transparent;color: var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:13px;}
-  .client-msg-row button{background:var(--signal);color:var(--signal-ink);border:none;padding:8px 14px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer; transition: transform 0.2s;}
+  .client-msg-row input{flex:1;background: var(--paper);color: var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:13px;outline:none;}
+  .client-msg-row input:focus { border-color: var(--signal); }
+  .client-msg-row button{background:var(--paper-2);color:var(--signal);border:1px solid var(--line);padding:8px 14px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer; transition: all 0.2s;}
+  .client-msg-row button:hover{background:var(--signal);color:var(--signal-ink);}
   .client-msg-row button:active { transform: scale(0.95); }
+
+  /* Toast Notification */
+  #toast {
+    position: fixed; bottom: 30px; right: 30px; background: var(--signal); color: var(--signal-ink);
+    padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13px;
+    box-shadow: 0 5px 20px rgba(0,255,102,0.3); transform: translateY(100px); opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
 </style>
 </head>
 <body>
@@ -101,17 +130,37 @@
 </header>
 
 <div class="wrap">
-  <div id="loadingState"><p class="mono">Checking access…</p></div>
+  <div id="loadingState"><p class="mono">Checking secure access…</p></div>
 
   <div id="blockedState" style="display:none;">
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;margin-bottom:10px;color:var(--indigo);">Not authorized</h2>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;margin-bottom:10px;color:var(--signal);">Not authorized</h2>
     <p>This page is restricted to the BrightStack admin account. Sign in with the admin account from the homepage first.</p>
   </div>
 
   <div id="adminState">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="leads">Leads</button>
-      <button class="tab-btn" data-tab="clients">Clients</button>
+    <!-- Quick Command Metrics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Leads</div>
+        <div class="stat-value" id="statLeads">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Clients</div>
+        <div class="stat-value" id="statClients">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Support Tickets</div>
+        <div class="stat-value" id="statTickets" style="color: var(--danger);">0</div>
+      </div>
+    </div>
+
+    <!-- Toolbar: Search & Navigation Tabs -->
+    <div class="toolbar">
+      <input type="text" id="searchInput" class="search-input" placeholder="Filter leads or clients by name/email...">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="leads">Leads</button>
+        <button class="tab-btn" data-tab="clients">Clients</button>
+      </div>
     </div>
 
     <div class="panel active" id="leadsPanel">
@@ -124,6 +173,8 @@
   </div>
 </div>
 
+<div id="toast">Changes saved successfully</div>
+
 <script type="module">
   import { auth, db, ADMIN_UID } from './firebase-config.js';
   import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -131,17 +182,31 @@
     collection, query, orderBy, getDocs, doc, updateDoc, arrayUnion
   } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
+  let cachedLeads = [];
+  let cachedClients = [];
+
+  function showToast(msg = "Changes saved successfully") {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      
-      // Small delay for smooth fade-in
       setTimeout(() => {
         document.getElementById(btn.dataset.tab + 'Panel').classList.add('active');
       }, 50);
     });
+  });
+
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    renderLeads(cachedLeads.filter(l => (l.name + l.email + l.message).toLowerCase().includes(term)));
+    renderClients(cachedClients.filter(c => (c.name + c.email + (c.projectBrief?.title || '')).toLowerCase().includes(term)));
   });
 
   function escapeHtml(str){
@@ -150,17 +215,36 @@
     return d.innerHTML;
   }
 
-  async function loadLeads(){
+  async function loadData(){
+    const leadsSnap = await getDocs(query(collection(db, 'leads'), orderBy('createdAt', 'desc')));
+    cachedLeads = [];
+    leadsSnap.forEach(docSnap => cachedLeads.push({ id: docSnap.id, ...docSnap.data() }));
+
+    const clientsSnap = await getDocs(collection(db, 'clients'));
+    cachedClients = [];
+    clientsSnap.forEach(docSnap => cachedClients.push({ id: docSnap.id, ...docSnap.data() }));
+
+    document.getElementById('statLeads').textContent = cachedLeads.length;
+    document.getElementById('statClients').textContent = cachedClients.length;
+    
+    let totalTickets = 0;
+    cachedClients.forEach(c => {
+      if (c.complaints) totalTickets += c.complaints.length;
+    });
+    document.getElementById('statTickets').textContent = totalTickets;
+
+    renderLeads(cachedLeads);
+    renderClients(cachedClients);
+  }
+
+  function renderLeads(leads){
     const list = document.getElementById('leadsList');
     list.innerHTML = '';
-    const q = query(collection(db, 'leads'), orderBy('createdAt', 'desc'));
-    const snap = await getDocs(q);
-    if (snap.empty){
-      list.innerHTML = '<div class="empty-state">No leads yet — they\'ll show up here as people use the quick-message form on the homepage.</div>';
+    if (leads.length === 0){
+      list.innerHTML = '<div class="empty-state">No leads found.</div>';
       return;
     }
-    snap.forEach(docSnap => {
-      const lead = docSnap.data();
+    leads.forEach(lead => {
       const when = lead.createdAt?.toDate ? lead.createdAt.toDate().toLocaleString() : '';
       const div = document.createElement('div');
       div.className = 'lead-card';
@@ -170,7 +254,7 @@
             <div class="lead-name">${escapeHtml(lead.name)} <span class="lead-meta">· ${escapeHtml(lead.email)}</span></div>
             <div class="lead-meta">${when} · source: ${escapeHtml(lead.source || 'website')}</div>
           </div>
-          <select class="status-select" data-id="${docSnap.id}">
+          <select class="status-select" data-id="${lead.id}">
             <option value="new" ${lead.status==='new'?'selected':''}>New</option>
             <option value="contacted" ${lead.status==='contacted'?'selected':''}>Contacted</option>
             <option value="closed" ${lead.status==='closed'?'selected':''}>Closed</option>
@@ -180,29 +264,28 @@
       `;
       list.appendChild(div);
     });
+
     document.querySelectorAll('.status-select').forEach(sel => {
       sel.addEventListener('change', async () => {
         await updateDoc(doc(db, 'leads', sel.dataset.id), { status: sel.value });
+        showToast("Lead status updated");
       });
     });
   }
 
-  async function loadClients(){
+  function renderClients(clients){
     const list = document.getElementById('clientsList');
     list.innerHTML = '';
-    const snap = await getDocs(collection(db, 'clients'));
-    if (snap.empty){
-      list.innerHTML = '<div class="empty-state">No clients have signed in yet.</div>';
+    if (clients.length === 0){
+      list.innerHTML = '<div class="empty-state">No clients found.</div>';
       return;
     }
-    snap.forEach(docSnap => {
-      const client = docSnap.data();
-      const uid = docSnap.id;
+    clients.forEach(client => {
+      const uid = client.id;
       const div = document.createElement('div');
       div.className = 'client-card';
       const brief = client.projectBrief;
       
-      // Wording changed from Complaints to Support Tickets
       div.innerHTML = `
         <div class="client-top">
           <div>
@@ -211,23 +294,23 @@
           </div>
         </div>
         ${brief ? `
-        <div class="lead-meta" style="margin-top:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;">
-          <strong style="color:var(--indigo);">${escapeHtml(brief.title)}</strong><br>${escapeHtml(brief.description)}<br>
+        <div class="lead-meta" style="margin-top:10px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px 14px;">
+          <strong style="color:var(--signal);">${escapeHtml(brief.title)}</strong><br>${escapeHtml(brief.description)}<br>
           Budget: ${escapeHtml(brief.budget \vert{}\vert{} '—')} · Timeline: ${escapeHtml(brief.timeline || '—')}
         </div>` : `<div class="lead-meta" style="margin-top:10px;">No project brief submitted yet.</div>`}
         
         ${(client.complaints && client.complaints.length) ? `
-        <div class="lead-meta" style="margin-top:10px;background:rgba(255, 99, 71, 0.1);border:1px solid rgba(255, 99, 71, 0.3);border-radius:8px;padding:12px 14px;">
-          <strong style="color:#FF6347;">${client.complaints.length} Support Ticket${client.complaints.length > 1 ? 's' : ''} Raised</strong><br>${client.complaints.slice().reverse().map(c => escapeHtml(c.text)).join('<br>')}
+        <div class="lead-meta" style="margin-top:10px;background:rgba(255, 85, 85, 0.1);border:1px solid rgba(255, 85, 85, 0.3);border-radius:8px;padding:12px 14px;">
+          <strong style="color:var(--danger);">${client.complaints.length} Support Ticket${client.complaints.length > 1 ? 's' : ''} Raised</strong><br>${client.complaints.slice().reverse().map(c => escapeHtml(c.text)).join('<br>')}
         </div>` : ''}
         
-        <div class="lead-meta" style="margin-top:8px;">Current status: <strong style="color:var(--indigo);">${escapeHtml(client.projectStatus)}</strong></div>
+        <div class="lead-meta" style="margin-top:8px;">Current status: <strong style="color:var(--signal);">${escapeHtml(client.projectStatus || 'In Progress')}</strong></div>
         <div class="client-status-row">
-          <input type="text" placeholder="New status…" class="status-input" data-uid="${uid}">
+          <input type="text" placeholder="New status..." class="status-input" data-uid="${uid}">
           <button class="status-save" data-uid="${uid}">Update status</button>
         </div>
         <div class="client-msg-row">
-          <input type="text" placeholder="Send a message to this client…" class="msg-input" data-uid="${uid}">
+          <input type="text" placeholder="Send a message to this client..." class="msg-input" data-uid="${uid}">
           <button class="msg-send" data-uid="${uid}">Send</button>
         </div>
       `;
@@ -241,9 +324,11 @@
         if (!input.value.trim()) return;
         await updateDoc(doc(db, 'clients', uid), { projectStatus: input.value.trim() });
         input.value = '';
-        loadClients();
+        showToast("Project status updated");
+        loadData();
       });
     });
+
     document.querySelectorAll('.msg-send').forEach(btn => {
       btn.addEventListener('click', async () => {
         const uid = btn.dataset.uid;
@@ -253,7 +338,8 @@
           messages: arrayUnion({ from: 'admin', text: input.value.trim(), timestamp: Date.now() })
         });
         input.value = '';
-        loadClients();
+        showToast("Message sent to client");
+        loadData();
       });
     });
   }
@@ -265,8 +351,7 @@
       return;
     }
     document.getElementById('adminState').style.display = 'block';
-    loadLeads();
-    loadClients();
+    loadData();
   });
 </script>
 
