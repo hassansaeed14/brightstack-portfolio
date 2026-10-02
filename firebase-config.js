@@ -1,4 +1,4 @@
-// Shared Firebase setup — imported as an ES module by index.html, client-area.html, and admin.html
+// Shared Firebase setup — Secure ES Module
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth, GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, OAuthProvider
@@ -14,28 +14,38 @@ const firebaseConfig = {
   appId: "1:1063629053655:web:3c80553bdc0c16cc089a92"
 };
 
+// Initialize Firebase App securely
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-// Auto-detect lets the SDK try a normal WebChannel connection first and fall back
-// to long-polling only if that genuinely fails (restrictive proxies, some corporate
-// networks). Preferred over forcing long-polling for everyone.
-// NOTE: this project's Firestore database is *named* "default" — not the special
-// unnamed "(default)" database the SDK assumes. The third argument below tells the
-// SDK which database to talk to. Without it, every write is queued locally and
-// never reaches the server, silently and with no error.
+
+// Initialize Firestore with explicit database targeting and robust polling fallback
 export const db = initializeFirestore(app, {
   experimentalAutoDetectLongPolling: true,
   useFetchStreams: false
 }, 'default');
 
+// Configure Auth Providers with secure custom parameters (e.g., forcing account selection prompt)
 export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+
 export const githubProvider = new GithubAuthProvider();
 export const facebookProvider = new FacebookAuthProvider();
-// LinkedIn is wired in Firebase as a generic OIDC provider — the ID below must
-// exactly match the "Provider ID" you set when adding it in the Firebase console.
+
+// LinkedIn OIDC Provider setup
 export const linkedinProvider = new OAuthProvider('oidc.linkedin');
 
-// TEMPORARY — replace with your real Firebase UID (Authentication → Users tab)
-// once you've signed in once. This same string must also be pasted into your
-// Firestore security rules wherever you see the same placeholder.
+// ADMIN CONSTANT
 export const ADMIN_UID = "9pzEI4cfAyPBH0M51QU3McDMqfP2";
+
+/**
+ * Secure Helper: Client-side check to verify if the currently logged-in user is an admin.
+ * NOTE: Client-side checks are strictly for UI rendering/routing. 
+ * Real security and data protection MUST be enforced via Firestore Security Rules.
+ * 
+ * @param {import('firebase/auth').User | null} user 
+ * @returns {boolean}
+ */
+export function verifyAdminAccess(user) {
+  if (!user || !user.uid) return false;
+  return user.uid === ADMIN_UID;
+}
