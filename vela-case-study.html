@@ -1,310 +1,344 @@
+
+
+Vela case study 3d v5 · HTML
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vela — First-Time Investing App | BrightStack Co.</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vela-case-study.html">
+<title>Vela — First-Time Investing App | 3D Spatial UX Case Study</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vela-case-study-3d-v5.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vela — First-Time Investing App | BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/vela-case-study.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Vela — First-Time Investing App | 3D Spatial UX Case Study">
+<meta property="og:description" content="Drag the 3D portfolio, change your monthly amount, and watch it grow. A spatial micro-investing case study by Hassan Saeed at BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-  :root{
-    --bg:#f1f2f7;
-    --card:#ffffff;
-    --ink:#12131a;
-    --muted:#6b7080;
-    --line:#e3e5ee;
-    --indigo:#4f46e5;
-    --indigo-dim:#eef0fd;
-    --green:#0f9d63;
-    --green-dim:#e7f7ef;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:1080px;margin:0 auto;padding:64px 24px 100px;}
-  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px;}
-  h1{font-family:'Space Grotesk',sans-serif;font-size:42px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
-  .lede{color:var(--muted);font-size:17.5px;line-height:1.65;max-width:680px;margin:0 0 36px;}
-  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:64px;}
-  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
-  .pill strong{color:var(--ink);font-weight:600;}
-
-  .stepper{display:flex;gap:0;margin-bottom:60px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);}
-  .step{flex:1;padding:16px 18px;border-right:1px solid var(--line);}
-  .step:last-child{border-right:none;}
-  .step-num{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--indigo);font-weight:700;letter-spacing:.06em;}
-  .step-name{font-size:13.5px;font-weight:600;margin-top:4px;}
-  @media(max-width:760px){.stepper{flex-direction:column;}.step{border-right:none;border-bottom:1px solid var(--line);}.step:last-child{border-bottom:none;}}
-
-  section{margin-bottom:64px;}
-  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:0 0 6px;}
-  .section-sub{color:var(--muted);font-size:15.5px;margin:0 0 28px;max-width:640px;line-height:1.6;}
-
-  /* Research */
-  .research-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  @media(max-width:760px){.research-grid{grid-template-columns:1fr;}}
-  .research-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;}
-  .research-card .tag{display:inline-block;font-size:11.5px;font-weight:600;color:var(--indigo);background:var(--indigo-dim);padding:4px 10px;border-radius:100px;margin-bottom:12px;}
-  .research-card h4{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 8px;}
-  .research-card p{color:var(--muted);font-size:14px;line-height:1.6;margin:0;}
-  .quote{font-style:italic;color:var(--ink);font-size:14.5px;border-left:2px solid var(--indigo);padding-left:14px;margin:14px 0 0;}
-
-  /* Sketch to UI progression */
-  .progression{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:16px;align-items:center;margin-bottom:8px;}
-  @media(max-width:800px){.progression{grid-template-columns:1fr;}}
-  .arrow{color:var(--muted);font-size:20px;text-align:center;}
-  @media(max-width:800px){.arrow{transform:rotate(90deg);}}
-  .prog-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;}
-  .prog-card .prog-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;}
-  .sketch-box{background:#fafafd;border:1px dashed #cfd2df;border-radius:10px;aspect-ratio:9/16;padding:12px;display:flex;flex-direction:column;gap:7px;}
-  .sk{background:#cfd2df;border-radius:3px;}
-  .sk.dark{background:#9ea3b8;}
-  .sk-h{height:12px;width:55%;}
-  .sk-l{height:6px;}
-  .sk-b{height:38px;border-radius:6px;}
-  .sk-circ{width:40px;height:40px;border-radius:50%;margin:8px auto;}
-
-  .hifi-box{
-    background:linear-gradient(180deg,#4f46e5,#3730a3);
-    border-radius:14px;
-    aspect-ratio:9/16;
-    padding:18px;
-    color:#fff;
-    display:flex;
-    flex-direction:column;
-  }
-  .hifi-box .hf-top{font-size:11px;opacity:.75;margin-bottom:6px;}
-  .hifi-box .hf-big{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin-bottom:4px;}
-  .hifi-box .hf-sub{font-size:11.5px;opacity:.8;margin-bottom:16px;}
-  .hf-chart{flex:1;display:flex;align-items:flex-end;gap:4px;margin-bottom:14px;}
-  .hf-bar{flex:1;background:rgba(255,255,255,.35);border-radius:3px 3px 0 0;}
-  .hf-bar.active{background:#fff;}
-  .hf-btn{background:#fff;color:var(--indigo);text-align:center;font-size:12px;font-weight:700;padding:10px;border-radius:8px;}
-
-  /* High-fidelity screens */
-  .hifi-screens{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-  @media(max-width:800px){.hifi-screens{grid-template-columns:1fr;}}
-  .hf-frame{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;}
-  .hf-frame .frame-title{font-size:13px;font-weight:600;margin-bottom:2px;}
-  .hf-frame .frame-desc{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
-
-  .app-screen{background:#fafafd;border-radius:14px;padding:18px;aspect-ratio:9/17;display:flex;flex-direction:column;border:1px solid var(--line);}
-  .as-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-  .as-greet{font-size:11px;color:var(--muted);}
-  .as-name{font-size:14px;font-weight:700;}
-  .as-avatar{width:26px;height:26px;border-radius:50%;background:var(--indigo);}
-  .as-balance-card{background:linear-gradient(135deg,#4f46e5,#3730a3);border-radius:12px;padding:16px;color:#fff;margin-bottom:14px;}
-  .as-balance-label{font-size:10.5px;opacity:.75;margin-bottom:4px;}
-  .as-balance-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;}
-  .as-balance-change{font-size:11px;opacity:.9;margin-top:4px;}
-  .as-list-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px;}
-  .as-list-item:last-child{border-bottom:none;}
-  .as-fund-name{font-weight:600;}
-  .as-fund-sub{color:var(--muted);font-size:10.5px;}
-  .as-gain{color:var(--green);font-weight:700;font-size:12px;}
-  .as-slider-track{height:6px;background:var(--line);border-radius:3px;position:relative;margin:20px 0 8px;}
-  .as-slider-fill{position:absolute;left:0;top:0;bottom:0;width:40%;background:var(--indigo);border-radius:3px;}
-  .as-slider-dot{position:absolute;left:40%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--indigo);}
-  .as-amount{text-align:center;font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin:16px 0 4px;}
-  .as-amount-sub{text-align:center;color:var(--muted);font-size:11px;margin-bottom:18px;}
-  .as-cta{background:var(--indigo);color:#fff;text-align:center;padding:12px;border-radius:10px;font-size:13px;font-weight:700;margin-top:auto;}
-  .as-badge{display:inline-block;background:var(--green-dim);color:var(--green);font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;margin-bottom:10px;}
-  .as-plain-icon{width:40px;height:40px;border-radius:10px;background:var(--indigo-dim);margin:0 auto 14px;}
-  .as-copy-title{text-align:center;font-weight:700;font-size:14px;margin-bottom:6px;}
-  .as-copy-sub{text-align:center;color:var(--muted);font-size:11.5px;line-height:1.5;margin-bottom:20px;}
-
-  /* Usability notes */
-  .notes-list{display:flex;flex-direction:column;gap:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
-  .note-row{display:grid;grid-template-columns:36px 1fr;gap:16px;padding:20px 24px;border-bottom:1px solid var(--line);}
-  .note-row:last-child{border-bottom:none;}
-  .note-num{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--indigo);font-size:14px;}
-  .note-row h5{margin:0 0 6px;font-size:14.5px;font-weight:600;}
-  .note-row p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.6;}
-
-  .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-  .footer-nav a{color:var(--indigo);text-decoration:none;font-weight:600;font-size:14.5px;}
-  .brand{color:var(--muted);font-size:13.5px;}
+  :root{--bg:#04060d;--card:#0c1120;--card2:#111829;--ink:#f4f7fc;--muted:#8f9db3;--line:#1c2640;--indigo:#7c7ff5;--indigo-dim:rgba(124,127,245,.16);--green:#2dd4a0;--green-dim:rgba(45,212,160,.15);--coral:#f43f5e;--stage:radial-gradient(circle at 50% 40%,#101833 0%,#04060d 75%);--glass:rgba(12,17,32,.72);--shadow:0 30px 60px -20px rgba(0,0,0,.9);--radius:22px}
+  [data-theme="light"]{--bg:#f3f5fb;--card:#fff;--card2:#f6f7fc;--ink:#0f172a;--muted:#52607a;--line:#e1e6f0;--indigo:#4f46e5;--indigo-dim:#eef0ff;--green:#059669;--green-dim:#e7f8f0;--stage:radial-gradient(circle at 50% 40%,#e9ecff 0%,#cfd6f3 80%);--glass:rgba(255,255,255,.8);--shadow:0 24px 48px -20px rgba(30,40,90,.18)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s,color .3s}
+  :focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+ 
+  /* Sticky nav */
+  .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:var(--glass);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+  .logo{font-family:'Space Grotesk';font-weight:700;font-size:19px;display:flex;align-items:center;gap:9px}
+  .logo i{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--indigo),var(--green));display:block;transform:rotate(45deg)}
+  .nav-links{display:flex;gap:22px;font-size:14px}
+  .nav-links a{color:var(--muted);text-decoration:none;font-weight:500}
+  .nav-links a:hover{color:var(--ink)}
+  @media(max-width:700px){.nav-links{display:none}}
+  .theme-toggle{background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink);font-family:inherit}
+ 
+  /* Hero */
+  .hero{padding:64px 0 28px;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:40px}}
+  h1{font-family:'Space Grotesk';font-size:clamp(36px,5.2vw,60px);line-height:1.04;margin:0 0 18px;font-weight:700;letter-spacing:-.03em}
+  h1 span{background:linear-gradient(100deg,var(--indigo),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{color:var(--muted);font-size:17.5px;line-height:1.65;max-width:520px;margin:0 0 26px}
+  .pills{display:flex;flex-wrap:wrap;gap:9px}
+  .pill{font-size:12.5px;padding:7px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted)}
+  .pill b{color:var(--ink);font-weight:600}
+ 
+  /* 3D stage */
+  .stage{position:relative;border-radius:var(--radius);border:1px solid var(--line);background:var(--stage);box-shadow:var(--shadow);overflow:hidden;min-height:440px}
+  #webglCanvas{width:100%;height:440px;display:block;cursor:grab;touch-action:pan-y}
+  #webglCanvas:active{cursor:grabbing}
+  .badge{position:absolute;top:14px;left:14px;font-size:12px;font-weight:600;color:var(--green);background:var(--green-dim);padding:6px 12px;border-radius:100px}
+  .hint{position:absolute;top:14px;right:14px;font-size:12px;color:var(--muted);background:var(--glass);padding:6px 12px;border-radius:100px;border:1px solid var(--line)}
+  .chips{position:absolute;left:14px;right:14px;bottom:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--line);padding:9px 14px;border-radius:12px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink);font-family:inherit;transition:border-color .2s,transform .2s}
+  .chip:hover{border-color:var(--indigo);transform:translateY(-2px)}
+  .chip[aria-pressed="true"]{border-color:var(--green);color:var(--green)}
+ 
+  /* Simulator */
+  section{padding:56px 0}
+  h2{font-family:'Space Grotesk';font-size:clamp(26px,3.4vw,36px);letter-spacing:-.02em;margin:0 0 10px}
+  .sub{color:var(--muted);font-size:16px;line-height:1.65;max-width:620px;margin:0 0 30px}
+  .sim{display:grid;grid-template-columns:.9fr 1.3fr;gap:22px}
+  @media(max-width:860px){.sim{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+  .field{margin-bottom:22px}
+  .field label{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:10px}
+  .field output{color:var(--indigo);font-family:'Space Grotesk';font-weight:700}
+  input[type=range]{width:100%;accent-color:var(--indigo);height:6px}
+  .big{font-family:'Space Grotesk';font-size:clamp(34px,4.6vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1}
+  .big small{display:block;font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted);margin-bottom:8px;font-family:'Inter'}
+  .split{display:flex;gap:28px;margin:18px 0 14px;flex-wrap:wrap}
+  .split div{font-size:13px;color:var(--muted)}
+  .split b{display:block;font-size:19px;color:var(--ink);font-family:'Space Grotesk'}
+  .split .g{color:var(--green)}
+  #chart{width:100%;height:auto;display:block}
+  .note{font-size:12.5px;color:var(--muted);margin:12px 0 0;line-height:1.55}
+ 
+  /* Process (a real sequence) */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+  @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;counter-increment:s;position:relative}
+  .step::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--indigo-dim);color:var(--indigo);font-weight:700;font-size:14px;margin-bottom:14px;font-family:'Space Grotesk'}
+  .step h4{margin:0 0 6px;font-family:'Space Grotesk';font-size:16px}
+  .step p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.6}
+ 
+  /* Results */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+  @media(max-width:640px){.stats{grid-template-columns:1fr}}
+  .stat{border-top:2px solid var(--green);padding-top:14px}
+  .stat b{font-family:'Space Grotesk';font-size:40px;letter-spacing:-.03em;display:block}
+  .stat span{color:var(--muted);font-size:14px}
+  .research{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:760px){.research{grid-template-columns:1fr}}
+  .rc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  .rc h4{font-family:'Space Grotesk';font-size:18px;margin:0 0 8px}
+  .rc p{color:var(--muted);font-size:14.5px;line-height:1.7;margin:0}
+  .quote{font-style:italic;font-size:15px;border-left:3px solid var(--indigo);padding-left:14px;margin:16px 0 0;line-height:1.6}
+ 
+  footer{border-top:1px solid var(--line);padding:28px 0 56px;margin-top:20px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:14px}
+  footer a{color:var(--indigo);text-decoration:none;font-weight:600}
+  .brand{color:var(--muted)}
+ 
+  /* Single reveal moment: hero text on load */
+  .hero-text{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <div class="eyebrow">UI/UX — Premium package</div>
-  <h1>Vela — Investing for first-time investors</h1>
-  <p class="lede">A full case study for a micro-investing app aimed at people who've never bought a stock — from the research question that shaped it, through low-fidelity structure, to a finished high-fidelity flow and the usability observations that came out of it.</p>
-
-  <div class="meta-row">
-    <span class="pill"><strong>Deliverable</strong> — full case study</span>
-    <span class="pill"><strong>Coverage</strong> — research → UI</span>
-    <span class="pill"><strong>Fidelity</strong> — high-fidelity prototype</span>
-    <span class="pill"><strong>Timeline</strong> — 10-12 day delivery</span>
+ 
+<header class="nav">
+  <div class="wrap">
+    <div class="logo"><i></i>Vela</div>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#simulator">Simulator</a><a href="#process">Process</a><a href="#results">Results</a>
+    </nav>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">☀️ Light mode</button>
   </div>
-
-  <div class="stepper">
-    <div class="step"><div class="step-num">01 · RESEARCH</div><div class="step-name">The problem</div></div>
-    <div class="step"><div class="step-num">02 · STRUCTURE</div><div class="step-name">Sketch → UI</div></div>
-    <div class="step"><div class="step-num">03 · DESIGN</div><div class="step-name">High-fidelity flow</div></div>
-    <div class="step"><div class="step-num">04 · VALIDATE</div><div class="step-name">Usability notes</div></div>
+</header>
+ 
+<main class="wrap">
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Investing that feels like <span>watching something grow</span></h1>
+      <p class="lede">Vela turns an intimidating portfolio into a 3D object you can hold, spin, and grow. Built for people making their very first investment.</p>
+      <div class="pills">
+        <span class="pill"><b>Role</b> UI/UX design and prototyping</span>
+        <span class="pill"><b>Stack</b> Three.js, WebGL</span>
+        <span class="pill"><b>By</b> Hassan Saeed, BrightStack Co.</span>
+      </div>
+    </div>
+ 
+    <div class="stage">
+      <canvas id="webglCanvas" aria-label="Interactive 3D portfolio shape. Drag to rotate."></canvas>
+      <div class="badge" id="badge">WebGL live</div>
+      <div class="hint">Drag to rotate</div>
+      <div class="chips">
+        <button class="chip" data-shape="torus">Growth ring</button>
+        <button class="chip" data-shape="crystal">Crystal</button>
+        <button class="chip" id="wireBtn" aria-pressed="true">Wireframe</button>
+        <button class="chip" id="pulseBtn">Compound pulse</button>
+      </div>
+    </div>
   </div>
-
-  <section>
-    <div class="section-label">01 — The research question</div>
-    <p class="section-sub">Before any screen was drawn, the brief was narrowed to one problem: first-time investors don't avoid investing apps because the apps are ugly — they avoid them because the apps assume knowledge they don't have yet.</p>
-    <div class="research-grid">
-      <div class="research-card">
-        <span class="tag">Pain point</span>
-        <h4>Jargon as a wall</h4>
-        <p>Terms like "expense ratio" and "diversification" are treated as given, not explained — so a new user either guesses or gives up before funding an account.</p>
-        <div class="quote">"I didn't know if I was buying one thing or fifty things."</div>
+ 
+  <section id="simulator">
+    <h2>Change the numbers, change the shape</h2>
+    <p class="sub">The 3D object above reacts to this simulator. A bigger future balance makes it larger and speeds up the particles around it.</p>
+    <div class="sim">
+      <div class="panel">
+        <div class="field"><label for="amt">Monthly investment <output id="amtO"></output></label><input type="range" id="amt" min="10" max="1000" step="10" value="150"></div>
+        <div class="field"><label for="yrs">Years <output id="yrsO"></output></label><input type="range" id="yrs" min="1" max="40" step="1" value="15"></div>
+        <div class="field"><label for="rate">Yearly return <output id="rateO"></output></label><input type="range" id="rate" min="1" max="12" step="0.5" value="7"></div>
+        <p class="note">Estimates only. Real returns vary and can be negative. Past performance does not predict future results.</p>
       </div>
-      <div class="research-card">
-        <span class="tag">Pain point</span>
-        <h4>Fear of an irreversible mistake</h4>
-        <p>Confirmation screens for existing apps read like legal disclaimers, which makes a small, reversible first deposit feel bigger and riskier than it is.</p>
-        <div class="quote">"It felt like signing something, not trying something."</div>
-      </div>
-      <div class="research-card">
-        <span class="tag">Design principle</span>
-        <h4>Plain language over financial vocabulary</h4>
-        <p>Every label is written the way a knowledgeable friend would say it out loud, with the technical term available on tap, never required to proceed.</p>
-      </div>
-      <div class="research-card">
-        <span class="tag">Design principle</span>
-        <h4>Small, reversible first step</h4>
-        <p>The first investment is framed explicitly as adjustable — a slider with a visible floor, not a fixed commitment — to lower the stakes of starting.</p>
+      <div class="panel">
+        <div class="big"><small>Estimated balance</small><span id="fv">$0</span></div>
+        <div class="split">
+          <div>You put in<b id="contrib">$0</b></div>
+          <div>Growth earned<b class="g" id="gain">$0</b></div>
+        </div>
+        <svg id="chart" viewBox="0 0 600 220" role="img" aria-label="Balance over time compared with money contributed"></svg>
       </div>
     </div>
   </section>
-
-  <section>
-    <div class="section-label">02 — From sketch to interface</div>
-    <p class="section-sub">The invest screen carried the most research weight, so it's shown here at both ends of the process — the structural sketch that set the layout, and the finished screen built on top of it.</p>
-    <div class="progression">
-      <div class="prog-card">
-        <div class="prog-label">Low-fi structure</div>
-        <div class="sketch-box">
-          <div class="sk sk-h"></div>
-          <div class="sk sk-l" style="width:40%;"></div>
-          <div style="flex:1;"></div>
-          <div class="sk sk-l" style="width:60%;margin:0 auto;"></div>
-          <div class="sk dark sk-l" style="height:22px;width:50%;margin:6px auto;border-radius:11px;"></div>
-          <div class="sk sk-l" style="width:70%;margin:8px auto 0;"></div>
-          <div style="flex:1;"></div>
-          <div class="sk dark sk-b"></div>
-        </div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="prog-card">
-        <div class="prog-label">Design principle applied</div>
-        <div class="sketch-box" style="align-items:center;justify-content:center;text-align:left;">
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;margin:0;">Slider replaces a numeric-entry field — the amount becomes something to feel out, not calculate. A floor prevents an uncomfortable first number.</p>
-        </div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="prog-card">
-        <div class="prog-label">Finished screen</div>
-        <div class="hifi-box">
-          <div class="hf-top">You're investing in</div>
-          <div class="hf-big">$25</div>
-          <div class="hf-sub">Starter Growth Fund · adjustable</div>
-          <div class="hf-chart">
-            <div class="hf-bar" style="height:30%;"></div>
-            <div class="hf-bar" style="height:50%;"></div>
-            <div class="hf-bar active" style="height:75%;"></div>
-            <div class="hf-bar" style="height:45%;"></div>
-            <div class="hf-bar" style="height:60%;"></div>
-          </div>
-          <div class="hf-btn">Confirm $25</div>
-        </div>
-      </div>
+ 
+  <section id="process">
+    <h2>How I got here</h2>
+    <p class="sub">Four steps from research to a prototype that first-time investors could actually use.</p>
+    <div class="steps">
+      <div class="step"><h4>Listen</h4><p>Interviewed first-time investors about what stopped them from starting.</p></div>
+      <div class="step"><h4>Simplify</h4><p>Replaced charts and jargon with one shape and one number.</p></div>
+      <div class="step"><h4>Prototype</h4><p>Built the shape in WebGL so people could touch the idea, not just see it.</p></div>
+      <div class="step"><h4>Refine</h4><p>Tested with new users and tuned motion, color, and wording.</p></div>
     </div>
   </section>
-
-  <section>
-    <div class="section-label">03 — High-fidelity flow</div>
-    <p class="section-sub">Three screens from the finished flow: the home balance view, the plain-language fund picker, and the low-stakes confirmation screen the research called for.</p>
-    <div class="hifi-screens">
-      <div class="hf-frame">
-        <div class="frame-title">Home</div>
-        <div class="frame-desc">Balance leads; today's change is framed in plain terms, not a raw percentage alone.</div>
-        <div class="app-screen">
-          <div class="as-header"><div><div class="as-greet">Good morning</div><div class="as-name">Amara</div></div><div class="as-avatar"></div></div>
-          <div class="as-balance-card">
-            <div class="as-balance-label">Total balance</div>
-            <div class="as-balance-val">$142.80</div>
-            <div class="as-balance-change">↑ $3.10 today — about the price of a coffee</div>
-          </div>
-          <div class="as-list-item"><div><div class="as-fund-name">Starter Growth Fund</div><div class="as-fund-sub">A mix of 40 large companies</div></div><div class="as-gain">+2.1%</div></div>
-          <div class="as-list-item"><div><div class="as-fund-name">Steady Income Fund</div><div class="as-fund-sub">Bonds — lower risk, lower reward</div></div><div class="as-gain">+0.4%</div></div>
-          <div class="as-cta">Invest more</div>
-        </div>
-      </div>
-      <div class="hf-frame">
-        <div class="frame-title">Choose an amount</div>
-        <div class="frame-desc">Slider default sits at a comfortable floor; the number is felt out, not typed.</div>
-        <div class="app-screen">
-          <div class="as-amount">$25</div>
-          <div class="as-amount-sub">You can change this anytime</div>
-          <div class="as-slider-track"><div class="as-slider-fill"></div><div class="as-slider-dot"></div></div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:20px;"><span>$10</span><span>$100</span></div>
-          <div class="as-list-item"><div><div class="as-fund-name">Starter Growth Fund</div><div class="as-fund-sub">Selected</div></div><div class="as-gain">✓</div></div>
-          <div class="as-cta">Review</div>
-        </div>
-      </div>
-      <div class="hf-frame">
-        <div class="frame-title">Confirm</div>
-        <div class="frame-desc">Framed as a low-stakes, reversible action — the exact language the research called for.</div>
-        <div class="app-screen">
-          <div class="as-plain-icon"></div>
-          <span class="as-badge" style="display:block;width:fit-content;margin:0 auto 10px;">REVERSIBLE ANYTIME</span>
-          <div class="as-copy-title">Invest $25 in Starter Growth?</div>
-          <div class="as-copy-sub">You can withdraw or change this whenever you want — nothing here is locked in.</div>
-          <div class="as-cta">Confirm $25</div>
-        </div>
-      </div>
+ 
+  <section id="results">
+    <h2>What we learned</h2>
+    <p class="sub">Replace these sample figures with your real test results before publishing.</p>
+    <div class="stats">
+      <div class="stat"><b data-count="87" data-suf="%">0</b><span>said the 3D view felt less intimidating</span></div>
+      <div class="stat"><b data-count="3" data-suf="x">0</b><span>more time exploring risk settings</span></div>
+      <div class="stat"><b data-count="62" data-suf="s">0</b><span>average time to a first investment</span></div>
+    </div>
+    <div class="research">
+      <div class="rc"><h4>Tangible asset view</h4><p>Allocation becomes a shape with weight and color. Growth is something you see, not decode.</p><div class="quote">"Seeing my portfolio as a 3D structure made investing feel approachable instead of abstract."</div></div>
+      <div class="rc"><h4>Safe to explore</h4><p>Moving sliders and shapes costs nothing, so people build confidence before they commit real money.</p></div>
     </div>
   </section>
-
-  <section>
-    <div class="section-label">04 — Usability notes</div>
-    <p class="section-sub">Observations from walking five first-time-investor participants through the flow, framed as what changed in the design because of what was seen.</p>
-    <div class="notes-list">
-      <div class="note-row">
-        <div class="note-num">01</div>
-        <div>
-          <h5>The word "confirm" alone still read as final</h5>
-          <p>Adding the "reversible anytime" badge above the confirmation copy reduced hesitation at that screen — participants tapped through noticeably faster once the reversibility was stated up front rather than implied.</p>
-        </div>
-      </div>
-      <div class="note-row">
-        <div class="note-num">02</div>
-        <div>
-          <h5>Fund names needed a plain-language subtitle</h5>
-          <p>"Starter Growth Fund" alone prompted a pause; adding "a mix of 40 large companies" beneath it let participants make a choice without leaving the screen to look the term up.</p>
-        </div>
-      </div>
-      <div class="note-row">
-        <div class="note-num">03</div>
-        <div>
-          <h5>A slider lowered the perceived stakes of the first deposit</h5>
-          <p>Compared to a numeric input tested earlier in the process, the slider with a visible floor made participants more willing to start below the amount they said they'd "typically" invest — treating it as a trial rather than a commitment.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="footer-nav">
-    <span class="brand">BrightStack Co. — UI/UX, Premium tier</span>
-    <a href="index.html">← Back to all projects</a>
-  </div>
-
-</div>
+</main>
+ 
+<footer><div class="wrap"><span class="brand">BrightStack Co.</span><a href="index.html">Back to portfolio</a></div></footer>
+ 
+<script>
+/* ---------- Theme ---------- */
+const root = document.documentElement, themeBtn = document.getElementById('themeBtn');
+let theme = 'dark';
+try { theme = localStorage.getItem('vela-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); } catch(e){}
+function applyTheme(){ root.setAttribute('data-theme', theme); themeBtn.textContent = theme === 'light' ? '🌙 Dark mode' : '☀️ Light mode'; try{localStorage.setItem('vela-theme', theme)}catch(e){} }
+themeBtn.onclick = () => { theme = theme === 'light' ? 'dark' : 'light'; applyTheme(); };
+applyTheme();
+ 
+/* ---------- Simulator ---------- */
+const $ = id => document.getElementById(id);
+const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+let shownFV = 0, targetFV = 0, bigScale = 1;
+function calc(){
+  const P = +$('amt').value, Y = +$('yrs').value, R = +$('rate').value / 100, r = R / 12;
+  $('amtO').textContent = fmt(P) + '/mo'; $('yrsO').textContent = Y + ' yrs'; $('rateO').textContent = R * 100 + '%';
+  const bal = m => r ? P * ((Math.pow(1 + r, m) - 1) / r) : P * m;
+  const n = Y * 12, fv = bal(n), put = P * n;
+  targetFV = fv; $('contrib').textContent = fmt(put); $('gain').textContent = fmt(fv - put);
+  drawChart(Y, bal, P);
+  bigScale = 0.75 + 0.6 * Math.min(1, Math.log10(Math.max(fv, 1000) / 1000) / 3);
+}
+function drawChart(Y, bal, P){
+  const W = 600, H = 220, pad = 8, pts = [], base = [];
+  const max = bal(Y * 12) || 1;
+  for(let y = 0; y <= Y; y++){
+    const x = pad + (W - pad * 2) * (y / Y);
+    pts.push([x, H - pad - (H - pad * 2) * (bal(y * 12) / max)]);
+    base.push([x, H - pad - (H - pad * 2) * (P * y * 12 / max)]);
+  }
+  const line = a => a.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  $('chart').innerHTML =
+    `<defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--green)" stop-opacity=".35"/><stop offset="1" stop-color="var(--green)" stop-opacity="0"/></linearGradient></defs>` +
+    `<path d="${line(pts)} L${W - pad} ${H - pad} L${pad} ${H - pad}Z" fill="url(#gf)"/>` +
+    `<path d="${line(base)}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 5"/>` +
+    `<path d="${line(pts)}" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+['amt','yrs','rate'].forEach(id => $(id).addEventListener('input', calc));
+calc();
+ 
+/* ---------- Stat counters (run once when visible) ---------- */
+const counters = document.querySelectorAll('[data-count]');
+const cio = new IntersectionObserver(es => es.forEach(e => {
+  if(!e.isIntersecting) return; cio.unobserve(e.target);
+  const el = e.target, to = +el.dataset.count, suf = el.dataset.suf, t0 = performance.now();
+  (function tick(t){ const k = Math.min(1, (t - t0) / 1100); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + suf; if(k < 1) requestAnimationFrame(tick); })(t0);
+}), { threshold: .6 });
+counters.forEach(c => cio.observe(c));
+ 
+/* ---------- Three.js ---------- */
+const canvas = $('webglCanvas');
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); }
+catch(e){ $('badge').textContent = 'WebGL not available'; $('badge').style.color = 'var(--coral)'; }
+ 
+if(renderer){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, 1, .1, 100); camera.position.z = 9;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+ 
+  scene.add(new THREE.AmbientLight(0xffffff, .7));
+  const l1 = new THREE.PointLight(0x7c7ff5, 2.6, 60); l1.position.set(8, 10, 8); scene.add(l1);
+  const l2 = new THREE.PointLight(0x2dd4a0, 2.2, 60); l2.position.set(-9, -6, 8); scene.add(l2);
+ 
+  const geos = { torus: new THREE.TorusKnotGeometry(2.4, .75, 160, 32), crystal: new THREE.IcosahedronGeometry(3, 1) };
+  const colors = { torus: 0x7c7ff5, crystal: 0x2dd4a0 };
+  const mat = new THREE.MeshStandardMaterial({ color: colors.torus, roughness: .2, metalness: .8, emissive: 0x000000 });
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: .16 });
+  const group = new THREE.Group(); scene.add(group);
+  const mesh = new THREE.Mesh(geos.torus, mat); group.add(mesh);
+  const wire = new THREE.Mesh(geos.torus, wireMat); wire.scale.setScalar(1.04); group.add(wire);
+ 
+  // Orbit rings
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4a0, transparent: true, opacity: .35 });
+  const ringA = new THREE.Mesh(new THREE.TorusGeometry(5.2, .016, 8, 180), ringMat);
+  const ringB = new THREE.Mesh(new THREE.TorusGeometry(6.2, .016, 8, 180), ringMat);
+  ringA.rotation.x = 1.15; ringB.rotation.set(.5, .9, 0); scene.add(ringA, ringB);
+ 
+  // Glowing particles with mixed colors
+  const N = 900, pos = new Float32Array(N * 3), col = new Float32Array(N * 3), c1 = new THREE.Color(0x7c7ff5), c2 = new THREE.Color(0x2dd4a0);
+  for(let i = 0; i < N; i++){
+    const r = 4.5 + Math.random() * 9, th = Math.random() * 6.283, ph = Math.acos(2 * Math.random() - 1);
+    pos.set([r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th) * .7, r * Math.cos(ph)], i * 3);
+    const c = c1.clone().lerp(c2, Math.random()); col.set([c.r, c.g, c.b], i * 3);
+  }
+  const pg = new THREE.BufferGeometry();
+  pg.setAttribute('position', new THREE.BufferAttribute(pos, 3)); pg.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const particles = new THREE.Points(pg, new THREE.PointsMaterial({ size: .07, vertexColors: true, transparent: true, opacity: .85, blending: THREE.AdditiveBlending, depthWrite: false }));
+  scene.add(particles);
+ 
+  // State
+  let dragging = false, last = { x: 0, y: 0 }, vel = { x: 0, y: 0 };
+  let shape = 'torus', swapTo = null, shrink = 1, pulse = 0, px = 0, py = 0, visible = true;
+ 
+  const pt = e => e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
+  const down = e => { dragging = true; last = pt(e); };
+  const move = e => { const p = pt(e); px = (p.x / innerWidth - .5); py = (p.y / innerHeight - .5); if(!dragging) return; vel.y = (p.x - last.x) * .008; vel.x = (p.y - last.y) * .008; group.rotation.y += vel.y; group.rotation.x += vel.x; last = p; };
+  canvas.addEventListener('mousedown', down); canvas.addEventListener('touchstart', down, { passive: true });
+  addEventListener('mousemove', move); canvas.addEventListener('touchmove', move, { passive: true });
+  addEventListener('mouseup', () => dragging = false); addEventListener('touchend', () => dragging = false);
+ 
+  document.querySelectorAll('[data-shape]').forEach(b => b.onclick = () => { if(b.dataset.shape !== shape) swapTo = b.dataset.shape; });
+  $('pulseBtn').onclick = () => { pulse = 1; };
+  $('wireBtn').onclick = e => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', on); wire.visible = on; };
+ 
+  function resize(){ const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  new ResizeObserver(resize).observe(canvas); resize();
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(canvas);
+ 
+  const clock = new THREE.Clock();
+  (function animate(){
+    requestAnimationFrame(animate);
+    if(!visible) return;
+    const t = clock.getElapsedTime();
+ 
+    // Smooth shape swap: shrink, change geometry, grow
+    if(swapTo){
+      shrink += (0 - shrink) * .18;
+      if(shrink < .06){ shape = swapTo; swapTo = null; mesh.geometry = wire.geometry = geos[shape]; mat.color.setHex(colors[shape]); }
+    } else shrink += (1 - shrink) * .1;
+ 
+    pulse += (0 - pulse) * .06;
+    const s = bigScale * shrink * (1 + pulse * .3);
+    group.scale.setScalar(s);
+    mat.emissive.setHex(0x2dd4a0); mat.emissiveIntensity = pulse * .7;
+ 
+    if(!dragging){ group.rotation.y += reduce ? 0 : .005 + vel.y * .9; group.rotation.x += reduce ? 0 : .002 + vel.x * .9; vel.x *= .94; vel.y *= .94; }
+    const speed = reduce ? 0 : .0012 * bigScale * (1 + pulse * 5);
+    particles.rotation.y -= speed; ringA.rotation.z += speed * 4; ringB.rotation.z -= speed * 3;
+    particles.material.size = .07 + pulse * .05;
+ 
+    camera.position.x += (px * 2.2 - camera.position.x) * .04;
+    camera.position.y += (-py * 1.6 - camera.position.y) * .04;
+    camera.lookAt(0, 0, 0);
+ 
+    // Count the balance up smoothly
+    shownFV += (targetFV - shownFV) * .12;
+    $('fv').textContent = fmt(shownFV);
+ 
+    renderer.render(scene, camera);
+  })();
+}
+</script>
 </body>
 </html>
+ 
