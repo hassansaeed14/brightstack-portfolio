@@ -9,11 +9,10 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Wander — Trail Companion (Interactive Prototype)">
 <meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/wander-trail-companion.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- Three.js Library for 3D Background Constellation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root{
     --ink:#16211B;
@@ -35,23 +34,15 @@
     font-family:'Inter',sans-serif;
     overflow-x:hidden;
     position:relative;
+    -webkit-font-smoothing:antialiased;
   }
-  body::before{
-    content:'';
-    position:fixed; inset:0;
-    background-image:
-      radial-gradient(circle at 20% 20%, transparent 0 60px, rgba(31,61,46,0.05) 61px, transparent 62px),
-      radial-gradient(circle at 80% 70%, transparent 0 90px, rgba(31,61,46,0.05) 91px, transparent 92px),
-      radial-gradient(circle at 60% 15%, transparent 0 40px, rgba(31,61,46,0.04) 41px, transparent 42px);
-    pointer-events:none;
-    z-index:0;
-  }
+  #bg3d{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;}
 
   .page{ position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:36px 28px 80px; }
 
   .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:14px; }
   .brand{ display:flex; align-items:center; gap:10px; }
-  .brand-mark{ width:34px; height:34px; border-radius:9px; background:var(--pine); display:flex; align-items:center; justify-content:center; }
+  .brand-mark{ width:34px; height:34px; border-radius:9px; background:var(--pine); display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px rgba(31,61,46,0.3); }
   .brand-mark svg{ width:18px; height:18px; }
   .brand-name{ font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:19px; color:var(--pine); }
   .brand-sub{ font-size:12px; color:var(--ink); opacity:0.55; }
@@ -60,7 +51,7 @@
     border:none; background:none; padding:9px 16px; border-radius:7px; font-family:'Inter',sans-serif;
     font-size:13px; font-weight:600; color:var(--ink); opacity:0.55; cursor:pointer; transition:all 0.2s;
   }
-  .mode-btn.active{ background:var(--pine); color:var(--paper); opacity:1; }
+  .mode-btn.active{ background:var(--pine); color:var(--paper); opacity:1; box-shadow:0 4px 15px rgba(31,61,46,0.25); }
 
   .headline-row{ margin:28px 0 30px; max-width:640px; }
   .headline-row .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--rust); font-weight:600; margin-bottom:10px; letter-spacing:0.02em; }
@@ -73,10 +64,10 @@
   .rail-label{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink); opacity:0.5; margin-bottom:14px; letter-spacing:0.05em; }
   .rail-item{
     display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:9px; cursor:pointer;
-    margin-bottom:4px; transition:background 0.15s;
+    margin-bottom:4px; transition:background 0.15s, transform 0.2s;
   }
-  .rail-item:hover{ background:var(--paper-2); }
-  .rail-item.active{ background:var(--pine); }
+  .rail-item:hover{ background:var(--paper-2); transform:translateX(4px); }
+  .rail-item.active{ background:var(--pine); box-shadow:0 8px 20px rgba(31,61,46,0.2); }
   .rail-num{
     font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:var(--pine);
     background:var(--paper-2); width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
@@ -88,7 +79,7 @@
   .device-wrap{ display:flex; flex-direction:column; align-items:center; gap:18px; flex-shrink:0; }
   .device-frame{
     width:320px; height:660px; background:var(--ink); border-radius:38px; padding:12px;
-    box-shadow:0 30px 70px rgba(22,33,27,0.35); position:relative;
+    box-shadow:0 35px 70px rgba(22,33,27,0.45), 0 0 30px rgba(31,61,46,0.15); position:relative;
   }
   .device-screen{
     width:100%; height:100%; background:var(--paper); border-radius:28px; overflow:hidden; position:relative;
@@ -111,8 +102,9 @@
   .nav-arrow{
     width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--white);
     display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
   }
-  .nav-arrow:hover{ background:var(--pine); border-color:var(--pine); }
+  .nav-arrow:hover{ background:var(--pine); border-color:var(--pine); transform:translateY(-2px); }
   .nav-arrow:hover svg path{ stroke:var(--paper); }
   .nav-arrow svg path{ stroke:var(--pine); transition:stroke 0.15s; }
   .nav-label{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink); opacity:0.55; }
@@ -124,6 +116,7 @@
   .tab-indicator{
     position:absolute; top:8px; width:50px; height:50px; background:var(--pine); border-radius:14px;
     transition:transform 0.3s cubic-bezier(.4,1.4,.6,1); z-index:0;
+    box-shadow:0 6px 18px rgba(31,61,46,0.3);
   }
   .tab-item{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; position:relative; z-index:1; cursor:pointer;
@@ -146,7 +139,9 @@
   .onboard-btn{
     background:var(--pine); color:var(--paper); border:none; padding:13px 0; border-radius:12px;
     font-weight:700; font-size:14px; width:100%; cursor:pointer; font-family:'Inter',sans-serif;
+    box-shadow:0 8px 20px rgba(31,61,46,0.25); transition:transform 0.2s;
   }
+  .onboard-btn:hover{ transform:translateY(-2px); }
   .skip-link{ text-align:center; font-size:12.5px; color:var(--ink); opacity:0.5; margin-top:14px; cursor:pointer; }
 
   .field-group{ margin-bottom:16px; }
@@ -158,13 +153,17 @@
   .field-input:focus{ outline:none; border-color:var(--rust); }
   .btn-primary{
     width:100%; background:var(--pine); color:var(--paper); border:none; padding:14px; border-radius:12px;
-    font-weight:700; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif; transition:transform 0.1s;
+    font-weight:700; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif; transition:transform 0.1s, box-shadow 0.2s;
+    box-shadow:0 8px 20px rgba(31,61,46,0.25);
   }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 25px rgba(31,61,46,0.35); }
   .btn-primary:active{ transform:scale(0.97); }
   .btn-ghost{
     width:100%; background:var(--paper-2); color:var(--ink); border:none; padding:14px; border-radius:12px;
     font-weight:600; font-size:13.5px; cursor:pointer; font-family:'Inter',sans-serif; margin-top:10px;
+    transition:background 0.2s;
   }
+  .btn-ghost:hover{ background:var(--line); }
   .divider-row{ display:flex; align-items:center; gap:12px; margin:22px 0; }
   .divider-row .line{ flex:1; height:1px; background:var(--line); }
   .divider-row span{ font-size:11px; color:var(--ink); opacity:0.5; }
@@ -175,18 +174,20 @@
     display:inline-flex; align-items:center; gap:8px; background:var(--paper-2); padding:8px 14px; border-radius:20px;
     font-size:12px; font-weight:600; color:var(--pine); margin-bottom:20px;
   }
-  .chip-row{ display:flex; gap:8px; margin-bottom:22px; overflow-x:auto; }
+  .chip-row{ display:flex; gap:8px; margin-bottom:22px; overflow-x:auto; scrollbar-width:none; }
+  .chip-row::-webkit-scrollbar{ display:none; }
   .cat-chip{
     padding:9px 15px; border-radius:18px; border:1.5px solid var(--line); font-size:12.5px; font-weight:600;
     color:var(--ink); white-space:nowrap; cursor:pointer; transition:all 0.2s; background:var(--white);
   }
-  .cat-chip.selected{ background:var(--pine); border-color:var(--pine); color:var(--paper); }
+  .cat-chip.selected{ background:var(--pine); border-color:var(--pine); color:var(--paper); box-shadow:0 4px 12px rgba(31,61,46,0.2); }
   .section-label{ font-size:13px; font-weight:700; color:var(--ink); opacity:0.7; margin-bottom:12px; }
   .trail-card{
     background:linear-gradient(135deg, var(--pine), var(--pine-2)); border-radius:16px; padding:20px;
-    color:var(--paper); cursor:pointer; position:relative; overflow:hidden; transition:transform 0.2s;
+    color:var(--paper); cursor:pointer; position:relative; overflow:hidden; transition:transform 0.2s, box-shadow 0.2s;
+    box-shadow:0 10px 25px rgba(31,61,46,0.25);
   }
-  .trail-card:hover{ transform:translateY(-2px); }
+  .trail-card:hover{ transform:translateY(-3px); box-shadow:0 15px 35px rgba(31,61,46,0.35); }
   .trail-card::after{
     content:''; position:absolute; right:-30px; bottom:-30px; width:120px; height:120px; border-radius:50%;
     background:rgba(217,164,65,0.18);
@@ -200,9 +201,9 @@
 
   .mini-trail{
     display:flex; gap:12px; align-items:center; padding:12px; border-radius:12px; margin-bottom:10px;
-    background:var(--white); border:1px solid var(--line); cursor:pointer; transition:border-color 0.2s;
+    background:var(--white); border:1px solid var(--line); cursor:pointer; transition:border-color 0.2s, transform 0.2s;
   }
-  .mini-trail:hover{ border-color:var(--rust); }
+  .mini-trail:hover{ border-color:var(--rust); transform:translateX(3px); }
   .mini-thumb{ width:52px; height:52px; border-radius:10px; background:var(--paper-2); flex-shrink:0; }
   .mini-thumb.lake{ background:linear-gradient(135deg, var(--lake), #6FA89F); }
   .mini-thumb.summit{ background:linear-gradient(135deg, var(--gold), #C1652F); }
@@ -241,16 +242,19 @@
   .track-controls{ display:flex; gap:10px; justify-content:center; align-items:center; margin-top:10px; }
   .ctrl-btn{
     width:56px; height:56px; border-radius:50%; border:none; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; background:var(--pine); transition:transform 0.15s;
+    cursor:pointer; background:var(--pine); transition:transform 0.15s, box-shadow 0.2s;
+    box-shadow:0 8px 20px rgba(31,61,46,0.3);
   }
+  .ctrl-btn:hover{ transform:scale(1.05); }
   .ctrl-btn:active{ transform:scale(0.92); }
-  .ctrl-btn.stop{ background:var(--rust); width:46px; height:46px; }
+  .ctrl-btn.stop{ background:var(--rust); width:46px; height:46px; box-shadow:0 8px 20px rgba(193,101,47,0.3); }
 
   .complete-wrap{ text-align:center; padding-top:36px; }
   .badge-reveal{
     width:96px; height:96px; margin:0 auto 20px; background:linear-gradient(135deg, var(--gold), var(--rust));
     border-radius:50%; display:flex; align-items:center; justify-content:center;
     transform:scale(0) rotate(-40deg); transition:transform 0.55s cubic-bezier(.34,1.6,.64,1);
+    box-shadow:0 12px 30px rgba(193,101,47,0.35);
   }
   .screen-content.visible .badge-reveal{ transform:scale(1) rotate(0deg); }
   .complete-wrap h2{ font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:20px; color:var(--pine); margin-bottom:6px; }
@@ -267,7 +271,7 @@
   .achieve-card span{ font-size:11px; color:var(--ink); opacity:0.6; }
 
   .profile-head{ display:flex; align-items:center; gap:14px; margin-bottom:24px; }
-  .avatar{ width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, var(--pine), var(--lake)); }
+  .avatar{ width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, var(--pine), var(--lake)); box-shadow:0 6px 18px rgba(31,61,46,0.25); }
   .profile-head h2{ font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:var(--pine); }
   .profile-head p{ font-size:12px; color:var(--ink); opacity:0.55; }
   .profile-stats{ display:flex; gap:10px; margin-bottom:26px; }
@@ -279,7 +283,7 @@
     aspect-ratio:1; border-radius:14px; background:var(--paper-2); display:flex; align-items:center; justify-content:center;
     opacity:0; transform:scale(0.6); transition:all 0.4s cubic-bezier(.34,1.6,.64,1);
   }
-  .mini-badge.earned{ background:linear-gradient(135deg, var(--gold), var(--rust)); }
+  .mini-badge.earned{ background:linear-gradient(135deg, var(--gold), var(--rust)); box-shadow:0 4px 15px rgba(193,101,47,0.3); }
   .screen-content.visible .mini-badge{ opacity:1; transform:scale(1); }
   .settings-row{
     display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--line);
@@ -287,7 +291,7 @@
   .settings-row span{ font-size:13.5px; font-weight:600; color:var(--ink); }
   .toggle-switch{ width:44px; height:25px; border-radius:14px; background:var(--line); position:relative; cursor:pointer; transition:background 0.25s; }
   .toggle-switch.on{ background:var(--pine); }
-  .toggle-knob{ position:absolute; top:3px; left:3px; width:19px; height:19px; border-radius:50%; background:var(--white); transition:transform 0.25s; }
+  .toggle-knob{ position:absolute; top:3px; left:3px; width:19px; height:19px; border-radius:50%; background:var(--white); transition:transform 0.25s; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
   .toggle-switch.on .toggle-knob{ transform:translateX(19px); }
 
   #flowView{ display:none; }
@@ -296,9 +300,9 @@
   .flow-node{ flex-shrink:0; width:160px; cursor:pointer; }
   .flow-mini{
     width:160px; height:330px; background:var(--ink); border-radius:20px; padding:7px; box-shadow:0 14px 34px rgba(22,33,27,0.25);
-    transition:transform 0.2s;
+    transition:transform 0.2s, box-shadow 0.2s;
   }
-  .flow-node:hover .flow-mini{ transform:translateY(-4px); }
+  .flow-node:hover .flow-mini{ transform:translateY(-5px); box-shadow:0 20px 45px rgba(31,61,46,0.35); }
   .flow-mini-screen{ width:100%; height:100%; border-radius:14px; overflow:hidden; position:relative; }
   .flow-label{ display:flex; align-items:center; gap:8px; margin-top:12px; }
   .flow-num{
@@ -316,6 +320,9 @@
 </style>
 </head>
 <body>
+
+<!-- Three.js 3D Background Constellation Canvas -->
+<canvas id="bg3d" aria-hidden="true"></canvas>
 
 <div class="page">
   <div class="topbar">
@@ -732,6 +739,34 @@ function setMode(mode){
 
 buildRail();
 render();
+
+/* Three.js 3D Background Constellation */
+(function(){
+  if(typeof THREE === 'undefined') return;
+  const canvas = document.getElementById('bg3d'); let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch(e){ return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(60, 1, .1, 200); cam.position.z = 16;
+  const N = 400, pos = new Float32Array(N * 3), col = new Float32Array(N * 3), pal = [new THREE.Color(0x1F3D2E), new THREE.Color(0xC1652F), new THREE.Color(0xD9A441), new THREE.Color(0x3E7C74)];
+  for(let i = 0; i < N; i++){
+    pos.set([(Math.random() - .5) * 50, 10 - Math.random() * 60, -Math.random() * 30 + 5], i * 3);
+    const c = pal[Math.floor(Math.random() * pal.length)]; col.set([c.r, c.g, c.b], i * 3);
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const pts = new THREE.Points(g, new THREE.PointsMaterial({ size: .14, vertexColors: true, transparent: true, opacity: .55, blending: THREE.NormalBlending, depthWrite: false })); scene.add(pts);
+  function size(){ renderer.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); }
+  addEventListener('resize', size); size();
+  let nx = 0, ny = 0;
+  addEventListener('mousemove', e => { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; }, { passive: true });
+  (function loop(t){
+    requestAnimationFrame(loop); if(document.hidden) return;
+    cam.position.x += (nx * 2 - cam.position.x) * .04;
+    cam.rotation.y += ((-nx * .06) - cam.rotation.y) * .04;
+    cam.rotation.x += ((ny * .04) - cam.rotation.x) * .04;
+    pts.rotation.y = t * .00001; pts.position.y = Math.sin(t * .0002) * .3;
+    renderer.render(scene, cam);
+  })(0);
+})();
 </script>
 
 </body>
