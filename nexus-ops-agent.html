@@ -3,15 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexus — Autonomous Operations Agent</title>
+<title>Nexus — Autonomous Operations Agent v3.0</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/nexus-ops-agent.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nexus — Autonomous Operations Agent">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/nexus-ops-agent.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="An interactive portfolio project featuring agent telemetry, memory vector vault, and live sandbox environment.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -28,6 +25,7 @@
     --warn:#ffdab9;
     --error:#ff4d4d;
     --info:#00e5ff;
+    --emerald:#10b981;
     --radius:16px;
     --shadow:0 20px 50px -20px rgba(0,0,0,0.8);
   }
@@ -41,20 +39,19 @@
     overflow-x:hidden;
   }
 
-  /* Cyber Scan Effect */
   .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
     background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.04), transparent 60%);}
+                radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.04), transparent 60%);}
 
-  .topnav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--line); background:rgba(5,8,13,0.85); backdrop-filter:blur(10px);}
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--line); background:rgba(5,8,13,0.85); backdrop-filter:blur(10px); flex-wrap:wrap; gap:16px;}
   .brand{display:flex; align-items:center; gap:11px;}
   .brand-mark{width:32px; height:32px; border-radius:8px; background:var(--surface-raised); border:1px solid var(--accent-dim); position:relative; flex-shrink:0; display:flex; align-items:center; justify-content:center;}
   .brand-mark span{width:8px; height:8px; background:var(--accent); border-radius:2px; box-shadow:0 0 8px var(--accent);}
   .brand-name{font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:700; letter-spacing:-0.2px; color:#fff;}
   .brand-sub{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:1.5px; margin-top:1px; font-family:'JetBrains Mono',monospace;}
 
-  .view-toggle{display:flex; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px;}
-  .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
+  .view-toggle{display:flex; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:999px; padding:4px; gap:2px; flex-wrap:wrap;}
+  .view-toggle button{border:none; background:transparent; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:12px; font-weight:600; padding:8px 14px; border-radius:999px; cursor:pointer; transition:all .2s ease;}
   .view-toggle button.active{background:var(--accent); color:#0a0f16; box-shadow:0 0 15px rgba(0,229,255,0.3);}
 
   .view{display:none; padding:36px 32px 64px;}
@@ -71,9 +68,9 @@
   /* input */
   .input-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin:22px 0 30px; box-shadow:var(--shadow); backdrop-filter:blur(12px);}
   .input-panel label{display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); margin-bottom:8px; font-weight:600; font-family:'JetBrains Mono',monospace;}
-  .input-row{display:flex; gap:10px;}
+  .input-row{display:flex; gap:10px; flex-wrap:wrap;}
   .input-row input{
-    flex:1; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:9px;
+    flex:1; min-width:240px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:9px;
     padding:13px 14px; color:var(--text); font-family:'Inter',sans-serif; font-size:14px; outline:none; transition: border-color 0.2s;
   }
   .input-row input:focus{border-color:var(--accent); box-shadow: 0 0 10px rgba(0,229,255,0.2);}
@@ -94,9 +91,11 @@
   /* trace */
   .trace-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-bottom:20px; display:none; backdrop-filter:blur(12px);}
   .trace-panel.show{display:block;}
-  .trace-head{padding:14px 18px; border-bottom:1px solid var(--line); background:rgba(255,255,255,0.03); display:flex; align-items:center; gap:9px;}
+  .trace-head{padding:14px 18px; border-bottom:1px solid var(--line); background:rgba(255,255,255,0.03); display:flex; align-items:center; justify-content:space-between;}
+  .trace-head-left{display:flex; align-items:center; gap:9px;}
   .trace-dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent);}
   .trace-title{font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600; letter-spacing:.3px; color:#fff;}
+  .trace-metrics{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint);}
   .trace-body{padding:6px 0;}
   .trace-step{padding:12px 18px; border-bottom:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.7;}
   .trace-step:last-child{border-bottom:none;}
@@ -111,10 +110,11 @@
   .final-answer-eyebrow{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:10px; font-family:'JetBrains Mono',monospace;}
   .final-answer-body{font-size:14px; line-height:1.75; color:var(--text); white-space:pre-wrap;}
 
-  /* ---------- LOG VIEW ---------- */
+  /* ---------- LOG & MEMORY & SANDBOX VIEWS ---------- */
   .cal-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px; flex-wrap:wrap; gap:14px;}
   .cal-title{font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700; color:#fff;}
   .cal-sub{color:var(--text-faint); font-size:13px; margin-top:4px; font-family:'JetBrains Mono',monospace;}
+  
   .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
   @media (max-width:820px){.stat-row{grid-template-columns:repeat(2,1fr);}}
   .stat-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3);}
@@ -141,6 +141,25 @@
   .tu-bar-fill{height:100%; background:var(--accent); border-radius:4px; box-shadow:0 0 6px var(--accent);}
   .tu-count{width:24px; text-align:right; font-family:'JetBrains Mono',monospace; color:var(--text-faint); font-size:11.5px;}
 
+  /* Memory Grid */
+  .memory-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media(max-width:850px){.memory-grid{grid-template-columns:1fr;}}
+  .mem-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; backdrop-filter:blur(12px); font-family:'JetBrains Mono',monospace;}
+  .mem-card h3{font-size:14px; font-weight:700; color:#fff; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;}
+  .mem-card p{font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:14px;}
+  .mem-meta{font-size:11px; color:var(--text-faint); display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:10px;}
+
+  /* Sandbox Form */
+  .sandbox-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:24px; backdrop-filter:blur(12px);}
+  .sandbox-card h3{font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:700; color:#fff; margin-bottom:14px;}
+  .sandbox-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;}
+  @media(max-width:700px){.sandbox-row{grid-template-columns:1fr;}}
+  .sandbox-field{display:flex; flex-direction:column; gap:6px;}
+  .sandbox-field label{font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text-faint); text-transform:uppercase; letter-spacing:1px;}
+  .sandbox-field input, .sandbox-field select{background:rgba(0,0,0,0.4); border:1px solid var(--line); border-radius:8px; padding:10px 12px; color:#fff; font-family:'Inter',sans-serif; font-size:13px; outline:none;}
+  .sandbox-field input:focus{border-color:var(--accent);}
+  .sandbox-btn{background:var(--emerald); color:#0a0f16; border:none; padding:11px 20px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; font-family:'JetBrains Mono',monospace; box-shadow:0 0 15px rgba(16,185,129,0.3);}
+
   .footnote{max-width:1220px; margin:40px auto 0; padding:16px 32px 0; border-top:1px solid var(--line); color:var(--text-faint); font-size:12px; line-height:1.7; font-family:'JetBrains Mono',monospace;}
 </style>
 </head>
@@ -158,13 +177,15 @@
   <div class="view-toggle">
     <button class="active" onclick="switchView('run')" id="btn-run">Agent Console</button>
     <button onclick="switchView('log')" id="btn-log">Operations Log</button>
+    <button onclick="switchView('memory')" id="btn-memory">Memory & RAG Vault</button>
+    <button onclick="switchView('sandbox')" id="btn-sandbox">Live Sandbox</button>
   </div>
 </div>
 
 <!-- CONSOLE -->
 <div class="view active" id="view-run">
   <div class="wrap">
-    <div class="hero-eyebrow">// AI Automation Case Study</div>
+    <div class="hero-eyebrow">// AI Automation Case Study v3.0</div>
     <h1 class="hero-title">An agent that decides, executes, and resolves customer operations autonomously.</h1>
     <p class="hero-desc">Local operations-agent simulation for Ember & Oak. Demonstrates order lookup, real-time inventory queries, automated refund calculations, ticketing, and scheduling without exposing production credentials.</p>
 
@@ -193,7 +214,10 @@
     </div>
 
     <div class="trace-panel" id="tracePanel">
-      <div class="trace-head"><div class="trace-dot"></div><div class="trace-title">agent_execution_trace.log</div></div>
+      <div class="trace-head">
+        <div class="trace-head-left"><div class="trace-dot"></div><div class="trace-title">agent_execution_trace.log</div></div>
+        <div class="trace-metrics" id="traceMetrics">Latency: -- | Tokens: --</div>
+      </div>
       <div class="trace-body" id="traceBody"></div>
     </div>
 
@@ -238,12 +262,97 @@
   </div>
 </div>
 
+<!-- MEMORY & RAG VAULT -->
+<div class="view" id="view-memory">
+  <div class="wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Vector Memory & RAG Vault</div>
+        <div class="cal-sub">// Active contextual embeddings & policy rule store</div>
+      </div>
+    </div>
+
+    <div class="memory-grid">
+      <div class="mem-card">
+        <h3><span>#EMB-01</span><span>Policy Rule</span></h3>
+        <p>Orders marked as 'Processing' are ineligible for instant automated refunds and require cancellation pipeline routing.</p>
+        <div class="mem-meta"><span>Vector ID: 0x8F21</span><span>Weight: 0.94</span></div>
+      </div>
+      <div class="mem-card">
+        <h3><span>#EMB-02</span><span>Customer Segment</span></h3>
+        <p>VIP Tier accounts qualify for expedited shipping fallback options and automatic callback scheduling override.</p>
+        <div class="mem-meta"><span>Vector ID: 0x4A19</span><span>Weight: 0.89</span></div>
+      </div>
+      <div class="mem-card">
+        <h3><span>#EMB-03</span><span>Inventory Node</span></h3>
+        <p>Seasonal items (Travel Mug, Pour-Over Set) trigger alternative restock notifications via automated webhook integration.</p>
+        <div class="mem-meta"><span>Vector ID: 0x1B88</span><span>Weight: 0.91</span></div>
+      </div>
+      <div class="mem-card">
+        <h3><span>#EMB-04</span><span>Escalation Heuristic</span></h3>
+        <p>Keywords denoting physical damage or safety hazards instantly bump ticket priority to 'high' for human review.</p>
+        <div class="mem-meta"><span>Vector ID: 0x9D02</span><span>Weight: 0.98</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE SANDBOX -->
+<div class="view" id="view-sandbox">
+  <div class="wrap">
+    <div class="cal-head">
+      <div>
+        <div class="cal-title">Live Sandbox Environment</div>
+        <div class="cal-sub">// Inject custom mock orders & test agent functions dynamically</div>
+      </div>
+    </div>
+
+    <div class="sandbox-card">
+      <h3>Add New Mock Order</h3>
+      <div class="sandbox-row">
+        <div class="sandbox-field">
+          <label>Order ID</label>
+          <input type="text" id="sbOrderId" placeholder="ORD-9999">
+        </div>
+        <div class="sandbox-field">
+          <label>Customer Name</label>
+          <input type="text" id="sbCustomer" placeholder="John Doe">
+        </div>
+      </div>
+      <div class="sandbox-row">
+        <div class="sandbox-field">
+          <label>Item Description</label>
+          <input type="text" id="sbItem" placeholder="Espresso Tamper">
+        </div>
+        <div class="sandbox-field">
+          <label>Total Value ($)</label>
+          <input type="number" id="sbTotal" placeholder="45.00">
+        </div>
+      </div>
+      <div class="sandbox-row">
+        <div class="sandbox-field">
+          <label>Status</label>
+          <select id="sbStatus">
+            <option value="Delivered">Delivered</option>
+            <option value="Shipped, in transit">Shipped, in transit</option>
+            <option value="Processing">Processing</option>
+          </select>
+        </div>
+        <div class="sandbox-field" style="justify-content: flex-end;">
+          <button class="sandbox-btn" onclick="injectOrder()">+ Inject into Mock DB</button>
+        </div>
+      </div>
+      <div id="sandboxStatus" style="margin-top: 14px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--emerald);"></div>
+    </div>
+  </div>
+</div>
+
 <div class="footnote wrap">
   // BrightStack Portfolio Demo — Nexus Autonomous Agent simulation. Mock execution architecture designed to demonstrate function calling and heuristic dispatch without external API dependency.
 </div>
 
 <script>
-const MOCK_ORDERS = {
+let MOCK_ORDERS = {
   "ORD-1042": {customer:"Maya Torres", items:["Ceramic Pour-Over Set"], total:64.00, status:"Delivered", date:"2026-07-18"},
   "ORD-1077": {customer:"Devon Cole", items:["Steel Travel Mug", "Filter Papers x3"], total:41.50, status:"Shipped, in transit", date:"2026-07-27"},
   "ORD-1103": {customer:"Aisha Rahman", items:["Espresso Grinder"], total:189.00, status:"Processing", date:"2026-07-30"}
@@ -313,8 +422,12 @@ let opsLog = [];
 function switchView(v){
   document.getElementById('view-run').classList.toggle('active', v==='run');
   document.getElementById('view-log').classList.toggle('active', v==='log');
+  document.getElementById('view-memory').classList.toggle('active', v==='memory');
+  document.getElementById('view-sandbox').classList.toggle('active', v==='sandbox');
   document.getElementById('btn-run').classList.toggle('active', v==='run');
   document.getElementById('btn-log').classList.toggle('active', v==='log');
+  document.getElementById('btn-memory').classList.toggle('active', v==='memory');
+  document.getElementById('btn-sandbox').classList.toggle('active', v==='sandbox');
   if(v==='log') renderLog();
 }
 
@@ -406,7 +519,7 @@ function composeAnswer(query, results){
 }
 
 async function callClaudeWithTools(msgList){
-  await new Promise(r => setTimeout(r, 400 + Math.random() * 200));
+  await new Promise(r => setTimeout(r, 300 + Math.random() * 200));
   const query = msgList[0].content;
   const alreadyRan = msgList.some(m => Array.isArray(m.content) && m.content.some(b => b.type === 'tool_result'));
 
@@ -439,6 +552,7 @@ async function runAgent(){
   const query = document.getElementById('queryInput').value.trim();
   if(!query) return;
 
+  const startTime = performance.now();
   const btn = document.getElementById('runBtn');
   btn.disabled = true;
   document.getElementById('spinner').classList.add('show');
@@ -483,6 +597,10 @@ async function runAgent(){
       }
       msgList.push({role:'user', content: toolResults});
     }
+
+    const duration = (performance.now() - startTime).toFixed(0);
+    const tokenCount = Math.floor(180 + Math.random() * 90);
+    document.getElementById('traceMetrics').textContent = `Latency: ${duration}ms | Tokens: ${tokenCount}`;
 
     if(finalText){
       document.getElementById('finalAnswerBody').textContent = finalText;
@@ -557,12 +675,35 @@ function renderLog(){
   });
 }
 
+function injectOrder(){
+  const id = document.getElementById('sbOrderId').value.trim().toUpperCase();
+  const customer = document.getElementById('sbCustomer').value.trim();
+  const item = document.getElementById('sbItem').value.trim();
+  const total = parseFloat(document.getElementById('sbTotal').value) || 0;
+  const status = document.getElementById('sbStatus').value;
+
+  if(!id || !customer || !item){
+    document.getElementById('sandboxStatus').style.color = 'var(--error)';
+    document.getElementById('sandboxStatus').textContent = 'Please fill out all required order fields.';
+    return;
+  }
+
+  MOCK_ORDERS[id] = { customer, items: [item], total, status, date: '2026-10-03' };
+  document.getElementById('sandboxStatus').style.color = 'var(--emerald)';
+  document.getElementById('sandboxStatus').textContent = `Success! Order ${id} injected into mock database. Test it in the Agent Console.`;
+  
+  document.getElementById('sbOrderId').value = '';
+  document.getElementById('sbCustomer').value = '';
+  document.getElementById('sbItem').value = '';
+  document.getElementById('sbTotal').value = '';
+}
+
 seedLog();
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".input-panel, .trace-panel, .final-answer, .stat-card, .runs-panel, .tool-usage-panel"), {
+  VanillaTilt.init(document.querySelectorAll(".input-panel, .trace-panel, .final-answer, .stat-card, .runs-panel, .tool-usage-panel, .mem-card, .sandbox-card"), {
     max: 2,
     speed: 400,
     glare: true,
