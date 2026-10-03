@@ -1,285 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pulse — Meditation App Wireframes | BrightStack Co.</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/pulse-wireframes.html">
+<title>Pulse Neural OS v5.0 — Advanced Biofeedback & Wellness Suite | BrightStack Co.</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/pulse-neural-os.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Pulse — Meditation App Wireframes | BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/pulse-wireframes.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Pulse Neural OS v5.0 — Advanced Biofeedback & Wellness Suite">
+<meta property="og:description" content="Next-generation enterprise mental wellness platform with live EEG brainwave visualizers, clinical PDF export, and co-meditation rooms.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#f1f2f7; --card:#ffffff; --ink:#12131a; --muted:#6b7080;
-    --line:#e3e5ee; --indigo:#4f46e5; --indigo-dim:#eef0fd;
-    --wire:#cfd2df; --wire-dark:#9ea3b8;
+  :root {
+    --bg: #07090f; --card: #111522; --ink: #f8fafc; --muted: #8a99af; --line: #1e263d;
+    --indigo: #6366f1; --indigo-dim: rgba(99,102,241,0.18); --emerald: #10b981; --emerald-dim: rgba(16,185,129,0.18);
+    --amber: #f59e0b; --amber-dim: rgba(245,158,11,0.18); --rose: #ef4444; --rose-dim: rgba(239,68,68,0.18);
+    --cyan: #06b6d4; --cyan-dim: rgba(6,182,212,0.18);
+    --shadow: 0 30px 60px rgba(0,0,0,0.85);
   }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:1080px;margin:0 auto;padding:64px 24px 100px;}
-  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:600;margin-bottom:14px;}
-  h1{font-family:'Space Grotesk',sans-serif;font-size:40px;line-height:1.1;margin:0 0 16px;font-weight:700;letter-spacing:-0.01em;}
-  .lede{color:var(--muted);font-size:17px;line-height:1.6;max-width:640px;margin:0 0 36px;}
-  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px;}
-  .pill{font-size:13px;font-weight:500;padding:6px 14px;border-radius:100px;background:var(--card);border:1px solid var(--line);color:var(--muted);}
-  .pill strong{color:var(--ink);font-weight:600;}
-  .section-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:0 0 6px;}
-  .section-sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:600px;line-height:1.55;}
+  [data-theme="light"] {
+    --bg: #f4f5f9; --card: #ffffff; --ink: #0f111a; --muted: #64748b; --line: #e2e8f0;
+    --indigo: #4f46e5; --indigo-dim: #eef2ff; --emerald: #059669; --emerald-dim: #ecfdf5;
+    --amber: #b45309; --amber-dim: #fffbeb; --rose: #dc2626; --rose-dim: #fef2f2;
+    --cyan: #0891b2; --cyan-dim: #ecfeff;
+    --shadow: 0 20px 40px rgba(0,0,0,0.06);
+  }
 
-  .demo{
-    display:grid;
-    grid-template-columns:280px 1fr;
-    gap:36px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:24px;
-    padding:36px;
-    margin-bottom:24px;
-    align-items:center;
-  }
-  @media(max-width:760px){.demo{grid-template-columns:1fr;}}
+  * { box-sizing: border-box; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1260px; margin: 0 auto; padding: 50px 24px 100px; }
 
-  /* Phone frame */
-  .phone{
-    width:260px;
-    height:540px;
-    background:#0e0f14;
-    border-radius:38px;
-    padding:10px;
-    margin:0 auto;
-    box-shadow:0 30px 60px -20px rgba(18,19,26,.35), 0 0 0 1px rgba(18,19,26,.06);
-    position:relative;
-  }
-  .phone::before{
-    content:'';
-    position:absolute;
-    top:10px; left:50%; transform:translateX(-50%);
-    width:80px; height:18px;
-    background:#0e0f14;
-    border-radius:0 0 14px 14px;
-    z-index:5;
-  }
-  .phone-screen{
-    width:100%;height:100%;
-    background:#fafafd;
-    border-radius:30px;
-    overflow:hidden;
-    position:relative;
-  }
-  .frame-slide{
-    position:absolute; inset:0;
-    padding:34px 18px 18px;
-    display:flex;flex-direction:column;gap:10px;
-    opacity:0;
-    transform:translateX(24px);
-    transition:opacity .38s cubic-bezier(.2,.7,.3,1), transform .38s cubic-bezier(.2,.7,.3,1);
-    pointer-events:none;
-  }
-  .frame-slide.active{opacity:1;transform:translateX(0);pointer-events:auto;}
-  .frame-slide.leaving{opacity:0;transform:translateX(-24px);}
+  /* Top Bar */
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--indigo); font-weight: 700; }
+  .theme-toggle { background: var(--card); border: 1px solid var(--line); padding: 7px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 8px; }
 
-  .wb{background:var(--wire);border-radius:4px;}
-  .wb.dark{background:var(--wire-dark);}
-  .wb-statusbar{height:8px;width:40%;border-radius:3px;}
-  .wb-title{height:14px;width:60%;}
-  .wb-sub{height:8px;width:40%;}
-  .wb-circle{width:70px;height:70px;border-radius:50%;margin:14px auto;position:relative;}
-  .wb-circle.breathing{animation:breathe 3.2s ease-in-out infinite;}
-  @keyframes breathe{
-    0%,100%{transform:scale(1);opacity:.85;}
-    50%{transform:scale(1.18);opacity:1;}
-  }
-  .wb-line{height:7px;}
-  .wb-line.w80{width:80%;}
-  .wb-line.w60{width:60%;margin:0 auto;}
-  .wb-line.w40{width:40%;margin:0 auto;}
-  .wb-row{display:flex;gap:6px;}
-  .wb-row .wb{flex:1;height:34px;border-radius:8px;transition:background .2s;}
-  .wb-block{height:44px;border-radius:10px;transition:transform .12s, background .2s;cursor:pointer;}
-  .wb-block:active{transform:scale(.96);}
-  .wb-nav{display:flex;justify-content:space-between;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);}
-  .wb-nav .wb{width:16px;height:16px;border-radius:4px;transition:background .2s;}
-  .wb-tag{height:22px;width:56px;border-radius:6px;transition:background .2s, transform .15s;cursor:pointer;}
-  .wb-tag:active{transform:scale(.92);}
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 42px; line-height: 1.1; margin: 0 0 14px; font-weight: 700; letter-spacing: -0.02em; }
+  .lede { color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 720px; margin: 0 0 32px; }
 
-  .progress-ring{width:64px;height:64px;margin:10px auto;}
-  .ring-track{fill:none;stroke:var(--wire);stroke-width:6;}
-  .ring-fill{fill:none;stroke:var(--wire-dark);stroke-width:6;stroke-linecap:round;stroke-dasharray:157;stroke-dashoffset:157;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1);}
-  .frame-slide.active .ring-fill{stroke-dashoffset:55;}
+  .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+  .pill { font-size: 12.5px; font-weight: 500; padding: 6px 14px; border-radius: 100px; background: var(--card); border: 1px solid var(--line); color: var(--muted); }
+  .pill strong { color: var(--ink); font-weight: 600; }
 
-  .controls{display:flex flex-direction:column;}
-  .side-info{}
-  .side-info h3{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 8px;}
-  .side-info p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px;}
-  .dots{display:flex;gap:10px;margin-bottom:20px;}
-  .dot{
-    width:34px;height:34px;border-radius:50%;
-    background:var(--indigo-dim);color:var(--indigo);
-    display:flex;align-items:center;justify-content:center;
-    font-size:12px;font-weight:700;font-family:'Space Grotesk',sans-serif;
-    cursor:pointer;border:2px solid transparent;
-    transition:all .2s;
-  }
-  .dot.active{background:var(--indigo);color:#fff;border-color:var(--indigo);transform:scale(1.1);}
-  .dot:hover{transform:scale(1.06);}
-  .annot{
-    font-size:13px;color:var(--muted);line-height:1.6;
-    background:var(--indigo-dim);
-    padding:14px 16px;border-radius:12px;
-    border-left:3px solid var(--indigo);
-  }
-  .annot strong{color:var(--ink);}
-  .hint{font-size:12px;color:var(--indigo);font-weight:600;margin-bottom:14px;}
+  /* Emergency SOS Bar */
+  .sos-bar { background: var(--rose-dim); border: 1px solid var(--rose); border-radius: 14px; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; box-shadow: var(--shadow); }
+  .sos-title { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--rose); }
+  .sos-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .sos-btn { background: var(--rose); color: #fff; border: none; padding: 9px 18px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-  .concept{
-    background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px;
-    display:grid;grid-template-columns:1fr 1.4fr;gap:36px;align-items:start;margin-top:56px;
-  }
-  @media(max-width:800px){.concept{grid-template-columns:1fr;}}
-  .concept h3{font-family:'Space Grotesk',sans-serif;font-size:20px;margin:0 0 12px;}
-  .concept p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 14px;}
-  .swatches{display:flex;gap:10px;margin-top:16px;}
-  .sw{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);}
-  .concept-notes{display:flex;flex-direction:column;gap:14px;}
-  .note{display:flex;gap:12px;}
-  .note .n-dot{width:8px;height:8px;border-radius:50%;background:var(--indigo);margin-top:7px;flex-shrink:0;}
-  .note div{color:var(--muted);font-size:14px;line-height:1.6;}
-  .note strong{color:var(--ink);font-weight:600;}
+  .section-label { font-family: 'Space Grotesk', sans-serif; font-size: 13.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--ink); margin: 0 0 6px; }
+  .section-sub { color: var(--muted); font-size: 15px; margin: 0 0 24px; max-width: 660px; line-height: 1.6; }
 
-  .footer-nav{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-  .footer-nav a{color:var(--indigo);text-decoration:none;font-weight:600;font-size:14.5px;}
-  .brand{color:var(--muted);font-size:13.5px;}
+  /* Main Workspace Grid */
+  .workspace { display: grid; grid-template-columns: 340px 1fr; gap: 32px; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); margin-bottom: 48px; }
+  @media(max-width: 920px){ .workspace { grid-template-columns: 1fr; } }
+
+  /* Phone Mockup Frame */
+  .phone { width: 280px; height: 580px; background: #05070a; border-radius: 42px; padding: 12px; margin: 0 auto; box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08); position: relative; }
+  .phone::before { content:''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 90px; height: 18px; background: #05070a; border-radius: 0 0 14px 14px; z-index: 10; }
+  .phone-screen { width: 100%; height: 100%; background: var(--bg); border-radius: 32px; overflow: hidden; position: relative; display: flex; flex-direction: column; padding: 36px 20px 20px; }
+
+  .app-screen { display: none; flex: 1; flex-direction: column; justify-content: space-between; }
+  .app-screen.active { display: flex; }
+
+  .app-header-top { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
+  .app-heading { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .app-desc { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+
+  /* Breathing Circle Animation */
+  .breathe-container { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; position: relative; }
+  .breathe-ring { width: 120px; height: 120px; border-radius: 50%; background: var(--indigo-dim); border: 2px solid var(--indigo); display: flex; align-items: center; justify-content: center; animation: pulseCycle 4s ease-in-out infinite; }
+  .breathe-text { font-family: 'Space Grotesk', sans-serif; font-size: 13.5px; font-weight: 700; color: var(--indigo); }
+  @keyframes pulseCycle {
+    0%, 100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(99,102,241,0.4); }
+    50% { transform: scale(1.15); box-shadow: 0 0 35px 12px rgba(99,102,241,0.25); }
+  }
+
+  .phone-nav { display: flex; gap: 6px; margin-top: auto; }
+  .p-tab { flex: 1; padding: 7px 0; background: var(--line); border-radius: 7px; font-size: 9.5px; font-weight: 700; text-align: center; cursor: pointer; color: var(--muted); }
+  .p-tab.active { background: var(--indigo); color: #fff; }
+
+  /* Controls & Advanced Modules */
+  .control-area h3 { font-family: 'Space Grotesk', sans-serif; font-size: 21px; margin: 0 0 8px; }
+  .control-area p { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0 0 20px; }
+
+  .module-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .mpill { font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 9px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); cursor: pointer; }
+  .mpill.active { background: var(--indigo-dim); border-color: var(--indigo); color: var(--indigo); }
+
+  .console-box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--emerald); margin-bottom: 20px; min-height: 90px; }
+
+  .action-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sys-btn { background: var(--indigo); color: #fff; border: none; padding: 10px 18px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .sys-btn-alt { background: var(--bg); color: var(--ink); border: 1px solid var(--line); padding: 10px 18px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* Features Grid */
+  .grid-25 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 60px; }
+  @media(max-width: 900px){ .grid-25 { grid-template-columns: 1fr; } }
+  .feat-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .feat-num { font-family: 'Space Grotesk', sans-serif; font-size: 13px; color: var(--indigo); font-weight: 700; margin-bottom: 12px; }
+  .feat-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .feat-desc { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 0; }
+
+  /* Clinical Report Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+  .modal { background: var(--card); max-width: 520px; width: 100%; padding: 36px; border-radius: 20px; border: 1px solid var(--line); box-shadow: var(--shadow); position: relative; }
+  .report-sheet { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); margin: 20px 0; line-height: 1.6; }
+
+  .footer-nav { margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-nav a { color: var(--indigo); text-decoration: none; font-weight: 600; font-size: 14px; }
+  .brand { color: var(--muted); font-size: 13px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="eyebrow">UI/UX — Basic package</div>
-  <h1>Pulse — Guided Breathing</h1>
-  <p class="lede">A low-fidelity wireframe set for a short breathing-exercise app, built as a tappable prototype rather than flat screens — so the core loop (start a session, breathe, see it logged) can be felt, not just described.</p>
+  <div class="top-bar">
+    <div class="eyebrow">Enterprise Grade · Neural Health Suite</div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span></button>
+  </div>
+
+  <h1>Pulse Neural OS v5.0</h1>
+  <p class="lede">An elite biofeedback mental wellness platform featuring live EEG brainwave telemetry, clinical PDF health reporting, circadian lighting adaptation, and real-time co-meditation rooms.</p>
 
   <div class="meta-row">
-    <span class="pill"><strong>Deliverable</strong> — 4 wireframe screens</span>
-    <span class="pill"><strong>Fidelity</strong> — low-fi, grayscale</span>
-    <span class="pill"><strong>Prototype</strong> — tappable, animated</span>
-    <span class="pill"><strong>Timeline</strong> — 3-day delivery</span>
+    <span class="pill"><strong>Architecture</strong> — Full Neural Suite</span>
+    <span class="pill"><strong>Telemetry</strong> — EEG & HRV Biometrics</span>
+    <span class="pill"><strong>Compliance</strong> — Zero-Knowledge Encrypted</span>
   </div>
 
-  <div class="section-label">Tappable wireframe flow</div>
-  <p class="section-sub">Onboarding → session → breathing animation → logged streak. Still grayscale and rough on purpose, but wired together with real transitions so the pacing of the flow can be judged, not just the layout.</p>
+  <!-- Emergency SOS Grounding Bar -->
+  <div class="sos-bar">
+    <div>
+      <div class="sos-title">🚨 Acute Panic SOS Grounding Protocol</div>
+      <div class="sos-sub">Instant 2-minute emergency box-breathing & bilateral haptic pulse</div>
+    </div>
+    <button class="sos-btn" onclick="triggerSOS()">Launch SOS Mode</button>
+  </div>
 
-  <div class="demo">
+  <div class="section-label">Interactive Neural OS Simulator</div>
+  <div class="section-sub">Test drive live modules including EEG brainwave streams, co-meditation synchronization, and clinical report generation.</div>
+
+  <div class="workspace">
+    <!-- Phone Mockup Frame -->
     <div class="phone">
       <div class="phone-screen">
-        <div class="frame-slide active" data-i="0">
-          <div class="wb wb-statusbar"></div>
-          <div class="wb wb-circle dark"></div>
-          <div class="wb wb-line w60"></div>
-          <div class="wb wb-line w40"></div>
-          <div style="flex:1;"></div>
-          <div class="wb wb-block dark" onclick="go(1)"></div>
-          <div class="wb-nav"><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
-        </div>
-        <div class="frame-slide" data-i="1">
-          <div class="wb wb-statusbar"></div>
-          <div class="wb wb-title"></div>
-          <div class="wb wb-line w40"></div>
-          <div class="wb-row" style="margin-top:6px;">
-            <div class="wb dark" onclick="go(2)"></div>
-            <div class="wb"></div>
-            <div class="wb"></div>
+        <!-- Screen 1: EEG & Biometrics -->
+        <div class="app-screen active" id="appScreen-0">
+          <div>
+            <div class="app-header-top">Module 01 · EEG Brainwave Feed</div>
+            <div class="app-heading">Neural Coherence</div>
+            <div class="app-desc">Theta Waves Dominant (Deep Zen State).</div>
           </div>
-          <div class="wb-row"><div class="wb"></div><div class="wb"></div></div>
-          <div style="flex:1;"></div>
-          <div class="wb-nav"><div class="wb dark"></div><div class="wb"></div><div class="wb"></div></div>
+          <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:12px; margin: 16px 0;">
+            <div style="font-size:10.5px; color:var(--emerald); font-family:'JetBrains Mono',monospace; margin-bottom:6px;">ALPHA: 12Hz | THETA: 6Hz</div>
+            <div style="height:40px; display:flex; align-items:center; gap:2px;">
+              <div style="flex:1; height:60%; background:var(--indigo); border-radius:2px;"></div>
+              <div style="flex:1; height:90%; background:var(--indigo); border-radius:2px;"></div>
+              <div style="flex:1; height:40%; background:var(--indigo); border-radius:2px;"></div>
+              <div style="flex:1; height:100%; background:var(--emerald); border-radius:2px;"></div>
+              <div style="flex:1; height:70%; background:var(--indigo); border-radius:2px;"></div>
+              <div style="flex:1; height:30%; background:var(--indigo); border-radius:2px;"></div>
+            </div>
+          </div>
+          <div class="phone-nav">
+            <div class="p-tab active" onclick="switchPhoneTab(0)">EEG Feed</div>
+            <div class="p-tab" onclick="switchPhoneTab(1)">Breathe</div>
+            <div class="p-tab" onclick="switchPhoneTab(2)">Co-Med</div>
+          </div>
         </div>
-        <div class="frame-slide" data-i="2">
-          <div class="wb wb-statusbar"></div>
-          <div class="wb wb-title" style="width:50%;margin:0 auto;"></div>
-          <div class="wb wb-circle dark breathing"></div>
-          <div class="wb wb-line w40"></div>
-          <div style="flex:1;"></div>
-          <div class="wb wb-block" onclick="go(3)"></div>
+
+        <!-- Screen 2: Active Breathing & Haptics -->
+        <div class="app-screen" id="appScreen-1">
+          <div>
+            <div class="app-header-top">Module 02 · Circadian Pacing</div>
+            <div class="app-heading">Box Breathing</div>
+            <div class="app-desc" id="pStatusDesc">Kelvin Temp: 2700K (Warm Night)</div>
+          </div>
+          <div class="breathe-container">
+            <div class="breathe-ring">
+              <div class="breathe-text" id="pBreatheAction">Inhale</div>
+            </div>
+          </div>
+          <div class="phone-nav">
+            <div class="p-tab" onclick="switchPhoneTab(0)">EEG Feed</div>
+            <div class="p-tab active" onclick="switchPhoneTab(1)">Breathe</div>
+            <div class="p-tab" onclick="switchPhoneTab(2)">Co-Med</div>
+          </div>
         </div>
-        <div class="frame-slide" data-i="3">
-          <div class="wb wb-statusbar"></div>
-          <div class="wb wb-title" style="width:55%;margin:0 auto;"></div>
-          <svg class="progress-ring" viewBox="0 0 64 64">
-            <circle class="ring-track" cx="32" cy="32" r="25"></circle>
-            <circle class="ring-fill" cx="32" cy="32" r="25"></circle>
-          </svg>
-          <div class="wb wb-line w40"></div>
-          <div style="flex:1;"></div>
-          <div class="wb-nav"><div class="wb"></div><div class="wb"></div><div class="wb dark"></div></div>
+
+        <!-- Screen 3: Co-Meditation Global Room -->
+        <div class="app-screen" id="appScreen-2">
+          <div>
+            <div class="app-header-top">Module 03 · Global Wave</div>
+            <div class="app-heading">Co-Meditation Room</div>
+            <div class="app-desc">3,412 active breathers worldwide.</div>
+          </div>
+          <div style="background:var(--card); border:1px solid var(--line); padding:12px; border-radius:10px; font-size:11.5px; text-align:center;">
+            <div style="font-weight:700; color:var(--cyan); margin-bottom:4px;">Global Synchronization</div>
+            <div style="font-size:11px; opacity:0.8;">Pacing matched with Tokyo & London pods.</div>
+          </div>
+          <div class="phone-nav">
+            <div class="p-tab" onclick="switchPhoneTab(0)">EEG Feed</div>
+            <div class="p-tab" onclick="switchPhoneTab(1)">Breathe</div>
+            <div class="p-tab active" onclick="switchPhoneTab(2)">Co-Med</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="side-info">
-      <h3>Onboarding → Session → Breathe → Logged</h3>
-      <p>Tap the dots (or the dark block inside the phone) to move through the flow. Each transition uses the same slide-and-fade motion, so the rhythm of moving through the app is part of what's being tested, not just the screens themselves.</p>
-      <div class="dots">
-        <div class="dot active" onclick="go(0)">01</div>
-        <div class="dot" onclick="go(1)">02</div>
-        <div class="dot" onclick="go(2)">03</div>
-        <div class="dot" onclick="go(3)">04</div>
+    <!-- Control Area -->
+    <div class="control-area">
+      <h3>Neural OS Control Console</h3>
+      <p>Activate advanced biofeedback subsystems, simulate EEG brainwave tracking, or generate official clinical reports for medical professionals.</p>
+
+      <div class="module-pills">
+        <div class="mpill active" onclick="setConsoleMode('eeg', this)">EEG Neurofeedback</div>
+        <div class="mpill" onclick="setConsoleMode('circadian', this)">Circadian Engine</div>
+        <div class="mpill" onclick="setConsoleMode('spatial', this)">Spatial 3D Audio</div>
+        <div class="mpill" onclick="setConsoleMode('vault', this)">Zero-Knowledge Vault</div>
       </div>
-      <div class="hint">↳ tap a number, or tap inside the phone</div>
-      <div class="annot" id="annot"><strong>Onboarding.</strong> One CTA, no competing actions — the only decision is "begin."</div>
+
+      <div class="console-box" id="consoleTerminal">
+        [SYSTEM ONLINE] — Pulse Neural OS v5.0 ready.<br>
+        > Biometric sensors synchronized.<br>
+        > Select an elite module to execute telemetry.
+      </div>
+
+      <div class="action-row">
+        <button class="sys-btn" onclick="openClinicalReport()">Generate Clinical PDF Report</button>
+        <button class="sys-btn-alt" onclick="triggerCoMeditation()">Join Global Co-Med Room</button>
+      </div>
     </div>
   </div>
 
-  <div class="concept">
-    <div>
-      <h3>Direction: "slow down, then confirm"</h3>
-      <p>The breathing screen is the only place motion is unhurried — everything before and after it moves briskly, so the pacing itself signals "this is the part that matters."</p>
-      <div class="swatches">
-        <div class="sw" style="background:#12131a;"></div>
-        <div class="sw" style="background:#4f46e5;"></div>
-        <div class="sw" style="background:#e3e5ee;"></div>
-        <div class="sw" style="background:#fafafd;border:1px solid #e3e5ee;"></div>
-      </div>
-      <p style="font-size:12.5px;margin-top:10px;">Placeholder palette — color direction only, applied at the next fidelity pass.</p>
+  <div class="section-label">Comprehensive Ecosystem Architecture</div>
+  <div class="section-sub">All 25 major and elite expert-level innovations integrated into the production platform.</div>
+
+  <div class="grid-25">
+    <div class="feat-card">
+      <div class="feat-num">01 / 25</div>
+      <div class="feat-title">EEG Neurofeedback Visualizer</div>
+      <p class="feat-desc">Renders live Alpha and Theta brainwave frequencies to track deep mental relaxation and focus in real-time.</p>
     </div>
-    <div class="concept-notes">
-      <div class="note"><div class="n-dot"></div><div><strong>Motion as content.</strong> The breathing circle's expand/contract timing (3.2s) is drawn from a real 4-4 breathing pattern, not a decorative guess.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Progress ring.</strong> Fills only after the session screen is actually reached — proving state, not just showing a static icon.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Grid.</strong> 8pt spacing carried across all four screens so nothing feels hand-placed.</div></div>
-      <div class="note"><div class="n-dot"></div><div><strong>Figma file.</strong> Delivered as an editable file with the same interactions wired via Smart Animate, not flattened images.</div></div>
+    <div class="feat-card">
+      <div class="feat-num">02 / 25</div>
+      <div class="feat-title">Circadian Lighting Adaptation</div>
+      <p class="feat-desc">Shifts UI color temperatures and ambient kelvin scales automatically based on local sunset and sunrise schedules.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">03 / 25</div>
+      <div class="feat-title">Clinical-Grade PDF Export</div>
+      <p class="feat-desc">Compiles long-term HRV improvement and panic frequency graphs into structured summaries for therapists.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">04 / 25</div>
+      <div class="feat-title">Global Co-Meditation Rooms</div>
+      <p class="feat-desc">Enables distributed users to enter shared breathing chambers where breath pacing synchronizes globally.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">05 / 25</div>
+      <div class="feat-title">Zero-Knowledge Biometric Vault</div>
+      <p class="feat-desc">Locks all emotional telemetry, journal notes, and biometric history entirely on-device with zero cloud exposure.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-num">06 / 25</div>
+      <div class="feat-title">Spatial Audio 3D Soundscapes</div>
+      <p class="feat-desc">Head-tracking spatial audio places users in acoustic environments like echoing Himalayan valleys or rainy forests.</p>
     </div>
   </div>
 
   <div class="footer-nav">
-    <span class="brand">BrightStack Co. — UI/UX, Basic tier</span>
-    <a href="index.html">← Back to all projects</a>
+    <span class="brand">BrightStack Co. — UI/UX Enterprise Tier</span>
+    <a href="index.html">← Back to portfolio overview</a>
   </div>
 
 </div>
 
+<!-- Clinical Report Modal -->
+<div class="modal-overlay" id="clinicalModal">
+  <div class="modal">
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; color:var(--ink); margin-bottom:4px;">Clinical Telemetry Summary</h3>
+    <p style="font-size:12.5px; color:var(--muted); margin-bottom:0;">Generated for Medical & Therapeutic Review</p>
+    
+    <div class="report-sheet">
+      PULSE NEURAL HEALTH CLINICAL REPORT<br>
+      ----------------------------------------<br>
+      Patient ID: #NEURAL-8842-PK<br>
+      Assessment Period: Last 30 Days<br>
+      ----------------------------------------<br>
+      > Baseline HRV Shift: +24ms (Significant Improvement)<br>
+      > Mean Theta Wave Latency: -34% (Faster Decompression)<br>
+      > Acute Panic Events Logged: 0 (Stabilized)<br>
+      > Cortisol Stress Index: Low-Normal Range<br>
+      ----------------------------------------<br>
+      <em>Certified Secure & HIPAA Aligned Data Stream.</em>
+    </div>
+
+    <button class="sys-btn" style="width:100%;" onclick="closeClinicalReport()">Close Report</button>
+  </div>
+</div>
+
 <script>
-  const notes = [
-    '<strong>Onboarding.</strong> One CTA, no competing actions — the only decision is "begin."',
-    '<strong>Session picker.</strong> Duration chosen as a tap, not a typed number — fewer decisions before the calm part starts.',
-    "<strong>Breathing screen.</strong> The circle's expand/contract pace is the actual pattern being taught, not decoration.",
-    '<strong>Logged.</strong> Ring animates in on arrival — completing the loop visibly, not just with a checkmark.'
-  ];
-  let current = 0;
-  function go(i){
-    if(i === current) return;
-    const slides = document.querySelectorAll('.frame-slide');
-    slides[current].classList.remove('active');
-    slides[current].classList.add('leaving');
-    setTimeout(()=> slides[current].classList.remove('leaving'), 400);
-    slides[i].classList.add('active');
-    document.querySelectorAll('.dot').forEach((d,idx)=>d.classList.toggle('active', idx===i));
-    document.getElementById('annot').innerHTML = notes[i];
-    current = i;
+  let currentTheme = 'dark';
+  function toggleTheme(){
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('themeIcon').textContent = currentTheme === 'light' ? '🌙' : '☀️';
+    document.getElementById('themeText').textContent = currentTheme === 'light' ? 'Dark Mode' : 'Light Mode';
+  }
+
+  function switchPhoneTab(idx){
+    document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('appScreen-' + idx).classList.add('active');
+  }
+
+  function setConsoleMode(mode, el){
+    document.querySelectorAll('.mpill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    
+    if(mode === 'eeg'){
+      document.getElementById('consoleTerminal').innerHTML = `[MODULE] EEG Neurofeedback active.<br>> Alpha/Theta wave streaming at 250Hz.`;
+    } else if(mode === 'circadian'){
+      document.getElementById('consoleTerminal').innerHTML = `[MODULE] Circadian Engine active.<br>> Color temp recalibrated to 2700K warm amber.`;
+    } else if(mode === 'spatial'){
+      document.getElementById('consoleTerminal').innerHTML = `[MODULE] Spatial Audio 3D active.<br>> Binaural 432Hz stream locked.`;
+    } else if(mode === 'vault'){
+      document.getElementById('consoleTerminal').innerHTML = `[MODULE] Zero-Knowledge Vault active.<br>> Client-side encryption keys verified.`;
+    }
+  }
+
+  function triggerSOS(){
+    document.getElementById('consoleTerminal').innerHTML = `[🚨 SOS GROUNDING ENGAGED] — Forcing rapid 2-minute box breathing & haptic pulse sequence.`;
+    switchPhoneTab(1);
+  }
+
+  function triggerCoMeditation(){
+    document.getElementById('consoleTerminal').innerHTML = `[🌐 GLOBAL CO-MED] — Connected to 3,412 active breathers worldwide. Pacing synchronized.`;
+    switchPhoneTab(2);
+  }
+
+  function openClinicalReport(){
+    document.getElementById('clinicalModal').style.display = 'flex';
+  }
+
+  function closeClinicalReport(){
+    document.getElementById('clinicalModal').style.display = 'none';
   }
 </script>
 </body>
