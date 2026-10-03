@@ -2,271 +2,207 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Web Design Collection | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/web-design-collection.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="website">
-<meta property="og:title" content="The Web Design Collection | BrightStack Co.">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/web-design-collection.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-  :root{
-    --paper:#F5F1E8; --paper-2:#FFFFFF; --ink:#1C1814; --ink-soft:#6B6055;
-    --line:#DDD5C6; --line-2:#C8BCA6;
-    --rust:#B5502A; --olive:#5E6B47; --plum:#6B3F5B; --gold:#C08A2E;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-  a{color:inherit;text-decoration:none;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  .serif{font-family:'Fraunces',serif;}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 30px;}
-
-  /* Editorial rule — thin double line, like a masthead */
-  .nav{display:flex;justify-content:space-between;align-items:baseline;padding:26px 0 18px;border-bottom:3px double var(--ink);}
-  .nav-brand{font-family:'Fraunces',serif;font-weight:700;font-size:19px;letter-spacing:-.01em;}
-  .nav-links{display:flex;gap:26px;font-size:13px;color:var(--ink-soft);font-weight:500;}
-  .nav-links a:hover{color:var(--rust);}
-
-  .masthead{padding:64px 0 20px;border-bottom:1px solid var(--line);margin-bottom:44px;}
-  .issue-line{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:26px;display:flex;gap:14px;align-items:center;}
-  .issue-line::after{content:'';height:1px;flex:1;background:var(--line-2);}
-  h1.title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(38px,6.4vw,72px);line-height:1.02;letter-spacing:-.025em;margin:0 0 24px;max-width:900px;}
-  h1.title em{font-style:italic;color:var(--rust);}
-  .standfirst{font-size:17.5px;line-height:1.65;color:var(--ink-soft);max-width:600px;margin:0 0 30px;}
-  .standfirst strong{color:var(--ink);font-weight:600;}
-  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;padding-bottom:14px;}
-  .btn{padding:13px 26px;font-size:13.5px;font-weight:600;border:1px solid var(--ink);border-radius:2px;}
-  .btn-ink{background:var(--ink);color:var(--paper);}
-  .btn-ink:hover{background:var(--rust);border-color:var(--rust);}
-  .btn-outline:hover{background:var(--ink);color:var(--paper);}
-
-  /* Stats as a newspaper deck */
-  .deck{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:80px;}
-  @media(max-width:760px){.deck{grid-template-columns:repeat(2,1fr);}}
-  .deck-item{padding:22px 20px;border-right:1px solid var(--line);}
-  .deck-item:last-child{border-right:none;}
-  .deck-num{font-family:'Fraunces',serif;font-size:31px;font-weight:600;color:var(--rust);line-height:1;}
-  .deck-label{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-top:8px;}
-
-  .section-head{margin-bottom:32px;}
-  .section-head .k{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:12px;}
-  .section-head h2{font-family:'Fraunces',serif;font-size:32px;font-weight:600;margin:0 0 10px;letter-spacing:-.015em;}
-  .section-head p{color:var(--ink-soft);max-width:580px;font-size:14.5px;line-height:1.6;margin:0;}
-
-  .filter-row{display:flex;gap:0;flex-wrap:wrap;margin-bottom:36px;border:1px solid var(--ink);width:fit-content;}
-  .filter-chip{padding:10px 20px;font-size:12.5px;font-weight:600;cursor:pointer;border-right:1px solid var(--ink);color:var(--ink-soft);background:transparent;}
-  .filter-chip:last-child{border-right:none;}
-  .filter-chip.active{background:var(--ink);color:var(--paper);}
-  .filter-chip:not(.active):hover{background:var(--line);color:var(--ink);}
-
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-bottom:80px;}
-  @media(max-width:820px){.grid{grid-template-columns:1fr;}}
-  .card{background:var(--paper-2);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s, box-shadow .25s;}
-  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(28,24,20,.28);}
-  .card.hidden{display:none;}
-  /* Each visual is a small typographic swatch echoing that site's own identity */
-  .card-visual{height:180px;position:relative;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .card-tier{position:absolute;top:14px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;background:rgba(255,255,255,.9);border:1px solid var(--line-2);color:var(--ink);}
-  .swatch-word{font-family:'Fraunces',serif;font-size:32px;font-weight:600;letter-spacing:-.01em;}
-  .card-body{padding:22px 22px 24px;flex:1;display:flex;flex-direction:column;}
-  .card-kicker{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--card-accent,var(--rust));margin-bottom:8px;}
-  .card-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:9px;letter-spacing:-.01em;}
-  .card-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:18px;flex:1;}
-  .card-foot{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding-top:14px;border-top:1px solid var(--line);}
-  .card-tag{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-size:11px;}
-  .card-link{font-weight:600;color:var(--card-accent,var(--rust));}
-
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);margin-bottom:80px;}
-  @media(max-width:820px){.tiers{grid-template-columns:1fr;}}
-  .tier-card{padding:28px 26px;border-right:1px solid var(--line);}
-  .tier-card:last-child{border-right:none;}
-  .tier-card.mid{background:var(--paper-2);}
-  .tier-name{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
-  .tier-price{font-family:'Fraunces',serif;font-size:30px;font-weight:600;margin-bottom:16px;}
-  .tier-list{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:10px;}
-  .tier-list li{font-size:13px;color:var(--ink-soft);display:flex;gap:9px;line-height:1.5;}
-  .tier-list li::before{content:'—';color:var(--line-2);flex-shrink:0;}
-  .tier-example{font-size:11.5px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;font-family:'IBM Plex Mono',monospace;}
-  .tier-example strong{color:var(--ink);font-weight:600;}
-
-  .closing{text-align:center;padding:66px 0 88px;border-top:3px double var(--ink);}
-  .closing h2{font-family:'Fraunces',serif;font-size:clamp(28px,4.4vw,44px);font-weight:600;margin:0 0 16px;letter-spacing:-.02em;}
-  .closing p{color:var(--ink-soft);max-width:520px;margin:0 auto 30px;font-size:15.5px;line-height:1.65;}
-  footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;color:var(--ink-soft);font-size:12.5px;font-family:'IBM Plex Mono',monospace;}
-
-  @media (max-width:560px){
-    body{overflow-x:hidden;}
-    .wrap{padding:0 18px;}
-    .nav{flex-direction:column;align-items:flex-start;gap:10px;padding:18px 0 14px;}
-    .nav-links{flex-wrap:wrap;gap:14px;font-size:12.5px;}
-    .masthead{padding:36px 0 16px;}
-    h1.title{font-size:31px;}
-    .standfirst{font-size:15.5px;}
-    .btn{padding:11px 18px;font-size:13px;}
-    .deck{grid-template-columns:1fr 1fr;}
-    .deck-item{padding:16px 14px;}
-    .deck-num{font-size:25px;}
-    .filter-row{width:100%;overflow-x:auto;flex-wrap:nowrap;}
-    .filter-chip{white-space:nowrap;flex-shrink:0;padding:9px 15px;}
-    .grid{gap:18px;}
-    .card-visual{height:140px;}
-    .swatch-word{font-size:25px;}
-    .tier-card{padding:22px 20px;}
-    .closing{padding:48px 0 60px;}
-  }
+:root{--paper:#F5F1E8;--p2:#fff;--ink:#1C1814;--soft:#6B6055;--line:#DDD5C6;--line2:#C8BCA6;--rust:#B5502A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#16130f;--p2:#201c17;--ink:#f3ede0;--soft:#a79c8c;--line:#2f2a23;--line2:#463f35;--rust:#e0805a}}
+:root[data-theme="dark"]{--paper:#16130f;--p2:#201c17;--ink:#f3ede0;--soft:#a79c8c;--line:#2f2a23;--line2:#463f35;--rust:#e0805a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Inter,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+h1,h2,h3{font-family:Fraunces,serif;margin:0;letter-spacing:-.02em}
+.mono{font-family:'IBM Plex Mono',monospace}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.nogl #gl{display:none}
+.w{max-width:1180px;margin:0 auto;padding:0 30px}
+.nav{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0 14px;border-bottom:3px double var(--ink)}
+.nav b{font:700 19px Fraunces,serif}
+.nl{display:flex;gap:22px;font-size:13px;color:var(--soft);font-weight:500;flex-wrap:wrap}.nl a:hover{color:var(--rust)}
+.btn{display:inline-block;padding:13px 26px;font-size:13.5px;font-weight:600;border:1px solid var(--ink);border-radius:2px}
+.bi{background:var(--ink);color:var(--paper)}.bi:hover{background:var(--rust);border-color:var(--rust);color:#fff}
+.bo{background:color-mix(in srgb,var(--paper) 70%,transparent)}.bo:hover{background:var(--ink);color:var(--paper)}
+.btn.off{opacity:.45;pointer-events:none}
+/* hero */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;user-select:none;-webkit-user-select:none}
+.hero .w{flex:1;display:flex;flex-direction:column;width:100%}
+.hin{flex:1;display:flex;align-items:center;padding:30px 0}
+.hcopy{max-width:520px}
+.il{font:500 11px 'IBM Plex Mono';letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:flex;gap:14px;align-items:center}
+.il::after{content:"";height:1px;flex:0 0 100px;background:var(--line2)}
+.hero h1{font-weight:600;font-size:clamp(38px,5.6vw,68px);line-height:1.03;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--rust);text-shadow:1px 1px 0 #8f3c1d,2px 2px 0 #8f3c1d,3px 3px 0 #8f3c1d,4px 4px 0 #8f3c1d,5px 8px 16px rgba(0,0,0,.28)}
+.sf{font-size:17px;color:var(--soft);margin:0 0 24px}.sf strong{color:var(--ink)}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hint{padding:0 0 26px;font:500 11px 'IBM Plex Mono';letter-spacing:.12em;text-transform:uppercase;color:var(--soft);display:flex;gap:10px;align-items:center}
+.hint i{width:1px;height:26px;background:var(--rust);animation:dr 1.6s ease-in-out infinite;transform-origin:top}
+@keyframes dr{50%{transform:scaleY(.3)}}
+/* tour */
+.tour{position:relative;z-index:1;height:400vh}
+.pin{position:sticky;top:0;height:100vh;pointer-events:none}
+.cap{position:absolute;left:30px;bottom:calc(34px + env(safe-area-inset-bottom,0px));max-width:420px;pointer-events:auto;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line2);padding:22px 22px 20px;box-shadow:0 24px 50px -24px rgba(0,0,0,.45)}
+.cap .c{font:500 11px 'IBM Plex Mono';letter-spacing:.14em;color:var(--soft);display:flex;justify-content:space-between;margin-bottom:12px}
+.cap .k{font:500 10.5px 'IBM Plex Mono';letter-spacing:.1em;text-transform:uppercase;color:var(--ac,var(--rust));margin-bottom:6px}
+.cap h2{font-size:30px;margin-bottom:8px}.cap p{color:var(--soft);font-size:13.5px;margin:0 0 14px}
+.cr{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tr{font:500 10px 'IBM Plex Mono';letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line2);padding:3px 9px}
+.dots{display:flex;gap:7px;margin-left:auto}.dots button{width:10px;height:10px;border-radius:50%;background:var(--line2);padding:0}.dots button.on{background:var(--ac,var(--rust));transform:scale(1.3)}
+/* rest */
+.rest{position:relative;z-index:2;background:var(--paper);border-top:3px double var(--ink);padding-top:70px}
+.deck{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:80px}
+.di{padding:22px 20px;border-right:1px solid var(--line)}.di:last-child{border-right:0}
+.di b{font:600 31px/1 Fraunces,serif;color:var(--rust);display:block}.di span{font-size:11px;color:var(--soft);text-transform:uppercase;letter-spacing:.08em;display:block;margin-top:8px}
+.sh{margin-bottom:26px}.sh .k{font:500 11px 'IBM Plex Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:10px}.sh h2{font-size:32px}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink);margin-bottom:80px}
+.tc{padding:28px 26px;border-right:1px solid var(--line)}.tc:last-child{border-right:0}.tc.mid{background:var(--p2)}
+.tc h3{font:500 11px 'IBM Plex Mono';letter-spacing:.1em;text-transform:uppercase;color:var(--rust);margin-bottom:10px}
+.tc .p{font:600 30px Fraunces,serif;margin-bottom:14px}
+.tc ul{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:9px;font-size:13px;color:var(--soft)}.tc li::before{content:"— ";color:var(--line2)}
+.tc small{display:block;border-top:1px solid var(--line);padding-top:13px;font:11.5px 'IBM Plex Mono';color:var(--soft)}.tc small b{color:var(--ink)}
+.close{text-align:center;padding:50px 0 84px}
+.close h2{font-size:clamp(28px,4.4vw,44px);margin-bottom:14px}.close p{color:var(--soft);max-width:520px;margin:0 auto 28px}
+footer{border-top:1px solid var(--line);padding:22px 0;text-align:center;color:var(--soft);font:12.5px 'IBM Plex Mono'}
+@media(max-width:900px){.tiers{grid-template-columns:1fr}.tc{border-right:0;border-bottom:1px solid var(--line)}.deck{grid-template-columns:1fr 1fr}.di:nth-child(2){border-right:0}.di:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:700px){.w{padding:0 18px}.hin{align-items:flex-start;padding-top:24px}.cap{left:14px;right:14px;max-width:none;padding:16px}.cap h2{font-size:24px}.cap p{font-size:12.5px}.nl a:nth-child(-n+3){display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<canvas id="gl" aria-hidden="true"></canvas>
 
-  <nav class="nav">
-    <div class="nav-brand">BrightStack Co.</div>
-    <div class="nav-links">
-      <a href="index.html">All work</a>
-      <a href="uiux-collection.html">UI/UX</a>
-      <a href="web-apps-collection.html">Web Apps</a>
-      <a href="ai-automation-collection.html">AI</a>
-      <a href="https://www.fiverr.com/brightstackco">Fiverr</a>
-    </div>
-  </nav>
+<header class="hero" id="hero"><div class="w">
+  <nav class="nav"><b>BrightStack Co.</b><div class="nl"><a href="index.html">All work</a><a href="uiux-collection.html">UI/UX</a><a href="web-apps-collection.html">Web Apps</a><a href="ai-automation-collection.html">AI</a><a href="https://www.fiverr.com/brightstackco">Fiverr</a></div></nav>
+  <div class="hin"><div class="hcopy">
+    <div class="il">The Web Design Collection</div>
+    <h1>Four businesses, four <em>entirely different</em> voices.</h1>
+    <p class="sf">A bakery shouldn't look like a gym, and a gym shouldn't look like a photographer. Every site here has its own typographic system and palette, <strong>no shared template underneath</strong>. Step into the ring and hear each voice.</p>
+    <div class="cta"><a class="btn bi" href="#tour">Enter the ring ↓</a><a class="btn bo" href="https://www.fiverr.com/brightstackco">Message on Fiverr</a></div>
+  </div></div>
+  <div class="hint"><i></i>Drag to spin · scroll to step inside</div>
+</div></header>
 
-  <header class="masthead">
-    <div class="issue-line">The Web Design Collection</div>
-    <h1 class="title">Four businesses, four <em>entirely different</em> voices.</h1>
-    <p class="standfirst">A bakery shouldn't look like a gym, and a gym shouldn't look like a photographer. Every site here was built from its own typographic system and palette — <strong>no shared template underneath</strong>, which is exactly the point.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-ink" href="#collection">Browse the collection ↓</a>
-      <a class="btn btn-outline" href="https://www.fiverr.com/brightstackco">Message on Fiverr</a>
-    </div>
-  </header>
+<section class="tour" id="tour"><div class="pin"><div class="cap" id="cap" aria-live="polite">
+  <div class="c"><span id="cn">01 / 04</span><span>Scroll to turn the ring</span></div>
+  <div class="k" id="ck"></div><h2 id="ch"></h2><p id="cp"></p>
+  <div class="cr"><span class="tr" id="ct"></span><a class="btn bi" style="padding:9px 18px" id="cl" href="#">Open site →</a><div class="dots" id="dots"></div></div>
+</div></div></section>
 
+<div class="rest"><div class="w">
   <div class="deck">
-    <div class="deck-item"><div class="deck-num">4</div><div class="deck-label">Sites built</div></div>
-    <div class="deck-item"><div class="deck-num">3</div><div class="deck-label">Tiers with proof</div></div>
-    <div class="deck-item"><div class="deck-num">4</div><div class="deck-label">Distinct type systems</div></div>
-    <div class="deck-item"><div class="deck-num">0</div><div class="deck-label">Templates reused</div></div>
+    <div class="di"><b>3</b><span>Sites live</span></div><div class="di"><b>1</b><span>Planned concept</span></div>
+    <div class="di"><b>4</b><span>Distinct type systems</span></div><div class="di"><b>0</b><span>Templates reused</span></div>
   </div>
-
-  <div id="collection">
-    <div class="section-head">
-      <div class="k">The work</div>
-      <h2>Filter by package</h2>
-      <p>Every tier below has a real, finished site behind it — so the standard a package buys is something you can click into, not a description.</p>
-    </div>
-
-    <div class="filter-row">
-      <div class="filter-chip active" onclick="filterBy('all', this)">All sites</div>
-      <div class="filter-chip" onclick="filterBy('basic', this)">Basic</div>
-      <div class="filter-chip" onclick="filterBy('standard', this)">Standard</div>
-      <div class="filter-chip" onclick="filterBy('premium', this)">Premium</div>
-    </div>
-
-    <div class="grid" id="grid">
-
-      <a class="card" data-tier="basic" href="larkspur-photography.html" style="--card-accent:#A3491F;">
-        <div class="card-visual" style="background:#F6F3EC;">
-          <div class="card-tier">Basic</div>
-          <div class="swatch-word" style="font-style:italic;color:#211D1A;">Larkspur</div>
-        </div>
-        <div class="card-body">
-          <div class="card-kicker">Portrait &amp; wedding photography</div>
-          <div class="card-title">Larkspur</div>
-          <div class="card-desc">A single-page site for a solo photographer, built around a film contact-sheet strip as its signature element — warm rust and bone palette, Cormorant italics, and a booking enquiry form that's the whole conversion path.</div>
-          <div class="card-foot"><span class="card-tag">one-page · enquiry form</span><span class="card-link">open →</span></div>
-        </div>
-      </a>
-
-      <a class="card" data-tier="standard" href="noor-bakehouse.html" style="--card-accent:#4A1F2E;">
-        <div class="card-visual" style="background:#F5EEDC;">
-          <div class="card-tier">Standard</div>
-          <div class="swatch-word" style="color:#4A1F2E;">Noor Bakehouse</div>
-        </div>
-        <div class="card-body">
-          <div class="card-kicker">Neighbourhood bakery</div>
-          <div class="card-title">Noor Bakehouse</div>
-          <div class="card-desc">A storefront site with a daily-bake ticket as its centrepiece — plum and gold, a dashed-stamp motif, and an ordering CTA carried through every section so the path to a pickup order is never more than one scroll away.</div>
-          <div class="card-foot"><span class="card-tag">storefront · multi-section</span><span class="card-link">open →</span></div>
-        </div>
-      </a>
-
-      <a class="card" data-tier="premium" href="momentum-fitness.html" style="--card-accent:#FF4B3E;">
-        <div class="card-visual" style="background:#15181C;">
-          <div class="card-tier">Premium</div>
-          <div class="swatch-word" style="font-family:'Inter',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.02em;color:#F7F6F3;">Momentum</div>
-        </div>
-        <div class="card-body">
-          <div class="card-kicker">Strength &amp; conditioning studio</div>
-          <div class="card-title">Momentum Studio</div>
-          <div class="card-desc">Built around a full weekly class schedule board — colour-coded by intensity, matching the whiteboard on the gym wall. Archivo Black on coral, plus trainer profiles, membership tiers, and member testimonials.</div>
-          <div class="card-foot"><span class="card-tag">full site · schedule system</span><span class="card-link">open →</span></div>
-        </div>
-      </a>
-
-      <a class="card" data-tier="premium" href="#" aria-disabled="true" onclick="event.preventDefault()" style="--card-accent:#4338CA;">
-        <div class="card-visual" style="background:#FAFBFC;">
-          <div class="card-tier">Premium</div>
-          <div class="swatch-word" style="font-family:'Inter',sans-serif;font-weight:700;letter-spacing:-.03em;color:#0E1420;">ledger<span style="color:#4338CA;">ly</span></div>
-        </div>
-        <div class="card-body">
-          <div class="card-kicker">SaaS product marketing</div>
-          <div class="card-title">Ledgerly</div>
-          <div class="card-desc">A conversion-focused product site for a freelancer budgeting app — a dashboard mock in the hero, three-tier pricing architecture, testimonials, and an interactive FAQ that opens and closes properly.</div>
-          <div class="card-foot"><span class="card-tag">Planned concept</span><span class="card-link">Coming soon</span></div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-
-  <div class="section-head">
-    <div class="k">Packages</div>
-    <h2>What each tier buys</h2>
-  </div>
-
+  <div class="sh"><div class="k">Packages</div><h2>What each tier buys</h2></div>
   <div class="tiers">
-    <div class="tier-card">
-      <div class="tier-name">Basic</div>
-      <div class="tier-price">$80</div>
-      <ul class="tier-list"><li>One-page site</li><li>Fully mobile responsive</li><li>Contact or enquiry form</li><li>3-day delivery</li></ul>
-      <div class="tier-example">proof → <strong>Larkspur</strong></div>
-    </div>
-    <div class="tier-card mid">
-      <div class="tier-name">Standard</div>
-      <div class="tier-price">$180</div>
-      <ul class="tier-list"><li>Up to 5 pages or sections</li><li>Custom content layout</li><li>Basic on-page SEO</li><li>5–7 day delivery</li></ul>
-      <div class="tier-example">proof → <strong>Noor Bakehouse</strong></div>
-    </div>
-    <div class="tier-card">
-      <div class="tier-name">Premium</div>
-      <div class="tier-price">$350+</div>
-      <ul class="tier-list"><li>Full multi-section site</li><li>Custom design system</li><li>Booking, pricing or scheduling systems</li><li>10–14 day delivery</li></ul>
-      <div class="tier-example">proof → <strong>Momentum</strong>, <strong>Ledgerly</strong></div>
-    </div>
+    <div class="tc"><h3>Basic</h3><div class="p">$80</div><ul><li>One-page site</li><li>Fully mobile responsive</li><li>Contact or enquiry form</li><li>3-day delivery</li></ul><small>proof → <b>Larkspur</b></small></div>
+    <div class="tc mid"><h3>Standard</h3><div class="p">$180</div><ul><li>Up to 5 pages or sections</li><li>Custom content layout</li><li>Basic on-page SEO</li><li>5–7 day delivery</li></ul><small>proof → <b>Noor Bakehouse</b></small></div>
+    <div class="tc"><h3>Premium</h3><div class="p">$350+</div><ul><li>Full multi-section site</li><li>Custom design system</li><li>Booking, pricing or scheduling systems</li><li>10–14 day delivery</li></ul><small>proof → <b>Momentum</b> · Ledgerly (planned)</small></div>
   </div>
-
-  <div class="closing">
-    <h2>Your business doesn't look like anyone else's.</h2>
-    <p>The site shouldn't either. Every project here started with the question of what this particular business actually sounds like — before a single colour was chosen.</p>
-    <a class="btn btn-ink" href="https://www.fiverr.com/brightstackco">Message on Fiverr</a>
-  </div>
-
-  <footer>BrightStack Co. — Hassan Saeed · Mansehra, Pakistan</footer>
+  <section class="close"><h2>Your business doesn't look like anyone else's.</h2><p>The site shouldn't either. Every project here started with the question of what this particular business actually sounds like, before a single colour was chosen.</p><a class="btn bi" href="https://www.fiverr.com/brightstackco">Message on Fiverr</a></section>
 </div>
+<footer>BrightStack Co. — Hassan Saeed · Mansehra, Pakistan</footer></div>
 
 <script>
-function filterBy(tier, el){
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.card[data-tier]').forEach(card => {
-    card.classList.toggle('hidden', !(tier === 'all' || card.dataset.tier === tier));
+var $=function(i){return document.getElementById(i)},RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var D=[
+ {n:'Larkspur',t:'Basic',k:'Portrait & wedding photography',h:'larkspur-photography.html',a:'#A3491F',d:'A single-page site for a solo photographer, built around a film contact-sheet strip. Warm rust and bone palette, italic serif headings, and an enquiry form that is the whole conversion path.'},
+ {n:'Noor Bakehouse',t:'Standard',k:'Neighbourhood bakery',h:'noor-bakehouse.html',a:'#4A1F2E',d:'A storefront site with a daily-bake ticket as its centrepiece. Plum and gold, a dashed-stamp motif, and an ordering call to action in every section.'},
+ {n:'Momentum Studio',t:'Premium',k:'Strength & conditioning studio',h:'momentum-fitness.html',a:'#FF4B3E',d:'Built around a weekly class schedule board, colour-coded by intensity like the whiteboard on the gym wall. Trainer profiles, membership tiers and testimonials.'},
+ {n:'Ledgerly',t:'Premium',k:'SaaS product marketing',h:'#',a:'#4338CA',d:'A conversion-focused product site for a freelancer budgeting app: dashboard mock in the hero, three-tier pricing and an interactive FAQ. Planned concept, not built yet.'}];
+
+/* caption */
+var idx=-1,dots=$('dots');
+D.forEach(function(s,i){var b=document.createElement('button');b.setAttribute('aria-label','Show '+s.n);b.onclick=function(){var T=$('tour');scrollTo({top:T.offsetTop+i/3*(T.offsetHeight-innerHeight),behavior:RM?'auto':'smooth'})};dots.appendChild(b)});
+function cap(i){if(i==idx)return;idx=i;var s=D[i],c=$('cap');c.style.setProperty('--ac',s.a);
+  $('cn').textContent='0'+(i+1)+' / 04';$('ck').textContent=s.k;$('ch').textContent=s.n;$('cp').textContent=s.d;$('ct').textContent=s.t;
+  var l=$('cl'),off=s.h=='#';l.href=s.h;l.textContent=off?'Coming soon':'Open site →';l.classList.toggle('off',off);
+  [].forEach.call(dots.children,function(b,k){b.classList.toggle('on',k==i)})}
+cap(0);
+
+/* ---------- WebGL ---------- */
+(function(){
+  var r;try{if(typeof THREE==='undefined')throw 0;r=new THREE.WebGLRenderer({canvas:$('gl'),antialias:true})}catch(e){document.body.classList.add('nogl');return}
+  r.setPixelRatio(Math.min(devicePixelRatio,2));r.outputEncoding=THREE.sRGBEncoding;
+  var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,1,.1,100),ring=new THREE.Group(),R=3.6,PI=Math.PI;
+  scene.fog=new THREE.Fog(0xf5f1e8,14,36);scene.add(ring);
+  scene.add(new THREE.AmbientLight(0xffffff,.85));
+  var dl=new THREE.DirectionalLight(0xfff2dc,1.1);dl.position.set(4,7,6);scene.add(dl);
+  var pl=new THREE.PointLight(0xb5502a,1.2,20);pl.position.set(-5,2,3);scene.add(pl);
+
+  /* textures: each site's identity drawn on canvas */
+  var cvs=[],texs=[];
+  function paint(i){
+    var c=cvs[i],x=c.getContext('2d'),W=512,H=680;x.clearRect(0,0,W,H);x.textBaseline='alphabetic';
+    function lab(t,col){x.font="500 20px 'IBM Plex Mono'";x.fillStyle=col;x.globalAlpha=.7;x.fillText(t.toUpperCase().split('').join(String.fromCharCode(8202)),36,60);x.globalAlpha=1}
+    if(i==0){x.fillStyle='#F6F3EC';x.fillRect(0,0,W,H);lab('Portrait & wedding','#211D1A');x.fillStyle='#211D1A';x.font="italic 600 104px Fraunces";x.fillText('Larkspur',36,360);
+      ['#B5502A','#211D1A','#C9B79A'].forEach(function(col,k){x.fillStyle=col;x.fillRect(36+k*150,470,134,180)})}
+    if(i==1){x.fillStyle='#F5EEDC';x.fillRect(0,0,W,H);lab('Neighbourhood bakery','#4A1F2E');
+      x.strokeStyle='#C08A2E';x.lineWidth=4;x.setLineDash([12,10]);x.beginPath();x.arc(256,250,110,0,PI*2);x.stroke();x.setLineDash([]);
+      x.fillStyle='#4A1F2E';x.textAlign='center';x.font="600 22px 'IBM Plex Mono'";x.fillText("TODAY'S BAKE",256,244);x.fillText('No. 14',256,276);
+      x.font="600 82px Fraunces";x.fillText('Noor',256,520);x.fillText('Bakehouse',256,606);x.textAlign='left'}
+    if(i==2){x.fillStyle='#15181C';x.fillRect(0,0,W,H);lab('Strength studio','#F7F6F3');x.fillStyle='#F7F6F3';x.font="800 92px Inter";x.fillText('MOMEN',36,300);x.fillText('TUM',36,390);
+      [['#FF4B3E',440],['#F2B134',330],['#3fae8a',400],['#FF4B3E',250]].forEach(function(b,k){x.fillStyle=b[0];x.fillRect(36,460+k*48,b[1],30)})}
+    if(i==3){x.fillStyle='#FAFBFC';x.fillRect(0,0,W,H);lab('SaaS · planned concept','#0E1420');x.font="800 96px Inter";x.fillStyle='#0E1420';x.fillText('ledger',36,330);var w=x.measureText('ledger').width;x.fillStyle='#4338CA';x.fillText('ly',36+w,330);
+      [.3,.5,.42,.7,.9].forEach(function(h,k){x.fillStyle='#4338CA';x.globalAlpha=.8;x.fillRect(36+k*92,640-h*220,70,h*220);x.globalAlpha=1})}
+    x.strokeStyle='rgba(0,0,0,.14)';x.lineWidth=2;x.strokeRect(1,1,W-2,H-2);
+    texs[i].needsUpdate=true;
+  }
+  var side=new THREE.MeshStandardMaterial({color:0x26231f,roughness:.7}),geo=new THREE.BoxGeometry(2.5,3.3,.1),mg=new THREE.PlaneGeometry(2.5,3.3),aniso=r.capabilities.getMaxAnisotropy();
+  D.forEach(function(s,i){
+    var c=document.createElement('canvas');c.width=512;c.height=680;cvs.push(c);
+    var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=aniso;texs.push(t);paint(i);
+    var front=new THREE.MeshStandardMaterial({map:t,emissiveMap:t,emissive:0xffffff,emissiveIntensity:.32,roughness:.6});
+    var m=new THREE.Mesh(geo,[side,side,side,side,front,side]),a=i*PI/2;
+    m.position.set(Math.sin(a)*R,0,Math.cos(a)*R);m.rotation.y=a;ring.add(m);
+    var rf=new THREE.Mesh(mg,new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:.13,side:THREE.DoubleSide}));
+    rf.position.set(Math.sin(a)*(R+.07),-3.8,Math.cos(a)*(R+.07));rf.rotation.y=a;rf.scale.y=-1;ring.add(rf);
   });
-}
+  if(document.fonts){Promise.all(["italic 600 40px Fraunces","600 40px Fraunces","800 40px Inter","500 20px 'IBM Plex Mono'"].map(function(f){return document.fonts.load(f)})).then(function(){D.forEach(function(s,i){paint(i)})})}
+
+  /* floor, grid, rings, shards */
+  var grid=new THREE.GridHelper(44,44,0x8a7f70,0x8a7f70);grid.position.y=-1.9;grid.material.transparent=true;grid.material.opacity=.28;scene.add(grid);
+  [R+1.9,R-1.9].forEach(function(rad,k){var m=new THREE.Mesh(new THREE.RingGeometry(rad,rad+.05,96),new THREE.MeshBasicMaterial({color:0xb5502a,side:THREE.DoubleSide,transparent:true,opacity:k?.5:.85}));m.rotation.x=-PI/2;m.position.y=-1.88;scene.add(m)});
+  var sh=new THREE.Group(),pal=[0xb5502a,0x6b3f5b,0xff4b3e,0x4338ca,0xc08a2e],S=[];scene.add(sh);
+  for(var i=0;i<34;i++){var m=new THREE.Mesh(new THREE.OctahedronGeometry(.08+Math.random()*.12),new THREE.MeshStandardMaterial({color:pal[i%5],emissive:pal[i%5],emissiveIntensity:.35,roughness:.4}));
+    var an=Math.random()*PI*2,rd=5.4+Math.random()*4.5;m.position.set(Math.cos(an)*rd,-1.4+Math.random()*5,Math.sin(an)*rd);m.userData={sp:.4+Math.random(),ph:Math.random()*6,y:m.position.y};sh.add(m);S.push(m)}
+
+  function theme(){var c=new THREE.Color(getComputedStyle(document.body).backgroundColor);r.setClearColor(c,1);scene.fog.color=c;
+    var dark=(c.r+c.g+c.b)<1;grid.material.color.set(dark?0x6b6254:0x8a7f70)}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){setTimeout(theme,30)});theme();
+
+  /* interaction */
+  var mx=0,my=0,drag=0,dv=0,dn=false,lx=0,auto=0,cur=0,hero=$('hero'),tour=$('tour');
+  addEventListener('pointermove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;if(dn){dv=(e.clientX-lx)*.012;drag+=dv;lx=e.clientX}},{passive:true});
+  hero.addEventListener('pointerdown',function(e){if(e.target.closest('a,button'))return;dn=true;lx=e.clientX});
+  addEventListener('pointerup',function(){dn=false});
+  function size(){r.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
+  addEventListener('resize',size);size();
+  var cl=function(v){return Math.max(0,Math.min(1,v))},sm=function(v){return v*v*(3-2*v)},lp=function(a,b,t){return a+(b-a)*t};
+  var look=new THREE.Vector3();
+  (function loop(now){
+    requestAnimationFrame(loop);var y=scrollY,tt=tour.offsetTop,tl=tour.offsetHeight-innerHeight;
+    if(document.hidden||y>tt+tour.offsetHeight+50)return;
+    var u=cl(y/tt),p=cl((y-tt)/tl),w=sm(cl((u-.55)/.45)),asp=innerWidth/innerHeight,mob=asp<1;
+    if(!dn){drag+=dv;dv*=.94}
+    if(!RM)auto+=.0028*(1-w);
+    var ha=auto+drag;ha=((ha+PI)%(PI*2)+PI*2)%(PI*2)-PI;
+    var q=p*3,ta=(q+(Math.round(q)-q)*.45)*PI/2,fin=lp(ha,ta,w);
+    cur+=(fin-cur)*.09;ring.rotation.y=-cur;
+    var H=mob?[0,3.2,20]:[-2.7,0,12.5],T=mob?[0,-1.2,10.6]:[-1.6,0,8.7],e=sm(u);
+    var ox=lp(H[0],T[0],e),oy=lp(H[1],T[1],e),oz=lp(H[2],T[2],e);
+    cam.position.set(ox+mx*.9,oy+lp(2.4,.5,e)-my*.5,oz);look.set(ox,oy-.1,0);cam.lookAt(look);
+    var t=now*.001;sh.rotation.y=-t*.05;S.forEach(function(m){m.rotation.x+=.01*m.userData.sp;m.rotation.y+=.014*m.userData.sp;m.position.y=m.userData.y+Math.sin(t*m.userData.sp+m.userData.ph)*.25});
+    pl.position.x=-5+Math.sin(t*.4)*2;
+    if(u>.85)cap(Math.round(p*3));
+    r.render(scene,cam);
+  })(0);
+})();
 </script>
 </body>
 </html>
