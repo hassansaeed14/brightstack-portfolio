@@ -11,33 +11,33 @@
 <meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Three.js Library for 3D Background Constellation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root {
-    --bg: #05070b;
-    --bg-soft: #080c13;
+    --bg: #030508;
     --text: #f8fafc;
     --muted: #8e9aad;
     --cyan: #00e5ff;
     --cyan-soft: rgba(0, 229, 255, 0.15);
     --peach: #ffd8bd;
     --purple: #8b5cf6;
-    --glass: rgba(10, 15, 24, 0.65);
-    --border: rgba(255,255,255,0.085);
-    --border-hover: rgba(0,229,255,0.38);
+    --glass: rgba(10, 15, 24, 0.75);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(0,229,255,0.35);
     --max-width: 440px;
-    --radius-lg: 24px;
-    --radius-md: 16px;
+    --radius-lg: 28px;
+    --radius-md: 18px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --red: #ff4d4d;
+    --red: #ff5555;
   }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     min-height: 100vh;
-    background:
-      radial-gradient(circle at 75% 20%, rgba(0,229,255,0.07), transparent 30%),
-      radial-gradient(circle at 20% 70%, rgba(139,92,246,0.06), transparent 30%),
-      var(--bg);
+    background: radial-gradient(circle at 80% 15%, rgba(0,229,255,0.06), transparent 35%),
+                radial-gradient(circle at 15% 85%, rgba(139,92,246,0.05), transparent 35%),
+                var(--bg);
     color: var(--text);
     font-family: 'Plus Jakarta Sans', sans-serif;
     display: flex;
@@ -46,29 +46,33 @@
     justify-content: center;
     padding: 24px;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   .background {
     position: fixed; inset: 0; pointer-events: none; z-index: -10; overflow: hidden;
   }
   .grid {
-    position: absolute; inset: 0; opacity: 0.23;
-    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: linear-gradient(to bottom, black, transparent 90%);
+    position: absolute; inset: 0; opacity: 0.15;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 90px 90px;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
   }
-  .orb {
-    position: absolute; width: 400px; height: 400px; border-radius: 50%; filter: blur(100px); opacity: 0.08;
-  }
-  .orb.one { top: -150px; right: -100px; background: var(--cyan); }
-  .orb.two { bottom: -150px; left: -100px; background: var(--purple); }
+  #bg3d { position: absolute; inset: 0; width: 100%; height: 100%; }
 
   header {
     position: absolute; top: 24px; left: 32px; right: 32px;
     display: flex; justify-content: space-between; align-items: center;
     max-width: 1000px; margin: 0 auto; width: calc(100% - 64px);
+    z-index: 10;
   }
-  .logo { font-weight: 800; font-size: 18px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
+  .brand-mark {
+    width: 32px; height: 32px; display: grid; place-items: center; border-radius: 10px;
+    background: linear-gradient(135deg, var(--cyan), #4ddfff); color: #001014; font-size: 14px; font-weight: 800;
+    box-shadow: 0 0 25px rgba(0,229,255,0.2); animation: markspin 10s linear infinite;
+  }
+  @keyframes markspin { 0%,80%{transform:perspective(200px) rotateY(0)} 100%{transform:perspective(200px) rotateY(360deg)} }
   .logo span { color: var(--cyan); text-shadow: 0 0 20px rgba(0,229,255,0.3); }
   .back-link { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); transition: color 0.3s; }
   .back-link:hover { color: var(--cyan); }
@@ -80,9 +84,12 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 36px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 35px 70px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
     margin-top: 40px;
+    position: relative;
+    z-index: 2;
   }
 
   h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
@@ -96,7 +103,7 @@
     font-size: 13.5px; cursor: pointer; text-align: center; color: var(--text);
     transition: all 0.3s var(--ease);
   }
-  .auth-provider-btn:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-soft); transform: translateY(-2px); }
+  .auth-provider-btn:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-soft); transform: translateY(-2px); box-shadow: 0 0 20px rgba(0,229,255,0.15); }
 
   .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--muted); font-size: 11.5px; font-family: 'JetBrains Mono', monospace; }
   .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
@@ -104,14 +111,14 @@
   .field { margin-bottom: 16px; }
   .field label { display: block; font-size: 11.5px; font-weight: 600; color: var(--muted); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; }
   .field input {
-    width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
-    font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text);
+    width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px;
+    font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; background: rgba(255,255,255,0.03); color: var(--text);
     outline: none; transition: border-color 0.3s, box-shadow 0.3s;
   }
-  .field input:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,229,255,0.15); }
+  .field input:focus { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,229,255,0.15); }
 
   .primary-btn {
-    width: 100%; background: var(--cyan); color: #05070b; border: none; padding: 13px; border-radius: 10px;
+    width: 100%; background: var(--cyan); color: #030508; border: none; padding: 13px; border-radius: 12px;
     font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 6px;
     font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px;
     transition: all 0.3s var(--ease);
@@ -125,7 +132,7 @@
   #authStatus { font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center; min-height: 16px; font-family: 'JetBrains Mono', monospace; }
   #authStatus.error { color: var(--red); }
 
-  footer { padding: 24px 32px 10px; text-align: center; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; max-width: 500px; line-height: 1.5; }
+  footer { padding: 24px 32px 10px; text-align: center; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; max-width: 500px; line-height: 1.5; position: relative; z-index: 2; }
 
   @media (max-width: 560px) {
     header { left: 18px; right: 18px; width: calc(100% - 36px); top: 16px; }
@@ -138,12 +145,14 @@
 
 <div class="background">
   <div class="grid"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
+  <canvas id="bg3d" aria-hidden="true"></canvas>
 </div>
 
 <header>
-  <div class="logo">Bright<span>Stack</span> Co.</div>
+  <div class="logo">
+    <div class="brand-mark">B</div>
+    Bright<span>Stack</span> Co.
+  </div>
   <a href="index.html" class="back-link">← Back to portfolio</a>
 </header>
 
@@ -276,6 +285,34 @@
   onAuthStateChanged(auth, (user) => {
     if (user) redirectAfterAuth();
   });
+
+  /* Three.js Background Constellation matching index.html */
+  (function(){
+    if(typeof THREE === 'undefined') return;
+    const canvas = document.getElementById('bg3d'); let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch(e){ return; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(60, 1, .1, 200); cam.position.z = 14;
+    const N = innerWidth < 768 ? 250 : 600, pos = new Float32Array(N * 3), col = new Float32Array(N * 3), pal = [new THREE.Color(0x00e5ff), new THREE.Color(0x8b5cf6), new THREE.Color(0xffd8bd)];
+    for(let i = 0; i < N; i++){
+      pos.set([(Math.random() - .5) * 44, 8 - Math.random() * 58, -Math.random() * 25 + 4], i * 3);
+      const c = pal[Math.random() < .6 ? 0 : Math.random() < .6 ? 1 : 2]; col.set([c.r, c.g, c.b], i * 3);
+    }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const pts = new THREE.Points(g, new THREE.PointsMaterial({ size: .1, vertexColors: true, transparent: true, opacity: .7, blending: THREE.AdditiveBlending, depthWrite: false })); scene.add(pts);
+    function size(){ renderer.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); }
+    addEventListener('resize', size); size();
+    let nx = 0, ny = 0;
+    addEventListener('mousemove', e => { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; }, { passive: true });
+    (function loop(t){
+      requestAnimationFrame(loop); if(document.hidden) return;
+      cam.position.x += (nx * 3 - cam.position.x) * .04;
+      cam.rotation.y += ((-nx * .08) - cam.rotation.y) * .04;
+      cam.rotation.x += ((ny * .05) - cam.rotation.x) * .04;
+      pts.rotation.y = t * .000015; pts.position.y = Math.sin(t * .0003) * .3;
+      renderer.render(scene, cam);
+    })(0);
+  })();
 </script>
 
 </body>
