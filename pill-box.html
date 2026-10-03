@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dawa Dabba — my pillbox</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf5ec;--card:#fffdf8;--ink:#1f2a2e;--soft:#6b7478;--line:#e8dfd0;--acc:#ff6b4a;--ok:#2f9e8f;--warn:#f2b134;--bad:#d64545;--r:20px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181a;--card:#1c2225;--ink:#f3efe7;--soft:#9aa5a9;--line:#2b3438}}
+:root[data-theme="dark"]{--bg:#14181a;--card:#1c2225;--ink:#f3efe7;--soft:#9aa5a9;--line:#2b3438}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'DM Sans',system-ui,sans-serif;padding:22px}
+.w{max-width:1100px;margin:0 auto}
+h1,h2{font-family:Fraunces,Georgia,serif;margin:0;letter-spacing:-.5px}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.top h1{font-size:clamp(26px,4vw,38px)}
+.top p{margin:2px 0 0;color:var(--soft)}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:13px;font-weight:500}
+.chip:hover{border-color:var(--acc)}
+.g{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:18px}
+.c h2{font-size:18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hero{display:flex;align-items:center;gap:20px}
+.ring{width:96px;height:96px;flex:none;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:700 20px Fraunces,serif}
+.mini{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
+.mini div b{display:block;font:700 22px Fraunces,serif}
+.mini div span{font-size:12px;color:var(--soft)}
+/* organizer */
+.org{display:grid;grid-template-columns:62px repeat(7,1fr);gap:6px;font-size:11px}
+.org .h{text-align:center;color:var(--soft);padding-bottom:2px}
+.org .h.t{color:var(--acc);font-weight:700}
+.org .rl{color:var(--soft);align-self:center}
+.cell{min-height:46px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;flex-wrap:wrap;gap:4px;align-items:center;justify-content:center;padding:5px}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--c);background:transparent}
+.dot.f{background:var(--c)}
+.cell i{color:var(--line);font-style:normal}
+/* add */
+.add{display:grid;grid-template-columns:1fr 118px 84px;gap:8px;margin-bottom:8px}
+.add2{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:14px}
+input,select{width:100%;min-height:42px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font:inherit}
+input:focus,select:focus{border-color:var(--acc);outline:none}
+.go{background:var(--acc);color:#fff;border:0;border-radius:12px;font-weight:700;padding:0 22px;min-height:42px}
+.go:active{transform:scale(.97)}
+.pc{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:16px;margin-bottom:9px;background:var(--bg)}
+.pc.done{opacity:.62}
+.pc.done .nm{text-decoration:line-through}
+.cap{width:38px;height:20px;border-radius:99px;background:linear-gradient(90deg,var(--c) 50%,#fff 50%);border:2px solid var(--c);flex:none;transform:rotate(-30deg)}
+.pc .m{flex:1;min-width:0}
+.nm{font-weight:700}
+.sb{font-size:12px;color:var(--soft);display:flex;gap:8px;flex-wrap:wrap}
+.tag{padding:1px 8px;border-radius:99px;font-size:11px;font-weight:700;background:var(--line)}
+.tag.od{background:var(--bad);color:#fff}.tag.lo{background:var(--warn);color:#2a2000}
+.tk{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:18px;flex:none}
+.tk.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.xx{background:none;border:0;color:var(--soft);font-size:15px;padding:6px}
+.xx:hover{color:var(--bad)}
+.none{padding:26px;text-align:center;color:var(--soft);border:2px dashed var(--line);border-radius:16px}
+.wn{background:#fff4d6;color:#4a3800;border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:13px}
+.note{font-size:12px;color:var(--soft);margin:8px 0 0}
+.r{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.sw{appearance:none;width:44px;height:25px;min-height:0;padding:0;border-radius:99px;background:var(--line);position:relative;cursor:pointer;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.2s}
+.sw:checked{background:var(--ok)}.sw:checked::after{left:22px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btns button{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:13px;font-weight:500}
+.btns button:hover{border-color:var(--acc)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:9;max-width:90vw;text-align:center}
+#toast.s{opacity:1;transform:translate(-50%,0)}
+@media(max-width:860px){.g{grid-template-columns:1fr}}
+@media(max-width:560px){body{padding:14px}.add{grid-template-columns:1fr 1fr}.add input:first-child{grid-column:1/-1}.org{grid-template-columns:48px repeat(7,1fr);gap:4px}.dot{width:9px;height:9px}.hero{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="top">
+    <div><h1 id="hi">Hello</h1><p id="sub"></p></div>
+    <button class="chip" id="th">◐ Theme</button>
+  </div>
+
+  <div class="g">
+    <div>
+      <div class="c hero">
+        <div class="ring"><svg width="96" height="96"><circle cx="48" cy="48" r="40" fill="none" stroke="var(--line)" stroke-width="10"/><circle id="arc" cx="48" cy="48" r="40" fill="none" stroke="var(--ok)" stroke-width="10" stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3" style="transition:stroke-dashoffset .6s"/></svg><b id="pc">0%</b></div>
+        <div>
+          <div style="font-weight:700" id="nx">–</div>
+          <div class="mini"><div><b id="st">0</b><span>day streak</span></div><div><b id="wk">–</b><span>this week</span></div><div><b id="dn">0/0</b><span>taken today</span></div></div>
+        </div>
+      </div>
+
+      <div class="c">
+        <h2>This week's box</h2>
+        <div class="org" id="org"></div>
+        <p class="note">Filled circle = taken. Hollow = missed or still to come. Each colour is one medicine.</p>
+      </div>
+
+      <div class="c">
+        <h2>Aaj ki dawaiyan</h2>
+        <div class="add">
+          <input id="n" placeholder="Name + dose, e.g. Metformin 500mg" aria-label="Medicine name">
+          <input id="tm" type="time" value="08:00" aria-label="Time">
+          <input id="sp" type="number" min="0" placeholder="Left" aria-label="Pills left">
+        </div>
+        <div class="add2">
+          <select id="how" aria-label="How to take"><option value="">Take any time</option><option>With food</option><option>Empty stomach</option><option>Before sleep</option></select>
+          <button class="go" id="ad">Add pill</button>
+        </div>
+        <div id="ls" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="c"><h2>Safety check</h2><div id="wr"></div>
+        <p class="note">Only a few common pairs are checked here. It is not a full interaction database, so ask your pharmacist.</p></div>
+
+      <div class="c"><h2>Settings</h2>
+        <div class="r"><span>Remind me when a dose is due<br><span class="note">Needs this tab open</span></span><input type="checkbox" class="sw" id="rm" aria-label="Reminders"></div>
+        <div class="r"><span>Refill alert when pills left ≤</span><input id="lw" type="number" min="1" style="width:76px"></div>
+        <input id="cg" placeholder="Family member's name (for sharing)" aria-label="Family name">
+      </div>
+
+      <div class="c"><h2>Share &amp; backup</h2>
+        <div class="btns">
+          <button id="cp">Copy today's update</button><button id="ex">Export backup</button>
+          <button id="im">Import backup</button><button id="rs" style="color:var(--bad)">Clear everything</button>
+        </div>
+        <input type="file" id="fi" accept="application/json" hidden>
+        <p class="note">All data stays in this browser. Nothing is uploaded or sent anywhere. This is a tracking aid, not medical advice.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+var K='dawa-dabba-1', $=function(i){return document.getElementById(i)};
+var COL=['#ff6b4a','#2f9e8f','#f2b134','#6c63ff','#e05297','#3d8bfd'];
+var DAYS=['Su','Mo','Tu','We','Th','Fr','Sa'];
+var PAIRS=[['lisinopril','potassium','can push potassium too high'],['warfarin','ibuprofen','more bleeding risk'],['warfarin','aspirin','more bleeding risk'],['sertraline','ibuprofen','may add to bleeding risk'],['atorvastatin','clarithromycin','muscle problems more likely']];
+
+function fresh(){return {meds:[
+  {id:1,name:'Metformin 500mg',time:'08:00',left:30,how:'With food',c:COL[0]},
+  {id:2,name:'Vitamin D3 2000IU',time:'08:00',left:60,how:'',c:COL[1]},
+  {id:3,name:'Lisinopril 10mg',time:'13:00',left:14,how:'',c:COL[2]},
+  {id:4,name:'Atorvastatin 20mg',time:'21:00',left:5,how:'Before sleep',c:COL[3]}],
+  log:{},theme:'',cg:'',rem:false,low:7}}
+var S; try{S=JSON.parse(localStorage.getItem(K))||fresh()}catch(e){S=fresh()}
+var told={};
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function key(d){d=d||new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function mn(t){var p=t.split(':');return p[0]*60+ +p[1]}
+function h12(t){var p=t.split(':'),h=+p[0];return (h%12||12)+':'+p[1]+(h<12?' am':' pm')}
+function slot(t){var m=mn(t);return m<720?0:m<1020?1:2}
+function say(m){var t=$('toast');t.textContent=m;t.className='s';clearTimeout(say.t);say.t=setTimeout(function(){t.className=''},2600)}
+function ent(k){return S.log[k]||(S.log[k]={sched:[],taken:[]})}
+function full(k){var e=S.log[k];return !!e&&e.sched.length>0&&e.sched.every(function(i){return e.taken.indexOf(i)>-1})}
+
+function draw(){
+  var e=ent(key());
+  e.sched=S.meds.map(function(m){return m.id});
+  e.taken=e.taken.filter(function(i){return e.sched.indexOf(i)>-1});
+  var n=S.meds.length,d=e.taken.length,p=n?Math.round(d*100/n):0,now=new Date(),nm=now.getHours()*60+now.getMinutes();
+  var hr=now.getHours();
+  $('hi').textContent=(hr<12?'Subah bakhair':hr<18?'Hello':'Shaam bakhair');
+  $('sub').textContent=now.toLocaleDateString([],{weekday:'long',day:'numeric',month:'long'});
+  $('arc').style.strokeDashoffset=251.3*(1-p/100);
+  $('pc').textContent=p+'%';$('dn').textContent=d+'/'+n;
+
+  var nx=S.meds.filter(function(m){return e.taken.indexOf(m.id)<0}).sort(function(a,b){return mn(a.time)-mn(b.time)})[0];
+  $('nx').textContent=!n?'Add your first pill':nx?'Next: '+nx.name+' at '+h12(nx.time):'All done for today 🎉';
+
+  // streak
+  var s=0,x=new Date(); if(!full(key(x)))x.setDate(x.getDate()-1);
+  while(full(key(x))){s++;x.setDate(x.getDate()-1)}
+  $('st').textContent=s;
+
+  // organizer
+  var top='<div></div>',rows=['','',''],a=0,b=0,days=[];
+  for(var i=6;i>=0;i--){var dd=new Date();dd.setDate(dd.getDate()-i);days.push(dd)}
+  days.forEach(function(dd,ix){top+='<div class="h'+(ix==6?' t':'')+'">'+DAYS[dd.getDay()]+'<br>'+dd.getDate()+'</div>'
+    var en=S.log[key(dd)]; if(en){a+=en.taken.length;b+=en.sched.length}
+    for(var r=0;r<3;r++){
+      var ms=en?S.meds.filter(function(m){return en.sched.indexOf(m.id)>-1&&slot(m.time)==r}):[];
+      rows[r]+='<div class="cell">'+(ms.length?ms.map(function(m){return '<span class="dot'+(en.taken.indexOf(m.id)>-1?' f':'')+'" style="--c:'+m.c+'" title="'+esc(m.name)+'"></span>'}).join(''):'<i>·</i>')+'</div>'}});
+  var lb=['Morning','Noon','Night'];
+  $('org').innerHTML=top+rows.map(function(r,i){return '<div class="rl">'+lb[i]+'</div>'+r}).join('');
+  $('wk').textContent=b?Math.round(a*100/b)+'%':'–';
+
+  // list
+  var ls=S.meds.slice().sort(function(a,b){return mn(a.time)-mn(b.time)});
+  $('ls').innerHTML=ls.length?ls.map(function(m){
+    var t=e.taken.indexOf(m.id)>-1,late=!t&&mn(m.time)<nm-30;
+    return '<div class="pc'+(t?' done':'')+'"><span class="cap" style="--c:'+m.c+'"></span><div class="m"><div class="nm">'+esc(m.name)+'</div><div class="sb"><span>'+h12(m.time)+'</span>'+(m.how?'<span>· '+esc(m.how)+'</span>':'')+(late?'<span class="tag od">late</span>':'')+(m.left!=null?'<span class="tag'+(m.left<=S.low?' lo':'')+'">'+m.left+' left'+(m.left<=S.low?' · refill':'')+'</span>':'')+'</div></div><button class="tk'+(t?' on':'')+'" data-t="'+m.id+'" aria-label="Toggle '+esc(m.name)+'">'+(t?'✓':'')+'</button><button class="xx" data-x="'+m.id+'" aria-label="Delete '+esc(m.name)+'">✕</button></div>'
+  }).join(''):'<div class="none">Koi dawai nahi. Upar se add karein.</div>';
+
+  // safety
+  var nn=S.meds.map(function(m){return m.name.toLowerCase()});
+  var hit=PAIRS.filter(function(p){return nn.some(function(q){return q.indexOf(p[0])>-1})&&nn.some(function(q){return q.indexOf(p[1])>-1})});
+  $('wr').innerHTML=hit.length?hit.map(function(p){return '<div class="wn">⚠️ <b>'+p[0]+' + '+p[1]+'</b>: '+p[2]+'. Check with your pharmacist.</div>'}).join(''):'<div class="note" style="margin:0">Nothing flagged in your list.</div>';
+  save();
+}
+
+$('ls').onclick=function(ev){
+  var t=ev.target.closest('[data-t]'),x=ev.target.closest('[data-x]');
+  if(t){var id=+t.dataset.t,m=S.meds.filter(function(q){return q.id==id})[0],e=ent(key()),i=e.taken.indexOf(id);
+    if(i>-1){e.taken.splice(i,1);if(m.left!=null)m.left++}
+    else{e.taken.push(id);if(m.left!=null&&m.left>0)m.left--;if(m.left!=null&&m.left<=S.low)say(m.name+': sirf '+m.left+' bachi hain')}
+    draw()}
+  if(x&&confirm('Delete this medicine?')){S.meds=S.meds.filter(function(q){return q.id!=+x.dataset.x});draw()}
+};
+function add(){
+  var n=$('n').value.trim(); if(!n){$('n').focus();return say('Pehle naam likhein')}
+  var l=$('sp').value;
+  S.meds.push({id:Date.now(),name:n,time:$('tm').value||'08:00',left:l===''?null:+l,how:$('how').value,c:COL[S.meds.length%COL.length]});
+  $('n').value='';$('sp').value='';draw();say('Added')
+}
+$('ad').onclick=add;
+$('n').onkeydown=function(e){if(e.key=='Enter')add()};
+document.onkeydown=function(e){if(e.key=='n'&&!/INPUT|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$('n').focus()}};
+
+function applyTheme(){S.theme?document.documentElement.setAttribute('data-theme',S.theme):document.documentElement.removeAttribute('data-theme')}
+$('th').onclick=function(){var dark=S.theme?S.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;S.theme=dark?'light':'dark';applyTheme();save()};
+
+$('rm').checked=!!S.rem;$('lw').value=S.low;$('cg').value=S.cg||'';
+$('rm').onchange=function(e){S.rem=e.target.checked;
+  if(S.rem&&'Notification' in window&&Notification.permission=='default')Notification.requestPermission();
+  save()};
+$('lw').onchange=function(e){S.low=Math.max(1,+e.target.value||7);draw()};
+$('cg').oninput=function(e){S.cg=e.target.value;save()};
+
+setInterval(function(){
+  if(!S.rem)return;
+  var n=new Date(),hm=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2),e=ent(key());
+  S.meds.forEach(function(m){var k=key()+m.id;
+    if(m.time==hm&&e.taken.indexOf(m.id)<0&&!told[k]){told[k]=1;say('Time for '+m.name);
+      if('Notification' in window&&Notification.permission=='granted')new Notification('Dawa Dabba',{body:'Time for '+m.name});draw()}})
+},15000);
+setInterval(draw,60000);
+
+$('cp').onclick=function(){
+  var e=ent(key()),L=S.meds.slice().sort(function(a,b){return mn(a.time)-mn(b.time)}).map(function(m){return (e.taken.indexOf(m.id)>-1?'✓ ':'○ ')+h12(m.time)+' '+m.name}).join('\n');
+  var t=(S.cg?S.cg+', ':'')+'aaj ki dawaiyan:\n'+L+'\n'+e.taken.length+'/'+S.meds.length+' li hain.';
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){say('Copied')},function(){prompt('Copy this:',t)})};
+$('ex').onclick=function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='dawa-dabba-'+key()+'.json';a.click();say('Backup saved')};
+$('im').onclick=function(){$('fi').click()};
+$('fi').onchange=function(e){var f=e.target.files[0];if(!f)return;
+  f.text().then(function(t){var d=JSON.parse(t);if(!Array.isArray(d.meds)||typeof d.log!='object')throw 0;S=Object.assign(fresh(),d);applyTheme();draw();say('Imported')}).catch(function(){say('Invalid backup file')});e.target.value=''};
+$('rs').onclick=function(){if(confirm('Erase all medicines and history?')){S={meds:[],log:{},theme:S.theme,cg:'',rem:false,low:7};$('rm').checked=false;$('cg').value='';draw()}};
+
+applyTheme();draw();
+</script>
+</body>
+</html>
