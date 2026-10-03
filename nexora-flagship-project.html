@@ -3,367 +3,399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexora — Client & project management for agencies</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/nexora-flagship-project.html">
+<title>Nexora Apex Neural Enterprise — Autonomous Agency ERP v26</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/nexora-apex-enterprise.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nexora — Client &amp; project management for agencies">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/nexora-flagship-project.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Nexora Apex Neural Enterprise — Autonomous Agency ERP">
+<meta property="og:description" content="Ultimate multi-tenant agency management platform with fully interactive kanban board, financial ledger, and diagnostics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#ffffff;
-    --paper:#0a0f16;
-    --violet:#00e5ff;
-    --violet-light:rgba(0,229,255,0.08);
-    --teal:#00e5ff;
-    --amber:#ffdab9;
-    --red:#ff4d4d;
-    --line:rgba(0,229,255,0.15);
-    --card:rgba(255,255,255,0.02);
-    --muted:#a0aec0;
+  :root {
+    --bg: #06080f;
+    --surface: rgba(12, 18, 32, 0.9);
+    --surface-raised: rgba(20, 29, 48, 0.96);
+    --line: rgba(245, 158, 11, 0.25);
+    --border-hover: rgba(139, 92, 246, 0.8);
+    
+    --ink: #f8fafc;
+    --muted: #8b9bb4;
+    
+    --gold: #f59e0b;
+    --gold-dim: rgba(245, 158, 11, 0.15);
+    --violet: #8b5cf6;
+    --violet-dim: rgba(139, 92, 246, 0.15);
+    --emerald: #10b981;
+    --emerald-dim: rgba(16, 185, 129, 0.15);
+    
+    --radius: 24px;
+    --shadow: 0 50px 140px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6; overflow-x:hidden;}
-  section{scroll-margin-top:70px;}
 
-  /* Cyber Scan Effect */
-  .scan{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:repeating-linear-gradient(0deg, rgba(0,229,255,0.02) 0px, rgba(0,229,255,0.02) 1px, transparent 1px, transparent 3px),
-               radial-gradient(700px 500px at 50% 0%, rgba(0,229,255,0.05), transparent 60%);}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100vh; width: 100vw; overflow: hidden; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); }
 
-  /* NAV */
-  header{
-    position:sticky;top:0;background:rgba(5,8,13,0.85);backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);z-index:10;
+  .scanline {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.12;
+    background-image: repeating-linear-gradient(0deg, rgba(245,158,11,0.03) 0px, rgba(245,158,11,0.03) 1px, transparent 1px, transparent 4px);
   }
-  .nav-inner{max-width:1120px;margin:0 auto;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;}
-  .brand{font-family:'Sora',sans-serif;font-weight:700;font-size:18px; color:#fff;}
-  .brand span{color:var(--violet);}
-  nav a{margin-left:26px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none; transition: color 0.2s;}
-  nav a:hover{color:#fff;}
-  .back-link{font-size:13px;color:var(--muted);text-decoration:none; font-family:'JetBrains Mono',monospace;}
-  .back-link:hover{color:var(--violet);}
 
-  /* HERO */
-  .hero{text-align:center;max-width:760px;margin:0 auto;padding:64px 32px 40px;}
-  .eyebrow{display:inline-block;background:var(--violet-light);border:1px solid var(--line);color:var(--violet);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:22px; font-family:'JetBrains Mono',monospace;}
-  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:42px;line-height:1.15;margin-bottom:18px; color:#fff;}
-  .hero p{color:var(--muted);font-size:16px;max-width:540px;margin:0 auto 28px; line-height:1.7;}
-  .btn-row{display:flex;gap:12px;justify-content:center;}
-  .btn-primary{background:var(--violet);color:#0a0f16;padding:13px 26px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
-  .btn-primary:hover{transform: translateY(-2px); opacity: 0.9;}
-  .btn-outline{border:1px solid var(--line);padding:13px 26px;border-radius:8px;font-weight:600;font-size:14px;color:#fff;text-decoration:none;background:var(--card); backdrop-filter: blur(10px); transition: all 0.2s;}
-  .btn-outline:hover{border-color:var(--violet);}
+  .app { display: flex; height: 100vh; width: 100vw; }
 
-  .stack-note{max-width:900px;margin:0 auto;padding:0 32px 56px;text-align:center;}
-  .stack-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
-  .stack-pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted); backdrop-filter: blur(10px); font-family:'JetBrains Mono',monospace;}
+  /* Enterprise Sidebar */
+  aside { width: 290px; flex-shrink: 0; background: rgba(3,5,10,0.98); border-right: 1px solid var(--line); display: flex; flex-direction: column; z-index: 10; backdrop-filter: blur(24px); }
+  .brand { padding: 24px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line); }
+  .brand-mark { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--gold), var(--violet)); box-shadow: 0 0 25px rgba(245,158,11,0.4); }
+  .brand-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 19px; color: #fff; }
+  .brand-sub { font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace; }
 
-  /* SECTION SHELL */
-  .section{max-width:1080px;margin:0 auto;padding:64px 32px;}
-  .section-head{margin-bottom:32px;}
-  .section-head .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-bottom:10px;}
-  .section-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:28px;margin-bottom:10px; color:#fff;}
-  .section-head p{color:var(--muted);font-size:14px;max-width:600px;}
+  .nav-menu { padding: 22px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; text-decoration: none; border: 1px solid transparent; font-family: 'JetBrains Mono', monospace; }
+  .nav-item:hover, .nav-item.active { background: var(--surface-raised); color: #fff; border-color: var(--line); }
 
-  /* APP PREVIEW (full-stack + UI/UX) */
-  .app-shell{background:#05080d;border:1px solid var(--line);border-radius:16px;padding:0;overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5);}
-  .app-topbar{background:rgba(255,255,255,0.02);padding:12px 20px;display:flex;gap:6px; border-bottom:1px solid var(--line);}
-  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.1);}
-  .app-body{display:flex;min-height:420px;}
-  .app-sidebar{width:180px;background:rgba(0,0,0,0.3);padding:20px 0;flex-shrink:0; border-right:1px solid var(--line);}
-  .app-side-link{padding:10px 20px;font-size:13px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .app-side-link.active{background:rgba(0,229,255,0.08);color:#fff;border-left:3px solid var(--violet);}
-  .app-main{flex:1;background:rgba(5,8,13,0.5);padding:26px 28px;color:var(--ink);}
-  .app-topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-  .app-topline h3{font-size:16px;font-weight:700; color:#fff;}
-  .client-badge{font-size:12px;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px; backdrop-filter: blur(10px);}
-  .kpi .kv{font-family:'Sora',sans-serif;font-weight:700;font-size:20px; color:var(--violet);}
-  .kpi .kl{font-size:11px;color:var(--muted);margin-top:2px; font-family:'JetBrains Mono',monospace;}
-  .proj-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px; color:#fff;}
-  .proj-row:last-child{border-bottom:none;}
-  .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px; font-family:'JetBrains Mono',monospace;}
-  .status-pill.active{background:rgba(0,229,255,0.1);color:var(--teal); border:1px solid rgba(0,229,255,0.2);}
-  .status-pill.review{background:rgba(255,218,185,0.1);color:var(--amber); border:1px solid rgba(255,218,185,0.2);}
-  .status-pill.done{background:rgba(0,229,255,0.15);color:var(--violet); border:1px solid rgba(0,229,255,0.3);}
+  .user-stats { margin-top: auto; padding: 22px; border-top: 1px solid var(--line); background: rgba(0,0,0,0.4); }
+  .stat-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; color: var(--muted); }
+  .stat-row span:last-child { color: var(--gold); font-weight: 700; }
+  .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .progress-fill { width: 94%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--violet)); border-radius: 3px; }
 
-  /* API SECTION */
-  .api-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);}
-  .api-row{display:flex;gap:16px;align-items:end;flex-wrap:wrap;margin-bottom:20px;}
-  .api-field label{display:block;font-size:11.5px;color:var(--muted);margin-bottom:6px;font-weight:600; font-family:'JetBrains Mono',monospace;}
-  .api-field input, .api-field select{
-    padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;
-    background:rgba(0,0,0,0.3);color:#fff;width:130px; outline: none; transition: border-color 0.2s;
-  }
-  .api-field input:focus, .api-field select:focus{border-color:var(--violet);}
-  .swap-btn{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:14px; color:#fff; transition: border-color 0.2s;}
-  .swap-btn:hover{border-color:var(--violet);}
-  .convert-btn{background:var(--violet);color:#0a0f16;border:none;padding:11px 22px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(0,229,255,0.3);}
-  .convert-btn:hover{transform: translateY(-2px); opacity: 0.9;}
-  .api-result{background:rgba(0,229,255,0.05);border:1px solid var(--line);border-radius:10px;padding:18px;font-size:14px;min-height:24px; color:#fff;}
-  .api-result .big{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:var(--violet);}
-  .api-note{font-size:12px;color:var(--muted);margin-top:12px; font-family:'JetBrains Mono',monospace;}
+  /* Main Workspace */
+  .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: var(--bg); }
+  header { height: 76px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(6,8,15,0.85); backdrop-filter: blur(18px); position: sticky; top: 0; z-index: 5; }
+  .page-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 21px; font-weight: 800; color: #fff; }
+  .header-actions { display: flex; gap: 14px; align-items: center; }
+  .btn-primary { background: linear-gradient(135deg, var(--gold), var(--violet)); color: #06080f; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 800; font-size: 13.5px; cursor: pointer; box-shadow: 0 0 25px rgba(245,158,11,0.4); transition: transform 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); }
 
-  /* AI INSIGHTS */
-  .insight-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);}
-  .insight-input-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
-  .insight-input-row select{padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:rgba(0,0,0,0.3);color:#fff;flex:1;min-width:160px; outline: none;}
-  .insight-input-row select:focus{border-color:var(--violet);}
-  .score-bars{display:grid;gap:14px;}
-  .score-row{display:flex;align-items:center;gap:12px;font-size:13px;}
-  .score-label{width:160px;flex-shrink:0;color:var(--muted); font-family:'JetBrains Mono',monospace;}
-  .score-track{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden; border:1px solid var(--line);}
-  .score-fill{height:100%;background:var(--teal);border-radius:6px; box-shadow: 0 0 8px var(--teal);}
-  .score-num{width:40px;text-align:right;font-weight:600; color:#fff; font-family:'JetBrains Mono',monospace;}
-  .verdict{margin-top:20px;padding:14px 16px;border-radius:10px;font-size:13px; font-family:'JetBrains Mono',monospace;}
-  .verdict.high{background:rgba(0,229,255,0.1);color:#00e5ff; border:1px solid rgba(0,229,255,0.3);}
-  .verdict.medium{background:rgba(255,218,185,0.1);color:#ffdab9; border:1px solid rgba(255,218,185,0.3);}
-  .verdict.low{background:rgba(255,77,77,0.1);color:#ff4d4d; border:1px solid rgba(255,77,77,0.3);}
+  .content-wrap { max-width: 1280px; margin: 0 auto; padding: 40px; width: 100%; }
+  .view-panel { display: none; }
+  .view-panel.active { display: block; }
 
-  /* DESIGN SYSTEM */
-  .ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
-  .ds-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);}
-  .ds-card h3{font-size:14px;font-weight:600;margin-bottom:16px; color:#fff; font-family:'JetBrains Mono',monospace;}
-  .color-swatches{display:flex;gap:10px;flex-wrap:wrap;}
-  .swatch{width:62px;text-align:center;}
-  .swatch-box{height:44px;border-radius:8px;margin-bottom:6px; border:1px solid var(--line);}
-  .swatch span{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
-  .type-sample .t1{font-family:'Sora',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px; color:#fff;}
-  .type-sample .t2{font-family:'Sora',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px; color:#fff;}
-  .type-sample .t3{font-size:13px;color:var(--muted);}
-  .btn-showcase{display:flex;gap:10px;flex-wrap:wrap;}
-  .comp-showcase{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; backdrop-filter: blur(20px); box-shadow: var(--shadow); margin-bottom: 30px; }
+  .card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .card p.sub { font-size: 12.5px; color: var(--muted); margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; }
 
-  footer{padding:32px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--line);margin-top:20px; font-family:'JetBrains Mono',monospace;}
+  /* Interactive Kanban Board */
+  .kanban-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media(max-width: 900px){ .kanban-grid { grid-template-columns: 1fr; } }
+  .kanban-col { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 18px; padding: 20px; min-height: 360px; display: flex; flex-direction: column; }
+  .kanban-col h4 { font-size: 13px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .kanban-dropzone { flex: 1; display: flex; flex-direction: column; gap: 14px; min-height: 280px; }
+  
+  .kanban-task { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 14px; padding: 16px; cursor: grab; transition: all 0.2s; user-select: none; }
+  .kanban-task:active { cursor: grabbing; }
+  .kanban-task:hover { border-color: var(--violet); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  .kanban-task h5 { font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .kanban-task span { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
 
-  @media (max-width:800px){
-    h1{font-size:30px;}
-    .app-body{flex-direction:column;}
-    .app-sidebar{width:100%;display:flex;padding:10px;overflow-x:auto;}
-    .kpi-row, .ds-grid{grid-template-columns:1fr;}
-    nav{display:none;}
-  }
+  /* Financial Ledger / Forex */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  @media(max-width: 900px){ .grid-2 { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .field input, .field select { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; color: #fff; font-size: 14px; outline: none; font-family: 'JetBrains Mono', monospace; }
+  .field input:focus, .field select:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(245,158,11,0.3); }
+
+  /* Heuristics Bars */
+  .score-bars { display: grid; gap: 14px; }
+  .score-row { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+  .score-label { width: 150px; flex-shrink: 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .score-track { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+  .score-fill { height: 100%; background: var(--gold); border-radius: 6px; box-shadow: 0 0 10px var(--gold); }
+  .score-num { width: 40px; text-align: right; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
+  .verdict { margin-top: 20px; padding: 14px 18px; border-radius: 12px; font-size: 12.5px; font-family: 'JetBrains Mono', monospace; }
+  .verdict.high { background: rgba(16,185,129,0.15); color: var(--emerald); border: 1px solid rgba(16,185,129,0.3); }
+  .verdict.medium { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(6,8,15,0.85); z-index: 50; display: none; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+  .modal-overlay.show { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 38px; width: 460px; box-shadow: var(--shadow); position: relative; }
+  .modal h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+
+  .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; }
+  .back-link:hover { border-color: var(--gold); }
 </style>
 </head>
 <body>
-<div class="scan"></div>
+<div class="scanline"></div>
 
-<header>
-  <div class="nav-inner">
-    <div class="brand">nex<span>ora</span></div>
-    <nav>
-      <a href="#app">Platform</a>
-      <a href="#api">Live Tools</a>
-      <a href="#insights">AI Insights</a>
-      <a href="#design">Design System</a>
-    </nav>
-    <a href="index.html" class="back-link">← Portfolio</a>
-  </div>
-</header>
+<div class="app">
+  <!-- Sidebar -->
+  <aside>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">Nexora Apex</div>
+        <div class="brand-sub">Neural Enterprise OS</div>
+      </div>
+    </div>
+    
+    <div class="nav-menu">
+      <a class="nav-item active" onclick="switchView('kanban', this)">🚀 Active Sprints &amp; Kanban</a>
+      <a class="nav-item" onclick="switchView('forex', this)">💱 Live Forex &amp; Invoicing</a>
+      <a class="nav-item" onclick="switchView('diagnostics', this)">📊 Client Health Diagnostics</a>
+      <a class="nav-item" onclick="switchView('settings', this)">⚙ Enterprise Protocols</a>
+    </div>
 
-<section class="hero">
-  <div class="eyebrow">// Flagship Architectural Build</div>
-  <h1>Unified Agency Management Platform.</h1>
-  <p>Nexora demonstrates full-stack capability: marketed product presentation, functional dashboard logic, real-time public API consumption, and rule-based diagnostic intelligence.</p>
-  <div class="btn-row">
-    <a href="#app" class="btn-primary">Explore Platform</a>
-    <a href="#design" class="btn-outline">Design System</a>
-  </div>
-</section>
+    <div class="user-stats">
+      <div class="stat-row"><span>Active Tier</span><span>ENTERPRISE OS</span></div>
+      <div class="stat-row"><span>API Latency</span><span>14.2 ms</span></div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+  </aside>
 
-<div class="stack-note">
-  <div class="stack-row">
-    <div class="stack-pill">UI/UX Architecture</div>
-    <div class="stack-pill">HTML5 / CSS3 / ES6</div>
-    <div class="stack-pill">Full-Stack Schema</div>
-    <div class="stack-pill">Frankfurter REST API</div>
-    <div class="stack-pill">Diagnostic Heuristics</div>
-    <div class="stack-pill">Responsive Design</div>
+  <!-- Main Area -->
+  <div class="main">
+    <header>
+      <div class="page-title" id="headerTitle">Active Sprints &amp; Kanban Board</div>
+      <div class="header-actions">
+        <button class="btn-primary" onclick="openModal()">+ Create Project Sprint</button>
+      </div>
+    </header>
+
+    <div class="content-wrap">
+      
+      <!-- VIEW 1: KANBAN -->
+      <div id="view-kanban" class="view-panel active">
+        <div class="card">
+          <h3>Operational Sprint Workspace</h3>
+          <p class="sub">// Drag and drop tasks across columns to update workflow status</p>
+          <div class="kanban-grid">
+            <div class="kanban-col" ondragover="allowDrop(event)" ondrop="dropTask(event, 'col-backlog')">
+              <h4>Backlog <span id="count-backlog">(2)</span></h4>
+              <div class="kanban-dropzone" id="col-backlog">
+                <div class="kanban-task" draggable="true" ondragstart="dragStart(event)" id="task-1">
+                  <h5>Payment Gateway Integration</h5>
+                  <span>Client: Nexus Corp · Due in 4 days</span>
+                </div>
+                <div class="kanban-task" draggable="true" ondragstart="dragStart(event)" id="task-2">
+                  <h5>Vector Database Schema</h5>
+                  <span>Client: Aether Labs · Due in 6 days</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-col" ondragover="allowDrop(event)" ondrop="dropTask(event, 'col-progress')">
+              <h4>In Progress <span id="count-progress">(2)</span></h4>
+              <div class="kanban-dropzone" id="col-progress">
+                <div class="kanban-task" draggable="true" ondragstart="dragStart(event)" id="task-3">
+                  <h5>UI/UX Design System Tokenization</h5>
+                  <span>Client: Vanguard Global · Active Sprint</span>
+                </div>
+                <div class="kanban-task" draggable="true" ondragstart="dragStart(event)" id="task-4">
+                  <h5>Real-Time WebSocket Feed</h5>
+                  <span>Client: FinTech Core · Active Sprint</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-col" ondragover="allowDrop(event)" ondrop="dropTask(event, 'col-deployed')">
+              <h4>Deployed <span id="count-deployed">(1)</span></h4>
+              <div class="kanban-dropzone" id="col-deployed">
+                <div class="kanban-task" draggable="true" ondragstart="dragStart(event)" id="task-5" style="border-color: var(--emerald);">
+                  <h5>Frankfurter Forex API Connector</h5>
+                  <span>Status: Verified &amp; Production Ready</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: FOREX & INVOICING -->
+      <div id="view-forex" class="view-panel">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Live Currency Exchange</h3>
+            <p class="sub">// Frankfurter ECB financial telemetry</p>
+            <div class="field">
+              <label>Amount</label>
+              <input type="number" id="amountInput" value="2500" oninput="convertCurrency()">
+            </div>
+            <div class="field">
+              <label>From Currency</label>
+              <select id="fromCurrency" onchange="convertCurrency()">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="PKR">PKR</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>To Currency</label>
+              <select id="toCurrency" onchange="convertCurrency()">
+                <option value="PKR" selected>PKR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+            <div id="apiResult" style="background: rgba(0,0,0,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: var(--gold); margin-top: 10px;">
+              Calculating telemetry...
+            </div>
+          </div>
+          <div class="card">
+            <h3>Automated Invoice Generator</h3>
+            <p class="sub">// Instant client billing statement</p>
+            <div class="field">
+              <label>Client Entity</label>
+              <input type="text" id="invClient" value="Nexus Global Corp">
+            </div>
+            <div class="field">
+              <label>Scope of Work</label>
+              <input type="text" id="invScope" value="Full-Stack Architecture &amp; API Integration">
+            </div>
+            <div class="field">
+              <label>Total Contract Value (USD)</label>
+              <input type="number" id="invoiceAmount" value="5000" oninput="updateInvoice()">
+            </div>
+            <div id="invoiceSummary" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-top: 15px; background: rgba(0,0,0,0.4); padding: 14px; border-radius: 10px;">
+              Subtotal: $5,000.00<br>Tax (16% GST): $800.00<br><strong style="color: #fff;">Total Payable: $5,800.00</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: DIAGNOSTICS -->
+      <div id="view-diagnostics" class="view-panel">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <h3>Client Health Heuristics Matrix</h3>
+          <p class="sub">// Automated algorithmic risk assessment</p>
+          <div class="field" style="margin-bottom: 24px;">
+            <label>Select Target Account</label>
+            <select id="clientSelect" onchange="scoreClient()">
+              <option value="0">Nexus Global Corp</option>
+              <option value="1">Aether Neural Labs</option>
+              <option value="2">Vanguard Global Systems</option>
+            </select>
+          </div>
+          <div class="score-bars" id="scoreBars"></div>
+          <div class="verdict high" id="verdictBox"></div>
+        </div>
+      </div>
+
+      <!-- VIEW 4: SETTINGS -->
+      <div id="view-settings" class="view-panel">
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+          <h3>Enterprise Security Protocols</h3>
+          <p class="sub">// System configuration and encryption parameters</p>
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
+              <div>
+                <h4 style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Zero-Trust Encryption</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">AES-256 end-to-end telemetry vault</span>
+              </div>
+              <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
+              <div>
+                <h4 style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Autonomous Churn Alerts</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Instant webhook broadcast on health drop</span>
+              </div>
+              <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<section class="section" id="app">
-  <div class="section-head">
-    <div class="tag">// 01 — FULL-STACK WORKSPACE</div>
-    <h2>Operations Dashboard</h2>
-    <p>Simulated agency administration panel tracking client pipelines, active project deliverables, and quarterly financial yield.</p>
-  </div>
-  <div class="app-shell">
-    <div class="app-topbar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-    <div class="app-body">
-      <div class="app-sidebar">
-        <div class="app-side-link active">Dashboard</div>
-        <div class="app-side-link">Clients</div>
-        <div class="app-side-link">Projects</div>
-        <div class="app-side-link">Invoices</div>
-        <div class="app-side-link">Settings</div>
-      </div>
-      <div class="app-main">
-        <div class="app-topline">
-          <h3>Agency Performance Overview</h3>
-          <div class="client-badge">// BrightStack Co. · 12 Active Clients</div>
-        </div>
-        <div class="kpi-row">
-          <div class="kpi"><div class="kv">Rs 612,000</div><div class="kl">Quarterly Revenue</div></div>
-          <div class="kpi"><div class="kv">9</div><div class="kl">Active Sprints</div></div>
-          <div class="kpi"><div class="kv">3</div><div class="kl">Pending Review</div></div>
-        </div>
-        <div class="proj-row"><span>Noor Bakehouse — E-Commerce Redesign</span><span class="status-pill active">In Progress</span></div>
-        <div class="proj-row"><span>Glow Studio — Booking Engine</span><span class="status-pill review">In Review</span></div>
-        <div class="proj-row"><span>Ledgerly — Conversion Landing Page</span><span class="status-pill done">Delivered</span></div>
-        <div class="proj-row"><span>Kamran Traders — Inventory Analytics</span><span class="status-pill active">In Progress</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+<a href="index.html" class="back-link">← Portfolio Hub</a>
 
-<section class="section" id="api">
-  <div class="section-head">
-    <div class="tag">// 02 — LIVE API INTEGRATION</div>
-    <h2>Real-Time Currency Exchange</h2>
-    <p>Consumes live financial rates from public foreign exchange APIs to quote multi-currency client contracts accurately.</p>
-  </div>
-  <div class="api-panel">
-    <div class="api-row">
-      <div class="api-field">
-        <label>Amount</label>
-        <input type="number" id="amountInput" value="1000">
-      </div>
-      <div class="api-field">
-        <label>From</label>
-        <select id="fromCurrency">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="PKR">PKR</option>
-        </select>
-      </div>
-      <button class="swap-btn" onclick="swapCurrencies()">⇄</button>
-      <div class="api-field">
-        <label>To</label>
-        <select id="toCurrency">
-          <option value="PKR">PKR</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-        </select>
-      </div>
-      <button class="convert-btn" onclick="convertCurrency()">Convert Live</button>
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button style="float:right; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;" onclick="closeModal()">✕</button>
+    <h3>Provision Sprint Task</h3>
+    <p style="font-size: 12.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 20px;">// Add deliverable to active kanban backlog</p>
+    <div class="field">
+      <label>Task Title</label>
+      <input type="text" id="taskTitle" placeholder="e.g., GraphQL API Endpoint">
     </div>
-    <div class="api-result" id="apiResult">Click convert to fetch live exchange telemetry.</div>
-    <div class="api-note">// Powered by frankfurter.app (European Central Bank real-time financial feeds)</div>
+    <div class="field">
+      <label>Client Assignee</label>
+      <input type="text" id="taskClient" placeholder="e.g., Aether Labs">
+    </div>
+    <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="createTask()">Deploy to Backlog</button>
   </div>
-</section>
+</div>
 
-<section class="section" id="insights">
-  <div class="section-head">
-    <div class="tag">// 03 — DIAGNOSTIC HEURISTICS</div>
-    <h2>Client Health Scoring Engine</h2>
-    <p>Rule-based algorithmic telemetry analyzing retention markers, payment velocity, and engagement frequency to preemptively flag churn risks.</p>
-  </div>
-  <div class="insight-panel">
-    <div class="insight-input-row">
-      <select id="clientSelect" onchange="scoreClient()">
-        <option value="0">Noor Bakehouse</option>
-        <option value="1">Kamran Traders</option>
-        <option value="2">Sadiq Motors</option>
-      </select>
-    </div>
-    <div class="score-bars" id="scoreBars"></div>
-    <div class="verdict" id="verdictBox"></div>
-  </div>
-</section>
-
-<section class="section" id="design">
-  <div class="section-head">
-    <div class="tag">// 04 — DESIGN SYSTEM TOKENS</div>
-    <h2>Architecture Design Tokens</h2>
-    <p>Standardized typography, color primitives, and component states ensuring brand and functional consistency across all product surfaces.</p>
-  </div>
-  <div class="ds-grid">
-    <div class="ds-card">
-      <h3>Color Palette Primitives</h3>
-      <div class="color-swatches">
-        <div class="swatch"><div class="swatch-box" style="background:#00e5ff;"></div><span>#00e5ff</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#0a0f16; border:1px solid rgba(0,229,255,0.3);"></div><span>#0a0f16</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#ffffff;"></div><span>#ffffff</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:#ffdab9;"></div><span>#ffdab9</span></div>
-        <div class="swatch"><div class="swatch-box" style="background:rgba(0,229,255,0.08);"></div><span>Glass</span></div>
-      </div>
-    </div>
-    <div class="ds-card">
-      <h3>Typography Hierarchy</h3>
-      <div class="type-sample">
-        <div class="t1">Sora — Display Heading</div>
-        <div class="t2">Sora Medium — Section Title</div>
-        <div class="t3">Inter — Functional body text and UI telemetry controls.</div>
-      </div>
-    </div>
-    <div class="ds-card">
-      <h3>Action Buttons</h3>
-      <div class="btn-showcase">
-        <button class="btn-primary">Primary Action</button>
-        <a href="#" class="btn-outline">Secondary Link</a>
-      </div>
-    </div>
-    <div class="ds-card">
-      <h3>State Badges</h3>
-      <div class="comp-showcase">
-        <span class="status-pill active">Active</span>
-        <span class="status-pill review">In Review</span>
-        <span class="status-pill done">Delivered</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>BrightStack Co. · Nexora Flagship Architecture · Full-Stack Integration Concept</footer>
-
-<!-- 3D Card Hover Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<!-- Scripts -->
 <script>
-  VanillaTilt.init(document.querySelectorAll(".app-shell, .api-panel, .insight-panel, .ds-card, .kpi"), {
-    max: 2,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.03,
-  });
+  function switchView(viewId, el){
+    document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    
+    document.getElementById('view-' + viewId).classList.add('active');
+    el.classList.add('active');
 
-  function swapCurrencies(){
-    const from = document.getElementById('fromCurrency');
-    const to = document.getElementById('toCurrency');
-    const temp = from.value;
-    from.value = to.value;
-    to.value = temp;
+    const titles = {
+      kanban: 'Active Sprints & Kanban Board',
+      forex: 'Live Forex Engine & Invoicing Core',
+      diagnostics: 'Client Health Heuristics Matrix',
+      settings: 'Enterprise Security Protocols'
+    };
+    document.getElementById('headerTitle').textContent = titles[viewId];
+  }
+
+  // Drag and Drop Logic
+  let draggedTaskId = null;
+
+  function dragStart(e) {
+    draggedTaskId = e.target.id;
+    e.dataTransfer.setData('text/plain', draggedTaskId);
+  }
+
+  function allowDrop(e) {
+    e.preventDefault();
+  }
+
+  function dropTask(e, zoneId) {
+    e.preventDefault();
+    const zone = document.getElementById(zoneId);
+    const task = document.getElementById(draggedTaskId);
+    if (task && zone) {
+      zone.appendChild(task);
+      updateKanbanCounts();
+    }
+  }
+
+  function updateKanbanCounts() {
+    document.getElementById('count-backlog').textContent = `(${document.getElementById('col-backlog').children.length})`;
+    document.getElementById('count-progress').textContent = `(${document.getElementById('col-progress').children.length})`;
+    document.getElementById('count-deployed').textContent = `(${document.getElementById('col-deployed').children.length})`;
   }
 
   async function convertCurrency(){
     const amount = document.getElementById('amountInput').value;
     const from = document.getElementById('fromCurrency').value;
     const to = document.getElementById('toCurrency').value;
-    const resultBox = document.getElementById('apiResult');
-    resultBox.innerHTML = 'Fetching real-time exchange telemetry…';
-    try{
+    const box = document.getElementById('apiResult');
+    box.innerHTML = 'Querying European Central Bank...';
+    try {
       const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
       const data = await res.json();
-      const converted = data.rates[to];
-      resultBox.innerHTML = `<span class="big">${amount} ${from} = ${converted.toFixed(2)} ${to}</span><br>// Telemetry synchronized via ECB live feeds.`;
-    }catch(e){
-      resultBox.innerHTML = 'API connection unavailable — verify network status or retry telemetry query.';
+      const val = data.rates[to];
+      box.innerHTML = `${amount} ${from} = <strong style="color:#fff;">${val.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} ${to}</strong><br>// Live ECB Feed Verified`;
+    } catch(e) {
+      box.innerHTML = 'API connection unavailable.';
     }
   }
 
+  function updateInvoice(){
+    const amt = parseFloat(document.getElementById('invoiceAmount').value) || 0;
+    const tax = amt * 0.16;
+    const total = amt + tax;
+    document.getElementById('invoiceSummary').innerHTML = `Subtotal: $${amt.toLocaleString(undefined, {minimumFractionDigits:2})}<br>Tax (16% GST): $${tax.toLocaleString(undefined, {minimumFractionDigits:2})}<br><strong style="color: #fff;">Total Payable: $${total.toLocaleString(undefined, {minimumFractionDigits:2})}</strong>`;
+  }
+
   const clients = [
-    { name:'Noor Bakehouse', payment:90, engagement:80, satisfaction:85, responsiveness:75 },
-    { name:'Kamran Traders', payment:60, engagement:40, satisfaction:55, responsiveness:35 },
-    { name:'Sadiq Motors', payment:95, engagement:90, satisfaction:92, responsiveness:88 }
+    { name:'Nexus Global Corp', payment:98, engagement:94, satisfaction:96, response:92 },
+    { name:'Aether Neural Labs', payment:82, engagement:70, satisfaction:75, response:68 },
+    { name:'Vanguard Global Systems', payment:99, engagement:98, satisfaction:99, response:95 }
   ];
 
   function scoreClient(){
@@ -372,33 +404,54 @@
     const bars = document.getElementById('scoreBars');
     bars.innerHTML = '';
     const metrics = [
-      {label:'Payment Reliability', value:c.payment},
+      {label:'Payment Velocity', value:c.payment},
       {label:'Sprint Engagement', value:c.engagement},
-      {label:'Satisfaction Signals', value:c.satisfaction},
-      {label:'Responsiveness', value:c.responsiveness}
+      {label:'Sentiment Index', value:c.satisfaction},
+      {label:'Responsiveness', value:c.response}
     ];
-    metrics.forEach(m=>{
+    metrics.forEach(m => {
       const row = document.createElement('div');
       row.className = 'score-row';
       row.innerHTML = `<div class="score-label">${m.label}</div><div class="score-track"><div class="score-fill" style="width:${m.value}%"></div></div><div class="score-num">${m.value}</div>`;
       bars.appendChild(row);
     });
-    const avg = (c.payment + c.engagement + c.satisfaction + c.responsiveness) / 4;
+    const avg = (c.payment + c.engagement + c.satisfaction + c.response) / 4;
     const verdict = document.getElementById('verdictBox');
-    if(avg >= 75){
+    if(avg >= 90){
       verdict.className = 'verdict high';
-      verdict.textContent = `// HEALTHY ACCOUNT (Score ${avg.toFixed(0)}/100) — Optimal retention metrics. Eligible for case study outreach.`;
-    } else if(avg >= 50){
-      verdict.className = 'verdict medium';
-      verdict.textContent = `// MODERATE RISK (Score ${avg.toFixed(0)}/100) — Engagement velocity declining. Recommend proactive check-in call.`;
+      verdict.textContent = `// ACCOUNT OPTIMAL (Score ${avg.toFixed(0)}/100) — Low churn risk profile.`;
     } else {
-      verdict.className = 'verdict low';
-      verdict.textContent = `// HIGH CHURN RISK (Score ${avg.toFixed(0)}/100) — Multiple negative signals. Urgent executive intervention required.`;
+      verdict.className = 'verdict medium';
+      verdict.textContent = `// ACCOUNT MONITORING (Score ${avg.toFixed(0)}/100) — Engagement dip detected.`;
     }
   }
 
-  scoreClient();
-</script>
+  function openModal(){ document.getElementById('modal').classList.add('show'); }
+  function closeModal(){ document.getElementById('modal').classList.remove('show'); }
 
+  let taskCounter = 6;
+  function createTask(){
+    const title = document.getElementById('taskTitle').value.trim();
+    const client = document.getElementById('taskClient').value.trim();
+    if(!title) return;
+
+    const newTask = document.createElement('div');
+    newTask.className = 'kanban-task';
+    newTask.draggable = true;
+    newTask.id = 'task-' + taskCounter++;
+    newTask.setAttribute('ondragstart', 'dragStart(event)');
+    newTask.innerHTML = `<h5>${title}</h5><span>Client: ${client || 'General'} · Just Added</span>`;
+
+    document.getElementById('col-backlog').appendChild(newTask);
+    updateKanbanCounts();
+    closeModal();
+    document.getElementById('taskTitle').value = '';
+    document.getElementById('taskClient').value = '';
+  }
+
+  convertCurrency();
+  scoreClient();
+  updateKanbanCounts();
+</script>
 </body>
 </html>
