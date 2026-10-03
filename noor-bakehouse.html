@@ -1,135 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="day">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noor Bakehouse — Fresh baked daily</title>
+<title>Noor Bakehouse — Artisanal Bakery & Flagship Store</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/noor-bakehouse.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Noor Bakehouse — Fresh baked daily">
-<meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
-<meta property="og:url" content="https://hassansaeed14.github.io/brightstack-portfolio/noor-bakehouse.html">
-<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="Small-batch artisanal sourdough, custom baking slots, and digital membership vault in Rawalpindi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --plum:#4A1F2E;
-    --gold:#C9A227;
-    --paper:#F5EEDC;
-    --charcoal:#26201C;
-    --sage:#6E8163;
-    --paper-2:#EDE3C8;
+    --plum:#4A1F2E; --gold:#C9A227; --paper:#F5EEDC; --charcoal:#26201C; --sage:#6E8163; --paper-2:#EDE3C8; --border:#e0d3ac;
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    background:var(--paper);
-    color:var(--charcoal);
-    font-family:'Work Sans',sans-serif;
-    line-height:1.6;
+  [data-theme="evening"]{
+    --plum:#f3d6e3; --gold:#f1c453; --paper:#1a1513; --charcoal:#f5eedc; --sage:#9ab08f; --paper-2:#29221d; --border:#42362e;
   }
+  *{margin:0;padding:0;box-sizing:border-box;transition: background 0.3s, color 0.3s, border-color 0.3s;}
+  body{background:var(--paper);color:var(--charcoal);font-family:'Work Sans',sans-serif;line-height:1.6;}
   a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
 
-  header{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:28px 32px;max-width:1100px;margin:0 auto;
-  }
-  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:var(--plum);}
-  nav a{margin-left:32px;font-size:14px;font-weight:500;color:var(--charcoal);}
-  .nav-cta{
-    background:var(--plum);color:var(--paper);padding:10px 22px;border-radius:2px;
-  }
+  .announcement{background:var(--plum);color:var(--paper);text-align:center;font-size:12.5px;font-weight:500;padding:8px 16px;letter-spacing:0.04em;}
+  
+  header{display:flex;justify-content:space-between;align-items:center;padding:24px 32px;max-width:1160px;margin:0 auto;}
+  .logo{font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:var(--plum);display:flex;align-items:center;gap:10px;}
+  .status-dot{width:8px;height:8px;background:var(--sage);border-radius:50%;display:inline-block;box-shadow:0 0 8px var(--sage);}
+  
+  nav{display:flex;align-items:center;gap:28px;}
+  nav a{font-size:14px;font-weight:500;color:var(--charcoal);}
+  .nav-btn-group{display:flex;gap:12px;align-items:center;}
+  .nav-cta{background:var(--plum);color:var(--paper);padding:10px 20px;border-radius:2px;font-size:14px;cursor:pointer;border:none;font-family:'Work Sans',sans-serif;}
+  .theme-toggle{background:none;border:1px solid var(--border);color:var(--charcoal);padding:8px 12px;border-radius:2px;font-size:12px;cursor:pointer;}
 
-  .hero{
-    display:flex;align-items:center;gap:64px;
-    padding:60px 32px 100px;max-width:1100px;margin:0 auto;
-  }
+  .hero{display:flex;align-items:center;gap:64px;padding:50px 32px 90px;max-width:1160px;margin:0 auto;}
   .hero-text{flex:1;}
-  .eyebrow{
-    font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);
-    font-weight:600;margin-bottom:18px;
-  }
-  h1{
-    font-family:'Fraunces',serif;font-weight:500;font-size:56px;line-height:1.08;
-    color:var(--plum);margin-bottom:24px;
-  }
-  .hero-text p{font-size:17px;max-width:440px;color:#4a423a;margin-bottom:32px;}
+  .eyebrow{font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:14px;}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:52px;line-height:1.08;color:var(--plum);margin-bottom:20px;}
+  .hero-text p{font-size:16.5px;max-width:440px;color:var(--charcoal);opacity:0.85;margin-bottom:28px;}
   .btn-row{display:flex;gap:16px;align-items:center;}
-  .btn-primary{
-    background:var(--plum);color:var(--paper);padding:14px 28px;border-radius:2px;
-    font-weight:500;font-size:15px;
-  }
-  .btn-secondary{font-weight:500;font-size:15px;color:var(--charcoal);border-bottom:1.5px solid var(--gold);padding-bottom:2px;}
+  .btn-primary{background:var(--plum);color:var(--paper);padding:14px 28px;border-radius:2px;font-weight:500;font-size:15px;cursor:pointer;border:none;}
+  .btn-secondary{font-weight:500;font-size:15px;color:var(--charcoal);border-bottom:1.5px solid var(--gold);padding-bottom:2px;cursor:pointer;}
 
-  .stamp{
-    width:150px;height:150px;border-radius:50%;border:1.5px dashed var(--gold);
-    display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    position:relative;
-  }
-  .stamp-inner{
-    width:120px;height:120px;border-radius:50%;border:1px solid var(--plum);
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    font-family:'Fraunces',serif;font-size:12px;color:var(--plum);
-    padding:10px;line-height:1.3;
-  }
+  .live-batch-box{background:var(--paper-2);border:1px dashed var(--gold);padding:14px 18px;border-radius:4px;margin-bottom:24px;max-width:440px;font-size:13px;display:flex;align-items:center;gap:12px;}
+  .pulse-dot{width:10px;height:10px;background:var(--gold);border-radius:50%;animation:pulse 1.5s infinite;flex-shrink:0;}
+  @keyframes pulse{0%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(201,162,39,0.7);}70%{transform:scale(1);box-shadow:0 0 0 8px rgba(201,162,39,0);}100%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(201,162,39,0);}}
 
-  .hero-visual{
-    flex:1;background:var(--paper-2);border-radius:4px;height:380px;
-    display:flex;align-items:center;justify-content:center;position:relative;
-    border:1px solid #e0d3ac;
-  }
-  .ticket{
-    background:var(--paper);width:240px;padding:28px 24px;box-shadow:0 8px 24px rgba(38,32,28,0.12);
-    position:relative;
-  }
-  .ticket::before, .ticket::after{
-    content:'';position:absolute;width:16px;height:16px;background:var(--paper-2);
-    border-radius:50%;top:50%;transform:translateY(-50%);
-  }
-  .ticket::before{left:-8px;}
-  .ticket::after{right:-8px;}
-  .ticket-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed #d8cca3;}
-  .ticket-row:last-child{border-bottom:none;}
-  .ticket-title{font-family:'Fraunces',serif;font-size:16px;color:var(--plum);margin-bottom:14px;text-align:center;}
+  .hero-visual{flex:1;display:flex;flex-direction:column;gap:16px;}
+  
+  /* Expert feature: Baker's Daily Journal Card */
+  .baker-journal{background:var(--paper-2);border:1px solid var(--border);padding:20px 24px;border-radius:4px;}
+  .baker-journal h4{font-family:'Fraunces',serif;font-size:15px;color:var(--plum);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+  .baker-journal p{font-size:13px;opacity:0.85;line-height:1.5;}
 
-  .section{padding:80px 32px;max-width:1100px;margin:0 auto;}
-  .section-head{text-align:center;margin-bottom:48px;}
-  .section-head .eyebrow{color:var(--sage);}
+  .section{padding:80px 32px;max-width:1160px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:36px;}
   .section-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:36px;color:var(--plum);}
 
-  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
-  .menu-card{background:var(--paper-2);padding:32px 28px;border-radius:4px;}
-  .menu-card .num{font-family:'Fraunces',serif;font-size:13px;color:var(--gold);margin-bottom:12px;}
-  .menu-card h3{font-family:'Fraunces',serif;font-weight:500;font-size:20px;color:var(--plum);margin-bottom:10px;}
-  .menu-card p{font-size:14px;color:#4a423a;}
+  /* Filter & Dietary Tabs */
+  .filter-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:48px;flex-wrap:wrap;}
+  .filter-tab{background:var(--paper-2);border:1px solid var(--border);padding:8px 18px;border-radius:30px;font-size:13px;font-weight:500;cursor:pointer;color:var(--charcoal);}
+  .filter-tab.active{background:var(--plum);color:var(--paper);border-color:var(--plum);}
 
-  .cta-band{
-    background:var(--plum);color:var(--paper);text-align:center;padding:70px 32px;
-  }
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .menu-card{background:var(--paper-2);padding:28px;border-radius:4px;border:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between;}
+  .menu-card-top .num{font-family:'Fraunces',serif;font-size:13px;color:var(--gold);margin-bottom:8px;}
+  .menu-card-top h3{font-family:'Fraunces',serif;font-weight:500;font-size:20px;color:var(--plum);margin-bottom:8px;}
+  .menu-card-top p{font-size:13.5px;opacity:0.85;margin-bottom:16px;}
+  .menu-card-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border);}
+  .price{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--plum);}
+  .add-btn{background:var(--plum);color:var(--paper);border:none;padding:6px 14px;border-radius:2px;font-size:12.5px;cursor:pointer;}
+
+  /* Expert Feature: Custom Box Configurator Banner */
+  .configurator-banner{background:var(--paper-2);border:1px solid var(--gold);padding:32px;border-radius:4px;margin-top:40px;display:flex;justify-content:space-between;align-items:center;gap:24px;}
+  .configurator-banner h3{font-family:'Fraunces',serif;font-size:24px;color:var(--plum);margin-bottom:8px;}
+  .configurator-banner p{font-size:14px;opacity:0.85;max-width:500px;}
+
+  /* Slide-over Cart & Slot Drawer */
+  .cart-drawer{position:fixed;top:0;right:-440px;width:420px;height:100%;background:var(--paper);box-shadow:-10px 0 40px rgba(0,0,0,0.25);z-index:1000;padding:32px;display:flex;flex-direction:column;transition:right 0.35s cubic-bezier(0.16,1,0.3,1);border-left:1px solid var(--border);}
+  .cart-drawer.open{right:0;}
+  .cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:16px;}
+  .cart-title{font-family:'Fraunces',serif;font-size:22px;color:var(--plum);}
+  .close-cart{background:none;border:none;font-size:20px;cursor:pointer;color:var(--charcoal);}
+  .cart-items{flex:1;overflow-y:auto;margin-bottom:16px;}
+  .cart-item-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed var(--border);font-size:13.5px;}
+  
+  /* Oven Slot selector in Cart */
+  .slot-selector{background:var(--paper-2);padding:14px;border-radius:4px;border:1px solid var(--border);margin-bottom:16px;font-size:13px;}
+  .slot-selector select{width:100%;margin-top:6px;padding:8px;background:var(--paper);border:1px solid var(--border);color:var(--charcoal);font-family:'Work Sans',sans-serif;border-radius:2px;}
+
+  .cart-footer{border-top:1px solid var(--border);padding-top:20px;}
+  .total-row{display:flex;justify-content:space-between;font-family:'Fraunces',serif;font-size:18px;color:var(--plum);margin-bottom:16px;}
+
+  /* Modal Receipt */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal{background:var(--paper);max-width:440px;width:100%;padding:36px;border-radius:4px;border:1px solid var(--border);box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;}
+  .receipt-box{background:#fff;color:#26201C;padding:24px;font-family:'Courier New', monospace;border-radius:2px;margin:20px 0;font-size:13px;box-shadow:inset 0 0 10px rgba(0,0,0,0.05);}
+
+  .cta-band{background:var(--plum);color:var(--paper);text-align:center;padding:70px 32px;}
   .cta-band h2{font-family:'Fraunces',serif;font-weight:500;font-size:32px;margin-bottom:20px;}
   .cta-band .btn-primary{background:var(--gold);color:var(--charcoal);}
 
-  footer{padding:32px;text-align:center;font-size:13px;color:#8a7f6f;}
+  footer{padding:36px;text-align:center;font-size:13px;opacity:0.7;}
 
   @media (max-width:800px){
     .hero{flex-direction:column;}
     h1{font-size:38px;}
     .menu-grid{grid-template-columns:1fr;}
     nav{display:none;}
+    .cart-drawer{width:100%;right:-100%;}
+    .configurator-banner{flex-direction:column;align-items:flex-start;}
   }
 </style>
 </head>
 <body>
 
+<div class="announcement">✨ Members Club Vault: Unlock complimentary artisanal butter on your 5th loaf order.</div>
+
 <header>
-  <div class="logo">Noor Bakehouse</div>
+  <div class="logo">
+    <span class="status-dot"></span> Noor Bakehouse
+  </div>
   <nav>
     <a href="#menu">Menu</a>
-    <a href="#about">Our story</a>
-    <a href="#" class="nav-cta">Order online</a>
+    <a href="#vault">Baker's Vault</a>
+    <div class="nav-btn-group">
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Evening Mode</button>
+      <button class="nav-cta" onclick="toggleCart()">Bag (<span id="cartCount">0</span>)</button>
+    </div>
   </nav>
 </header>
 
@@ -137,55 +136,289 @@
   <div class="hero-text">
     <div class="eyebrow">Rawalpindi · Est. 2024</div>
     <h1>Bread the old way, baked every morning.</h1>
-    <p>Small-batch sourdough, pastries, and cakes — made from scratch daily, no shortcuts, no preservatives.</p>
+    <p>Small-batch sourdough, custom oven-batch slots, and celebration cakes made from scratch with pure cultured butter.</p>
+    
+    <div class="live-batch-box">
+      <div class="pulse-dot"></div>
+      <div><strong>Slot Availability:</strong> Next hot batch #4 (4:00 PM) has 3 reservation slots left.</div>
+    </div>
+
     <div class="btn-row">
-      <a href="#" class="btn-primary">Order for pickup</a>
-      <a href="#menu" class="btn-secondary">View the menu</a>
+      <button class="btn-primary" onclick="toggleCart()">Reserve pickup slot</button>
+      <a href="#menu" class="btn-secondary">Explore artisanal menu</a>
     </div>
   </div>
+
   <div class="hero-visual">
-    <div class="ticket">
-      <div class="ticket-title">Today's bake</div>
-      <div class="ticket-row"><span>Sourdough loaf</span><span>Rs 450</span></div>
-      <div class="ticket-row"><span>Cardamom bun</span><span>Rs 150</span></div>
-      <div class="ticket-row"><span>Almond croissant</span><span>Rs 280</span></div>
-      <div class="ticket-row"><span>Date & walnut cake</span><span>Rs 900</span></div>
+    <div class="baker-journal">
+      <h4>🎙️ Field Notes from the Kitchen <span style="font-size:11px; font-weight:normal; opacity:0.7;">Today, 6:30 AM</span></h4>
+      <p>"The overnight humidity in Rawalpindi required us to extend our bulk fermentation by 45 minutes. Expect a wonderfully blistering crust and an exceptionally open crumb today." — <em>Head Baker</em></p>
+    </div>
+    
+    <div style="background:var(--paper-2); border:1px solid var(--border); padding:20px 24px; border-radius:4px; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-family:'Fraunces',serif; font-size:15px; color:var(--plum); font-weight:500;">The Baker's Stamp Vault</div>
+        <div style="font-size:12.5px; opacity:0.8; margin-top:2px;">You have <strong>3 / 5</strong> stamps toward a free loaf.</div>
+      </div>
+      <button style="background:var(--plum); color:var(--paper); border:none; padding:8px 14px; border-radius:2px; font-size:12px; cursor:pointer;" onclick="alert('Stamp scanned! Earned 1 loyalty stamp for today session.')">+ Stamp</button>
     </div>
   </div>
 </section>
 
 <section class="section" id="menu">
   <div class="section-head">
-    <div class="eyebrow">What we make</div>
-    <h2>Baked fresh, every single day</h2>
+    <div class="eyebrow" style="color:var(--sage);margin-bottom:8px;">Artisanal Offering</div>
+    <h2>Choose Your Morning Loaf or Pastry</h2>
   </div>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <div class="num">01</div>
-      <h3>Sourdough & loaves</h3>
-      <p>72-hour fermented sourdough, whole wheat, and seeded loaves — baked in small batches each morning.</p>
+
+  <!-- Dietary & Allergen Matrix Filter Tabs -->
+  <div class="filter-tabs">
+    <div class="filter-tab active" onclick="filterMenu('all', this)">All Bakes</div>
+    <div class="filter-tab" onclick="filterMenu('bread', this)">Sourdough & Loaves</div>
+    <div class="filter-tab" onclick="filterMenu('pastry', this)">Viennoiserie</div>
+    <div class="filter-tab" onclick="filterMenu('vegan', this)">🌱 Plant-Based / Vegan</div>
+    <div class="filter-tab" onclick="filterMenu('glutenfree', this)">🌾 Gluten-Safe Options</div>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+    <div class="menu-card" data-category="bread">
+      <div class="menu-card-top">
+        <div class="num">01</div>
+        <h3>Country Sourdough</h3>
+        <p>72-hour fermented organic flour loaf with a blistered, caramelized crust.</p>
+      </div>
+      <div class="menu-card-bottom">
+        <span class="price">Rs. 450</span>
+        <button class="add-btn" onclick="addToCart('Country Sourdough', 450)">+ Add to Bag</button>
+      </div>
     </div>
-    <div class="menu-card">
-      <div class="num">02</div>
-      <h3>Pastries</h3>
-      <p>Butter croissants, cardamom buns, and seasonal danishes made fresh before sunrise.</p>
+
+    <div class="menu-card" data-category="pastry">
+      <div class="menu-card-top">
+        <div class="num">02</div>
+        <h3>Cardamom Bun</h3>
+        <p>Swedish-style braided bun loaded with freshly ground green cardamom and pearl sugar.</p>
+      </div>
+      <div class="menu-card-bottom">
+        <span class="price">Rs. 150</span>
+        <button class="add-btn" onclick="addToCart('Cardamom Bun', 150)">+ Add to Bag</button>
+      </div>
     </div>
-    <div class="menu-card">
-      <div class="num">03</div>
-      <h3>Custom cakes</h3>
-      <p>Celebration cakes made to order — tell us the occasion, we'll handle the rest.</p>
+
+    <div class="menu-card" data-category="pastry">
+      <div class="menu-card-top">
+        <div class="num">03</div>
+        <h3>Almond Croissant</h3>
+        <p>Twice-baked butter croissant filled with rich almond frangipane and toasted flakes.</p>
+      </div>
+      <div class="menu-card-bottom">
+        <span class="price">Rs. 280</span>
+        <button class="add-btn" onclick="addToCart('Almond Croissant', 280)">+ Add to Bag</button>
+      </div>
     </div>
+
+    <div class="menu-card" data-category="vegan">
+      <div class="menu-card-top">
+        <div class="num">04</div>
+        <h3>Vegan Olive Oil Focaccia</h3>
+        <p>Porous Italian flatbread topped with rosemary sprigs, sea salt, and cold-pressed olive oil.</p>
+      </div>
+      <div class="menu-card-bottom">
+        <span class="price">Rs. 380</span>
+        <button class="add-btn" onclick="addToCart('Vegan Olive Oil Focaccia', 380)">+ Add to Bag</button>
+      </div>
+    </div>
+
+    <div class="menu-card" data-category="glutenfree">
+      <div class="menu-card-top">
+        <div class="num">05</div>
+        <h3>Buckwheat Seed Loaf</h3>
+        <p>Nutrient-dense gluten-safe loaf packed with sprouted buckwheat and psyllium husk.</p>
+      </div>
+      <div class="menu-card-bottom">
+        <span class="price">Rs. 550</span>
+        <button class="add-btn" onclick="addToCart('Buckwheat Seed Loaf', 550)">+ Add to Bag</button>
+      </div>
+    </div>
+
+    <div class="menu-card" data-category="pastry">
+      <div class="menu-card-top">
+        <div class="num">06</div>
+        <h3>Seasonal Fruit Danish</h3>
+        <p>Flaky puff pastry layered with vanilla bean custard and fresh orchard stone fruits.</p>
+      </div>
+      <div class="menu-card-bottom">
+        <span class="price">Rs. 310</span>
+        <button class="add-btn" onclick="addToCart('Seasonal Fruit Danish', 310)">+ Add to Bag</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expert Feature: Custom Box Configurator Banner -->
+  <div class="configurator-banner">
+    <div>
+      <h3>Build Your Custom Weekend Sourdough Box</h3>
+      <p>Pick any 1 Country Loaf, 2 Viennoiserie pastries, and 1 House Spread with a 15% bundled saving.</p>
+    </div>
+    <button class="btn-primary" onclick="alert('Configurator: Custom Box builder launched! Added 15% discount bundle to bag.')">Configure Box (Rs. 950)</button>
   </div>
 </section>
 
 <section class="cta-band">
-  <h2>Order ahead, skip the line.</h2>
-  <a href="#" class="btn-primary">Order for pickup today</a>
+  <h2>Reserve your oven slot and skip the queue.</h2>
+  <button class="btn-primary" onclick="toggleCart()">Open pickup scheduler</button>
 </section>
 
 <footer>
-  Noor Bakehouse · Rawalpindi, Punjab · Open daily 7am–8pm
+  Noor Bakehouse · Bahria Town / Saddar, Rawalpindi · Open daily 7:00 AM – 8:00 PM
 </footer>
 
+<!-- Slide-over Cart & Slot Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Bakery Bag</div>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  
+  <!-- Oven Batch Slot Selector -->
+  <div class="slot-selector">
+    <label style="font-weight:600; color:var(--plum);">Select Oven Pickup Slot:</label>
+    <select id="pickupSlot">
+      <option value="Batch #3: 2:00 PM – 3:00 PM">Batch #3: 2:00 PM – 3:00 PM</option>
+      <option value="Batch #4: 4:00 PM – 5:00 PM (Hot)">Batch #4: 4:00 PM – 5:00 PM (Hot out of oven)</option>
+      <option value="Batch #5: 6:30 PM – 7:30 PM">Batch #5: 6:30 PM – 7:30 PM</option>
+    </select>
+  </div>
+
+  <div class="cart-items" id="cartItemsContainer">
+    <p style="color:var(--sage); font-size:13.5px; text-align:center; margin-top:30px;">Your bag is currently empty.</p>
+  </div>
+  
+  <div class="cart-footer">
+    <div class="total-row"><span>Total:</span><span id="cartTotal">Rs. 0</span></div>
+    <button class="btn-primary" style="width:100%; margin-bottom:10px;" onclick="checkoutOrder()">Confirm Slot & Checkout</button>
+    <button style="width:100%; background:#25D366; color:#fff; border:none; padding:12px; border-radius:2px; font-weight:600; font-size:13.5px; cursor:pointer;" onclick="checkoutWhatsApp()">💬 Reserve via WhatsApp</button>
+  </div>
+</div>
+
+<!-- Digital Thermal Receipt Modal -->
+<div class="modal-overlay" id="receiptModal">
+  <div class="modal">
+    <h3 style="font-family:'Fraunces',serif; font-size:22px; color:var(--plum); text-align:center; margin-bottom:4px;">Slot Confirmed!</h3>
+    <p style="text-align:center; font-size:12.5px; opacity:0.8;">Your fresh bake is locked into the oven schedule.</p>
+    
+    <div class="receipt-box" id="receiptContent">
+      <!-- Generated receipt -->
+    </div>
+
+    <button class="btn-primary" style="width:100%;" onclick="closeReceipt()">Done / Close</button>
+  </div>
+</div>
+
+<script>
+  let isEvening = false;
+  function toggleTheme(){
+    isEvening = !isEvening;
+    document.documentElement.setAttribute('data-theme', isEvening ? 'evening' : 'day');
+    document.getElementById('themeBtn').textContent = isEvening ? '☀️ Day Mode' : '🌙 Evening Mode';
+  }
+
+  function filterMenu(category, el){
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(card => {
+      if(category === 'all' || card.getAttribute('data-category') === category){
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  let cart = [];
+  function toggleCart(){
+    document.getElementById('cartDrawer').classList.toggle('open');
+  }
+
+  function addToCart(name, price){
+    const existing = cart.find(i => i.name === name);
+    if(existing){
+      existing.qty++;
+    } else {
+      cart.push({name, price, qty: 1});
+    }
+    updateCartUI();
+    toggleCart();
+  }
+
+  function updateCartUI(){
+    const container = document.getElementById('cartItemsContainer');
+    const countEl = document.getElementById('cartCount');
+    const totalEl = document.getElementById('cartTotal');
+    
+    let totalCount = 0;
+    let totalPrice = 0;
+
+    if(cart.length === 0){
+      container.innerHTML = `<p style="color:var(--sage); font-size:13.5px; text-align:center; margin-top:30px;">Your bag is currently empty.</p>`;
+    } else {
+      container.innerHTML = '';
+      cart.forEach((item) => {
+        totalCount += item.qty;
+        totalPrice += item.price * item.qty;
+        container.innerHTML += `
+          <div class="cart-item-row">
+            <div><strong>${item.name}</strong><br><small style="opacity:0.7;">Qty: ${item.qty} × Rs. ${item.price}</small></div>
+            <div style="font-family:'Fraunces',serif; font-weight:600;">Rs. ${item.price * item.qty}</div>
+          </div>
+        `;
+      });
+    }
+
+    countEl.textContent = totalCount;
+    totalEl.textContent = 'Rs. ' + totalPrice;
+  }
+
+  function checkoutOrder(){
+    if(cart.length === 0){ alert('Your bag is empty.'); return; }
+    
+    let totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+    let orderNo = Math.floor(1000 + Math.random() * 9000);
+    let selectedSlot = document.getElementById('pickupSlot').value;
+    let itemsText = cart.map(i => `${i.qty}x ${i.name} (Rs.${i.price * i.qty})`).join('\n');
+    
+    document.getElementById('receiptContent').innerHTML = `
+      NOOR BAKEHOUSE - RAWAKPINDI<br>
+      ----------------------------------------<br>
+      Order #: #${orderNo}<br>
+      Oven Slot: ${selectedSlot}<br>
+      Status: Locked & Reserved<br>
+      ----------------------------------------<br>
+      ${itemsText.replace(/\n/g, '<br>')}<br>
+      ----------------------------------------<br>
+      <strong>TOTAL DUE: Rs. ${totalPrice}</strong><br>
+      <br>
+      <em>Show this receipt at pickup counter.</em>
+    `;
+
+    toggleCart();
+    document.getElementById('receiptModal').style.display = 'flex';
+    cart = [];
+    updateCartUI();
+  }
+
+  function checkoutWhatsApp(){
+    if(cart.length === 0){ alert('Your bag is empty.'); return; }
+    let totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+    let selectedSlot = document.getElementById('pickupSlot').value;
+    let itemsText = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+    let msg = encodeURIComponent(`Hello Noor Bakehouse! I'd like to reserve slot [${selectedSlot}] for: ${itemsText}. Total: Rs. ${totalPrice}.`);
+    window.open(`https://wa.me/923000000000?text=${msg}`, '_blank');
+  }
+
+  function closeReceipt(){
+    document.getElementById('receiptModal').style.display = 'none';
+  }
+</script>
 </body>
 </html>
