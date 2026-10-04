@@ -1,4 +1,4 @@
-# Hassan Saeed — BrightStack Portfolio
+# Hassan Saeed -> BrightStack Portfolio
 
 > AI/ML • UI/UX • Web Applications • AI Automation
 
