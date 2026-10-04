@@ -22,6 +22,7 @@ a{color:inherit;text-decoration:none}button{font-family:inherit}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 .background{position:fixed;inset:0;pointer-events:none;z-index:-10;overflow:hidden}
 .grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:90px 90px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+#starCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:auto;z-index:-9}
 #bg3d{position:absolute;inset:0;width:100%;height:100%}
 .progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--cyan),var(--purple),var(--peach));z-index:200}
 
@@ -125,7 +126,7 @@ spline-viewer{position:absolute;inset:0;width:100%;height:100%;display:none}
 .v-ai svg{position:absolute;inset:0;width:100%;height:100%}
 .v-ai text{fill:var(--muted);font:600 12px 'Plus Jakarta Sans',sans-serif}
 
-/* --- EXACT FEATURED PROJECTS LIST SECTION & ANIMATIONS --- */
+/* --- FEATURED PROJECTS LIST SECTION --- */
 .projects-list-section{position:relative;width:min(100%,var(--max));margin:0 auto;padding:110px 48px}
 .projects-list-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px}
 .projects-list-header h2{font-size:clamp(36px,4.5vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.04}
@@ -230,7 +231,7 @@ if(rm){go();return}requestAnimationFrame(function(){document.getElementById('pfi
 var done=false;function fin(){if(done)return;done=true;setTimeout(go,300)}
 setTimeout(function(){if(document.readyState==='complete')fin();else addEventListener('load',fin)},1100);setTimeout(fin,4000)})()</script>
 <div class="progress" id="progress"></div>
-<div class="background"><div class="grid"></div><canvas id="bg3d" aria-hidden="true"></canvas></div>
+<div class="background"><div class="grid"></div><canvas id="starCanvas"></canvas><canvas id="bg3d" aria-hidden="true"></canvas></div>
 
 <header id="navbar">
   <a href="index.html" class="brand"><div class="brand-mark">B</div>Bright<span>Stack</span></a>
@@ -294,7 +295,7 @@ setTimeout(function(){if(document.readyState==='complete')fin();else addEventLis
     </div>
   </section>
 
-  <!-- Featured Projects Row Section with Exact Animation -->
+  <!-- Featured Projects Row Section -->
   <section class="projects-list-section reveal" id="projects">
     <div class="projects-list-header">
       <h2>Featured projects, live.</h2>
@@ -371,6 +372,132 @@ setTimeout(function(){if(document.readyState==='complete')fin();else addEventLis
 </script>
 
 <script>
+// Interactive Moving & Bursting Stars Background
+const starCanvas = document.getElementById('starCanvas');
+const sCtx = starCanvas.getContext('2d');
+let sWidth, sHeight;
+
+function resizeStars() {
+  sWidth = starCanvas.width = window.innerWidth;
+  sHeight = starCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeStars);
+resizeStars();
+
+class Star {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * sWidth;
+    this.y = Math.random() * sHeight;
+    this.size = Math.random() * 2 + 1;
+    this.baseAlpha = Math.random() * 0.7 + 0.3;
+    this.alpha = this.baseAlpha;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.fleeing = false;
+    this.fx = 0;
+    this.fy = 0;
+    this.destructing = false;
+    this.particles = [];
+  }
+  update() {
+    if (this.destructing) {
+      this.particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.03;
+      });
+      this.particles = this.particles.filter(p => p.alpha > 0);
+      if (this.particles.length === 0) this.reset();
+      return;
+    }
+
+    if (this.fleeing) {
+      this.x += this.fx;
+      this.y += this.fy;
+      if (this.x < 0 || this.x > sWidth || this.y < 0 || this.y > sHeight) {
+        this.triggerDestruction();
+      }
+    } else {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0) this.x = sWidth;
+      if (this.x > sWidth) this.x = 0;
+      if (this.y < 0) this.y = sHeight;
+      if (this.y > sHeight) this.y = 0;
+      this.alpha = this.baseAlpha + Math.sin(Date.now() * 0.003 + this.x) * 0.3;
+    }
+  }
+  draw() {
+    if (this.destructing) {
+      this.particles.forEach(p => {
+        sCtx.fillStyle = `rgba(0, 229, 255, ${p.alpha})`;
+        sCtx.beginPath();
+        sCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        sCtx.fill();
+      });
+      return;
+    }
+
+    sCtx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, this.alpha)})`;
+    sCtx.shadowBlur = 8;
+    sCtx.shadowColor = '#00e5ff';
+    sCtx.beginPath();
+    sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    sCtx.fill();
+    sCtx.shadowBlur = 0;
+  }
+  triggerDestruction() {
+    this.destructing = true;
+    this.particles = [];
+    for (let i = 0; i < 15; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 2;
+      this.particles.push({
+        x: this.x,
+        y: this.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: Math.random() * 2 + 1,
+        alpha: 1
+      });
+    }
+  }
+}
+
+const stars = Array.from({ length: 90 }, () => new Star());
+
+starCanvas.addEventListener('click', (e) => {
+  const rect = starCanvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  stars.forEach(star => {
+    if (!star.fleeing && !star.destructing) {
+      const dist = Math.hypot(star.x - mouseX, star.y - mouseY);
+      if (dist < 30) {
+        star.fleeing = true;
+        const angle = Math.atan2(star.y - mouseY, star.x - mouseX);
+        const speed = Math.random() * 12 + 10;
+        star.fx = Math.cos(angle) * speed;
+        star.fy = Math.sin(angle) * speed;
+      }
+    }
+  });
+});
+
+function animateStars() {
+  sCtx.clearRect(0, 0, sWidth, sHeight);
+  stars.forEach(star => {
+    star.update();
+    star.draw();
+  });
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const navbar = document.getElementById('navbar'), bar = document.getElementById('progress');
@@ -666,13 +793,6 @@ if(fine && !reduce){
   try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch(e){ return; }
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(60, 1, .1, 200); cam.position.z = 14;
-  const N = innerWidth < 768 ? 250 : 600, pos = new Float32Array(N * 3), col = new Float32Array(N * 3), pal = [new THREE.Color(0x00e5ff), new THREE.Color(0x8b5cf6), new THREE.Color(0xffd8bd)];
-  for(let i = 0; i < N; i++){
-    pos.set([(Math.random() - .5) * 44, 8 - Math.random() * 58, -Math.random() * 25 + 4], i * 3);
-    const c = pal[Math.random() < .6 ? 0 : Math.random() < .6 ? 1 : 2]; col.set([c.r, c.g, c.b], i * 3);
-  }
-  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const pts = new THREE.Points(g, new THREE.PointsMaterial({ size: .1, vertexColors: true, transparent: true, opacity: .7, blending: THREE.AdditiveBlending, depthWrite: false })); scene.add(pts);
   const shapes = [[new THREE.TorusKnotGeometry(2.2, .5, 140, 14), 9, -7, -12, 0x00e5ff], [new THREE.IcosahedronGeometry(3, 1), -10, -24, -14, 0x8b5cf6], [new THREE.TorusGeometry(3, .6, 12, 48), 10, -41, -13, 0xffd8bd], [new THREE.OctahedronGeometry(3, 0), -9, -58, -13, 0x00e5ff]].map(a => {
     const m = new THREE.Mesh(a[0], new THREE.MeshBasicMaterial({ color: a[4], wireframe: true, transparent: true, opacity: .09 })); m.position.set(a[1], a[2], a[3]); scene.add(m); return m; });
   function size(){ renderer.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); }
@@ -684,7 +804,6 @@ if(fine && !reduce){
     cam.position.x += (nx * 3 - cam.position.x) * .04;
     cam.rotation.y += ((-nx * .08) - cam.rotation.y) * .04;
     cam.rotation.x += ((ny * .05) - cam.rotation.x) * .04;
-    pts.rotation.y = t * .000015; pts.position.y = Math.sin(t * .0003) * .3;
     shapes.forEach((m, i) => { m.rotation.x = t * .00012 * (i + 1) + sy * .0015; m.rotation.y = t * .00009 * (i + 2); });
     renderer.render(scene, cam);
   }
