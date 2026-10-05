@@ -1,44 +1,21 @@
-# Hassan Saeed -> BrightStack Portfolio
+# Hi, I'm Hassan Saeed 👋
 
-> AI/ML • UI/UX • Web Applications • AI Automation
+### AI/ML Developer • UI/UX Designer • AI Builder
 
-This repository contains my personal portfolio and selected projects
-in Artificial Intelligence, Machine Learning, UI/UX Design,
-web applications and intelligent automation.
+I build practical AI systems, machine learning projects, web applications and user-focused digital experiences. I am currently in my 5th semester pursuing a BS in Artificial Intelligence.
 
-🌐 Live Portfolio:
-https://hassansaeed14.github.io/brightstack-portfolio/
+---
 
-👨‍💻 GitHub:
-https://github.com/hassansaeed14
+### 🎯 What I Do
+- 🤖 **Artificial Intelligence & ML:** Implementing models, classification systems, and intelligent workflows.
+- 🎨 **UI/UX Designing:** Crafting clean interfaces, user flows, and interactive prototypes.
+- 💻 **Python & Web Dev:** Building robust backend logic and modern responsive frontends.
 
-## 🚀 Featured Projects
+---
 
-### Nexora
-Full-stack agency platform with dashboard functionality,
-currency conversion and account health scoring.
+### 🚀 Featured Work
+- **BrightStack Portfolio:** Interactive digital studio & project showcase.
+- **VORIS:** AI Assistant / OS interface concept.
+- **Brain Tumor MRI Classification:** Machine learning and computer vision implementation.
 
-### Smart Inquiry Router
-AI-inspired support ticket classification interface
-with confidence telemetry.
-
-### Atlas Knowledge Copilot
-AI knowledge and productivity interface.
-
-### Ember Oak AI Assistant
-AI assistant interface and automation concept.
-
-## 🛠️ Areas
-
-- Artificial Intelligence
-- Machine Learning
-- UI/UX Design
-- Web Development
-- AI Automation
-- Prompt Engineering
-
-## 📬 Contact
-
-If you'd like to collaborate, hire me, or discuss an AI/UI/UX project,
-feel free to reach out through my portfolio.
-
+🌐 **Explore my live portfolio:** [hassansaeed14.github.io/brightstack-portfolio](https://hassansaeed14.github.io/brightstack-portfolio/)
