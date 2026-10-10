@@ -22,7 +22,7 @@
 <style>
 :root{--bg:#030508;--surface:#0a0e16;--surface2:#0e1420;--text:#f8fafc;--muted:#8e9aad;--dim:#5d687a;--cyan:#00e5ff;--peach:#ffd8bd;--purple:#8b5cf6;--line:rgba(255,255,255,.08);--border:rgba(255,255,255,.08);--border-hover:rgba(0,229,255,.35);--max:1280px;--r-lg:28px;--r-md:20px;--ease:cubic-bezier(.16,1,.3,1)}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html:not(.lenis){scroll-behavior:smooth}
 body{min-height:100vh;background:radial-gradient(circle at 80% 15%,rgba(0,229,255,.06),transparent 35%),radial-gradient(circle at 15% 85%,rgba(139,92,246,.05),transparent 35%),var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;line-height:1.65;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}button{font-family:inherit}
 ::selection{background:var(--cyan);color:#001014}
@@ -359,7 +359,7 @@ setTimeout(function(){if(document.readyState==='complete')fin();else addEventLis
 
 <button class="totop" id="totop" aria-label="Back to top">↑</button>
 
-<div class="pal" id="pal" hidden role="dialog" aria-modal="true" aria-label="Quick jump">
+<div class="pal" id="pal" hidden data-lenis-prevent role="dialog" aria-modal="true" aria-label="Quick jump">
   <div class="pbox">
     <input id="pin" type="text" placeholder="Jump to a collection, project or page…" aria-label="Search" autocomplete="off">
     <ul id="pls"></ul>
@@ -837,7 +837,31 @@ if(fine && !reduce){
 <script type="module">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 gsap.registerPlugin(ScrollTrigger);
+
+// Lenis smooth scrolling, driven by GSAP's ticker so ScrollTrigger stays in sync.
+// Skipped (and torn down) when the visitor prefers reduced motion.
+gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+  const lenis = new Lenis({ anchors: true, autoRaf: false });
+  lenis.on('scroll', ScrollTrigger.update);
+  const tick = time => lenis.raf(time * 1000);
+  gsap.ticker.add(tick);
+  gsap.ticker.lagSmoothing(0);
+
+  // Back-to-top button: route through Lenis instead of native smooth scrolling.
+  const totop = document.getElementById('totop');
+  const prevTotop = totop.onclick;
+  totop.onclick = () => lenis.scrollTo(0);
+
+  return () => {
+    totop.onclick = prevTotop;
+    gsap.ticker.remove(tick);
+    gsap.ticker.lagSmoothing(500, 33);
+    lenis.destroy();
+  };
+});
 
 // Hero scroll-out: content drifts up and fades as the hero leaves the viewport.
 // Animates the children (not .hero-content / .spline-stage), whose transforms are driven by the parallax loop.
