@@ -10,6 +10,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="importmap">
+{ "imports": {
+  "gsap": "./vendor/gsap/index.js",
+  "gsap/ScrollTrigger": "./vendor/gsap/ScrollTrigger.js",
+  "gsap/": "./vendor/gsap/"
+} }
+</script>
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
@@ -825,6 +832,21 @@ if(fine && !reduce){
     requestAnimationFrame(f);
   })();
 })();
+</script>
+
+<script type="module">
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero scroll-out: content drifts up and fades as the hero leaves the viewport.
+// Animates the children (not .hero-content / .spline-stage), whose transforms are driven by the parallax loop.
+gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 } });
+  tl.to('.hero-content > *', { y: -90, opacity: 0, stagger: .08, ease: 'none' }, 0)
+    .to('.spline-stage', { opacity: .15, ease: 'none' }, 0)
+    .to('.scroll-indicator', { opacity: 0, duration: .25, ease: 'none' }, 0);
+});
 </script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R3F Demo — BrightStack Co.</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030508;--text:#f8fafc;--muted:#8e9aad;--cyan:#00e5ff}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif}
+header{position:fixed;top:24px;left:24px;right:24px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;pointer-events:none}
+header a{pointer-events:auto;color:var(--muted);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px}
+header a:hover{color:var(--cyan)}
+h1{font-size:clamp(22px,4vw,34px);font-weight:800;letter-spacing:-.03em}
+p{position:fixed;bottom:24px;left:0;right:0;text-align:center;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;pointer-events:none}
+#r3f-root{position:fixed;inset:0}
+</style>
+</head>
+<body>
+<header>
+  <h1>React Three Fiber</h1>
+  <a href="index.html">← Back to BrightStack</a>
+</header>
+<div id="r3f-root"></div>
+<p>HOVER A CUBE · CLICK TO SCALE IT</p>
+<script type="module" src="./src/r3f/main.jsx"></script>
+</body>
+</html>
