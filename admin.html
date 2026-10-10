@@ -342,7 +342,7 @@
         ${brief ? `
         <div class="lead-meta" style="margin-top:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
           <strong style="color:var(--cyan);">${escapeHtml(brief.title)}</strong><br>${escapeHtml(brief.description)}<br>
-          Budget: ${escapeHtml(brief.budget \vert{}\vert{} '—')} · Timeline: ${escapeHtml(brief.timeline || '—')}
+          Budget: ${escapeHtml(brief.budget || '—')} · Timeline: ${escapeHtml(brief.timeline || '—')}
         </div>` : `<div class="lead-meta" style="margin-top:10px;">No project brief submitted yet.</div>`}
         
         ${(client.complaints && client.complaints.length) ? `
