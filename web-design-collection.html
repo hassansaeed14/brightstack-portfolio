@@ -44,7 +44,7 @@ h1,h2,h3{font-family:Fraunces,serif;margin:0;letter-spacing:-.02em}
 .hint i{width:1px;height:26px;background:var(--rust);animation:dr 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes dr{50%{transform:scaleY(.3)}}
 /* tour */
-.tour{position:relative;z-index:1;height:400vh}
+.tour{position:relative;z-index:1;height:500vh}
 .pin{position:sticky;top:0;height:100vh;pointer-events:none}
 .cap{position:absolute;left:30px;bottom:calc(34px + env(safe-area-inset-bottom,0px));max-width:420px;pointer-events:auto;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line2);padding:22px 22px 20px;box-shadow:0 24px 50px -24px rgba(0,0,0,.45)}
 .cap .c{font:500 11px 'IBM Plex Mono';letter-spacing:.14em;color:var(--soft);display:flex;justify-content:space-between;margin-bottom:12px}
@@ -80,7 +80,7 @@ footer{border-top:1px solid var(--line);padding:22px 0;text-align:center;color:v
   <nav class="nav"><b>BrightStack Co.</b><div class="nl"><a href="index.html">All work</a><a href="uiux-collection.html">UI/UX</a><a href="web-apps-collection.html">Web Apps</a><a href="ai-automation-collection.html">AI</a><a href="https://www.fiverr.com/brightstackco">Fiverr</a></div></nav>
   <div class="hin"><div class="hcopy">
     <div class="il">The Web Design Collection</div>
-    <h1>Four businesses, four <em>entirely different</em> voices.</h1>
+    <h1>Five businesses, five <em>entirely different</em> voices.</h1>
     <p class="sf">A bakery shouldn't look like a gym, and a gym shouldn't look like a photographer. Every site here has its own typographic system and palette, <strong>no shared template underneath</strong>. Step into the ring and hear each voice.</p>
     <div class="cta"><a class="btn bi" href="#tour">Enter the ring ↓</a><a class="btn bo" href="https://www.fiverr.com/brightstackco">Message on Fiverr</a></div>
   </div></div>
@@ -88,15 +88,15 @@ footer{border-top:1px solid var(--line);padding:22px 0;text-align:center;color:v
 </div></header>
 
 <section class="tour" id="tour"><div class="pin"><div class="cap" id="cap" aria-live="polite">
-  <div class="c"><span id="cn">01 / 04</span><span>Scroll to turn the ring</span></div>
+  <div class="c"><span id="cn">01 / 05</span><span>Scroll to turn the ring</span></div>
   <div class="k" id="ck"></div><h2 id="ch"></h2><p id="cp"></p>
   <div class="cr"><span class="tr" id="ct"></span><a class="btn bi" style="padding:9px 18px" id="cl" href="#">Open site →</a><div class="dots" id="dots"></div></div>
 </div></div></section>
 
 <div class="rest"><div class="w">
   <div class="deck">
-    <div class="di"><b>3</b><span>Sites live</span></div><div class="di"><b>1</b><span>Planned concept</span></div>
-    <div class="di"><b>4</b><span>Distinct type systems</span></div><div class="di"><b>0</b><span>Templates reused</span></div>
+    <div class="di"><b>4</b><span>Sites live</span></div><div class="di"><b>1</b><span>Planned concept</span></div>
+    <div class="di"><b>5</b><span>Distinct type systems</span></div><div class="di"><b>0</b><span>Templates reused</span></div>
   </div>
   <div class="sh"><div class="k">Packages</div><h2>What each tier buys</h2></div>
   <div class="tiers">
@@ -114,13 +114,14 @@ var D=[
  {n:'Larkspur',t:'Basic',k:'Portrait & wedding photography',h:'larkspur-photography.html',a:'#A3491F',d:'A single-page site for a solo photographer, built around a film contact-sheet strip. Warm rust and bone palette, italic serif headings, and an enquiry form that is the whole conversion path.'},
  {n:'Noor Bakehouse',t:'Standard',k:'Neighbourhood bakery',h:'noor-bakehouse.html',a:'#4A1F2E',d:'A storefront site with a daily-bake ticket as its centrepiece. Plum and gold, a dashed-stamp motif, and an ordering call to action in every section.'},
  {n:'Momentum Studio',t:'Premium',k:'Strength & conditioning studio',h:'momentum-fitness.html',a:'#FF4B3E',d:'Built around a weekly class schedule board, colour-coded by intensity like the whiteboard on the gym wall. Trainer profiles, membership tiers and testimonials.'},
- {n:'Ledgerly',t:'Premium',k:'SaaS product marketing',h:'#',a:'#4338CA',d:'A conversion-focused product site for a freelancer budgeting app: dashboard mock in the hero, three-tier pricing and an interactive FAQ. Planned concept, not built yet.'}];
+ {n:'Ledgerly',t:'Premium',k:'SaaS product marketing',h:'#',a:'#4338CA',d:'A conversion-focused product site for a freelancer budgeting app: dashboard mock in the hero, three-tier pricing and an interactive FAQ. Planned concept, not built yet.'},
+ {n:'Chai Khana',t:'Premium',k:'Late-night desi tea café',h:'chai-khana/index.html',a:'#E3A33B',d:'A late-night café site celebrating Karachi\'s chai culture. Deep roasted brown and saffron gold palette, an interactive categorized menu, student combo deals, and direct WhatsApp table booking.'}];
 
 /* caption */
 var idx=-1,dots=$('dots');
-D.forEach(function(s,i){var b=document.createElement('button');b.setAttribute('aria-label','Show '+s.n);b.onclick=function(){var T=$('tour');scrollTo({top:T.offsetTop+i/3*(T.offsetHeight-innerHeight),behavior:RM?'auto':'smooth'})};dots.appendChild(b)});
+D.forEach(function(s,i){var b=document.createElement('button');b.setAttribute('aria-label','Show '+s.n);b.onclick=function(){var T=$('tour');scrollTo({top:T.offsetTop+i/4*(T.offsetHeight-innerHeight),behavior:RM?'auto':'smooth'})};dots.appendChild(b)});
 function cap(i){if(i==idx)return;idx=i;var s=D[i],c=$('cap');c.style.setProperty('--ac',s.a);
-  $('cn').textContent='0'+(i+1)+' / 04';$('ck').textContent=s.k;$('ch').textContent=s.n;$('cp').textContent=s.d;$('ct').textContent=s.t;
+  $('cn').textContent='0'+(i+1)+' / 05';$('ck').textContent=s.k;$('ch').textContent=s.n;$('cp').textContent=s.d;$('ct').textContent=s.t;
   var l=$('cl'),off=s.h=='#';l.href=s.h;l.textContent=off?'Coming soon':'Open site →';l.classList.toggle('off',off);
   [].forEach.call(dots.children,function(b,k){b.classList.toggle('on',k==i)})}
 cap(0);
@@ -150,6 +151,8 @@ cap(0);
       [['#FF4B3E',440],['#F2B134',330],['#3fae8a',400],['#FF4B3E',250]].forEach(function(b,k){x.fillStyle=b[0];x.fillRect(36,460+k*48,b[1],30)})}
     if(i==3){x.fillStyle='#FAFBFC';x.fillRect(0,0,W,H);lab('SaaS · planned concept','#0E1420');x.font="800 96px Inter";x.fillStyle='#0E1420';x.fillText('ledger',36,330);var w=x.measureText('ledger').width;x.fillStyle='#4338CA';x.fillText('ly',36+w,330);
       [.3,.5,.42,.7,.9].forEach(function(h,k){x.fillStyle='#4338CA';x.globalAlpha=.8;x.fillRect(36+k*92,640-h*220,70,h*220);x.globalAlpha=1})}
+    if(i==4){x.fillStyle='#1C120C';x.fillRect(0,0,W,H);lab('Late-night tea café','#E3A33B');x.fillStyle='#E3A33B';x.font="600 88px Fraunces";x.fillText('Chai',36,320);x.fillText('Khana',36,410);
+      ['#E3A33B','#C47B27','#5A3825'].forEach(function(col,k){x.fillStyle=col;x.fillRect(36+k*148,470,132,180)})}
     x.strokeStyle='rgba(0,0,0,.14)';x.lineWidth=2;x.strokeRect(1,1,W-2,H-2);
     texs[i].needsUpdate=true;
   }
@@ -158,7 +161,7 @@ cap(0);
     var c=document.createElement('canvas');c.width=512;c.height=680;cvs.push(c);
     var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=aniso;texs.push(t);paint(i);
     var front=new THREE.MeshStandardMaterial({map:t,emissiveMap:t,emissive:0xffffff,emissiveIntensity:.32,roughness:.6});
-    var m=new THREE.Mesh(geo,[side,side,side,side,front,side]),a=i*PI/2;
+    var m=new THREE.Mesh(geo,[side,side,side,side,front,side]),a=i*PI*2/D.length;
     m.position.set(Math.sin(a)*R,0,Math.cos(a)*R);m.rotation.y=a;ring.add(m);
     var rf=new THREE.Mesh(mg,new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:.13,side:THREE.DoubleSide}));
     rf.position.set(Math.sin(a)*(R+.07),-3.8,Math.cos(a)*(R+.07));rf.rotation.y=a;rf.scale.y=-1;ring.add(rf);
@@ -192,14 +195,14 @@ cap(0);
     if(!dn){drag+=dv;dv*=.94}
     if(!RM)auto+=.0028*(1-w);
     var ha=auto+drag;ha=((ha+PI)%(PI*2)+PI*2)%(PI*2)-PI;
-    var q=p*3,ta=(q+(Math.round(q)-q)*.45)*PI/2,fin=lp(ha,ta,w);
+    var q=p*4,ta=(q+(Math.round(q)-q)*.45)*PI*2/D.length,fin=lp(ha,ta,w);
     cur+=(fin-cur)*.09;ring.rotation.y=-cur;
     var H=mob?[0,3.2,20]:[-2.7,0,12.5],T=mob?[0,-1.2,10.6]:[-1.6,0,8.7],e=sm(u);
     var ox=lp(H[0],T[0],e),oy=lp(H[1],T[1],e),oz=lp(H[2],T[2],e);
     cam.position.set(ox+mx*.9,oy+lp(2.4,.5,e)-my*.5,oz);look.set(ox,oy-.1,0);cam.lookAt(look);
     var t=now*.001;sh.rotation.y=-t*.05;S.forEach(function(m){m.rotation.x+=.01*m.userData.sp;m.rotation.y+=.014*m.userData.sp;m.position.y=m.userData.y+Math.sin(t*m.userData.sp+m.userData.ph)*.25});
     pl.position.x=-5+Math.sin(t*.4)*2;
-    if(u>.85)cap(Math.round(p*3));
+    if(u>.85)cap(Math.round(p*4));
     r.render(scene,cam);
   })(0);
 })();
