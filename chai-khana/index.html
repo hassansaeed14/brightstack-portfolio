@@ -1,1025 +1,1028 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chai Khana Café - Har Ghoont Mein Sukoon</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#2B1B12',   // Dark warm brown
-            cream: '#F5E6D3',     // Cream text/accent
-            gold: '#E3A33B',      // Saffron/gold
-            goldDark: '#B87D22',
-            darker: '#1E120C'     // Even darker brown for deep contrast
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['Poppins', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Custom Styles for Scroll Reveal, Glows and Custom Utilities -->
-  <style>
-    /* Smooth Scroll Reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* Elegant Glows */
-    .glow-gold {
-      box-shadow: 0 0 15px rgba(227, 163, 59, 0.4);
-    }
-    .glow-gold:hover {
-      box-shadow: 0 0 25px rgba(227, 163, 59, 0.7);
-    }
-    
-    /* Custom Scrollbar for premium feel */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #1E120C;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #E3A33B;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #B87D22;
-    }
-
-    /* Custom 3D Card Tilt */
-    .tilt-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      transform-style: preserve-3d;
-    }
-
-    /* Steaming effect for design flair */
-    @keyframes steam {
-      0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0.2; }
-      50% { transform: translateY(-10px) scale(1.1) rotate(5deg); opacity: 0.4; }
-      100% { transform: translateY(-20px) scale(1.3) rotate(-5deg); opacity: 0; }
-    }
-    .steam-particle {
-      animation: steam 4s infinite ease-in-out;
-    }
-  </style>
-
-  <!-- Three.js Import Map -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
-      }
-    }
-  </script>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/chai-khana/">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
-</head>
-<body class="bg-primary text-cream font-sans overflow-x-hidden">
-
-  <!-- Sticky Top Bar -->
-  <header class="sticky top-0 z-50 bg-primary/95 backdrop-blur-md border-b border-gold/20 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="flex items-center space-x-2">
-        <span class="font-serif text-3xl font-extrabold tracking-wide text-gold hover:text-cream transition-colors">
-          Chai Khana
-        </span>
-        <span class="text-xs bg-gold/20 text-gold px-2.5 py-1 rounded-full font-sans uppercase tracking-widest border border-gold/30">Café</span>
-      </a>
-
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex space-x-8 items-center font-medium text-sm tracking-wider uppercase">
-        <a href="#menu" class="hover:text-gold transition-colors">Menu</a>
-        <a href="#deals" class="hover:text-gold transition-colors">Deals</a>
-        <a href="#about" class="hover:text-gold transition-colors">About</a>
-        <a href="#gallery" class="hover:text-gold transition-colors">Gallery</a>
-        <a href="#reviews" class="hover:text-gold transition-colors">Reviews</a>
-        <a href="#visit" class="hover:text-gold transition-colors">Visit</a>
-      </nav>
-
-      <!-- CTA Button -->
-      <div class="hidden md:block">
-        <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order" 
-           target="_blank" 
-           class="bg-gold hover:bg-goldDark text-primary font-bold px-6 py-2.5 rounded-full transition-all duration-300 glow-gold flex items-center space-x-2">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3 1.503 4.94 1.505 5.548 0 10.064-4.512 10.068-10.066.002-2.693-1.047-5.224-2.955-7.133C16.83 1.55 14.3 1.502 11.622 1.502c-5.552 0-10.069 4.513-10.073 10.068-.001 1.843.491 3.645 1.424 5.248l-.992 3.626 3.71-.973zm11.367-7.36c-.302-.15-1.786-.881-2.062-.982-.277-.1-.478-.15-.679.15-.2.3-.777.982-.953 1.183-.176.2-.351.224-.653.075-.302-.15-1.273-.469-2.426-1.494-.897-.8-1.502-1.79-1.278-2.19.176-.3.176-.462.327-.613.15-.15.302-.35.452-.525.15-.174.2-.3.302-.5.101-.2.05-.376-.026-.525-.075-.15-.679-1.636-.93-2.246-.244-.589-.493-.51-.679-.519-.176-.01-.377-.01-.578-.01-.2 0-.527.075-.803.376-.277.3-1.054 1.03-1.054 2.512s1.08 2.917 1.23 3.117c.15.2 2.124 3.244 5.146 4.545.719.31 1.28.496 1.718.635.722.23 1.38.197 1.9.12.58-.087 1.786-.73 2.037-1.435.251-.704.251-1.306.176-1.435-.075-.129-.276-.204-.577-.354z"/>
-          </svg>
-          <span>Order on WhatsApp</span>
-        </a>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="md:hidden text-cream focus:outline-none" aria-label="Toggle Menu">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu" class="hidden md:hidden bg-darker border-b border-gold/20 px-4 py-6 space-y-4">
-      <a href="#menu" class="block text-lg hover:text-gold transition-colors">Menu</a>
-      <a href="#deals" class="block text-lg hover:text-gold transition-colors">Deals</a>
-      <a href="#about" class="block text-lg hover:text-gold transition-colors">About</a>
-      <a href="#gallery" class="block text-lg hover:text-gold transition-colors">Gallery</a>
-      <a href="#reviews" class="block text-lg hover:text-gold transition-colors">Reviews</a>
-      <a href="#visit" class="block text-lg hover:text-gold transition-colors">Visit</a>
-      <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order" 
-         target="_blank" 
-         class="w-full text-center bg-gold hover:bg-goldDark text-primary font-bold py-3 rounded-xl transition-all duration-300 glow-gold flex items-center justify-center space-x-2">
-        <span>Order on WhatsApp</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="relative h-[90vh] flex items-center justify-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(43, 27, 18, 0.4), rgba(43, 27, 18, 0.95)), url('https://loremflickr.com/800/600/steaming,karak,chai');">
-    <!-- Three.js Canvas Container -->
-    <div id="hero-canvas-container" class="absolute inset-0 pointer-events-none z-10"></div>
-
-    <!-- Hero Content -->
-    <div class="relative z-20 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-      <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-cream mb-6 leading-tight">
-        Har Ghoont Mein <br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-amber-400 to-gold">Sukoon</span>
-      </h1>
-      <p class="text-lg sm:text-2xl text-cream/90 max-w-2xl mx-auto mb-10 font-light tracking-wide">
-        Karachi ki sab se garam chai, <span class="text-gold font-semibold">4 PM se 2 AM</span>. Experience the authentic taste of premium doodh patti & hot parathas.
-      </p>
-      
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-        <a href="#menu" class="w-full sm:w-auto bg-gold hover:bg-goldDark text-primary font-bold text-lg px-8 py-4 rounded-full transition-all duration-300 glow-gold">
-          See Menu
-        </a>
-        <a href="#book" class="w-full sm:w-auto border-2 border-cream hover:border-gold hover:text-gold text-cream font-bold text-lg px-8 py-4 rounded-full transition-all duration-300">
-          Book a Table
-        </a>
-      </div>
-    </div>
-
-    <!-- Bottom Wave Decor -->
-    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-primary to-transparent pointer-events-none"></div>
-  </section>
-
-  <!-- Deals Section (Revision Round Addition) -->
-  <section id="deals" class="py-24 bg-darker relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-16 reveal">
-        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Special Offers</span>
-        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Chai Khana Deals</h2>
-        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        <!-- Student Deal -->
-        <div class="bg-primary/50 border border-gold/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-gold/50 transition-all duration-300 tilt-card shadow-2xl reveal">
-          <div>
-            <div class="relative h-48 sm:h-64 rounded-2xl overflow-hidden mb-6">
-              <img src="assets/karak-chai-and-aloo-paratha-on-brass-plate.jpg" alt="Student Deal" class="w-full h-full object-cover">
-              <span class="absolute top-4 right-4 bg-gold text-primary font-black px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Save Big</span>
-            </div>
-            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mb-2">Student Deal</h3>
-            <p class="text-cream/70 mb-6">Perfect combo for college & university students! Enjoy our signature aromatic Karak Chai served hot with a freshly made, crispy golden Aloo Paratha.</p>
-          </div>
-          <div class="flex items-center justify-between mt-4 pt-6 border-t border-gold/10">
-            <div>
-              <span class="text-xs text-cream/50 block">Only For</span>
-              <span class="text-3xl font-black text-gold">Rs. 280</span>
-            </div>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Student%20Deal" 
-               target="_blank" 
-               class="bg-gold hover:bg-goldDark text-primary font-bold px-6 py-3 rounded-full transition-all duration-300 glow-gold text-sm uppercase tracking-wider">
-              Order Now
-            </a>
-          </div>
-        </div>
-
-        <!-- Family Deal -->
-        <div class="bg-primary/50 border border-gold/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-gold/50 transition-all duration-300 tilt-card shadow-2xl reveal">
-          <div>
-            <div class="relative h-48 sm:h-64 rounded-2xl overflow-hidden mb-6">
-              <img src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.jpg" alt="Family Deal" class="w-full h-full object-cover">
-              <span class="absolute top-4 right-4 bg-gold text-primary font-black px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Best Seller</span>
-            </div>
-            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mb-2">Family Deal</h3>
-            <p class="text-cream/70 mb-6">A grand feast for the family. Get 4 cups of hot Chai of your choice, 4 freshly baked premium Parathas, and a large plate of our signature cheesy Loaded Fries.</p>
-          </div>
-          <div class="flex items-center justify-between mt-4 pt-6 border-t border-gold/10">
-            <div>
-              <span class="text-xs text-cream/50 block">Only For</span>
-              <span class="text-3xl font-black text-gold">Rs. 1,600</span>
-            </div>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Family%20Deal" 
-               target="_blank" 
-               class="bg-gold hover:bg-goldDark text-primary font-bold px-6 py-3 rounded-full transition-all duration-300 glow-gold text-sm uppercase tracking-wider">
-              Order Now
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Menu Section -->
-  <section id="menu" class="py-24 bg-primary relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16 reveal">
-        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Fresh & Hot</span>
-        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Explore Our Menu</h2>
-        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
-      </div>
-
-      <!-- Filter Tabs -->
-      <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12 reveal">
-        <button onclick="filterMenu('all')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-gold text-primary font-bold">All</button>
-        <button onclick="filterMenu('chai')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Chai</button>
-        <button onclick="filterMenu('breakfast')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Paratha & Breakfast</button>
-        <button onclick="filterMenu('fastfood')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Fast Food</button>
-        <button onclick="filterMenu('desserts')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Desserts</button>
-      </div>
-
-      <!-- Menu Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-        
-        <!-- Chai Category -->
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/doodh-patti-tea-in-traditional-cup.jpg" alt="Doodh Patti" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Doodh Patti</h3>
-              <p class="text-sm text-cream/70 mt-2">Traditional rich milk tea brewed to perfection with premium leaves.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 120</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Doodh%20Patti" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/karak-chai-in-glass-cup-with-cardamom.jpg" alt="Karak Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Karak Chai</h3>
-              <p class="text-sm text-cream/70 mt-2">Strong, aromatic tea with a kick of cardamom and thick milk.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 150</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Karak%20Chai" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/pink-kashmiri-chai-with-pistachio-garnish.jpg" alt="Kashmiri Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Kashmiri Chai</h3>
-              <p class="text-sm text-cream/70 mt-2">Pink tea topped with crushed almonds and pistachios.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 220</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Kashmiri%20Chai" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/elaichi-tea-with-steam-rising.jpg" alt="Elaichi Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Elaichi Chai</h3>
-              <p class="text-sm text-cream/70 mt-2">Infused with fresh cardamom pods for a refreshing aroma.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 140</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Elaichi%20Chai" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/hot-green-tea-in-transparent-cup.png" alt="Green Tea" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Green Tea</h3>
-              <p class="text-sm text-cream/70 mt-2">Light and soothing jasmine green tea for a healthy detox.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 100</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Green%20Tea" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <!-- Paratha & Breakfast Category -->
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/crispy-stuffed-aloo-paratha-with-butter.jpg" alt="Aloo Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Aloo Paratha</h3>
-              <p class="text-sm text-cream/70 mt-2">Crispy golden paratha stuffed with spiced mashed potatoes.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 180</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Aloo%20Paratha" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/cheesy-chicken-paratha-slice-pulling-cheese.png" alt="Chicken Cheese Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Chicken Cheese Paratha</h3>
-              <p class="text-sm text-cream/70 mt-2">Flaky paratha loaded with shredded chicken and melted mozzarella.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 350</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Chicken%20Cheese%20Paratha" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/nutella-paratha-roll-with-chocolate-drizzle.jpg" alt="Nutella Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Nutella Paratha</h3>
-              <p class="text-sm text-cream/70 mt-2">Sweet crispy paratha oozing with genuine Nutella spread.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 300</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Nutella%20Paratha" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/anda-paratha-roll-wrapped-in-paper.jpg" alt="Anda Paratha Roll" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Anda Paratha Roll</h3>
-              <p class="text-sm text-cream/70 mt-2">Flaky paratha rolled with a spiced fried egg and green chutney.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 250</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Anda%20Paratha%20Roll" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <!-- Fast Food Category -->
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/crispy-zinger-burger-with-lettuce-and-mayo.jpg" alt="Zinger Burger" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Zinger Burger</h3>
-              <p class="text-sm text-cream/70 mt-2">Crispy fried chicken thigh, lettuce, and mayo in a toasted bun.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 550</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Zinger%20Burger" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/triple-decker-club-sandwich-with-fries.jpg" alt="Club Sandwich" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Club Sandwich</h3>
-              <p class="text-sm text-cream/70 mt-2">Classic triple-decker sandwich with chicken, egg, cheese, and veggies.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 480</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Club%20Sandwich" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/loaded-fries-with-melted-cheese-and-chicken.webp" alt="Loaded Fries" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Loaded Fries</h3>
-              <p class="text-sm text-cream/70 mt-2">Crispy fries drenched in cheese sauce, chicken chunks, and jalapenos.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 420</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Loaded%20Fries" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/chicken-shawarma-wrap-cut-in-half.jpg" alt="Chicken Shawarma" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Chicken Shawarma</h3>
-              <p class="text-sm text-cream/70 mt-2">Spiced chicken wraps with garlic sauce and pickled veggies.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 280</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Chicken%20Shawarma" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <!-- Desserts Category -->
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/two-warm-gulab-jamuns-in-syrup.webp" alt="Gulab Jamun" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Gulab Jamun (2 pcs)</h3>
-              <p class="text-sm text-cream/70 mt-2">Warm, soft milk solids fried and soaked in cardamom sugar syrup.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 160</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Gulab%20Jamun" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/traditional-kheer-in-clay-kulhad-cup.jpg" alt="Kheer in Kulhad" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Kheer in Kulhad</h3>
-              <p class="text-sm text-cream/70 mt-2">Slow-cooked traditional rice pudding served chilled in clay cups.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 220</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Kheer%20in%20Kulhad" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
-          <div>
-            <div class="h-48 overflow-hidden">
-              <img src="assets/molten-chocolate-lava-cake-with-oozing-center.jpg" alt="Chocolate Lava Cake" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-            </div>
-            <div class="p-5">
-              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
-              <h3 class="font-serif text-xl font-bold text-cream mt-1">Chocolate Lava Cake</h3>
-              <p class="text-sm text-cream/70 mt-2">Rich chocolate cake with a warm, gooey molten chocolate center.</p>
-            </div>
-          </div>
-          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
-            <span class="text-lg font-bold text-gold">Rs. 450</span>
-            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Chocolate%20Lava%20Cake" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="py-24 bg-darker relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
-        <!-- About Text -->
-        <div class="lg:col-span-7 reveal">
-          <span class="text-gold uppercase tracking-widest text-sm font-semibold">Our Story</span>
-          <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 mb-6 text-cream">From a Small Dhaba to Karachi's Premium Spot</h2>
-          <p class="text-cream/80 text-lg leading-relaxed mb-6">
-            In 2019, Chai Khana started as a humble roadside dhaba with just two kettles and a dream to serve the absolute best tea in town. Today, we have evolved into a premium modern desi café in the heart of Gulshan-e-Iqbal, serving hundreds of families and students every evening.
-          </p>
-          <p class="text-cream/80 text-lg leading-relaxed mb-8">
-            Whether you're looking to share a quiet evening with family or catch up with friends over hot, crispy parathas and strong Karak Chai, Chai Khana provides the perfect cosy, modern, and hygienic environment.
-          </p>
-          
-          <!-- Stats -->
-          <div class="grid grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-gold/20">
-            <div>
-              <span class="block font-serif text-3xl sm:text-4xl font-extrabold text-gold">6+</span>
-              <span class="text-xs sm:text-sm text-cream/60 uppercase tracking-wider">Years of Love</span>
-            </div>
-            <div>
-              <span class="block font-serif text-3xl sm:text-4xl font-extrabold text-gold">40+</span>
-              <span class="text-xs sm:text-sm text-cream/60 uppercase tracking-wider">Menu Items</span>
-            </div>
-            <div>
-              <span class="block font-serif text-3xl sm:text-4xl font-extrabold text-gold">500+</span>
-              <span class="text-xs sm:text-sm text-cream/60 uppercase tracking-wider">Cups a Day</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Visual Highlight / Decorative element -->
-        <div class="lg:col-span-5 relative flex justify-center items-center reveal">
-          <div class="relative w-full max-w-md aspect-square rounded-full border border-gold/20 flex items-center justify-center p-8 bg-primary/40 backdrop-blur-sm">
-            <div class="absolute inset-0 border border-gold/10 rounded-full animate-pulse"></div>
-            <div class="text-center">
-              <span class="font-serif text-8xl text-gold/20 block font-black">CHAI</span>
-              <span class="font-serif text-3xl text-gold font-bold block -mt-4">K H A N A</span>
-              <p class="text-xs text-cream/50 mt-4 tracking-widest uppercase">Est. 2019 • Karachi</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery Section -->
-  <section id="gallery" class="py-24 bg-primary">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16 reveal">
-        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Atmosphere</span>
-        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Vibes At Chai Khana</h2>
-        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
-      </div>
-
-      <!-- Gallery Grid (6 Photos) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img src="assets/modern-desi-cafe-at-night-cozy-lighting.jpg" alt="Café at night" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p class="font-serif text-xl font-bold text-cream">Café at Night</p>
-          </div>
-        </div>
-
-        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img src="assets/pouring-hot-milk-tea-into-glass-cup-from-high-up.jpg" alt="Chai being poured" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p class="font-serif text-xl font-bold text-cream">Fresh Brewed Karak</p>
-          </div>
-        </div>
-
-        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img src="assets/flaky-golden-parathas-on-a-plate.jpg" alt="Parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p class="font-serif text-xl font-bold text-cream">Crispy Parathas</p>
-          </div>
-        </div>
-
-        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img src="assets/friends-smiling-and-sharing-chai-at-a-cafe-table.jpg" alt="Friends at table" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p class="font-serif text-xl font-bold text-cream">Shared Moments</p>
-          </div>
-        </div>
-
-        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img src="assets/traditional-clay-kulhad-cups-stacked-on-a-counter.jpg" alt="Kulhad cups" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p class="font-serif text-xl font-bold text-cream">Traditional Kulhad</p>
-          </div>
-        </div>
-
-        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img src="assets/modern-cafe-kitchen-counter-with-espresso-machine-.jpg" alt="Our counter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p class="font-serif text-xl font-bold text-cream">Our Counter</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Reviews Section -->
-  <section id="reviews" class="py-24 bg-darker">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16 reveal">
-        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Testimonials</span>
-        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">What Our Guests Say</h2>
-        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="bg-primary/40 border border-gold/10 p-8 rounded-3xl shadow-xl flex flex-col justify-between reveal">
-          <div>
-            <!-- Stars -->
-            <div class="flex space-x-1 text-gold mb-6">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <p class="text-cream/80 italic leading-relaxed mb-6">"The Karak Chai is absolutely spot on! It's rich, fragrant, and perfect for late-night hangouts. Their Cheese Paratha is highly recommended too."</p>
-          </div>
-          <div class="border-t border-gold/10 pt-4">
-            <h4 class="font-bold text-cream">Customer A</h4>
-            <span class="text-xs text-gold">Gulshan Resident</span>
-          </div>
-        </div>
-
-        <div class="bg-primary/40 border border-gold/10 p-8 rounded-3xl shadow-xl flex flex-col justify-between reveal">
-          <div>
-            <!-- Stars -->
-            <div class="flex space-x-1 text-gold mb-6">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <p class="text-cream/80 italic leading-relaxed mb-6">"Chai Khana has become our family's favorite weekend spot. The environment is extremely decent, clean, and the service is very quick."</p>
-          </div>
-          <div class="border-t border-gold/10 pt-4">
-            <h4 class="font-bold text-cream">Customer B</h4>
-            <span class="text-xs text-gold">University Student</span>
-          </div>
-        </div>
-
-        <div class="bg-primary/40 border border-gold/10 p-8 rounded-3xl shadow-xl flex flex-col justify-between reveal">
-          <div>
-            <!-- Stars -->
-            <div class="flex space-x-1 text-gold mb-6">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <p class="text-cream/80 italic leading-relaxed mb-6">"Best pink tea in Karachi! The Kheer in Kulhad also reminded me of traditional village weddings. 10/10 for food quality and pricing."</p>
-          </div>
-          <div class="border-t border-gold/10 pt-4">
-            <h4 class="font-bold text-cream">Customer C</h4>
-            <span class="text-xs text-gold">Food Enthusiast</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Book a Table Section -->
-  <section id="book" class="py-24 bg-primary relative overflow-hidden">
-    <!-- Overlay decoration -->
-    <div class="absolute inset-0 bg-cover bg-center opacity-5" style="background-image: url('https://loremflickr.com/800/600/steaming,karak,chai');"></div>
-    
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-12 reveal">
-        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Reservations</span>
-        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Book a Table</h2>
-        <p class="text-cream/70 mt-4 max-w-md mx-auto">Plan a cozy evening with your loved ones. Fill out the details below and we'll confirm via WhatsApp instantly.</p>
-        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
-      </div>
-
-      <!-- Booking Form -->
-      <form id="booking-form" class="bg-darker/80 backdrop-blur-md border border-gold/20 p-8 sm:p-12 rounded-3xl shadow-2xl space-y-6 reveal">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-cream/80 mb-2">Full Name</label>
-            <input type="text" id="name" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream placeholder-cream/40 focus:outline-none transition-colors" placeholder="Bilal Ahmed">
-          </div>
-          <div>
-            <label for="phone" class="block text-sm font-medium text-cream/80 mb-2">Phone Number</label>
-            <input type="tel" id="phone" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream placeholder-cream/40 focus:outline-none transition-colors" placeholder="0300-1234567">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div>
-            <label for="date" class="block text-sm font-medium text-cream/80 mb-2">Date</label>
-            <input type="date" id="date" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream focus:outline-none transition-colors">
-          </div>
-          <div>
-            <label for="time" class="block text-sm font-medium text-cream/80 mb-2">Time</label>
-            <input type="time" id="time" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream focus:outline-none transition-colors">
-          </div>
-          <div>
-            <label for="people" class="block text-sm font-medium text-cream/80 mb-2">Number of People</label>
-            <input type="number" id="people" min="1" max="20" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream placeholder-cream/40 focus:outline-none transition-colors" placeholder="4">
-          </div>
-        </div>
-
-        <div class="pt-4">
-          <button type="submit" class="w-full bg-gold hover:bg-goldDark text-primary font-bold text-lg py-4 rounded-xl transition-all duration-300 glow-gold">
-            Book via WhatsApp
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Visit Us Section -->
-  <section id="visit" class="py-24 bg-darker">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16 reveal">
-        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Find Us</span>
-        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Visit Our Café</h2>
-        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <!-- Address details -->
-        <div class="lg:col-span-5 space-y-8 reveal">
-          <div>
-            <h3 class="font-serif text-2xl font-bold text-cream mb-3">Our Location</h3>
-            <p class="text-cream/80 text-lg leading-relaxed">
-              Block 13-D, Gulshan-e-Iqbal,<br>
-              Karachi, Pakistan.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-serif text-2xl font-bold text-cream mb-3">Opening Hours</h3>
-            <p class="text-cream/80 text-lg leading-relaxed">
-              Open Daily: <span class="text-gold font-semibold">4:00 PM to 2:00 AM</span>
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-serif text-2xl font-bold text-cream mb-3">Contact Info</h3>
-            <p class="text-cream/80 text-lg leading-relaxed">
-              Phone/WhatsApp: <a href="tel:0300-1234567" class="text-gold hover:underline">0300-1234567</a><br>
-              Instagram: <a href="https://instagram.com/chaikhana.khi" target="_blank" class="text-gold hover:underline">@chaikhana.khi</a>
-            </p>
-          </div>
-        </div>
-
-        <!-- Google Maps Embed -->
-        <div class="lg:col-span-7 h-96 rounded-3xl overflow-hidden border border-gold/20 shadow-2xl reveal">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.3181822365287!2d67.0780287!3d24.9126207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f1694d6e159%3A0x647f3b8908f5115c!2sBlock%2013%20D%201%20Gulshan-e-Iqbal%2C%20Karachi!5e0!3m2!1sen!2spk!4v1700000000000" 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-primary border-t border-gold/20 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <!-- Logo -->
-      <a href="#" class="font-serif text-2xl font-extrabold tracking-wide text-gold">
-        Chai Khana
-      </a>
-
-      <!-- Socials & Info -->
-      <div class="flex space-x-6 text-sm text-cream/70">
-        <a href="https://instagram.com/chaikhana.khi" target="_blank" class="hover:text-gold transition-colors">Instagram</a>
-        <a href="tel:0300-1234567" class="hover:text-gold transition-colors">0300-1234567</a>
-      </div>
-
-      <p class="text-sm text-cream/50 text-center md:text-right">
-        © 2026 Chai Khana. All rights reserved.
-      </p>
-    </div>
-  </footer>
-
-  <!-- Floating Round WhatsApp Button (Revision Round Addition) -->
-  <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order" 
-     target="_blank" 
-     class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center animate-bounce"
-     aria-label="Contact on WhatsApp">
-    <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
-      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3 1.503 4.94 1.505 5.548 0 10.064-4.512 10.068-10.066.002-2.693-1.047-5.224-2.955-7.133C16.83 1.55 14.3 1.502 11.622 1.502c-5.552 0-10.069 4.513-10.073 10.068-.001 1.843.491 3.645 1.424 5.248l-.992 3.626 3.71-.973zm11.367-7.36c-.302-.15-1.786-.881-2.062-.982-.277-.1-.478-.15-.679.15-.2.3-.777.982-.953 1.183-.176.2-.351.224-.653.075-.302-.15-1.273-.469-2.426-1.494-.897-.8-1.502-1.79-1.278-2.19.176-.3.176-.462.327-.613.15-.15.302-.35.452-.525.15-.174.2-.3.302-.5.101-.2.05-.376-.026-.525-.075-.15-.679-1.636-.93-2.246-.244-.589-.493-.51-.679-.519-.176-.01-.377-.01-.578-.01-.2 0-.527.075-.803.376-.277.3-1.054 1.03-1.054 2.512s1.08 2.917 1.23 3.117c.15.2 2.124 3.244 5.146 4.545.719.31 1.28.496 1.718.635.722.23 1.38.197 1.9.12.58-.087 1.786-.73 2.037-1.435.251-.704.251-1.306.176-1.435-.075-.129-.276-.204-.577-.354z"/>
-    </svg>
-  </a>
-
-  <!-- Scripts -->
-  <script type="module">
-    import * as THREE from 'three';
-
-    // Interactive Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
-
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      if (mobileMenu.classList.contains('hidden')) {
-        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-      } else {
-        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-      }
-    });
-
-    // Close mobile menu on clicking any link
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-      });
-    });
-
-    // Scroll Reveal Intersection Observer
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    reveals.forEach(el => observer.observe(el));
-
-    // Menu Filtering Logic
-    window.filterMenu = function(category) {
-      // Update tabs UI
-      const tabs = document.querySelectorAll('.menu-tab');
-      tabs.forEach(tab => {
-        tab.className = "menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20";
-      });
-
-      // Highlight active tab
-      const activeTab = event.currentTarget;
-      activeTab.className = "menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-gold text-primary font-bold";
-
-      // Filter Cards
-      const cards = document.querySelectorAll('.menu-item-card');
-      cards.forEach(card => {
-        if (category === 'all' || card.dataset.category === category) {
-          card.style.display = 'flex';
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'scale(1)';
-          }, 50);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.95)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 300);
-        }
-      });
-    };
-
-    // Card Tilt Effect
-    document.querySelectorAll('.tilt-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const xc = rect.width / 2;
-        const yc = rect.height / 2;
-        const dx = x - xc;
-        const dy = y - yc;
-        card.style.transform = `perspective(1000px) rotateX(${-dy / 25}deg) rotateY(${dx / 25}deg) scale3d(1.02, 1.02, 1.02)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      });
-    });
-
-    // Booking Form Handler
-    const bookingForm = document.getElementById('booking-form');
-    bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const date = document.getElementById('date').value;
-      const time = document.getElementById('time').value;
-      const people = document.getElementById('people').value;
-
-      const message = `Assalam o Alaikum, I want to book a table under the name ${name} on ${date} at ${time} for ${people} people. My contact is ${phone}.`;
-      const encodedMessage = encodeURIComponent(message);
-      window.open(`https://wa.me/923001234567?text=${encodedMessage}`, '_blank');
-    });
-
-    // Three.js Warm Steam/Spark Particles Setup
-    try {
-      const container = document.getElementById('hero-canvas-container');
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      container.appendChild(renderer.domElement);
-
-      // Particle Geometry
-      const particleCount = 120;
-      const geometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(particleCount * 3);
-      const speeds = [];
-
-      for (let i = 0; i < particleCount * 3; i += 3) {
-        // Spread particles across the hero space
-        positions[i] = (Math.random() - 0.5) * 10;     // X
-        positions[i + 1] = (Math.random() - 0.5) * 6; // Y
-        positions[i + 2] = (Math.random() - 0.5) * 5; // Z
-        speeds.push(0.005 + Math.random() * 0.01);
-      }
-
-      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-      // Particle Material (Warm Golden Amber Sparks)
-      const material = new THREE.PointsMaterial({
-        color: 0xE3A33B,
-        size: 0.08,
-        transparent: true,
-        opacity: 0.6,
-        blending: THREE.AdditiveBlending
-      });
-
-      const particleSystem = new THREE.Points(geometry, material);
-      scene.add(particleSystem);
-
-      camera.position.z = 5;
-
-      // Resize handler
-      window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-      });
-
-      // Animation Loop
-      function animate() {
-        requestAnimationFrame(animate);
-
-        const positions = particleSystem.geometry.attributes.position.array;
-
-        for (let i = 0; i < particleCount; i++) {
-          const index = i * 3;
-          // Move particles upwards to mimic steam/sparks
-          positions[index + 1] += speeds[i];
-          // Gentle side sway
-          positions[index] += Math.sin(positions[index + 1] + i) * 0.002;
-
-          // Reset particles when they go too high
-          if (positions[index + 1] > 3) {
-            positions[index + 1] = -3;
-            positions[index] = (Math.random() - 0.5) * 10;
-          }
-        }
-
-        particleSystem.geometry.attributes.position.needsUpdate = true;
-        renderer.render(scene, camera);
-      }
-
-      animate();
-    } catch (error) {
-      console.warn("Three.js initialization failed, falling back to CSS animations.", error);
-    }
-  </script>
-
-<!-- BrightStack portfolio -->
-<div style="font:13px/1.4 system-ui,sans-serif;text-align:center;padding:14px 12px;background:#111;color:#bbb">Designed &amp; built by BrightStack Co. — Hassan Saeed · <a href="../web-design-collection.html" style="color:#fff">More web design work</a> · <a href="../index.html" style="color:#fff">Portfolio</a></div>
-</body>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chai Khana Café - Har Ghoont Mein Sukoon</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2B1B12',   // Dark warm brown
+            cream: '#F5E6D3',     // Cream text/accent
+            gold: '#E3A33B',      // Saffron/gold
+            goldDark: '#B87D22',
+            darker: '#1E120C'     // Even darker brown for deep contrast
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles for Scroll Reveal, Glows and Custom Utilities -->
+  <style>
+    /* Smooth Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Elegant Glows */
+    .glow-gold {
+      box-shadow: 0 0 15px rgba(227, 163, 59, 0.4);
+    }
+    .glow-gold:hover {
+      box-shadow: 0 0 25px rgba(227, 163, 59, 0.7);
+    }
+    
+    /* Custom Scrollbar for premium feel */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1E120C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E3A33B;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #B87D22;
+    }
+
+    /* Custom 3D Card Tilt */
+    .tilt-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    /* Steaming effect for design flair */
+    @keyframes steam {
+      0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0.2; }
+      50% { transform: translateY(-10px) scale(1.1) rotate(5deg); opacity: 0.4; }
+      100% { transform: translateY(-20px) scale(1.3) rotate(-5deg); opacity: 0; }
+    }
+    .steam-particle {
+      animation: steam 4s infinite ease-in-out;
+    }
+  </style>
+
+  <!-- Three.js Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/chai-khana/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="description" content="Explore Chai Khana Café's menu, deals, and authentic Karachi tea experience. A concept demo by BrightStack Co.">
+<meta property="og:title" content="Chai Khana Café - Har Ghoont Mein Sukoon">
+<meta property="og:description" content="Explore Chai Khana Café's menu, deals, and authentic Karachi tea experience. A concept demo by BrightStack Co.">
+</head>
+<body class="bg-primary text-cream font-sans overflow-x-hidden">
+
+  <!-- Sticky Top Bar -->
+  <header class="sticky top-0 z-50 bg-primary/95 backdrop-blur-md border-b border-gold/20 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center space-x-2">
+        <span class="font-serif text-3xl font-extrabold tracking-wide text-gold hover:text-cream transition-colors">
+          Chai Khana
+        </span>
+        <span class="text-xs bg-gold/20 text-gold px-2.5 py-1 rounded-full font-sans uppercase tracking-widest border border-gold/30">Café</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-8 items-center font-medium text-sm tracking-wider uppercase">
+        <a href="#menu" class="hover:text-gold transition-colors">Menu</a>
+        <a href="#deals" class="hover:text-gold transition-colors">Deals</a>
+        <a href="#about" class="hover:text-gold transition-colors">About</a>
+        <a href="#gallery" class="hover:text-gold transition-colors">Gallery</a>
+        <a href="#reviews" class="hover:text-gold transition-colors">Reviews</a>
+        <a href="#visit" class="hover:text-gold transition-colors">Visit</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="hidden md:block">
+        <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order" 
+           target="_blank" 
+           class="bg-gold hover:bg-goldDark text-primary font-bold px-6 py-2.5 rounded-full transition-all duration-300 glow-gold flex items-center space-x-2">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3 1.503 4.94 1.505 5.548 0 10.064-4.512 10.068-10.066.002-2.693-1.047-5.224-2.955-7.133C16.83 1.55 14.3 1.502 11.622 1.502c-5.552 0-10.069 4.513-10.073 10.068-.001 1.843.491 3.645 1.424 5.248l-.992 3.626 3.71-.973zm11.367-7.36c-.302-.15-1.786-.881-2.062-.982-.277-.1-.478-.15-.679.15-.2.3-.777.982-.953 1.183-.176.2-.351.224-.653.075-.302-.15-1.273-.469-2.426-1.494-.897-.8-1.502-1.79-1.278-2.19.176-.3.176-.462.327-.613.15-.15.302-.35.452-.525.15-.174.2-.3.302-.5.101-.2.05-.376-.026-.525-.075-.15-.679-1.636-.93-2.246-.244-.589-.493-.51-.679-.519-.176-.01-.377-.01-.578-.01-.2 0-.527.075-.803.376-.277.3-1.054 1.03-1.054 2.512s1.08 2.917 1.23 3.117c.15.2 2.124 3.244 5.146 4.545.719.31 1.28.496 1.718.635.722.23 1.38.197 1.9.12.58-.087 1.786-.73 2.037-1.435.251-.704.251-1.306.176-1.435-.075-.129-.276-.204-.577-.354z"/>
+          </svg>
+          <span>Order on WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-cream focus:outline-none" aria-label="Toggle Menu">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-darker border-b border-gold/20 px-4 py-6 space-y-4">
+      <a href="#menu" class="block text-lg hover:text-gold transition-colors">Menu</a>
+      <a href="#deals" class="block text-lg hover:text-gold transition-colors">Deals</a>
+      <a href="#about" class="block text-lg hover:text-gold transition-colors">About</a>
+      <a href="#gallery" class="block text-lg hover:text-gold transition-colors">Gallery</a>
+      <a href="#reviews" class="block text-lg hover:text-gold transition-colors">Reviews</a>
+      <a href="#visit" class="block text-lg hover:text-gold transition-colors">Visit</a>
+      <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order" 
+         target="_blank" 
+         class="w-full text-center bg-gold hover:bg-goldDark text-primary font-bold py-3 rounded-xl transition-all duration-300 glow-gold flex items-center justify-center space-x-2">
+        <span>Order on WhatsApp</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative h-[90vh] flex items-center justify-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(43, 27, 18, 0.4), rgba(43, 27, 18, 0.95)), url('https://loremflickr.com/800/600/steaming,karak,chai');">
+    <!-- Three.js Canvas Container -->
+    <div id="hero-canvas-container" class="absolute inset-0 pointer-events-none z-10"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-20 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+      <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-cream mb-6 leading-tight">
+        Har Ghoont Mein <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-amber-400 to-gold">Sukoon</span>
+      </h1>
+      <p class="text-lg sm:text-2xl text-cream/90 max-w-2xl mx-auto mb-10 font-light tracking-wide">
+        Karachi ki sab se garam chai, <span class="text-gold font-semibold">4 PM se 2 AM</span>. Experience the authentic taste of premium doodh patti & hot parathas.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+        <a href="#menu" class="w-full sm:w-auto bg-gold hover:bg-goldDark text-primary font-bold text-lg px-8 py-4 rounded-full transition-all duration-300 glow-gold">
+          See Menu
+        </a>
+        <a href="#book" class="w-full sm:w-auto border-2 border-cream hover:border-gold hover:text-gold text-cream font-bold text-lg px-8 py-4 rounded-full transition-all duration-300">
+          Book a Table
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Wave Decor -->
+    <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-primary to-transparent pointer-events-none"></div>
+  </section>
+
+  <!-- Deals Section (Revision Round Addition) -->
+  <section id="deals" class="py-24 bg-darker relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16 reveal">
+        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Special Offers</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Chai Khana Deals</h2>
+        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <!-- Student Deal -->
+        <div class="bg-primary/50 border border-gold/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-gold/50 transition-all duration-300 tilt-card shadow-2xl reveal">
+          <div>
+            <div class="relative h-48 sm:h-64 rounded-2xl overflow-hidden mb-6">
+              <img src="assets/karak-chai-and-aloo-paratha-on-brass-plate.jpg" alt="Student Deal" class="w-full h-full object-cover">
+              <span class="absolute top-4 right-4 bg-gold text-primary font-black px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Save Big</span>
+            </div>
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mb-2">Student Deal</h3>
+            <p class="text-cream/70 mb-6">Perfect combo for college & university students! Enjoy our signature aromatic Karak Chai served hot with a freshly made, crispy golden Aloo Paratha.</p>
+          </div>
+          <div class="flex items-center justify-between mt-4 pt-6 border-t border-gold/10">
+            <div>
+              <span class="text-xs text-cream/50 block">Only For</span>
+              <span class="text-3xl font-black text-gold">Rs. 280</span>
+            </div>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Student%20Deal" 
+               target="_blank" 
+               class="bg-gold hover:bg-goldDark text-primary font-bold px-6 py-3 rounded-full transition-all duration-300 glow-gold text-sm uppercase tracking-wider">
+              Order Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Family Deal -->
+        <div class="bg-primary/50 border border-gold/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-gold/50 transition-all duration-300 tilt-card shadow-2xl reveal">
+          <div>
+            <div class="relative h-48 sm:h-64 rounded-2xl overflow-hidden mb-6">
+              <img src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.jpg" alt="Family Deal" class="w-full h-full object-cover">
+              <span class="absolute top-4 right-4 bg-gold text-primary font-black px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Best Seller</span>
+            </div>
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mb-2">Family Deal</h3>
+            <p class="text-cream/70 mb-6">A grand feast for the family. Get 4 cups of hot Chai of your choice, 4 freshly baked premium Parathas, and a large plate of our signature cheesy Loaded Fries.</p>
+          </div>
+          <div class="flex items-center justify-between mt-4 pt-6 border-t border-gold/10">
+            <div>
+              <span class="text-xs text-cream/50 block">Only For</span>
+              <span class="text-3xl font-black text-gold">Rs. 1,600</span>
+            </div>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Family%20Deal" 
+               target="_blank" 
+               class="bg-gold hover:bg-goldDark text-primary font-bold px-6 py-3 rounded-full transition-all duration-300 glow-gold text-sm uppercase tracking-wider">
+              Order Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="py-24 bg-primary relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Fresh & Hot</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Explore Our Menu</h2>
+        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12 reveal">
+        <button onclick="filterMenu('all')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-gold text-primary font-bold">All</button>
+        <button onclick="filterMenu('chai')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Chai</button>
+        <button onclick="filterMenu('breakfast')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Paratha & Breakfast</button>
+        <button onclick="filterMenu('fastfood')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Fast Food</button>
+        <button onclick="filterMenu('desserts')" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20">Desserts</button>
+      </div>
+
+      <!-- Menu Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        
+        <!-- Chai Category -->
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/doodh-patti-tea-in-traditional-cup.jpg" alt="Doodh Patti" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Doodh Patti</h3>
+              <p class="text-sm text-cream/70 mt-2">Traditional rich milk tea brewed to perfection with premium leaves.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 120</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Doodh%20Patti" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/karak-chai-in-glass-cup-with-cardamom.jpg" alt="Karak Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Karak Chai</h3>
+              <p class="text-sm text-cream/70 mt-2">Strong, aromatic tea with a kick of cardamom and thick milk.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 150</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Karak%20Chai" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/pink-kashmiri-chai-with-pistachio-garnish.jpg" alt="Kashmiri Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Kashmiri Chai</h3>
+              <p class="text-sm text-cream/70 mt-2">Pink tea topped with crushed almonds and pistachios.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 220</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Kashmiri%20Chai" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/elaichi-tea-with-steam-rising.jpg" alt="Elaichi Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Elaichi Chai</h3>
+              <p class="text-sm text-cream/70 mt-2">Infused with fresh cardamom pods for a refreshing aroma.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 140</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Elaichi%20Chai" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/hot-green-tea-in-transparent-cup.png" alt="Green Tea" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Green Tea</h3>
+              <p class="text-sm text-cream/70 mt-2">Light and soothing jasmine green tea for a healthy detox.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 100</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Green%20Tea" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <!-- Paratha & Breakfast Category -->
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/crispy-stuffed-aloo-paratha-with-butter.jpg" alt="Aloo Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Aloo Paratha</h3>
+              <p class="text-sm text-cream/70 mt-2">Crispy golden paratha stuffed with spiced mashed potatoes.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 180</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Aloo%20Paratha" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/cheesy-chicken-paratha-slice-pulling-cheese.png" alt="Chicken Cheese Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Chicken Cheese Paratha</h3>
+              <p class="text-sm text-cream/70 mt-2">Flaky paratha loaded with shredded chicken and melted mozzarella.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 350</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Chicken%20Cheese%20Paratha" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/nutella-paratha-roll-with-chocolate-drizzle.jpg" alt="Nutella Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Nutella Paratha</h3>
+              <p class="text-sm text-cream/70 mt-2">Sweet crispy paratha oozing with genuine Nutella spread.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 300</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Nutella%20Paratha" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/anda-paratha-roll-wrapped-in-paper.jpg" alt="Anda Paratha Roll" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Anda Paratha Roll</h3>
+              <p class="text-sm text-cream/70 mt-2">Flaky paratha rolled with a spiced fried egg and green chutney.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 250</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Anda%20Paratha%20Roll" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <!-- Fast Food Category -->
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/crispy-zinger-burger-with-lettuce-and-mayo.jpg" alt="Zinger Burger" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Zinger Burger</h3>
+              <p class="text-sm text-cream/70 mt-2">Crispy fried chicken thigh, lettuce, and mayo in a toasted bun.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 550</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Zinger%20Burger" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/triple-decker-club-sandwich-with-fries.jpg" alt="Club Sandwich" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Club Sandwich</h3>
+              <p class="text-sm text-cream/70 mt-2">Classic triple-decker sandwich with chicken, egg, cheese, and veggies.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 480</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Club%20Sandwich" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/loaded-fries-with-melted-cheese-and-chicken.webp" alt="Loaded Fries" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Loaded Fries</h3>
+              <p class="text-sm text-cream/70 mt-2">Crispy fries drenched in cheese sauce, chicken chunks, and jalapenos.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 420</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Loaded%20Fries" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/chicken-shawarma-wrap-cut-in-half.jpg" alt="Chicken Shawarma" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Chicken Shawarma</h3>
+              <p class="text-sm text-cream/70 mt-2">Spiced chicken wraps with garlic sauce and pickled veggies.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 280</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Chicken%20Shawarma" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <!-- Desserts Category -->
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/two-warm-gulab-jamuns-in-syrup.webp" alt="Gulab Jamun" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Gulab Jamun (2 pcs)</h3>
+              <p class="text-sm text-cream/70 mt-2">Warm, soft milk solids fried and soaked in cardamom sugar syrup.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 160</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Gulab%20Jamun" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/traditional-kheer-in-clay-kulhad-cup.jpg" alt="Kheer in Kulhad" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Kheer in Kulhad</h3>
+              <p class="text-sm text-cream/70 mt-2">Slow-cooked traditional rice pudding served chilled in clay cups.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 220</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Kheer%20in%20Kulhad" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+        <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
+          <div>
+            <div class="h-48 overflow-hidden">
+              <img src="assets/molten-chocolate-lava-cake-with-oozing-center.jpg" alt="Chocolate Lava Cake" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-5">
+              <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
+              <h3 class="font-serif text-xl font-bold text-cream mt-1">Chocolate Lava Cake</h3>
+              <p class="text-sm text-cream/70 mt-2">Rich chocolate cake with a warm, gooey molten chocolate center.</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex items-center justify-between border-t border-gold/5 mt-4">
+            <span class="text-lg font-bold text-gold">Rs. 450</span>
+            <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order%20Chocolate%20Lava%20Cake" target="_blank" class="bg-gold/10 hover:bg-gold text-gold hover:text-primary border border-gold/30 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300">Order</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-24 bg-darker relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- About Text -->
+        <div class="lg:col-span-7 reveal">
+          <span class="text-gold uppercase tracking-widest text-sm font-semibold">Our Story</span>
+          <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 mb-6 text-cream">From a Small Dhaba to Karachi's Premium Spot</h2>
+          <p class="text-cream/80 text-lg leading-relaxed mb-6">
+            In 2019, Chai Khana started as a humble roadside dhaba with just two kettles and a dream to serve the absolute best tea in town. Today, we have evolved into a premium modern desi café in the heart of Gulshan-e-Iqbal, serving hundreds of families and students every evening.
+          </p>
+          <p class="text-cream/80 text-lg leading-relaxed mb-8">
+            Whether you're looking to share a quiet evening with family or catch up with friends over hot, crispy parathas and strong Karak Chai, Chai Khana provides the perfect cosy, modern, and hygienic environment.
+          </p>
+          
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-gold/20">
+            <div>
+              <span class="block font-serif text-3xl sm:text-4xl font-extrabold text-gold">6+</span>
+              <span class="text-xs sm:text-sm text-cream/60 uppercase tracking-wider">Years of Love</span>
+            </div>
+            <div>
+              <span class="block font-serif text-3xl sm:text-4xl font-extrabold text-gold">40+</span>
+              <span class="text-xs sm:text-sm text-cream/60 uppercase tracking-wider">Menu Items</span>
+            </div>
+            <div>
+              <span class="block font-serif text-3xl sm:text-4xl font-extrabold text-gold">500+</span>
+              <span class="text-xs sm:text-sm text-cream/60 uppercase tracking-wider">Cups a Day</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual Highlight / Decorative element -->
+        <div class="lg:col-span-5 relative flex justify-center items-center reveal">
+          <div class="relative w-full max-w-md aspect-square rounded-full border border-gold/20 flex items-center justify-center p-8 bg-primary/40 backdrop-blur-sm">
+            <div class="absolute inset-0 border border-gold/10 rounded-full animate-pulse"></div>
+            <div class="text-center">
+              <span class="font-serif text-8xl text-gold/20 block font-black">CHAI</span>
+              <span class="font-serif text-3xl text-gold font-bold block -mt-4">K H A N A</span>
+              <p class="text-xs text-cream/50 mt-4 tracking-widest uppercase">Est. 2019 • Karachi</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-24 bg-primary">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Atmosphere</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Vibes At Chai Khana</h2>
+        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <!-- Gallery Grid (6 Photos) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
+          <img src="assets/modern-desi-cafe-at-night-cozy-lighting.jpg" alt="Café at night" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-serif text-xl font-bold text-cream">Café at Night</p>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
+          <img src="assets/pouring-hot-milk-tea-into-glass-cup-from-high-up.jpg" alt="Chai being poured" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-serif text-xl font-bold text-cream">Fresh Brewed Karak</p>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
+          <img src="assets/flaky-golden-parathas-on-a-plate.jpg" alt="Parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-serif text-xl font-bold text-cream">Crispy Parathas</p>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
+          <img src="assets/friends-smiling-and-sharing-chai-at-a-cafe-table.jpg" alt="Friends at table" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-serif text-xl font-bold text-cream">Shared Moments</p>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
+          <img src="assets/traditional-clay-kulhad-cups-stacked-on-a-counter.jpg" alt="Kulhad cups" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-serif text-xl font-bold text-cream">Traditional Kulhad</p>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
+          <img src="assets/modern-cafe-kitchen-counter-with-espresso-machine-.jpg" alt="Our counter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+            <p class="font-serif text-xl font-bold text-cream">Our Counter</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section id="reviews" class="py-24 bg-darker">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Testimonials</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">What Our Guests Say</h2>
+        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-primary/40 border border-gold/10 p-8 rounded-3xl shadow-xl flex flex-col justify-between reveal">
+          <div>
+            <!-- Stars -->
+            <div class="flex space-x-1 text-gold mb-6">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="text-cream/80 italic leading-relaxed mb-6">"The Karak Chai is absolutely spot on! It's rich, fragrant, and perfect for late-night hangouts. Their Cheese Paratha is highly recommended too."</p>
+          </div>
+          <div class="border-t border-gold/10 pt-4">
+            <h4 class="font-bold text-cream">Customer A</h4>
+            <span class="text-xs text-gold">Gulshan Resident</span>
+          </div>
+        </div>
+
+        <div class="bg-primary/40 border border-gold/10 p-8 rounded-3xl shadow-xl flex flex-col justify-between reveal">
+          <div>
+            <!-- Stars -->
+            <div class="flex space-x-1 text-gold mb-6">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="text-cream/80 italic leading-relaxed mb-6">"Chai Khana has become our family's favorite weekend spot. The environment is extremely decent, clean, and the service is very quick."</p>
+          </div>
+          <div class="border-t border-gold/10 pt-4">
+            <h4 class="font-bold text-cream">Customer B</h4>
+            <span class="text-xs text-gold">University Student</span>
+          </div>
+        </div>
+
+        <div class="bg-primary/40 border border-gold/10 p-8 rounded-3xl shadow-xl flex flex-col justify-between reveal">
+          <div>
+            <!-- Stars -->
+            <div class="flex space-x-1 text-gold mb-6">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p class="text-cream/80 italic leading-relaxed mb-6">"Best pink tea in Karachi! The Kheer in Kulhad also reminded me of traditional village weddings. 10/10 for food quality and pricing."</p>
+          </div>
+          <div class="border-t border-gold/10 pt-4">
+            <h4 class="font-bold text-cream">Customer C</h4>
+            <span class="text-xs text-gold">Food Enthusiast</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Book a Table Section -->
+  <section id="book" class="py-24 bg-primary relative overflow-hidden">
+    <!-- Overlay decoration -->
+    <div class="absolute inset-0 bg-cover bg-center opacity-5" style="background-image: url('https://loremflickr.com/800/600/steaming,karak,chai');"></div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-12 reveal">
+        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Reservations</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Book a Table</h2>
+        <p class="text-cream/70 mt-4 max-w-md mx-auto">Plan a cozy evening with your loved ones. Fill out the details below and we'll confirm via WhatsApp instantly.</p>
+        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <!-- Booking Form -->
+      <form id="booking-form" class="bg-darker/80 backdrop-blur-md border border-gold/20 p-8 sm:p-12 rounded-3xl shadow-2xl space-y-6 reveal">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-cream/80 mb-2">Full Name</label>
+            <input type="text" id="name" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream placeholder-cream/40 focus:outline-none transition-colors" placeholder="Bilal Ahmed">
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-cream/80 mb-2">Phone Number</label>
+            <input type="tel" id="phone" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream placeholder-cream/40 focus:outline-none transition-colors" placeholder="0300-1234567">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div>
+            <label for="date" class="block text-sm font-medium text-cream/80 mb-2">Date</label>
+            <input type="date" id="date" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream focus:outline-none transition-colors">
+          </div>
+          <div>
+            <label for="time" class="block text-sm font-medium text-cream/80 mb-2">Time</label>
+            <input type="time" id="time" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream focus:outline-none transition-colors">
+          </div>
+          <div>
+            <label for="people" class="block text-sm font-medium text-cream/80 mb-2">Number of People</label>
+            <input type="number" id="people" min="1" max="20" required class="w-full bg-primary border border-gold/20 focus:border-gold rounded-xl px-4 py-3 text-cream placeholder-cream/40 focus:outline-none transition-colors" placeholder="4">
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <button type="submit" class="w-full bg-gold hover:bg-goldDark text-primary font-bold text-lg py-4 rounded-xl transition-all duration-300 glow-gold">
+            Book via WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Visit Us Section -->
+  <section id="visit" class="py-24 bg-darker">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <span class="text-gold uppercase tracking-widest text-sm font-semibold">Find Us</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold mt-2 text-cream">Visit Our Café</h2>
+        <div class="w-24 h-1 bg-gold mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Address details -->
+        <div class="lg:col-span-5 space-y-8 reveal">
+          <div>
+            <h3 class="font-serif text-2xl font-bold text-cream mb-3">Our Location</h3>
+            <p class="text-cream/80 text-lg leading-relaxed">
+              Block 13-D, Gulshan-e-Iqbal,<br>
+              Karachi, Pakistan.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-serif text-2xl font-bold text-cream mb-3">Opening Hours</h3>
+            <p class="text-cream/80 text-lg leading-relaxed">
+              Open Daily: <span class="text-gold font-semibold">4:00 PM to 2:00 AM</span>
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-serif text-2xl font-bold text-cream mb-3">Contact Info</h3>
+            <p class="text-cream/80 text-lg leading-relaxed">
+              Phone/WhatsApp: <a href="tel:0300-1234567" class="text-gold hover:underline">0300-1234567</a><br>
+              Instagram: <a href="https://instagram.com/chaikhana.khi" target="_blank" class="text-gold hover:underline">@chaikhana.khi</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Google Maps Embed -->
+        <div class="lg:col-span-7 h-96 rounded-3xl overflow-hidden border border-gold/20 shadow-2xl reveal">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.3181822365287!2d67.0780287!3d24.9126207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f1694d6e159%3A0x647f3b8908f5115c!2sBlock%2013%20D%201%20Gulshan-e-Iqbal%2C%20Karachi!5e0!3m2!1sen!2spk!4v1700000000000" 
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary border-t border-gold/20 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- Logo -->
+      <a href="#" class="font-serif text-2xl font-extrabold tracking-wide text-gold">
+        Chai Khana
+      </a>
+
+      <!-- Socials & Info -->
+      <div class="flex space-x-6 text-sm text-cream/70">
+        <a href="https://instagram.com/chaikhana.khi" target="_blank" class="hover:text-gold transition-colors">Instagram</a>
+        <a href="tel:0300-1234567" class="hover:text-gold transition-colors">0300-1234567</a>
+      </div>
+
+      <p class="text-sm text-cream/50 text-center md:text-right">
+        © 2026 Chai Khana. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Floating Round WhatsApp Button (Revision Round Addition) -->
+  <a href="https://wa.me/923001234567?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20order" 
+     target="_blank" 
+     class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center animate-bounce"
+     aria-label="Contact on WhatsApp">
+    <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3 1.503 4.94 1.505 5.548 0 10.064-4.512 10.068-10.066.002-2.693-1.047-5.224-2.955-7.133C16.83 1.55 14.3 1.502 11.622 1.502c-5.552 0-10.069 4.513-10.073 10.068-.001 1.843.491 3.645 1.424 5.248l-.992 3.626 3.71-.973zm11.367-7.36c-.302-.15-1.786-.881-2.062-.982-.277-.1-.478-.15-.679.15-.2.3-.777.982-.953 1.183-.176.2-.351.224-.653.075-.302-.15-1.273-.469-2.426-1.494-.897-.8-1.502-1.79-1.278-2.19.176-.3.176-.462.327-.613.15-.15.302-.35.452-.525.15-.174.2-.3.302-.5.101-.2.05-.376-.026-.525-.075-.15-.679-1.636-.93-2.246-.244-.589-.493-.51-.679-.519-.176-.01-.377-.01-.578-.01-.2 0-.527.075-.803.376-.277.3-1.054 1.03-1.054 2.512s1.08 2.917 1.23 3.117c.15.2 2.124 3.244 5.146 4.545.719.31 1.28.496 1.718.635.722.23 1.38.197 1.9.12.58-.087 1.786-.73 2.037-1.435.251-.704.251-1.306.176-1.435-.075-.129-.276-.204-.577-.354z"/>
+    </svg>
+  </a>
+
+  <!-- Scripts -->
+  <script type="module">
+    import * as THREE from 'three';
+
+    // Interactive Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      } else {
+        menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+      }
+    });
+
+    // Close mobile menu on clicking any link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      });
+    });
+
+    // Scroll Reveal Intersection Observer
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Menu Filtering Logic
+    window.filterMenu = function(category) {
+      // Update tabs UI
+      const tabs = document.querySelectorAll('.menu-tab');
+      tabs.forEach(tab => {
+        tab.className = "menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-darker text-cream hover:bg-gold/10 border border-gold/20";
+      });
+
+      // Highlight active tab
+      const activeTab = event.currentTarget;
+      activeTab.className = "menu-tab px-6 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 bg-gold text-primary font-bold";
+
+      // Filter Cards
+      const cards = document.querySelectorAll('.menu-item-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 50);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+    };
+
+    // Card Tilt Effect
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xc = rect.width / 2;
+        const yc = rect.height / 2;
+        const dx = x - xc;
+        const dy = y - yc;
+        card.style.transform = `perspective(1000px) rotateX(${-dy / 25}deg) rotateY(${dx / 25}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+
+    // Booking Form Handler
+    const bookingForm = document.getElementById('booking-form');
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const people = document.getElementById('people').value;
+
+      const message = `Assalam o Alaikum, I want to book a table under the name ${name} on ${date} at ${time} for ${people} people. My contact is ${phone}.`;
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://wa.me/923001234567?text=${encodedMessage}`, '_blank');
+    });
+
+    // Three.js Warm Steam/Spark Particles Setup
+    try {
+      const container = document.getElementById('hero-canvas-container');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Particle Geometry
+      const particleCount = 120;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const speeds = [];
+
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        // Spread particles across the hero space
+        positions[i] = (Math.random() - 0.5) * 10;     // X
+        positions[i + 1] = (Math.random() - 0.5) * 6; // Y
+        positions[i + 2] = (Math.random() - 0.5) * 5; // Z
+        speeds.push(0.005 + Math.random() * 0.01);
+      }
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      // Particle Material (Warm Golden Amber Sparks)
+      const material = new THREE.PointsMaterial({
+        color: 0xE3A33B,
+        size: 0.08,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
+      });
+
+      const particleSystem = new THREE.Points(geometry, material);
+      scene.add(particleSystem);
+
+      camera.position.z = 5;
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const positions = particleSystem.geometry.attributes.position.array;
+
+        for (let i = 0; i < particleCount; i++) {
+          const index = i * 3;
+          // Move particles upwards to mimic steam/sparks
+          positions[index + 1] += speeds[i];
+          // Gentle side sway
+          positions[index] += Math.sin(positions[index + 1] + i) * 0.002;
+
+          // Reset particles when they go too high
+          if (positions[index + 1] > 3) {
+            positions[index + 1] = -3;
+            positions[index] = (Math.random() - 0.5) * 10;
+          }
+        }
+
+        particleSystem.geometry.attributes.position.needsUpdate = true;
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    } catch (error) {
+      console.warn("Three.js initialization failed, falling back to CSS animations.", error);
+    }
+  </script>
+
+<!-- BrightStack portfolio -->
+<div style="font:13px/1.4 system-ui,sans-serif;text-align:center;padding:14px 12px;background:#111;color:#bbb">Designed &amp; built by BrightStack Co. — Hassan Saeed · <a href="../web-design-collection.html" style="color:#fff">More web design work</a> · <a href="../index.html" style="color:#fff">Portfolio</a></div>
+</body>
 </html>
