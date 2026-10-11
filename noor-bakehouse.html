@@ -117,6 +117,11 @@
     .cart-drawer{width:100%;right:-100%;}
     .configurator-banner{flex-direction:column;align-items:flex-start;}
   }
+  /* Demo notice: ordering isn't live on this demo site */
+  .demo-note{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2100;width:calc(100% - 32px);max-width:420px;background:var(--paper);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;box-shadow:0 20px 50px rgba(0,0,0,0.3);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .demo-note[hidden]{display:none;}
+  .demo-note p{font-family:'Fraunces',serif;font-size:16px;color:var(--plum);}
+  .demo-note button{background:var(--plum);color:var(--paper);border:none;border-radius:2px;padding:8px 18px;font-family:'Work Sans',sans-serif;font-size:14px;cursor:pointer;}
 </style>
 <meta name="description" content="Reserve freshly baked sourdough loaves and pastries with Noor Bakehouse's morning slot system. A demo by BrightStack Co.">
 </head>
@@ -309,6 +314,14 @@
   </div>
 </div>
 
+<!-- Demo notice: ordering isn't live on this demo site -->
+<div role="status" aria-live="polite">
+  <div class="demo-note" id="demoNote" hidden>
+    <p id="demoNoteText"></p>
+    <button type="button" id="demoNoteClose" onclick="hideDemoNote()">OK</button>
+  </div>
+</div>
+
 <!-- Digital Thermal Receipt Modal -->
 <div class="modal-overlay" id="receiptModal">
   <div class="modal">
@@ -415,14 +428,23 @@
     updateCartUI();
   }
 
+  // Demo site: ordering isn't live, so "Reserve via WhatsApp" shows a note instead of opening WhatsApp.
+  let demoNoteReturn = null;
   function checkoutWhatsApp(){
-    if(cart.length === 0){ alert('Your bag is empty.'); return; }
-    let totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-    let selectedSlot = document.getElementById('pickupSlot').value;
-    let itemsText = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
-    let msg = encodeURIComponent(`Hello Noor Bakehouse! I'd like to reserve slot [${selectedSlot}] for: ${itemsText}. Total: Rs. ${totalPrice}.`);
-    window.open(`https://wa.me/923000000000?text=${msg}`, '_blank');
+    demoNoteReturn = document.activeElement;
+    document.getElementById('demoNote').hidden = false;
+    const text = document.getElementById('demoNoteText');
+    text.textContent = '';
+    setTimeout(() => { text.textContent = 'Demo site - ordering is not live'; }, 50);
+    document.getElementById('demoNoteClose').focus();
   }
+  function hideDemoNote(){
+    document.getElementById('demoNote').hidden = true;
+    document.getElementById('demoNoteText').textContent = '';
+    if(demoNoteReturn && demoNoteReturn.focus) demoNoteReturn.focus();
+    demoNoteReturn = null;
+  }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && !document.getElementById('demoNote').hidden) hideDemoNote(); });
 
   function closeReceipt(){
     document.getElementById('receiptModal').style.display = 'none';

@@ -6,13 +6,12 @@ import AxeBuilder from '@axe-core/playwright'
 const PAGES = [...readdirSync('.').filter(f => f.endsWith('.html')), 'chai-khana/index.html']
 
 // Known third-party failures that aren't bugs in this repo. Keep this list short and explained.
-const KNOWN_FAILURES = [
-  /loremflickr\.com/, // Chai Khana placeholder photos, waiting on real images
-]
+const KNOWN_FAILURES = []
 
-// Pages that render WebGL (three.js) scenes. With several test workers rendering WebGL in software, the
-// accessibility scan on these can take longer than the default 30 s, so that test gets more time.
-const HEAVY_3D = PAGES.filter(f => /THREE\.|WebGLRenderer|getContext\(['"]webgl/.test(readFileSync(f, 'utf8')))
+// While other test workers render the site's WebGL (three.js) pages in software, an accessibility scan
+// can take longer than the default 30 s, on those pages and on any page tested alongside them (seen on
+// vantage-autonomous-agent, which has no 3D itself), so every accessibility test gets more time.
+const ACCESSIBILITY_TIMEOUT = 90_000
 
 for (const page of PAGES) {
   test.describe(page, () => {
@@ -32,7 +31,7 @@ for (const page of PAGES) {
     })
 
     test('has no serious accessibility violations', async ({ page: p }) => {
-      if (HEAVY_3D.includes(page)) test.setTimeout(90_000)
+      test.setTimeout(ACCESSIBILITY_TIMEOUT)
       await p.goto(page, { waitUntil: 'load' })
       await p.waitForTimeout(1000)
       const { violations } = await new AxeBuilder({ page: p }).withTags(['wcag2a', 'wcag2aa']).analyze()
