@@ -220,7 +220,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
       <div class="stage" id="stage">
         <div class="glow" id="glow"></div><div class="floor"></div>
         <div class="tw" id="tw"><div class="phone" id="phone"><div class="island"></div><div class="screen" id="screen"></div></div></div>
-        <div class="cap"><div><h3 id="capT"></h3><p id="capD"></p></div><a class="btn btn-g" id="capB" href="#">Open project</a></div>
+        <div class="cap"><div><h3 id="capT"></h3><p id="capD"></p></div><a class="btn btn-g" id="capB" href="nomad-prototype.html">Open project</a></div>
       </div>
     </div>
   </section>
@@ -280,9 +280,9 @@ const P = [
   ['Nimbus', 'premium', 'nimbus-smart-home.html', 'Smart home control: a full case study with working toggles and a draggable slider.', 'case study, interactive', '#d16b6b', ['#10111c', '#1c1e30', '#eceeff', '#e0818a'], U.h('Home', '4 devices on') + U.tiles([['Living room', 1], ['Thermostat', 0], ['Front door', 1], ['Speakers', 0]]) + U.sl()],
   ['Vela', 'premium', 'vela-case-study.html', 'First-time investing: a full case study from research to UI, plus usability notes.', 'case study', '#d16b6b', ['#0b0f1a', '#151c30', '#eef2ff', '#7c7ff5'], U.h('Portfolio', '$4,280') + U.chart([22, 30, 26, 40, 46, 42, 58, 66, 74]) + U.rows([['Index fund', '+6.2%'], ['Savings', '+2.1%']])],
   ['Aviary', 'premium', 'aviary-case-study.html', 'Travel booking: a realistic prototype with loading states, save gestures and a seat picker.', 'case study, animated', '#d16b6b', ['#0d1a27', '#172c40', '#e8f4ff', '#4cc3ff'], U.h('Choose a seat', 'Flight 214') + U.seats() + U.btn('Confirm seat 3C')],
-  ['Pillbox', 'premium', 'uiux-case-study.html', 'Medication reminders: a research-framed case study for cognitive overload.', 'case study', '#d16b6b', ['#f4f7f3', '#fff', '#1f2a24', '#3fae8a'], U.h('Today', '2 of 4 taken') + U.rows([['Morning', '8:00'], ['Midday', '12:30'], ['Evening', '18:00'], ['Night', '22:00']]) + U.btn('Mark as taken')],
+  ['Pillbox', 'premium', 'pill-box.html', 'Medication reminders: a research-framed case study for cognitive overload.', 'case study', '#d16b6b', ['#f4f7f3', '#fff', '#1f2a24', '#3fae8a'], U.h('Today', '2 of 4 taken') + U.rows([['Morning', '8:00'], ['Midday', '12:30'], ['Evening', '18:00'], ['Night', '22:00']]) + U.btn('Mark as taken')],
   ['Cadence', 'explore', 'cadence-beatmaker.html', '8-track beat sequencer with real synthesis, live spectrum analysis, swing and mute/solo.', 'plays real audio', '#e0a458', ['#120d06', '#241909', '#fff2dc', '#e0a458'], U.h('Beat 01', '120 bpm') + U.steps() + U.btn('Play')],
-  ['Ledger Pro', 'explore', '#', 'Analytics dashboard: light, data-dense desktop SaaS with self-drawing charts. A planned concept.', 'planned concept', '#2563eb', ['#f5f7fb', '#fff', '#14213d', '#2563eb'], U.h('Revenue', '$84.2k this month') + U.chart([30, 36, 34, 48, 52, 50, 66, 72]) + U.rows([['New customers', '+128'], ['Churn', '1.8%']])]
+  ['Ledger Pro', 'explore', '', 'Analytics dashboard: light, data-dense desktop SaaS with self-drawing charts. A planned concept.', 'planned concept', '#2563eb', ['#f5f7fb', '#fff', '#14213d', '#2563eb'], U.h('Revenue', '$84.2k this month') + U.chart([30, 36, 34, 48, 52, 50, 66, 72]) + U.rows([['New customers', '+128'], ['Churn', '1.8%']])]
 ];
 const TL = { basic: 'Basic', standard: 'Standard', premium: 'Premium', explore: 'Explore' };
 const list = $('list'), rows = [];
@@ -303,7 +303,7 @@ function pick(i){
   const ph = $('phone'); ph.style.animation = 'none'; void ph.offsetWidth; ph.style.animation = '';
   const g = $('glow'); g.style.animation = 'none'; void g.offsetWidth; g.style.animation = '';
   $('capT').textContent = p[0];$('capD').textContent = p[3];
-  const a = $('capB'), off = p[2] === '#'; a.href = off ? '#' : p[2]; a.textContent = off ? 'Coming soon' : 'Open project'; a.classList.toggle('off', off);
+  const a = $('capB'), off = !p[2]; if(off) a.removeAttribute('href'); else a.href = p[2]; a.textContent = off ? 'In progress' : 'Open project'; a.classList.toggle('off', off);
 }
 $('seg').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return;
   document.querySelectorAll('#seg button').forEach(x => x.classList.toggle('on', x === b));

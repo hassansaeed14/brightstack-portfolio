@@ -97,7 +97,7 @@ footer{border-top:1px solid var(--line);padding:22px 0;text-align:center;color:v
 <section class="tour" id="tour"><div class="pin"><div class="cap" id="cap" aria-live="polite">
   <div class="c"><span id="cn">01 / 05</span><span>Scroll to turn the ring</span></div>
   <div class="k" id="ck"></div><h2 id="ch"></h2><p id="cp"></p>
-  <div class="cr"><span class="tr" id="ct"></span><a class="btn bi" style="padding:9px 18px" id="cl" href="#">Open site →</a><div class="dots" id="dots"></div></div>
+  <div class="cr"><span class="tr" id="ct"></span><a class="btn bi" style="padding:9px 18px" id="cl" href="larkspur-photography.html">Open site →</a><div class="dots" id="dots"></div></div>
 </div></div></section>
 
 <div class="rest"><div class="w">
@@ -122,7 +122,7 @@ var D=[
  {n:'Larkspur',t:'Basic',k:'Portrait & wedding photography',h:'larkspur-photography.html',a:'#A3491F',d:'A single-page site for a solo photographer, built around a film contact-sheet strip. Warm rust and bone palette, italic serif headings, and an enquiry form that is the whole conversion path.'},
  {n:'Noor Bakehouse',t:'Standard',k:'Neighbourhood bakery',h:'noor-bakehouse.html',a:'#4A1F2E',d:'A storefront site with a daily-bake ticket as its centrepiece. Plum and gold, a dashed-stamp motif, and an ordering call to action in every section.'},
  {n:'Momentum Studio',t:'Premium',k:'Strength & conditioning studio',h:'momentum-fitness.html',a:'#FF4B3E',d:'Built around a weekly class schedule board, colour-coded by intensity like the whiteboard on the gym wall. Trainer profiles, membership tiers and testimonials.'},
- {n:'Ledgerly',t:'Premium',k:'SaaS product marketing',h:'#',a:'#4338CA',d:'A conversion-focused product site for a freelancer budgeting app: dashboard mock in the hero, three-tier pricing and an interactive FAQ. Planned concept, not built yet.'},
+ {n:'Ledgerly',t:'Premium',k:'SaaS product marketing',h:'',a:'#4338CA',d:'A conversion-focused product site for a freelancer budgeting app: dashboard mock in the hero, three-tier pricing and an interactive FAQ. Planned concept, not built yet.'},
  {n:'Chai Khana',t:'Premium',k:'Late-night desi tea café',h:'chai-khana/index.html',a:'#E3A33B',d:'A late-night café site celebrating Karachi\'s chai culture. Deep roasted brown and saffron gold palette, an interactive categorized menu, student combo deals, and direct WhatsApp table booking.'}];
 
 /* caption */
@@ -130,7 +130,7 @@ var idx=-1,dots=$('dots');
 D.forEach(function(s,i){var b=document.createElement('button');b.setAttribute('aria-label','Show '+s.n);b.onclick=function(){var T=$('tour');scrollTo({top:T.offsetTop+i/4*(T.offsetHeight-innerHeight),behavior:RM?'auto':'smooth'})};dots.appendChild(b)});
 function cap(i){if(i==idx)return;idx=i;var s=D[i],c=$('cap');c.style.setProperty('--ac',s.a);
   $('cn').textContent='0'+(i+1)+' / 05';$('ck').textContent=s.k;$('ch').textContent=s.n;$('cp').textContent=s.d;$('ct').textContent=s.t;
-  var l=$('cl'),off=s.h=='#';l.href=s.h;l.textContent=off?'Coming soon':'Open site →';l.classList.toggle('off',off);
+  var l=$('cl'),off=!s.h;if(off)l.removeAttribute('href');else l.href=s.h;l.textContent=off?'In progress':'Open site →';l.classList.toggle('off',off);
   [].forEach.call(dots.children,function(b,k){b.classList.toggle('on',k==i)})}
 cap(0);
 
