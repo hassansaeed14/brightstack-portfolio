@@ -1,0 +1,4 @@
+/* Tailwind for the Chai Khana page, compiled at build time with chai-khana/tailwind.config.js. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

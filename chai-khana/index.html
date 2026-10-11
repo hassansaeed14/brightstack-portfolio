@@ -10,28 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#2B1B12',   // Dark warm brown
-            cream: '#F5E6D3',     // Cream text/accent
-            gold: '#E3A33B',      // Saffron/gold
-            goldDark: '#B87D22',
-            darker: '#1E120C'     // Even darker brown for deep contrast
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['Poppins', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
-
   <!-- Custom Styles for Scroll Reveal, Glows and Custom Utilities -->
   <style>
     /* Smooth Scroll Reveal */
@@ -84,6 +62,9 @@
       animation: steam 4s infinite ease-in-out;
     }
   </style>
+
+  <!-- Tailwind CSS (compiled at build time from tailwind.css and tailwind.config.js) -->
+  <link rel="stylesheet" href="./tailwind.css">
 
   <!-- Three.js Import Map -->
   <script type="importmap">
@@ -632,14 +613,14 @@
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/friends-smiling-and-sharing-chai-at-a-cafe-table.jpg" alt="Friends at table" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.jpg" alt="Chai served with parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Shared Moments</p>
           </div>
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/traditional-clay-kulhad-cups-stacked-on-a-counter.jpg" alt="Kulhad cups" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/karak-chai-and-aloo-paratha-on-brass-plate.jpg" alt="Karak chai in a clay kulhad" class="w-full h-full object-cover object-right group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Traditional Kulhad</p>
           </div>
