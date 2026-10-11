@@ -3,6 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script>
+// Pause every requestAnimationFrame loop on this page while the tab is hidden, including the ones inside
+// libraries: a frame requested while hidden is held back and scheduled once the tab is visible again.
+(function(){
+  var raf = window.requestAnimationFrame.bind(window), caf = window.cancelAnimationFrame.bind(window);
+  var held = new Map(), released = new Map(), nextId = 0;
+  window.requestAnimationFrame = function(cb){
+    if(!document.hidden) return raf(cb);
+    var id = --nextId; held.set(id, cb); return id;
+  };
+  window.cancelAnimationFrame = function(id){
+    if(held.delete(id)) return;
+    if(released.has(id)){ caf(released.get(id)); released.delete(id); return; }
+    caf(id);
+  };
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) return;
+    held.forEach(function(cb, id){ released.set(id, raf(function(t){ released.delete(id); cb(t); })); });
+    held.clear();
+  });
+})();
+</script>
 <title>BrightStack Co. — Creative Digital Studio</title>
 <meta name="description" content="BrightStack Co. creates digital products, websites, web applications, UI/UX experiences and intelligent automation systems.">
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/">
@@ -637,9 +659,8 @@ if(fine && !reduce){
     setTimeout(() => { setScene(false); }, 1500);
   }
 
-  // The Spline viewer (~650 KB) isn't needed for the default Stack scene, so it's fetched
-  // in the background once the page has finished loading and is idle (skipped on
-  // data-saver or 2G connections), or on the first click of "Spline", whichever comes first.
+  // The Spline viewer (~650 KB) isn't needed for the default Stack scene, so it's only
+  // fetched when the visitor clicks "Spline".
   const SPLINE_VIEWER = 'https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js';
   let viewerReady = null;
   function loadViewer(){
@@ -651,11 +672,6 @@ if(fine && !reduce){
       customElements.whenDefined('spline-viewer').then(resolve);
     });
     return viewerReady;
-  }
-  const conn = navigator.connection;
-  if (!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')))) {
-    const prefetch = () => (window.requestIdleCallback || (cb => setTimeout(cb, 1500)))(() => loadViewer().catch(() => {}), { timeout: 4000 });
-    if (document.readyState === 'complete') prefetch(); else addEventListener('load', prefetch, { once: true });
   }
 
   function loadSpline(){

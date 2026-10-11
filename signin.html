@@ -3,6 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+// Pause every requestAnimationFrame loop on this page while the tab is hidden, including the ones inside
+// libraries: a frame requested while hidden is held back and scheduled once the tab is visible again.
+(function(){
+  var raf = window.requestAnimationFrame.bind(window), caf = window.cancelAnimationFrame.bind(window);
+  var held = new Map(), released = new Map(), nextId = 0;
+  window.requestAnimationFrame = function(cb){
+    if(!document.hidden) return raf(cb);
+    var id = --nextId; held.set(id, cb); return id;
+  };
+  window.cancelAnimationFrame = function(id){
+    if(held.delete(id)) return;
+    if(released.has(id)){ caf(released.get(id)); released.delete(id); return; }
+    caf(id);
+  };
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) return;
+    held.forEach(function(cb, id){ released.set(id, raf(function(t){ released.delete(id); cb(t); })); });
+    held.clear();
+  });
+})();
+</script>
 <title>Sign in — BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/signin.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">

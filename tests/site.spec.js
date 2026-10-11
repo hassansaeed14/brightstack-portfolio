@@ -10,6 +10,10 @@ const KNOWN_FAILURES = [
   /loremflickr\.com/, // Chai Khana placeholder photos, waiting on real images
 ]
 
+// Pages that render WebGL (three.js) scenes. With several test workers rendering WebGL in software, the
+// accessibility scan on these can take longer than the default 30 s, so that test gets more time.
+const HEAVY_3D = PAGES.filter(f => /THREE\.|WebGLRenderer|getContext\(['"]webgl/.test(readFileSync(f, 'utf8')))
+
 for (const page of PAGES) {
   test.describe(page, () => {
     test('loads without script errors or failed requests', async ({ page: p }) => {
@@ -28,6 +32,7 @@ for (const page of PAGES) {
     })
 
     test('has no serious accessibility violations', async ({ page: p }) => {
+      if (HEAVY_3D.includes(page)) test.setTimeout(90_000)
       await p.goto(page, { waitUntil: 'load' })
       await p.waitForTimeout(1000)
       const { violations } = await new AxeBuilder({ page: p }).withTags(['wcag2a', 'wcag2aa']).analyze()
@@ -71,13 +76,16 @@ test.describe('home page', () => {
     }
   })
 
-  test('does not download the Spline viewer before the page has loaded', async ({ page }) => {
-    const early = []
-    page.on('request', r => { if (r.url().includes('spline-viewer')) early.push(r.url()) })
-    await page.goto('index.html', { waitUntil: 'domcontentloaded' })
-    await page.waitForLoadState('load')
-    const atLoad = early.length
-    expect(atLoad).toBe(0)
+  test('downloads the Spline viewer only when the visitor clicks "Spline"', async ({ page }) => {
+    const requests = []
+    // Serve an empty stub so the test doesn't depend on the CDN: only whether it's requested matters.
+    await page.route(/spline-viewer/, route => { requests.push(route.request().url()); return route.fulfill({ contentType: 'text/javascript', body: '' }) })
+    await page.goto('index.html', { waitUntil: 'load' })
+    // Wait well past when the old idle prefetch fired (about 5.5 s after load).
+    await page.waitForTimeout(8000)
+    expect(requests).toEqual([])
+    await page.click('button[data-scene="spline"]')
+    await expect.poll(() => requests.length).toBe(1)
   })
 
   test('turns smooth scrolling off for reduced motion', async ({ page }) => {
