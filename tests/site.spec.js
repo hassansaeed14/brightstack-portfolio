@@ -93,6 +93,41 @@ test.describe('home page', () => {
     await page.waitForTimeout(500)
     expect(await page.evaluate(() => document.documentElement.classList.contains('lenis'))).toBe(false)
   })
+
+  // #contact is the last section, so the page may not scroll far enough to put it at the very top:
+  // these check that the section is brought into view instead. The smooth scroll can be slow on a busy machine,
+  // so the in-view checks allow up to 15 s.
+  test('the nav "Contact" link and "Start a conversation" both reach the contact section', async ({ page }) => {
+    await page.goto('index.html', { waitUntil: 'load' })
+    await page.waitForTimeout(2500)
+    const heading = page.getByRole('heading', { name: "Let's talk about your project." })
+    await page.click('nav a[href="#contact"]')
+    await expect(heading).toBeInViewport({ timeout: 15_000 })
+    await page.evaluate(() => scrollTo(0, 0)); await page.waitForTimeout(1500)
+    await expect(heading).not.toBeInViewport()
+    await page.getByRole('link', { name: /Start a conversation/ }).click()
+    await expect(heading).toBeInViewport({ timeout: 15_000 })
+  })
+
+  test('the phone menu "Contact" link reaches the contact section', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('index.html', { waitUntil: 'load' })
+    await page.waitForTimeout(2500)
+    await page.getByRole('button', { name: 'Open navigation' }).click()
+    await page.click('nav a[href="#contact"]')
+    await expect(page.locator('#contact')).toBeInViewport({ timeout: 15_000 })
+  })
+
+  test('contact links use the exact addresses', async ({ page }) => {
+    await page.goto('index.html', { waitUntil: 'load' })
+    const links = await page.$$eval('#contact a', as => as.map(a => ({ href: a.getAttribute('href'), target: a.getAttribute('target'), rel: a.getAttribute('rel') })))
+    expect(links).toEqual([
+      { href: 'mailto:19hsnkhan@gmail.com?subject=Project%20enquiry%20%E2%80%94%20BrightStack', target: null, rel: null },
+      { href: "https://wa.me/923175091910?text=Hi%20BrightStack%2C%20I'd%20like%20to%20talk%20about%20a%20project.", target: '_blank', rel: 'noopener' },
+      { href: 'https://www.fiverr.com/brightstackco', target: '_blank', rel: 'noopener' },
+    ])
+    expect(decodeURIComponent(links[0].href.split('subject=')[1])).toBe('Project enquiry — BrightStack')
+  })
 })
 
 test('Nexora converter shows USD to PKR from the rates API', async ({ page }) => {
