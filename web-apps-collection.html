@@ -103,6 +103,7 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-.02em}
 .tier ul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:9px;color:var(--muted);font-size:13.5px}
 .tier li::before{content:"▪ ";color:var(--cyan)}
 .tier small{display:block;border-top:1px solid var(--line);padding-top:12px;font:11.5px 'IBM Plex Mono';color:var(--muted)}
+.tier small a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .gap{border-left:3px solid var(--amber);background:color-mix(in srgb,var(--amber) 10%,transparent);padding:14px 18px;font-size:13.5px;max-width:680px;border-radius:0 12px 12px 0;margin:0 0 90px}
 .close{text-align:center;padding:70px 0 90px;border-top:1px solid var(--line)}
 .close h2{font-size:clamp(28px,4vw,42px);margin-bottom:12px}.close p{color:var(--muted);max-width:520px;margin:0 auto 28px}
@@ -165,7 +166,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;color:v
   <section class="rv" style="padding-top:100px">
     <div class="sh"><h2>What each tier buys</h2></div>
     <div class="tiers">
-      <div class="tier"><h3>Basic</h3><div class="p">$150</div><ul><li>Single dashboard screen</li><li>Static or mock data</li><li>Fully responsive layout</li><li>5-day delivery</li></ul><small>no example built yet</small></div>
+      <div class="tier"><h3>Basic</h3><div class="p">$150</div><ul><li>Single dashboard screen</li><li>Static or mock data</li><li>Fully responsive layout</li><li>5-day delivery</li></ul><small>proof → <a href="expense-tracker.html">Kharcha</a></small></div>
       <div class="tier mid"><h3>Standard</h3><div class="p">$350</div><ul><li>Live database-backed data</li><li>Authentication included</li><li>Multiple views and tables</li><li>10-day delivery</li></ul><small>proof → Flowdesk, Glow Studio</small></div>
       <div class="tier"><h3>Premium</h3><div class="p">$600+</div><ul><li>Full-stack app with live API</li><li>Admin panel included</li><li>Custom design system</li><li>3-week delivery</li></ul><small>proof → Nexora, Loom</small></div>
     </div>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kharcha — Expense &amp; Invoice Tracker</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/expense-tracker.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="description" content="Track expenses and invoices in PKR with Kharcha, a single-screen demo web app by BrightStack Co. Your entries stay in your own browser.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kharcha — Expense &amp; Invoice Tracker">
+<meta property="og:description" content="A single-screen expense and invoice tracker in PKR, built as a demo by BrightStack Co.">
+<meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #030712;
+    --text: #f9fafb;
+    --muted: #9ca3af;
+    --neon-cyan: #06b6d4;
+    --neon-purple: #8b5cf6;
+    --glass: rgba(15, 23, 42, 0.75);
+    --field: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(6, 182, 212, 0.4);
+    --teal: #10b981;
+    --amber: #f59e0b;
+    --danger: #f87171;
+    --on-accent: #031018;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    color-scheme: dark;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background: radial-gradient(circle at 80% 15%, rgba(6,182,212,0.06), transparent 35%),
+                radial-gradient(circle at 15% 85%, rgba(139,92,246,0.05), transparent 35%),
+                var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .grid-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: 0.12;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 90px 90px;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  :focus-visible { outline: 2px solid var(--neon-cyan); outline-offset: 2px; }
+  a { color: var(--neon-cyan); }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* Top bar */
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 36px; height: 36px; display: grid; place-items: center; border-radius: 11px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); color: var(--on-accent); font-size: 15px; font-weight: 800;
+    box-shadow: 0 0 25px rgba(6,182,212,0.3);
+  }
+  .brand h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .brand h1 span { color: var(--neon-cyan); }
+  .brand p { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .back-link {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); text-decoration: none;
+    background: var(--glass); border: 1px solid var(--border); padding: 8px 14px; border-radius: 12px; transition: color .3s, border-color .3s;
+  }
+  .back-link:hover { color: var(--text); border-color: var(--border-hover); }
+
+  /* Totals */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 8px; }
+  .stat-card {
+    background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px;
+    backdrop-filter: blur(16px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  .stat-label { font-size: 11.5px; color: var(--muted); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+  .stat-value.paid { color: var(--teal); }
+  .stat-value.unpaid { color: var(--amber); }
+  .stat-value.overall { color: var(--neon-cyan); }
+  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
+  .totals-note { font-size: 12px; color: var(--muted); margin: 0 2px 22px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Panel, toolbar and table */
+  .panel {
+    background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); overflow: hidden;
+  }
+  .panel-head { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; justify-content: space-between; }
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ctl { display: flex; flex-direction: column; gap: 5px; }
+  .ctl label, .field label {
+    font-size: 11px; font-weight: 600; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  input, select {
+    padding: 9px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--field);
+    color: var(--text); font-size: 13.5px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; transition: border-color .3s, box-shadow .3s;
+  }
+  input:focus, select:focus { border-color: var(--neon-cyan); box-shadow: 0 0 18px rgba(6,182,212,0.18); }
+  select option { background: #0b1222; color: var(--text); }
+  #search { width: 220px; }
+
+  .btn {
+    border-radius: 10px; padding: 10px 16px; font-size: 12.5px; font-weight: 700; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; border: 1px solid var(--border); background: var(--field); color: var(--text);
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s, background .3s; white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--muted); background: rgba(255,255,255,0.06); }
+  .btn.primary { background: linear-gradient(135deg, var(--neon-cyan), #22d3ee); color: var(--on-accent); border-color: transparent; box-shadow: 0 0 20px rgba(6,182,212,0.3); }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(6,182,212,0.45); }
+  .btn.danger { color: var(--danger); border-color: rgba(248,113,113,0.35); }
+  .btn.danger:hover { background: rgba(248,113,113,0.1); border-color: var(--danger); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn.small { padding: 6px 10px; font-size: 11.5px; }
+
+  table { width: 100%; border-collapse: collapse; text-align: left; }
+  th { padding: 14px 24px; font-size: 11px; color: var(--muted); font-weight: 600; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01); }
+  th.num, td.num { text-align: right; }
+  td { padding: 15px 24px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(255,255,255,0.02); }
+  td.desc { overflow-wrap: anywhere; }
+  td.date, td.amount { font-family: 'JetBrains Mono', monospace; font-size: 13px; white-space: nowrap; }
+  td.row-actions { white-space: nowrap; text-align: right; }
+  td.row-actions .btn + .btn { margin-left: 6px; }
+
+  .badge { padding: 5px 11px; border-radius: 20px; font-size: 11.5px; font-weight: 700; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+  .badge.paid { background: rgba(16,185,129,0.15); color: var(--teal); border: 1px solid rgba(16,185,129,0.3); }
+  .badge.unpaid { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+  .cat { font-size: 12.5px; color: var(--muted); }
+
+  .empty { padding: 56px 24px; text-align: center; }
+  .empty h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .empty p { font-size: 13.5px; color: var(--muted); max-width: 420px; margin: 0 auto 20px; line-height: 1.6; }
+  .empty .actions { justify-content: center; }
+
+  .notice { margin: 0 0 18px; padding: 12px 16px; border-radius: 12px; font-size: 13px; line-height: 1.5; border: 1px solid rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); color: #fcd34d; }
+  .foot { margin-top: 18px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; line-height: 1.6; }
+
+  /* Dialogs */
+  dialog {
+    margin: auto; width: min(460px, calc(100% - 32px)); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    background: #0b1222; color: var(--text); padding: 30px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+  dialog::backdrop { background: rgba(3,7,18,0.85); backdrop-filter: blur(8px); }
+  dialog h2 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+  dialog p.sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .field input, .field select { width: 100%; padding: 11px 14px; font-size: 14px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  fieldset { border: none; margin-bottom: 14px; }
+  legend { font-size: 11px; font-weight: 600; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .radios { display: flex; gap: 10px; }
+  .radios label { flex: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 13.5px; }
+  .radios input { accent-color: var(--neon-cyan); padding: 0; }
+  .form-error { color: var(--danger); font-size: 12.5px; min-height: 18px; margin-bottom: 4px; }
+  .dialog-actions { display: flex; gap: 10px; margin-top: 8px; }
+  .dialog-actions .btn { flex: 1; padding: 12px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    dialog[open] { animation: scaleUp .3s var(--ease); }
+    @keyframes scaleUp { from { opacity: 0; transform: scale(.96) } to { opacity: 1; transform: scale(1) } }
+  }
+
+  @media (max-width: 860px) {
+    .stats-row { grid-template-columns: 1fr; gap: 12px; }
+    .panel-head { flex-direction: column; align-items: stretch; }
+    .filters { display: grid; grid-template-columns: 1fr 1fr; }
+    .filters .ctl:first-child { grid-column: 1 / -1; }
+    #search { width: 100%; }
+    .actions .btn { flex: 1; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 20px 16px 48px; }
+    .stat-card { padding: 16px 18px; }
+    .stat-value { font-size: 22px; }
+    /* Table rows become cards on phones */
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tbody tr { padding: 14px 16px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    tbody tr:hover td { background: none; }
+    td { padding: 0; border: none; }
+    td.desc { grid-column: 1 / -1; font-weight: 600; }
+    td.date { grid-row: 1; grid-column: 1; color: var(--muted); font-size: 12px; }
+    td.status { grid-row: 1; grid-column: 2; text-align: right; }
+    td.cat-cell { grid-column: 1; }
+    td.amount { grid-column: 2; text-align: right; font-weight: 700; }
+    td.row-actions { grid-column: 1 / -1; text-align: left; margin-top: 4px; }
+    .two { grid-template-columns: 1fr; gap: 0; }
+    dialog { padding: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<main class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">K</div>
+      <div>
+        <h1>Khar<span>cha</span></h1>
+        <p>Expense &amp; invoice tracker · amounts in PKR</p>
+      </div>
+    </div>
+    <a class="back-link" href="web-apps-collection.html">← Web Apps collection</a>
+  </header>
+
+  <div class="notice" id="sampleNotice" hidden>Sample entries are shown. They are made up for this demo; use “Clear all” to remove them.</div>
+  <div class="notice" id="storageNotice" hidden>Your browser is blocking local storage, so entries will be lost when you leave this page.</div>
+
+  <section aria-labelledby="totalsHeading">
+    <h2 id="totalsHeading" class="sr-only">Totals</h2>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Paid</div>
+        <div class="stat-value paid" id="totalPaid">Rs 0</div>
+        <div class="stat-sub" id="countPaid">0 entries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Unpaid</div>
+        <div class="stat-value unpaid" id="totalUnpaid">Rs 0</div>
+        <div class="stat-sub" id="countUnpaid">0 entries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Overall</div>
+        <div class="stat-value overall" id="totalOverall">Rs 0</div>
+        <div class="stat-sub" id="countOverall">0 entries</div>
+      </div>
+    </div>
+    <p class="totals-note" id="totalsNote">Totals include every entry.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="entriesHeading">
+    <h2 id="entriesHeading" class="sr-only">Entries</h2>
+    <div class="panel-head">
+      <div class="filters">
+        <div class="ctl">
+          <label for="search">Search</label>
+          <input type="search" id="search" placeholder="Description or category" autocomplete="off">
+        </div>
+        <div class="ctl">
+          <label for="filterStatus">Status</label>
+          <select id="filterStatus">
+            <option value="all">All</option>
+            <option value="paid">Paid</option>
+            <option value="unpaid">Unpaid</option>
+          </select>
+        </div>
+        <div class="ctl">
+          <label for="filterCategory">Category</label>
+          <select id="filterCategory"><option value="all">All</option></select>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn primary" id="addBtn">+ Add entry</button>
+        <button type="button" class="btn" id="exportBtn">Export CSV</button>
+        <button type="button" class="btn danger" id="clearBtn">Clear all</button>
+      </div>
+    </div>
+
+    <div id="emptyFirst" class="empty" hidden>
+      <h2>No entries yet</h2>
+      <p>Add your first expense or invoice to start tracking what’s paid and what’s still due. Everything you enter stays in this browser.</p>
+      <div class="actions">
+        <button type="button" class="btn primary" id="emptyAddBtn">+ Add your first entry</button>
+        <button type="button" class="btn" id="sampleBtn">Load sample data</button>
+      </div>
+    </div>
+    <div id="emptyFiltered" class="empty" hidden>
+      <h2>No matching entries</h2>
+      <p>Nothing matches the current search and filters.</p>
+      <div class="actions"><button type="button" class="btn" id="resetFiltersBtn">Reset filters</button></div>
+    </div>
+
+    <table id="entriesTable" role="table" hidden>
+      <caption class="sr-only">Expenses and invoices</caption>
+      <thead role="rowgroup">
+        <tr role="row"><th scope="col" role="columnheader">Date</th><th scope="col" role="columnheader">Description</th><th scope="col" role="columnheader">Category</th><th scope="col" role="columnheader" class="num">Amount</th><th scope="col" role="columnheader">Status</th><th scope="col" role="columnheader"><span class="sr-only">Actions</span></th></tr>
+      </thead>
+      <tbody id="entriesBody" role="rowgroup"></tbody>
+    </table>
+  </section>
+
+  <p class="foot">Demo app. Entries are saved only in this browser (local storage) and are never sent anywhere.</p>
+  <p class="sr-only" id="liveStatus" role="status" aria-live="polite"></p>
+</main>
+
+<dialog id="entryDialog" aria-labelledby="entryDialogTitle">
+  <form id="entryForm" novalidate>
+    <h2 id="entryDialogTitle">Add entry</h2>
+    <p class="sub">Record an expense or an invoice. Amounts are in Pakistani rupees.</p>
+    <div class="two">
+      <div class="field">
+        <label for="fDate">Date</label>
+        <input type="date" id="fDate" required>
+      </div>
+      <div class="field">
+        <label for="fAmount">Amount (PKR)</label>
+        <input type="number" id="fAmount" min="0.01" step="0.01" inputmode="decimal" required>
+      </div>
+    </div>
+    <div class="field">
+      <label for="fDesc">Description</label>
+      <input type="text" id="fDesc" maxlength="120" required autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fCategory">Category</label>
+      <select id="fCategory"></select>
+    </div>
+    <fieldset>
+      <legend>Status</legend>
+      <div class="radios">
+        <label><input type="radio" name="fStatus" value="paid"> Paid</label>
+        <label><input type="radio" name="fStatus" value="unpaid" checked> Unpaid</label>
+      </div>
+    </fieldset>
+    <p class="form-error" id="formError" role="alert"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn" id="cancelEntry">Cancel</button>
+      <button type="submit" class="btn primary" id="saveEntry">Save entry</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+  <h2 id="confirmTitle">Delete entry?</h2>
+  <p class="sub" id="confirmText"></p>
+  <div class="dialog-actions">
+    <button type="button" class="btn" id="confirmCancel">Cancel</button>
+    <button type="button" class="btn danger" id="confirmOk">Delete</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'kharcha-entries-v1';
+  var CATEGORIES = ['Invoice', 'Rent', 'Utilities', 'Supplies', 'Travel', 'Software', 'Other'];
+  // Clearly fictional sample entries: no real people or businesses. Removable with "Clear all".
+  var SAMPLE = [
+    { date: -2, description: 'Sample: invoice for website design work', category: 'Invoice', amount: 45000, status: 'unpaid' },
+    { date: -5, description: 'Sample: monthly office rent', category: 'Rent', amount: 60000, status: 'paid' },
+    { date: -7, description: 'Sample: electricity bill', category: 'Utilities', amount: 8450.5, status: 'paid' },
+    { date: -9, description: 'Sample: printer paper and toner', category: 'Supplies', amount: 3200, status: 'unpaid' },
+    { date: -12, description: 'Sample: design software subscription', category: 'Software', amount: 5600, status: 'paid' }
+  ];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var entries = [];
+  var storageOk = true;
+  var usingSample = false;
+  var editingId = null;
+  var pendingConfirm = null;
+  var returnFocus = null;
+
+  // Whole rupees show no decimals; anything with paisa shows two (Rs 8,450.50).
+  var whole = new Intl.NumberFormat('en-PK', { maximumFractionDigits: 0 });
+  var paisa = new Intl.NumberFormat('en-PK', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  function rs(n) { return 'Rs ' + (Math.round(n * 100) % 100 === 0 ? whole : paisa).format(n); }
+  function plural(n) { return n + (n === 1 ? ' entry' : ' entries'); }
+  function today(offsetDays) {
+    var d = new Date(); d.setDate(d.getDate() + (offsetDays || 0));
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function newId() { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2); }
+  function formatDate(iso) {
+    var p = iso.split('-');
+    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  function announce(msg) { var s = $('liveStatus'); s.textContent = ''; setTimeout(function () { s.textContent = msg; }, 30); }
+
+  // ---------- Storage ----------
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (data && Array.isArray(data.entries)) {
+        entries = data.entries.filter(valid);
+        usingSample = !!data.sample && entries.length > 0;
+      }
+    } catch (e) { storageOk = false; }
+  }
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ entries: entries, sample: usingSample })); storageOk = true; }
+    catch (e) { storageOk = false; }
+  }
+  function valid(e) {
+    return e && typeof e.id === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && typeof e.description === 'string' &&
+      CATEGORIES.indexOf(e.category) !== -1 && typeof e.amount === 'number' && isFinite(e.amount) && e.amount > 0 &&
+      (e.status === 'paid' || e.status === 'unpaid');
+  }
+
+  // ---------- Filtering and totals ----------
+  function filters() {
+    return { q: $('search').value.trim().toLowerCase(), status: $('filterStatus').value, category: $('filterCategory').value };
+  }
+  function filtering(f) { return f.q !== '' || f.status !== 'all' || f.category !== 'all'; }
+  function visibleEntries() {
+    var f = filters();
+    return entries.filter(function (e) {
+      if (f.status !== 'all' && e.status !== f.status) return false;
+      if (f.category !== 'all' && e.category !== f.category) return false;
+      if (f.q && (e.description + ' ' + e.category).toLowerCase().indexOf(f.q) === -1) return false;
+      return true;
+    }).sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+  }
+  function sum(list) { return Math.round(list.reduce(function (t, e) { return t + e.amount; }, 0) * 100) / 100; }
+
+  // ---------- Rendering ----------
+  function render() {
+    var list = visibleEntries();
+    var f = filters();
+    var paid = list.filter(function (e) { return e.status === 'paid'; });
+    var unpaid = list.filter(function (e) { return e.status === 'unpaid'; });
+    $('totalPaid').textContent = rs(sum(paid));
+    $('totalUnpaid').textContent = rs(sum(unpaid));
+    $('totalOverall').textContent = rs(sum(list));
+    $('countPaid').textContent = plural(paid.length);
+    $('countUnpaid').textContent = plural(unpaid.length);
+    $('countOverall').textContent = plural(list.length);
+    $('totalsNote').textContent = filtering(f)
+      ? 'Totals for the ' + plural(list.length) + ' matching the search and filters (of ' + entries.length + ' in total).'
+      : 'Totals include every entry.';
+
+    var body = $('entriesBody');
+    body.textContent = '';
+    list.forEach(function (e) {
+      var tr = document.createElement('tr');
+      tr.dataset.id = e.id;
+      tr.setAttribute('role', 'row');
+      tr.appendChild(cell('date', formatDate(e.date)));
+      tr.appendChild(cell('desc', e.description));
+      var c = cell('cat-cell', ''); var span = document.createElement('span'); span.className = 'cat'; span.textContent = e.category; c.appendChild(span); tr.appendChild(c);
+      tr.appendChild(cell('num amount', rs(e.amount)));
+      var s = cell('status', ''); var b = document.createElement('span'); b.className = 'badge ' + e.status; b.textContent = e.status === 'paid' ? 'Paid' : 'Unpaid'; s.appendChild(b); tr.appendChild(s);
+      var a = cell('row-actions', '');
+      a.appendChild(button('Edit', 'btn small', 'Edit “' + e.description + '”', function () { openEntry(e.id); }));
+      a.appendChild(button('Delete', 'btn small danger', 'Delete “' + e.description + '”', function () { askDelete(e.id); }));
+      tr.appendChild(a);
+      body.appendChild(tr);
+    });
+
+    $('emptyFirst').hidden = entries.length !== 0;
+    $('emptyFiltered').hidden = !(entries.length !== 0 && list.length === 0);
+    $('entriesTable').hidden = list.length === 0;
+    $('exportBtn').disabled = list.length === 0;
+    $('clearBtn').disabled = entries.length === 0;
+    $('sampleNotice').hidden = !usingSample;
+    $('storageNotice').hidden = storageOk;
+  }
+  function cell(cls, text) { var td = document.createElement('td'); td.setAttribute('role', 'cell'); td.className = cls; td.textContent = text; return td; }
+  function button(text, cls, label, onClick) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = cls; b.textContent = text; b.setAttribute('aria-label', label);
+    b.addEventListener('click', onClick); return b;
+  }
+  function fillCategories() {
+    var fc = $('filterCategory'), ec = $('fCategory');
+    CATEGORIES.forEach(function (c) {
+      fc.appendChild(new Option(c, c));
+      ec.appendChild(new Option(c, c));
+    });
+  }
+
+  // ---------- Add / edit ----------
+  function openEntry(id) {
+    returnFocus = document.activeElement;
+    editingId = id || null;
+    var e = id ? entries.find(function (x) { return x.id === id; }) : null;
+    $('entryDialogTitle').textContent = e ? 'Edit entry' : 'Add entry';
+    $('saveEntry').textContent = e ? 'Save changes' : 'Save entry';
+    $('fDate').value = e ? e.date : today();
+    $('fAmount').value = e ? String(e.amount) : '';
+    $('fDesc').value = e ? e.description : '';
+    $('fCategory').value = e ? e.category : CATEGORIES[0];
+    document.querySelector('input[name="fStatus"][value="' + (e ? e.status : 'unpaid') + '"]').checked = true;
+    $('formError').textContent = '';
+    $('entryDialog').showModal();
+    $(e ? 'fDesc' : 'fDate').focus();
+  }
+  function closeDialog(d) { d.close(); if (returnFocus && document.contains(returnFocus)) returnFocus.focus(); else $('addBtn').focus(); }
+
+  $('entryForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var date = $('fDate').value, desc = $('fDesc').value.trim().replace(/\s+/g, ' '), amount = Number($('fAmount').value);
+    var category = $('fCategory').value, status = document.querySelector('input[name="fStatus"]:checked').value;
+    var problem = !/^\d{4}-\d{2}-\d{2}$/.test(date) ? ['fDate', 'Please choose a date.']
+      : !desc ? ['fDesc', 'Please enter a description.']
+      : !(amount > 0) || !isFinite(amount) ? ['fAmount', 'Please enter an amount greater than zero.']
+      : null;
+    if (problem) { $('formError').textContent = problem[1]; $(problem[0]).focus(); return; }
+    amount = Math.round(amount * 100) / 100;
+    if (editingId) {
+      var e = entries.find(function (x) { return x.id === editingId; });
+      if (e) { e.date = date; e.description = desc; e.category = category; e.amount = amount; e.status = status; }
+      announce('Entry updated.');
+    } else {
+      entries.push({ id: newId(), date: date, description: desc, category: category, amount: amount, status: status });
+      announce('Entry added.');
+    }
+    save(); render();
+    closeDialog($('entryDialog'));
+  });
+  $('cancelEntry').addEventListener('click', function () { closeDialog($('entryDialog')); });
+
+  // ---------- Delete / clear (with confirmation) ----------
+  function confirmAction(title, text, okLabel, onOk) {
+    returnFocus = document.activeElement;
+    $('confirmTitle').textContent = title; $('confirmText').textContent = text; $('confirmOk').textContent = okLabel;
+    pendingConfirm = onOk;
+    $('confirmDialog').showModal();
+    $('confirmCancel').focus();
+  }
+  function askDelete(id) {
+    var e = entries.find(function (x) { return x.id === id; });
+    if (!e) return;
+    confirmAction('Delete entry?', '“' + e.description + '” (' + rs(e.amount) + ') will be removed.', 'Delete', function () {
+      entries = entries.filter(function (x) { return x.id !== id; });
+      if (!entries.length) usingSample = false;
+      save(); render(); announce('Entry deleted.');
+    });
+  }
+  $('confirmOk').addEventListener('click', function () {
+    var fn = pendingConfirm; pendingConfirm = null;
+    $('confirmDialog').close();
+    if (fn) fn();
+    var target = returnFocus && document.contains(returnFocus) ? returnFocus : (entries.length ? $('addBtn') : $('emptyAddBtn'));
+    target.focus();
+  });
+  $('confirmCancel').addEventListener('click', function () { pendingConfirm = null; closeDialog($('confirmDialog')); });
+  $('clearBtn').addEventListener('click', function () {
+    confirmAction('Clear all entries?', 'All ' + plural(entries.length) + ' will be removed from this browser. This can’t be undone.', 'Clear all', function () {
+      entries = []; usingSample = false;
+      save(); render(); announce('All entries cleared.');
+    });
+  });
+
+  // ---------- Sample data ----------
+  $('sampleBtn').addEventListener('click', function () {
+    entries = SAMPLE.map(function (s) { return { id: newId(), date: today(s.date), description: s.description, category: s.category, amount: s.amount, status: s.status }; });
+    usingSample = true;
+    save(); render(); announce('Sample entries loaded.');
+    $('addBtn').focus();
+  });
+
+  // ---------- CSV export ----------
+  function csvCell(v) {
+    var s = String(v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; // stop spreadsheet apps treating text as a formula
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+  function buildCsv(list) {
+    var rows = [['Date', 'Description', 'Category', 'Amount (PKR)', 'Status']];
+    list.forEach(function (e) { rows.push([e.date, e.description, e.category, e.amount.toFixed(2), e.status === 'paid' ? 'Paid' : 'Unpaid']); });
+    return rows.map(function (r) { return r.map(csvCell).join(','); }).join('\r\n') + '\r\n';
+  }
+  $('exportBtn').addEventListener('click', function () {
+    var list = visibleEntries();
+    if (!list.length) return;
+    var blob = new Blob(['﻿' + buildCsv(list)], { type: 'text/csv;charset=utf-8' });
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = 'kharcha-entries-' + today() + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    announce('Exported ' + plural(list.length) + ' to CSV.');
+  });
+
+  // ---------- Wiring ----------
+  $('addBtn').addEventListener('click', function () { openEntry(); });
+  $('emptyAddBtn').addEventListener('click', function () { openEntry(); });
+  ['search', 'filterStatus', 'filterCategory'].forEach(function (id) { $(id).addEventListener(id === 'search' ? 'input' : 'change', render); });
+  $('resetFiltersBtn').addEventListener('click', function () {
+    $('search').value = ''; $('filterStatus').value = 'all'; $('filterCategory').value = 'all'; render(); $('search').focus();
+  });
+
+  fillCategories();
+  load();
+  render();
+})();
+</script>
+</body>
+</html>
