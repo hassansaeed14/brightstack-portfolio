@@ -166,13 +166,13 @@
 <body>
 <div class="scan"></div>
 
-<div class="app">
+<div class="app" role="main">
   <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sb-brand">
       <div class="sb-mark"></div>
       <div>
-        <div class="sb-brand-name">Loom Studio Apex</div>
+        <div class="sb-brand-name" role="heading" aria-level="1">Loom Studio Apex</div>
         <div class="sb-brand-sub">// Enterprise AI Suite</div>
       </div>
     </div>
@@ -249,13 +249,13 @@
     { id: 'n1', type: 'trigger', x: 100, y: 70, label: 'Incoming Support Inquiry', desc: 'Triggers upon receiving client email', status: 'idle',
       config: { sampleText: "Hi team, I ordered the Steel Travel Mug last week (ORD-1077) and it hasn't shipped yet. I needed it as a gift THIS WEEKEND and I am honestly quite frustrated — please update me immediately!" } },
     { id: 'n2', type: 'ai', x: 100, y: 280, label: 'Classify Urgency & Topic', desc: 'Extracts sentiment and category via LLM', status: 'idle',
-      config: { model: 'Claude 3.5 Sonnet', temperature: 0.2, prompt: 'Analyze customer email and return valid JSON: {"urgency":"high or normal","topic":"category","summary":"one sentence summary"}.\n\nEmail: {{trigger.sampleText}}', outputKey: 'classify', format: 'json' } },
+      config: { model: 'Reasoning Model', temperature: 0.2, prompt: 'Analyze customer email and return valid JSON: {"urgency":"high or normal","topic":"category","summary":"one sentence summary"}.\n\nEmail: {{trigger.sampleText}}', outputKey: 'classify', format: 'json' } },
     { id: 'n3', type: 'logic', x: 100, y: 490, label: 'Urgency Router', desc: 'Evaluates priority routing branches', status: 'idle',
       config: { field: 'classify.urgency', value: 'high' } },
     { id: 'n4', type: 'action', x: -210, y: 680, label: 'Create Priority Ticket', desc: 'Escalates urgent ticket to CRM system', status: 'idle',
       config: { kind: 'ticket' } },
     { id: 'n5', type: 'ai-draft', x: 410, y: 680, label: 'Draft Contextual Reply', desc: 'Generates tailored empathetic response', status: 'idle',
-      config: { model: 'GPT-4o', temperature: 0.7, prompt: 'Write a warm, professional customer reply (3 sentences), no markdown. Acknowledge: {{classify.summary}}. Original: {{trigger.sampleText}}', outputKey: 'draft', format: 'text' } },
+      config: { model: 'Fast Model', temperature: 0.7, prompt: 'Write a warm, professional customer reply (3 sentences), no markdown. Acknowledge: {{classify.summary}}. Original: {{trigger.sampleText}}', outputKey: 'draft', format: 'text' } },
     { id: 'n6', type: 'action', x: 410, y: 890, label: 'Dispatch Email Response', desc: 'Sends finalized message to client', status: 'idle',
       config: { kind: 'send' } }
   ];
@@ -410,8 +410,8 @@
     const baseX = 1050, baseY = 70 + (nodes.length % 5) * 130;
     let n;
     if (kind === 'trigger') n = { id, type: 'trigger', x: baseX, y: baseY, label: 'Custom Webhook', desc: 'Endpoint trigger event', status: 'idle', config: { sampleText: 'Incoming payload...' } };
-    else if (kind === 'ai') n = { id, type: 'ai', x: baseX, y: baseY, label: 'Advanced Extraction', desc: 'Structured entity parser', status: 'idle', config: { model: 'Claude 3.5 Sonnet', temperature: 0.1, prompt: 'Extract data and return JSON: {"result":"..."}\n\nInput: {{trigger.sampleText}}', outputKey: 'extracted', format: 'json' } };
-    else if (kind === 'ai-draft') n = { id, type: 'ai-draft', x: baseX, y: baseY, label: 'Generative AI Writer', desc: 'Contextual response generator', status: 'idle', config: { model: 'GPT-4o', temperature: 0.7, prompt: 'Write a response based on: {{trigger.sampleText}}', outputKey: 'drafted', format: 'text' } };
+    else if (kind === 'ai') n = { id, type: 'ai', x: baseX, y: baseY, label: 'Advanced Extraction', desc: 'Structured entity parser', status: 'idle', config: { model: 'Reasoning Model', temperature: 0.1, prompt: 'Extract data and return JSON: {"result":"..."}\n\nInput: {{trigger.sampleText}}', outputKey: 'extracted', format: 'json' } };
+    else if (kind === 'ai-draft') n = { id, type: 'ai-draft', x: baseX, y: baseY, label: 'Generative AI Writer', desc: 'Contextual response generator', status: 'idle', config: { model: 'Fast Model', temperature: 0.7, prompt: 'Write a response based on: {{trigger.sampleText}}', outputKey: 'drafted', format: 'text' } };
     else if (kind === 'logic') n = { id, type: 'logic', x: baseX, y: baseY, label: 'Conditional Evaluator', desc: 'Branching logic gate', status: 'idle', config: { field: 'classify.urgency', value: 'high' } };
     else n = { id, type: 'action', x: baseX, y: baseY, label: 'API Integration', desc: 'Webhook dispatch action', status: 'idle', config: { kind: 'ticket' } };
     nodes.push(n);
@@ -439,10 +439,10 @@
       fields = `
         <div class="insp-field"><label>AI Model Engine</label>
           <select onchange="updateConfig('${id}','model',this.value)">
-            <option ${n.config.model==='Claude 3.5 Sonnet'?'selected':''}>Claude 3.5 Sonnet</option>
-            <option ${n.config.model==='GPT-4o'?'selected':''}>GPT-4o</option>
-            <option ${n.config.model==='Llama 3 70B'?'selected':''}>Llama 3 70B</option>
-            <option ${n.config.model==='Gemini 1.5 Pro'?'selected':''}>Gemini 1.5 Pro</option>
+            <option ${n.config.model==='Reasoning Model'?'selected':''}>Reasoning Model</option>
+            <option ${n.config.model==='Fast Model'?'selected':''}>Fast Model</option>
+            <option ${n.config.model==='Local Model'?'selected':''}>Local Model</option>
+            <option ${n.config.model==='Long-Context Model'?'selected':''}>Long-Context Model</option>
           </select>
         </div>
         <div class="insp-field"><label>Temperature (${n.config.temperature})</label>

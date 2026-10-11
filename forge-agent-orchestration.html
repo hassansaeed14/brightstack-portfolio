@@ -75,7 +75,7 @@
     font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700;
     padding: 8px 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;
   }
-  .view-toggle button.active { background: var(--violet); color: #fff; box-shadow: 0 0 15px rgba(139,92,246,0.5); }
+  .view-toggle button.active { background: #8452f5; color: #fff; box-shadow: 0 0 15px rgba(139,92,246,0.5); }
 
   .view { display: none; padding: 48px 24px 80px; max-width: 1280px; margin: 0 auto; }
   .view.active { display: block; animation: fadeIn 0.35s cubic-bezier(.2,.8,.2,1); }
@@ -128,7 +128,7 @@
   
   .node-name { font-size: 14px; font-weight: 800; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
   .node-role { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
-  .node-status { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; color: var(--faint); font-weight: 700; }
+  .node-status { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; color: #7e8896; font-weight: 700; }
   .node.running .node-status { color: var(--amber); }
   .node.done .node-status { color: var(--emerald); }
 
@@ -181,6 +181,12 @@
 
   .footer-nav { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted); }
   .footer-nav a { color: var(--violet); text-decoration: none; font-weight: 700; }
+/* Small screens: keep content within the viewport. */
+@media (max-width: 600px) {
+  header { flex-wrap: wrap; gap: 12px; }
+  .input-row { flex-wrap: wrap; }
+  .input-row > * { min-width: 0; }
+}
 </style>
 <meta name="description" content="Discover Forge AI, an autonomous multi-agent pipeline executing research, strategy, and risk analysis demo by BrightStack Co.">
 </head>
@@ -202,6 +208,7 @@
 </header>
 
 <!-- RUN VIEW -->
+<main>
 <div class="view active" id="view-run">
   <div class="eyebrow">// Autonomous Multi-Agent Pipeline</div>
   <h1>Four specialized models <span>collaborating on complex queries</span>.</h1>
@@ -254,6 +261,7 @@
   </div>
 </div>
 
+</main>
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
   <div class="modal" id="modalBody"></div>
 </div>

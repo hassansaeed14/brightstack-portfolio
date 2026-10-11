@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reprise Neural OS v5.0 — Enterprise AI Content Engine</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/reprise-neural-os.html">
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/reprise-content-engine.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Reprise Neural OS v5.0 — Enterprise AI Content Engine">
@@ -14,7 +14,7 @@
 <style>
   :root {
     --bg: #0c0e12; --surface: #14171f; --surface-raised: #1c212c; --line: #262c3a;
-    --text: #f3f4f6; --text-muted: #9ca3af; --text-faint: #6b7280;
+    --text: #f3f4f6; --text-muted: #9ca3af; --text-faint: #7b8291;
     --accent: #a78bfa; --accent-dim: rgba(167,139,250,0.15);
     --c-x: #38bdf8; --c-linkedin: #60a5fa; --c-instagram: #f43f5e; --c-email: #fbbf24; --c-tiktok: #2dd4bf;
     --radius: 16px; --shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
@@ -39,7 +39,7 @@
   .nav-controls { display: flex; align-items: center; gap: 16px; }
   .view-toggle { display: flex; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 2px; }
   .view-toggle button { border: none; background: transparent; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 999px; cursor: pointer; }
-  .view-toggle button.active { background: var(--accent); color: #fff; }
+  .view-toggle button.active { background: var(--accent); color: #0b0d14; }
 
   .theme-btn { background: var(--surface-raised); border: 1px solid var(--line); color: var(--text); padding: 8px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; }
 
@@ -70,10 +70,10 @@
 
   .tone-row { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
   .tone-pill { border: 1px solid var(--line); background: var(--bg); color: var(--text-muted); font-size: 12px; padding: 7px 12px; border-radius: 999px; cursor: pointer; }
-  .tone-pill.selected { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+  .tone-pill.selected { background: var(--accent); color: #0b0d14; border-color: var(--accent); font-weight: 600; }
 
   .generate-btn {
-    width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    width: 100%; background: var(--accent); color: #0b0d14; border: none; border-radius: 10px;
     padding: 14px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif;
     display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 10px 25px -5px rgba(167,139,250,0.4);
   }
@@ -124,6 +124,11 @@
   .carousel-slide { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; text-align: center; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; margin: 16px 0; line-height: 1.4; color: var(--text); }
   
   .footnote { max-width: 1280px; margin: 40px auto 0; padding: 20px 36px 0; border-top: 1px solid var(--line); color: var(--text-faint); font-size: 12px; line-height: 1.7; }
+/* Small screens: keep content within the viewport. */
+@media (max-width: 600px) {
+  .topnav { flex-wrap: wrap; gap: 12px; padding: 18px 20px; }
+  .nav-controls { flex-wrap: wrap; }
+}
 </style>
 <meta name="description" content="Transform long-form text into cross-platform social media posts using Reprise Neural OS, a concept demo by BrightStack Co.">
 </head>
@@ -147,6 +152,7 @@
 </div>
 
 <!-- STUDIO VIEW -->
+<main>
 <div class="view active" id="view-studio">
   <div class="wrap">
     <div class="hero-eyebrow">Enterprise AI Content Engine</div>
@@ -161,11 +167,11 @@
         <div style="margin: 18px 0;">
           <label>Active Channel Matrix</label>
           <div class="matrix-channels" id="matrixChannels">
-            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked> X Thread</div>
-            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked> LinkedIn</div>
-            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked> Instagram / Carousel</div>
-            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked> TikTok Script</div>
-            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked> Newsletter</div>
+            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="X Thread"> X Thread</div>
+            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="LinkedIn"> LinkedIn</div>
+            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="Instagram / Carousel"> Instagram / Carousel</div>
+            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="TikTok Script"> TikTok Script</div>
+            <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="Newsletter"> Newsletter</div>
           </div>
         </div>
 
@@ -218,6 +224,7 @@
 </div>
 
 <!-- Carousel Preview Modal -->
+</main>
 <div class="modal-overlay" id="carouselModal">
   <div class="modal">
     <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; margin-bottom:4px;">Visual Carousel Preview</h3>

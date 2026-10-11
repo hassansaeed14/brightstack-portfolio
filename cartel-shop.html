@@ -185,7 +185,7 @@
   <a href="index.html" class="back-link">← Portfolio Hub</a>
 </header>
 
-<div class="wrap">
+<div class="wrap" role="main">
   <div class="eyebrow">// Enterprise Commerce Architecture</div>
   <h1>Cartel Pro — Frictionless Checkout Suite</h1>
   <p class="lede">A state-of-the-art mobile commerce prototype engineered with multi-currency conversion, instant promo verification, size guide modals, and tactile checkout feedback to maximize conversion rates.</p>
@@ -201,7 +201,7 @@
   <div class="toolbar">
     <div class="toolbar-left">
       <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); text-transform:uppercase;">Currency:</span>
-      <select class="currency-select" id="currencySelector" onchange="changeCurrency(this.value)">
+      <select class="currency-select" id="currencySelector" aria-label="Currency" onchange="changeCurrency(this.value)">
         <option value="USD">USD ($)</option>
         <option value="EUR">EUR (€)</option>
         <option value="GBP">GBP (£)</option>

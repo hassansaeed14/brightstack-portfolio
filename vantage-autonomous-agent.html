@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vantage Neural OS v3.0 — Autonomous Multi-Agent Command Center</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vantage-neural-os-v3.html">
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vantage-autonomous-agent.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vantage Neural OS v3.0 — Autonomous Multi-Agent Command Center">
@@ -14,7 +14,7 @@
 <style>
   :root {
     --bg: #06080d; --surface: #0f131f; --surface-raised: #171d2d; --line: #222b42;
-    --text: #f8fafc; --text-muted: #8a99af; --text-faint: #56657d;
+    --text: #f8fafc; --text-muted: #8a99af; --text-faint: #7787a1;
     --gold: #f59e0b; --violet: #8b5cf6; --blue: #3b82f6; --teal: #14b8a6;
     --green: #10b981; --red: #ef4444; --radius: 18px;
     --shadow: 0 30px 60px -15px rgba(0,0,0,0.9);
@@ -138,6 +138,11 @@
   .empty-state { padding: 40px 20px; text-align: center; color: var(--text-faint); font-size: 13.5px; }
 
   .footnote { max-width: 1320px; margin: 40px auto 0; padding: 20px 36px 0; border-top: 1px solid var(--line); color: var(--text-faint); font-size: 12px; line-height: 1.7; }
+/* Small screens: keep content within the viewport. */
+@media (max-width: 600px) {
+  .toolbar-group { flex-wrap: wrap; min-width: 0; max-width: 100%; }
+  .toolbar select { max-width: 100%; }
+}
 </style>
 <meta name="description" content="Orchestrate multi-model AI agent swarms to resolve customer inquiries in Vantage Neural OS, a demo by BrightStack Co.">
 </head>
@@ -160,6 +165,7 @@
 </div>
 
 <!-- CONSOLE -->
+<main>
 <div class="view active" id="view-console">
   <div class="wrap">
     <div class="hero-eyebrow">Enterprise Autonomous Multi-Agent Swarm</div>
@@ -170,10 +176,10 @@
     <div class="toolbar">
       <div class="toolbar-group">
         <span>Model Swarm Engine:</span>
-        <select id="modelSelector">
-          <option value="claude-3-5-sonnet">Claude 3.5 Sonnet (Advanced Reasoning)</option>
-          <option value="gpt-4o">GPT-4o (High-Speed Tool Dispatch)</option>
-          <option value="llama-3-70b">Llama 3 70B (Zero-Knowledge Local Enclave)</option>
+        <select id="modelSelector" aria-label="Model swarm engine">
+          <option value="reasoning-model">Reasoning Model (Advanced Reasoning)</option>
+          <option value="fast-model">Fast Model (High-Speed Tool Dispatch)</option>
+          <option value="local-model">Local Model (Zero-Knowledge Local Enclave)</option>
         </select>
       </div>
       <div class="toolbar-group" style="color:var(--text-faint); font-size:12px;">
@@ -183,7 +189,7 @@
 
     <div class="console-grid">
       <div class="goal-panel">
-        <label>Autonomous Goal Directive</label>
+        <label for="goalInput">Autonomous Goal Directive</label>
         <textarea id="goalInput">A VIP customer states order ORD-1077 (Steel Travel Mug) hasn't shipped and needs it for a weekend trip. Investigate, verify against company policy, execute expedited resolution, and log audit trail.</textarea>
         <div class="example-row">
           <button class="example-chip" onclick="setGoal(1)">Process wrong-color item refund on ORD-1103 strictly following return policy</button>
@@ -247,6 +253,7 @@
   </div>
 </div>
 
+</main>
 <div class="footnote wrap">
   BrightStack Co. — Vantage Neural OS v3.0. Autonomous Multi-Agent Command Center. All rights reserved.
 </div>
@@ -463,9 +470,9 @@
 
   function seedLog(){
     missionLog = [
-      {goal:"Investigate delayed order ORD-1077 and resolve for VIP customer", outcome:{resolved:true, confidence:96, escalate:false}, steps:4, model:"claude-3-5-sonnet", tokens:512},
-      {goal:"Process incorrect color refund on ORD-1103 per return policy", outcome:{resolved:true, confidence:94, escalate:false}, steps:5, model:"gpt-4o", tokens:430},
-      {goal:"Audit order ORD-1042 fulfillment and verify inventory stock", outcome:{resolved:true, confidence:98, escalate:false}, steps:3, model:"llama-3-70b", tokens:385}
+      {goal:"Investigate delayed order ORD-1077 and resolve for VIP customer", outcome:{resolved:true, confidence:96, escalate:false}, steps:4, model:"reasoning-model", tokens:512},
+      {goal:"Process incorrect color refund on ORD-1103 per return policy", outcome:{resolved:true, confidence:94, escalate:false}, steps:5, model:"fast-model", tokens:430},
+      {goal:"Audit order ORD-1042 fulfillment and verify inventory stock", outcome:{resolved:true, confidence:98, escalate:false}, steps:3, model:"local-model", tokens:385}
     ];
   }
 
@@ -489,7 +496,7 @@
         <td class="run-goal">${escapeHtml(m.goal)}</td>
         <td><span class="pill ${m.outcome.escalate ? 'escalated':'resolved'}">${m.outcome.escalate ? 'Escalated' : 'Resolved'}</span></td>
         <td style="font-family:'JetBrains Mono'; color:var(--text-faint);">${m.outcome.confidence}%</td>
-        <td style="font-family:'JetBrains Mono'; color:var(--text-faint);">${m.steps} (${m.model || 'gpt-4o'})</td>
+        <td style="font-family:'JetBrains Mono'; color:var(--text-faint);">${m.steps} (${m.model || 'fast-model'})</td>
       `;
       tbody.appendChild(tr);
     });

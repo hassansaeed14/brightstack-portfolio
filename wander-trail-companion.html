@@ -11,8 +11,6 @@
 <meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<!-- Three.js Library for 3D Background Constellation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root{
     --ink:#16211B;
@@ -49,7 +47,7 @@
   .mode-toggle{ display:flex; gap:6px; background:var(--paper-2); padding:5px; border-radius:10px; border:1px solid var(--line); }
   .mode-btn{
     border:none; background:none; padding:9px 16px; border-radius:7px; font-family:'Inter',sans-serif;
-    font-size:13px; font-weight:600; color:var(--ink); opacity:0.55; cursor:pointer; transition:all 0.2s;
+    font-size:13px; font-weight:600; color:var(--ink); opacity:0.75; cursor:pointer; transition:all 0.2s;
   }
   .mode-btn.active{ background:var(--pine); color:var(--paper); opacity:1; box-shadow:0 4px 15px rgba(31,61,46,0.25); }
 
@@ -142,7 +140,7 @@
     box-shadow:0 8px 20px rgba(31,61,46,0.25); transition:transform 0.2s;
   }
   .onboard-btn:hover{ transform:translateY(-2px); }
-  .skip-link{ text-align:center; font-size:12.5px; color:var(--ink); opacity:0.5; margin-top:14px; cursor:pointer; }
+  .skip-link{ text-align:center; font-size:12.5px; color:var(--ink); opacity:0.66; margin-top:14px; cursor:pointer; }
 
   .field-group{ margin-bottom:16px; }
   .field-label{ font-size:12px; font-weight:600; color:var(--ink); opacity:0.6; margin-bottom:7px; display:block; }
@@ -325,7 +323,7 @@
 <!-- Three.js 3D Background Constellation Canvas -->
 <canvas id="bg3d" aria-hidden="true"></canvas>
 
-<div class="page">
+<div class="page" role="main">
   <div class="topbar">
     <div class="brand">
       <div class="brand-mark">
@@ -383,7 +381,8 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+import * as THREE from './src/3d/three.js';
 const SCREENS = [
   { id:'onboarding', name:'Onboarding', tab:null },
   { id:'signin', name:'Sign in', tab:null },
@@ -759,6 +758,12 @@ render();
   addEventListener('resize', size); size();
   let nx = 0, ny = 0;
   addEventListener('mousemove', e => { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; }, { passive: true });
+  // Reduced motion: draw one still frame (and again after a resize) instead of animating.
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    renderer.render(scene, cam);
+    addEventListener('resize', () => renderer.render(scene, cam));
+    return;
+  }
   (function loop(t){
     requestAnimationFrame(loop); if(document.hidden) return;
     cam.position.x += (nx * 2 - cam.position.x) * .04;

@@ -21,7 +21,7 @@
     
     --ink: #f8fafc;
     --muted: #8b9bb4;
-    --faint: #4e5d75;
+    --faint: #657998;
     
     --crimson: #ff2d78; /* Neon Crimson */
     --crimson-soft: rgba(255, 45, 120, 0.12);
@@ -60,7 +60,7 @@
 
   .view-toggle { display: flex; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 2px; }
   .view-toggle button { border: none; background: transparent; color: var(--muted); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 999px; cursor: pointer; transition: all .3s ease; }
-  .view-toggle button.active { background: var(--crimson); color: #fff; box-shadow: 0 0 20px rgba(255,45,120,0.4); font-weight: 700; }
+  .view-toggle button.active { background: var(--crimson); color: #0b0d14; box-shadow: 0 0 20px rgba(255,45,120,0.4); font-weight: 700; }
 
   .view { display: none; }
   .view.active { display: block; animation: fadeIn 0.4s ease forwards; }
@@ -174,6 +174,11 @@
   .gap-q { font-weight: 600; color: var(--error); }
 
   .footnote { max-width: 1180px; margin: 40px auto 0; padding: 24px 32px 40px; border-top: 1px dashed var(--line); color: var(--faint); font-size: 12px; line-height: 1.7; font-family: 'JetBrains Mono', monospace; }
+/* Small screens: keep content within the viewport. */
+@media (max-width: 600px) {
+  .lib, .qa-area { min-width: 0; }
+  .qa-area { padding: 32px 18px; }
+}
 </style>
 <meta name="description" content="Explore Atlas, a RAG knowledge copilot providing grounded document answers with citation traces. A concept demo by BrightStack Co.">
 </head>
@@ -195,6 +200,7 @@
 </div>
 
 <!-- COPILOT VIEW -->
+<main>
 <div class="view active" id="view-copilot">
   <div class="copilot-layout">
     <div class="lib">
@@ -271,6 +277,7 @@
   </div>
 </div>
 
+</main>
 <div class="footnote">
   Portfolio Demo — Built by Hassan Saeed. Retrieval runs a local TF-IDF semantic scoring pass over indexed knowledge chunks, synthesizing extractive citations directly with complete audit tracing.
 </div>

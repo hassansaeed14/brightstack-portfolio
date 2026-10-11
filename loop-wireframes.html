@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Loop Apex Quantum v3.1 — Enterprise Habit & Neural Focus Suite</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loop-quantum.html">
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loop-wireframes.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Loop Apex Quantum v3.1 — Enterprise Habit &amp; Neural Focus Suite">
@@ -153,38 +153,38 @@
   <!-- Main Content -->
   <div class="main">
     <header>
-      <div class="page-title" id="headerTitle">Executive Neural & Habit Command Center</div>
+      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Executive Neural & Habit Command Center</div>
       <div class="header-actions">
         <button class="btn-primary" onclick="openModal()">+ New Habit Protocol</button>
       </div>
     </header>
 
-    <div class="content-wrap">
+    <div class="content-wrap" role="main">
       
       <!-- VIEW 1: DASHBOARD -->
       <div id="view-dashboard" class="view-panel active">
         <div class="dash-grid">
           <div class="card">
-            <h3>Daily Execution Queue</h3>
+            <h3 aria-level="2">Daily Execution Queue</h3>
             <p class="sub">// Active protocols scheduled for today</p>
             <div class="habit-list" id="habitList">
               <div class="habit-item">
                 <div class="habit-info">
-                  <h4>Deep Work Architecture</h4>
+                  <h4 aria-level="3">Deep Work Architecture</h4>
                   <span>08:00 AM · 90 Minutes Focus</span>
                 </div>
                 <div class="checkbox completed" onclick="toggleCheck(this)">✓</div>
               </div>
               <div class="habit-item">
                 <div class="habit-info">
-                  <h4>Hydration Protocol</h4>
+                  <h4 aria-level="3">Hydration Protocol</h4>
                   <span>3.5 Liters Daily Target</span>
                 </div>
                 <div class="checkbox completed" onclick="toggleCheck(this)">✓</div>
               </div>
               <div class="habit-item">
                 <div class="habit-info">
-                  <h4>Algorithmic Problem Solving</h4>
+                  <h4 aria-level="3">Algorithmic Problem Solving</h4>
                   <span>LeetCode / System Design</span>
                 </div>
                 <div class="checkbox" onclick="toggleCheck(this)"></div>
@@ -193,7 +193,7 @@
           </div>
 
           <div class="card">
-            <h3>Streak Momentum</h3>
+            <h3 aria-level="2">Streak Momentum</h3>
             <p class="sub">// Consistency metrics</p>
             <div style="text-align: center; padding: 20px 0;">
               <div style="font-size: 46px; font-weight: 800; color: var(--gold); font-family: 'Plus Jakarta Sans', sans-serif;">21 Days</div>
@@ -210,7 +210,7 @@
       <!-- VIEW 2: POMODORO -->
       <div id="view-pomodoro" class="view-panel">
         <div class="card" style="max-width: 600px; margin: 0 auto;">
-          <h3>Dedicated Focus Session</h3>
+          <h3 aria-level="2">Dedicated Focus Session</h3>
           <p class="sub">// Time-boxing module for deep engineering</p>
           <div class="pomodoro-box">
             <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;" id="timerStatus">STATUS: READY FOR DEEP WORK</div>
@@ -227,7 +227,7 @@
       <!-- VIEW 3: MOMENTUM MATRIX -->
       <div id="view-matrix" class="view-panel">
         <div class="card">
-          <h3>Advanced Momentum Analytics</h3>
+          <h3 aria-level="2">Advanced Momentum Analytics</h3>
           <p class="sub">// Long-term behavioral consistency tracking</p>
           <div style="padding: 20px 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 13px;">
             > Total Execution Hours: 142.5 hrs<br>
@@ -244,19 +244,19 @@
       <!-- VIEW 4: SYSTEM PROTOCOLS -->
       <div id="view-protocols" class="view-panel">
         <div class="card" style="max-width: 700px; margin: 0 auto;">
-          <h3>System Habit Protocols & Settings</h3>
+          <h3 aria-level="2">System Habit Protocols & Settings</h3>
           <p class="sub">// Configure execution parameters and notifications</p>
           <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
             <div class="habit-item">
               <div class="habit-info">
-                <h4>Quantum Notifications</h4>
+                <h4 aria-level="3">Quantum Notifications</h4>
                 <span>Receive push alerts before scheduled sessions</span>
               </div>
               <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
             </div>
             <div class="habit-item">
               <div class="habit-info">
-                <h4>Strict Focus Lockdown</h4>
+                <h4 aria-level="3">Strict Focus Lockdown</h4>
                 <span>Block distracting web protocols during deep work</span>
               </div>
               <input type="checkbox" style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
@@ -272,7 +272,7 @@
 <!-- Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <h3>Create Habit Protocol</h3>
+    <h3 aria-level="2">Create Habit Protocol</h3>
     <div class="field">
       <label>Habit Name</label>
       <input type="text" id="newHabitName" placeholder="e.g., Read 30 pages">
@@ -403,7 +403,7 @@
     item.className = 'habit-item';
     item.innerHTML = `
       <div class="habit-info">
-        <h4>${name}</h4>
+        <h4 aria-level="3">${name}</h4>
         <span>${time || 'Daily Schedule'}</span>
       </div>
       <div class="checkbox" onclick="toggleCheck(this)"></div>

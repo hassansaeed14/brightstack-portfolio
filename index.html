@@ -10,8 +10,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--bg:#030508;--surface:#0a0e16;--surface2:#0e1420;--text:#f8fafc;--muted:#8e9aad;--dim:#5d687a;--cyan:#00e5ff;--peach:#ffd8bd;--purple:#8b5cf6;--line:rgba(255,255,255,.08);--border:rgba(255,255,255,.08);--border-hover:rgba(0,229,255,.35);--max:1280px;--r-lg:28px;--r-md:20px;--ease:cubic-bezier(.16,1,.3,1)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -162,6 +160,7 @@ footer{width:min(100%,var(--max));margin:0 auto;padding:40px 48px 50px;display:f
 
 .reveal{opacity:0;transform:perspective(1100px) rotateX(7deg) translateY(40px);transform-origin:50% 0;transition:opacity .9s ease,transform 1s var(--ease)}
 .reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:no-preference){.reveal:not(.visible){scroll-margin-top:40px}}
 
 .hero-content{transition:transform .2s ease-out;will-change:transform}
 .pre{position:fixed;inset:0;background:var(--bg);z-index:500;display:grid;place-items:center;align-content:center;gap:34px;perspective:600px;transition:opacity .7s,visibility .7s}
@@ -221,6 +220,8 @@ nav.open{display:flex}nav a{padding:5px}.nav-cta{text-align:center}.menu-btn{dis
 .cta{min-height:340px;padding:30px 20px}.rings{width:300px;height:300px;margin:-150px 0 0 -150px}
 footer{padding:30px 22px;flex-direction:column;gap:12px;text-align:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 .w,.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+/* Small screens: keep content within the viewport. */
+main{overflow-x:clip}
 </style>
 <meta property="og:title" content="BrightStack Co. — Creative Digital Studio">
 <meta property="og:description" content="BrightStack Co. creates digital products, websites, web applications, UI/UX experiences and intelligent automation systems.">
@@ -373,7 +374,8 @@ setTimeout(function(){if(document.readyState==='complete')fin();else addEventLis
   })();
 </script>
 
-<script>
+<script type="module">
+import * as THREE from './src/3d/three.js';
 // Interactive Moving & Bursting Stars Background
 const starCanvas = document.getElementById('starCanvas');
 const sCtx = starCanvas.getContext('2d');
@@ -622,29 +624,54 @@ if(fine && !reduce){
     st.classList.add('sp-ready'); 
   }
   
-  function spFail(){ 
-    clearTimeout(spTimer); 
-    const v = st.querySelector('spline-viewer'); 
+  function spFail(text){
+    clearTimeout(spTimer);
+    const v = st.querySelector('spline-viewer');
     if(v) v.remove();
-    msg.textContent = 'Spline took too long. Falling back to Stack…'; 
-    setTimeout(() => { setScene(false); }, 1500); 
+    msg.textContent = text || 'Spline took too long. Falling back to Stack…';
+    setTimeout(() => { setScene(false); }, 1500);
+  }
+
+  // The Spline viewer (~650 KB) isn't needed for the default Stack scene, so it's fetched
+  // in the background once the page has finished loading and is idle (skipped on
+  // data-saver or 2G connections), or on the first click of "Spline", whichever comes first.
+  const SPLINE_VIEWER = 'https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js';
+  let viewerReady = null;
+  function loadViewer(){
+    if (!viewerReady) viewerReady = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.type = 'module'; s.src = SPLINE_VIEWER;
+      s.onerror = () => { s.remove(); viewerReady = null; reject(new Error('Spline viewer failed to load')); };
+      document.head.appendChild(s);
+      customElements.whenDefined('spline-viewer').then(resolve);
+    });
+    return viewerReady;
+  }
+  const conn = navigator.connection;
+  if (!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')))) {
+    const prefetch = () => (window.requestIdleCallback || (cb => setTimeout(cb, 1500)))(() => loadViewer().catch(() => {}), { timeout: 4000 });
+    if (document.readyState === 'complete') prefetch(); else addEventListener('load', prefetch, { once: true });
   }
 
   function loadSpline(){
     if (st.querySelector('spline-viewer')) return;
-    msg.textContent = 'Loading Spline scene…'; 
-    st.classList.add('sp-wait'); 
+    msg.textContent = 'Loading Spline scene…';
+    st.classList.add('sp-wait');
     st.classList.remove('sp-ready');
-    
-    const v = document.createElement('spline-viewer'); 
-    v.setAttribute('url', document.getElementById('spl').dataset.url); 
-    v.setAttribute('events-target', 'global');
-    
-    v.addEventListener('load', spReady);
-    v.addEventListener('load-complete', spReady);
-    
-    st.prepend(v);
-    spTimer = setTimeout(spFail, 7000);
+
+    loadViewer().then(() => {
+      // The visitor may have switched back to Stack while the viewer was downloading.
+      if (!st.classList.contains('spline-on') || st.querySelector('spline-viewer')) return;
+      const v = document.createElement('spline-viewer');
+      v.setAttribute('url', document.getElementById('spl').dataset.url);
+      v.setAttribute('events-target', 'global');
+
+      v.addEventListener('load', spReady);
+      v.addEventListener('load-complete', spReady);
+
+      st.prepend(v);
+      spTimer = setTimeout(spFail, 7000);
+    }, () => spFail('Spline couldn’t load. Falling back to Stack…'));
   }
 
   function setScene(on){

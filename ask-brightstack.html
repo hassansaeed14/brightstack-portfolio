@@ -11,8 +11,6 @@
 <meta property="og:description" content="Ask questions about Hassan Saeed's projects, skills, and experience — answered by a transparent, local AI assistant.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Three.js Library for 3D Background Constellation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root {
     --bg: #030508;
@@ -194,6 +192,7 @@
     <a href="index.html" class="back-link">← Back to portfolio</a>
   </header>
 
+  <main style="flex:1;display:flex;flex-direction:column">
   <section class="hero">
     <div class="eyebrow">Interactive · Local keyword matching</div>
     <h1>Ask about my projects, stack, or background.</h1>
@@ -215,11 +214,13 @@
     <summary>How this retrieval system works</summary>
     <p>No external API calls or large language models are used here. Every answer is fetched from a local JavaScript knowledge base structured around portfolio artifacts, matched via keyword overlap scoring. If a confident match isn't found, it responds transparently instead of hallucinating.</p>
   </details>
+  </main>
 
   <footer>Built by BrightStack Co. · local keyword retrieval demo</footer>
 </div>
 
-<script>
+<script type="module">
+import * as THREE from './src/3d/three.js';
 const KB = [
   {
     tags: ['churn risk model','churn model','logistic regression','gradient descent','pyodide','webassembly','ml lab','python model','from scratch'],
@@ -302,7 +303,7 @@ const KB = [
   {
     tags: ['client area','client login','sign in','my account','project status','client portal'],
     title: 'Client Area',
-    link: 'index.html#contact',
+    link: 'signin.html',
     answer: "Existing clients can authenticate from the homepage to track live project status and communicate securely through the private client portal."
   },
   {
@@ -441,6 +442,12 @@ setTimeout(() => {
   addEventListener('resize', size); size();
   let nx = 0, ny = 0;
   addEventListener('mousemove', e => { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; }, { passive: true });
+  // Reduced motion: draw one still frame (and again after a resize) instead of animating.
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    renderer.render(scene, cam);
+    addEventListener('resize', () => renderer.render(scene, cam));
+    return;
+  }
   (function loop(t){
     requestAnimationFrame(loop); if(document.hidden) return;
     cam.position.x += (nx * 3 - cam.position.x) * .04;

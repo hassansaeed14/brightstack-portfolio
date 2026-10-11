@@ -11,8 +11,6 @@
 <meta property="og:description" content="An interactive portfolio project by Hassan Saeed at BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Three.js Library for 3D Background Constellation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root {
     --bg: #030508;
@@ -157,7 +155,7 @@
   <a href="index.html" class="back-link">← Back to portfolio</a>
 </header>
 
-<div class="card">
+<div class="card" role="main">
   <h1 id="formTitle">Sign in to BrightStack</h1>
   <p class="sub">Access your client area — project status, messages, and deliverables.</p>
 
@@ -187,6 +185,7 @@
 <footer>Your password is handled directly by Firebase Authentication — BrightStack never sees or stores it in plain text.</footer>
 
 <script type="module">
+import * as THREE from './src/3d/three.js';
   import { auth, db, googleProvider } from './firebase-config.js';
   import {
     signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword,
@@ -305,6 +304,12 @@
     addEventListener('resize', size); size();
     let nx = 0, ny = 0;
     addEventListener('mousemove', e => { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; }, { passive: true });
+    // Reduced motion: draw one still frame (and again after a resize) instead of animating.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      renderer.render(scene, cam);
+      addEventListener('resize', () => renderer.render(scene, cam));
+      return;
+    }
     (function loop(t){
       requestAnimationFrame(loop); if(document.hidden) return;
       cam.position.x += (nx * 3 - cam.position.x) * .04;

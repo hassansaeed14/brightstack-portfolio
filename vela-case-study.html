@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vela — First-Time Investing App | 3D Spatial UX Case Study</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vela-case-study-3d-v5.html">
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vela-case-study.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vela — First-Time Investing App | 3D Spatial UX Case Study">
 <meta property="og:description" content="Drag the 3D portfolio, change your monthly amount, and watch it grow. A spatial micro-investing case study by Hassan Saeed at BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root{--bg:#04060d;--card:#0c1120;--card2:#111829;--ink:#f4f7fc;--muted:#8f9db3;--line:#1c2640;--indigo:#7c7ff5;--indigo-dim:rgba(124,127,245,.16);--green:#2dd4a0;--green-dim:rgba(45,212,160,.15);--coral:#f43f5e;--stage:radial-gradient(circle at 50% 40%,#101833 0%,#04060d 75%);--glass:rgba(12,17,32,.72);--shadow:0 30px 60px -20px rgba(0,0,0,.9);--radius:22px}
-  [data-theme="light"]{--bg:#f3f5fb;--card:#fff;--card2:#f6f7fc;--ink:#0f172a;--muted:#52607a;--line:#e1e6f0;--indigo:#4f46e5;--indigo-dim:#eef0ff;--green:#059669;--green-dim:#e7f8f0;--stage:radial-gradient(circle at 50% 40%,#e9ecff 0%,#cfd6f3 80%);--glass:rgba(255,255,255,.8);--shadow:0 24px 48px -20px rgba(30,40,90,.18)}
+  [data-theme="light"]{--bg:#f3f5fb;--card:#fff;--card2:#f6f7fc;--ink:#0f172a;--muted:#52607a;--line:#e1e6f0;--indigo:#4f46e5;--indigo-dim:#eef0ff;--green:#047d58;--green-dim:#e7f8f0;--stage:radial-gradient(circle at 50% 40%,#e9ecff 0%,#cfd6f3 80%);--glass:rgba(255,255,255,.8);--shadow:0 24px 48px -20px rgba(30,40,90,.18)}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s,color .3s}
@@ -193,7 +192,8 @@
  
 <footer><div class="wrap"><span class="brand">BrightStack Co.</span><a href="index.html">Back to portfolio</a></div></footer>
  
-<script>
+<script type="module">
+import * as THREE from './src/3d/three.js';
 /* ---------- Theme ---------- */
 const root = document.documentElement, themeBtn = document.getElementById('themeBtn');
 let theme = 'dark';

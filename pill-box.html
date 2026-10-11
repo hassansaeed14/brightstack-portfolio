@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dawa Dabba — my pillbox</title>
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/pill-box.html">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#faf5ec;--card:#fffdf8;--ink:#1f2a2e;--soft:#6b7478;--line:#e8dfd0;--acc:#ff6b4a;--ok:#2f9e8f;--warn:#f2b134;--bad:#d64545;--r:20px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#faf5ec;--card:#fffdf8;--ink:#1f2a2e;--soft:#5b6366;--line:#e8dfd0;--acc:#ff6b4a;--ok:#2f9e8f;--warn:#f2b134;--bad:#d13030;--r:20px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181a;--card:#1c2225;--ink:#f3efe7;--soft:#9aa5a9;--line:#2b3438}}
 :root[data-theme="dark"]{--bg:#14181a;--card:#1c2225;--ink:#f3efe7;--soft:#9aa5a9;--line:#2b3438}
 *{box-sizing:border-box}
@@ -34,7 +35,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 /* organizer */
 .org{display:grid;grid-template-columns:62px repeat(7,1fr);gap:6px;font-size:11px}
 .org .h{text-align:center;color:var(--soft);padding-bottom:2px}
-.org .h.t{color:var(--acc);font-weight:700}
+.org .h.t{color:#de2800;font-weight:700}
 .org .rl{color:var(--soft);align-self:center}
 .cell{min-height:46px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;flex-wrap:wrap;gap:4px;align-items:center;justify-content:center;padding:5px}
 .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--c);background:transparent}
@@ -45,7 +46,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .add2{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:14px}
 input,select{width:100%;min-height:42px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font:inherit}
 input:focus,select:focus{border-color:var(--acc);outline:none}
-.go{background:var(--acc);color:#fff;border:0;border-radius:12px;font-weight:700;padding:0 22px;min-height:42px}
+.go{background:var(--acc);color:#0b0d14;border:0;border-radius:12px;font-weight:700;padding:0 22px;min-height:42px}
 .go:active{transform:scale(.97)}
 .pc{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:16px;margin-bottom:9px;background:var(--bg)}
 .pc.done{opacity:.62}
@@ -81,7 +82,7 @@ input:focus,select:focus{border-color:var(--acc);outline:none}
 <meta property="og:description" content="Track daily medications, check interactions, and set refill reminders with Dawa Dabba, a concept demo by BrightStack Co.">
 </head>
 <body>
-<div class="w">
+<div class="w" role="main">
   <div class="top">
     <div><h1 id="hi">Hello</h1><p id="sub"></p></div>
     <button class="chip" id="th">◐ Theme</button>
@@ -124,7 +125,7 @@ input:focus,select:focus{border-color:var(--acc);outline:none}
 
       <div class="c"><h2>Settings</h2>
         <div class="r"><span>Remind me when a dose is due<br><span class="note">Needs this tab open</span></span><input type="checkbox" class="sw" id="rm" aria-label="Reminders"></div>
-        <div class="r"><span>Refill alert when pills left ≤</span><input id="lw" type="number" min="1" style="width:76px"></div>
+        <div class="r"><span>Refill alert when pills left ≤</span><input id="lw" type="number" aria-label="Refill alert when pills left is at or below" min="1" style="width:76px"></div>
         <input id="cg" placeholder="Family member's name (for sharing)" aria-label="Family name">
       </div>
 

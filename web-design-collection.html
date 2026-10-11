@@ -7,9 +7,8 @@
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/web-design-collection.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-:root{--paper:#F5F1E8;--p2:#fff;--ink:#1C1814;--soft:#6B6055;--line:#DDD5C6;--line2:#C8BCA6;--rust:#B5502A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--paper:#F5F1E8;--p2:#fff;--ink:#1C1814;--soft:#6B6055;--line:#DDD5C6;--line2:#C8BCA6;--rust:#b14e29;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#16130f;--p2:#201c17;--ink:#f3ede0;--soft:#a79c8c;--line:#2f2a23;--line2:#463f35;--rust:#e0805a}}
 :root[data-theme="dark"]{--paper:#16130f;--p2:#201c17;--ink:#f3ede0;--soft:#a79c8c;--line:#2f2a23;--line2:#463f35;--rust:#e0805a}
 *{box-sizing:border-box}
@@ -111,7 +110,8 @@ footer{border-top:1px solid var(--line);padding:22px 0;text-align:center;color:v
 </div>
 <footer>BrightStack Co. — Hassan Saeed · Mansehra, Pakistan</footer></div>
 
-<script>
+<script type="module">
+import * as THREE from './src/3d/three.js';
 var $=function(i){return document.getElementById(i)},RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var D=[
  {n:'Larkspur',t:'Basic',k:'Portrait & wedding photography',h:'larkspur-photography.html',a:'#A3491F',d:'A single-page site for a solo photographer, built around a film contact-sheet strip. Warm rust and bone palette, italic serif headings, and an enquiry form that is the whole conversion path.'},
@@ -132,7 +132,7 @@ cap(0);
 /* ---------- WebGL ---------- */
 (function(){
   var r;try{if(typeof THREE==='undefined')throw 0;r=new THREE.WebGLRenderer({canvas:$('gl'),antialias:true})}catch(e){document.body.classList.add('nogl');return}
-  r.setPixelRatio(Math.min(devicePixelRatio,2));r.outputEncoding=THREE.sRGBEncoding;
+  r.setPixelRatio(Math.min(devicePixelRatio,2));r.outputColorSpace=THREE.SRGBColorSpace;
   var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,1,.1,100),ring=new THREE.Group(),R=3.6,PI=Math.PI;
   scene.fog=new THREE.Fog(0xf5f1e8,14,36);scene.add(ring);
   scene.add(new THREE.AmbientLight(0xffffff,.85));
@@ -162,7 +162,7 @@ cap(0);
   var side=new THREE.MeshStandardMaterial({color:0x26231f,roughness:.7}),geo=new THREE.BoxGeometry(2.5,3.3,.1),mg=new THREE.PlaneGeometry(2.5,3.3),aniso=r.capabilities.getMaxAnisotropy();
   D.forEach(function(s,i){
     var c=document.createElement('canvas');c.width=512;c.height=680;cvs.push(c);
-    var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=aniso;texs.push(t);paint(i);
+    var t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=aniso;texs.push(t);paint(i);
     var front=new THREE.MeshStandardMaterial({map:t,emissiveMap:t,emissive:0xffffff,emissiveIntensity:.32,roughness:.6});
     var m=new THREE.Mesh(geo,[side,side,side,side,front,side]),a=i*PI*2/D.length;
     m.position.set(Math.sin(a)*R,0,Math.cos(a)*R);m.rotation.y=a;ring.add(m);

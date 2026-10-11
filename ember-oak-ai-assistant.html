@@ -166,6 +166,10 @@
 
   .footer-nav { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted); }
   .footer-nav a { color: var(--emerald); text-decoration: none; font-weight: 700; }
+/* Small screens: keep content within the viewport. */
+@media (max-width: 600px) {
+  header { flex-wrap: wrap; gap: 12px; }
+}
 </style>
 <meta name="description" content="Test an autonomous customer concierge that qualifies sales leads in real time. A concept demo by BrightStack Co.">
 </head>
@@ -187,6 +191,7 @@
 </header>
 
 <!-- CHAT VIEW -->
+<main>
 <div class="view active" id="view-chat">
   <div class="chat-grid">
     <div>
@@ -251,6 +256,7 @@
   </div>
 </div>
 
+</main>
 <div class="footer-nav" style="max-width:1280px; margin:60px auto 0; padding:24px 24px 0;">
   <span>BrightStack Co. · Enterprise AI Concierge Architecture</span>
   <a href="index.html">← Back to portfolio hub</a>

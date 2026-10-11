@@ -25,4 +25,18 @@ export default defineConfig({
     },
   ],
   input: Object.fromEntries(pages.map(p => [p.replace(/\.html$/, ''), resolve(root, p)])),
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            // Give three.js its own chunk. Without this, the bundler's small runtime helpers
+            // land inside the three.js chunk and every page that needs them (sign-in, admin,
+            // client area) downloads three.js too.
+            { name: 'three', test: /node_modules[\\/]three[\\/]/ },
+          ],
+        },
+      },
+    },
+  },
 })

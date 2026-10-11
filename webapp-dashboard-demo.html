@@ -11,8 +11,6 @@
 <meta property="og:description" content="An advanced interactive 3D portfolio project by Hassan Saeed at BrightStack Co.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Three.js Library for 3D Background Constellation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root {
     --bg: #030712;
@@ -199,19 +197,20 @@
 </div>
 
 <!-- LOGIN SCREEN -->
+<main>
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo">
+    <div class="login-logo" role="heading" aria-level="1">
       <div class="brand-mark">F</div>
       Flow<span>desk</span>
     </div>
     <div class="login-sub">Secure 3D Enterprise Order & Invoice Management Portal.</div>
     <div class="field">
-      <label>Email Address</label>
+      <label for="email-input">Email Address</label>
       <input type="email" value="admin@brightbeanroasters.com" id="email-input">
     </div>
     <div class="field">
-      <label>Password</label>
+      <label for="pass-input">Password</label>
       <input type="password" value="••••••••" id="pass-input">
     </div>
     <button class="login-btn" onclick="showDashboard()">Sign in to 3D portal</button>
@@ -301,20 +300,21 @@
 </div>
 
 <!-- NEW ORDER MODAL -->
+</main>
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
     <h3>Create New Order</h3>
     <p>Enter the details for the new enterprise client order.</p>
     <div class="field">
-      <label>Customer Name</label>
+      <label for="newCust">Customer Name</label>
       <input type="text" id="newCust" placeholder="e.g. Chenab Corp">
     </div>
     <div class="field">
-      <label>Amount (Rs)</label>
+      <label for="newAmt">Amount (Rs)</label>
       <input type="number" id="newAmt" placeholder="e.g. 45000">
     </div>
     <div class="field">
-      <label>Status</label>
+      <label for="newStatus">Status</label>
       <select id="newStatus" style="width:100%; padding:13px 16px; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,0.02); color:var(--text); outline:none; font-family:'Plus Jakarta Sans',sans-serif;">
         <option value="Paid" style="background:#030718;">Paid</option>
         <option value="Pending" style="background:#030718;">Pending</option>
@@ -328,7 +328,8 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+import * as THREE from './src/3d/three.js';
 let orderCount = 142;
 
 function showDashboard(){
@@ -400,6 +401,12 @@ function filterTable(){
   addEventListener('resize', size); size();
   let nx = 0, ny = 0;
   addEventListener('mousemove', e => { nx = e.clientX / innerWidth - .5; ny = e.clientY / innerHeight - .5; }, { passive: true });
+  // Reduced motion: draw one still frame (and again after a resize) instead of animating.
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    renderer.render(scene, cam);
+    addEventListener('resize', () => renderer.render(scene, cam));
+    return;
+  }
   (function loop(t){
     requestAnimationFrame(loop); if(document.hidden) return;
     cam.position.x += (nx * 3 - cam.position.x) * .04;
@@ -407,7 +414,7 @@ function filterTable(){
     cam.rotation.x += ((ny * .05) - cam.rotation.x) * .04;
     pts.rotation.y = t * .000015; pts.position.y = Math.sin(t * .0003) * .3;
     renderer.render(scene, cam);
-  })();
+  })(0);
 })();
 </script>
 

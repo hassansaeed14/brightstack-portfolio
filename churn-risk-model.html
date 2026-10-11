@@ -142,6 +142,7 @@
   <a href="index.html" class="back-link">← Portfolio Hub</a>
 </header>
 
+<main>
 <section class="hero">
   <div class="eyebrow">// Enterprise ML Engine · WebAssembly Runtime</div>
   <h1>Churn Model Lab Pro — Live Python ML & Inference</h1>
@@ -155,15 +156,15 @@
     <!-- Controls Bar -->
     <div class="lab-controls">
       <div class="control-group">
-        <label>Learning Rate: <span id="lrVal" style="color:var(--cyan);">0.40</span></label>
+        <label for="lrSlider">Learning Rate: <span id="lrVal" style="color:var(--cyan);">0.40</span></label>
         <input type="range" id="lrSlider" min="0.05" max="2" step="0.05" value="0.4">
       </div>
       <div class="control-group">
-        <label>Epochs: <span id="epochsVal" style="color:var(--cyan);">400</span></label>
+        <label for="epochsSlider">Epochs: <span id="epochsVal" style="color:var(--cyan);">400</span></label>
         <input type="range" id="epochsSlider" min="50" max="1000" step="50" value="400">
       </div>
-      <button id="trainBtn" disabled>Booting CPython…</button>
-      <div class="status-line" id="statusLine">Initializing WebAssembly CPython runtime environment...</div>
+      <button id="trainBtn">Train Model</button>
+      <div class="status-line" id="statusLine">Ready — the in-browser CPython runtime (~5 MB) loads on your first training run.</div>
     </div>
 
     <!-- Results Dashboard (Hidden until trained) -->
@@ -217,11 +218,11 @@
         <div class="inference-layout">
           <div class="inf-sliders">
             <div class="control-group" style="min-width:auto;">
-              <label>Customer Engagement Score (0 - 10): <span id="infEngVal" style="color:var(--cyan);">5.0</span></label>
+              <label for="infEngSlider">Customer Engagement Score (0 - 10): <span id="infEngVal" style="color:var(--cyan);">5.0</span></label>
               <input type="range" id="infEngSlider" min="0" max="10" step="0.1" value="5" oninput="runInference()">
             </div>
             <div class="control-group" style="min-width:auto;">
-              <label>Payment Latency / Delay (Days 0 - 30): <span id="infDelayVal" style="color:var(--cyan);">15.0</span></label>
+              <label for="infDelaySlider">Payment Latency / Delay (Days 0 - 30): <span id="infDelayVal" style="color:var(--cyan);">15.0</span></label>
               <input type="range" id="infDelaySlider" min="0" max="30" step="0.5" value="15" oninput="runInference()">
             </div>
           </div>
@@ -261,10 +262,9 @@
   <p style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--cyan);">// Note: Engineered as a transparent, verifiable machine learning demonstration rather than a black-box enterprise pipeline.</p>
 </details>
 
+</main>
 <footer>Built by BrightStack Co. · Real Python, Real Gradient Descent, Zero Server Overhead.</footer>
 
-<!-- Pyodide CPython WebAssembly Runtime -->
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 <!-- 3D Card Hover Effect -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
@@ -378,16 +378,24 @@ result = {
 json.dumps(result)
 `;
 
-  async function boot(){
-    try{
-      pyodide = await loadPyodide();
-      pyodide.runPython(SETUP_CODE);
-      document.getElementById('statusLine').textContent = 'CPython Ready — Click Train Model to execute WebAssembly training pipeline.';
-      document.getElementById('trainBtn').disabled = false;
-      document.getElementById('trainBtn').textContent = 'Train Model';
-    }catch(err){
-      document.getElementById('statusLine').textContent = 'Runtime initialization failed — ' + err;
-    }
+  // Pyodide (~5.5 MB with the standard library) is only fetched the first time someone trains.
+  const PYODIDE_SRC = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+  let runtimeReady = null;
+  function ensureRuntime(){
+    if (!runtimeReady) runtimeReady = (async () => {
+      if (typeof loadPyodide === 'undefined') {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = PYODIDE_SRC; s.onload = resolve;
+          s.onerror = () => { s.remove(); reject(new Error('could not download the runtime')); };
+          document.head.appendChild(s);
+        });
+      }
+      const py = await loadPyodide();
+      py.runPython(SETUP_CODE);
+      pyodide = py;
+    })().catch(err => { runtimeReady = null; throw err; });
+    return runtimeReady;
   }
 
   function mapPt(nx, ny, w, h, pad){
@@ -508,6 +516,20 @@ json.dumps(result)
     const lr = parseFloat(document.getElementById('lrSlider').value);
     const epochs = parseInt(document.getElementById('epochsSlider').value);
     btn.disabled = true;
+
+    if (!pyodide) {
+      btn.textContent = 'Loading Python…';
+      document.getElementById('statusLine').textContent = 'Loading the in-browser CPython runtime (first run only)...';
+      try {
+        await ensureRuntime();
+      } catch (err) {
+        document.getElementById('statusLine').textContent = 'Runtime initialization failed — ' + err.message + '. Please try again.';
+        btn.disabled = false;
+        btn.textContent = 'Train Model';
+        return;
+      }
+    }
+
     btn.textContent = 'Training…';
     document.getElementById('statusLine').textContent = `Executing batch gradient descent across ${epochs} epochs...`;
 
@@ -546,8 +568,6 @@ json.dumps(result)
     document.getElementById('epochsVal').textContent = e.target.value;
   });
   document.getElementById('trainBtn').addEventListener('click', runTraining);
-
-  boot();
 </script>
 </body>
 </html>

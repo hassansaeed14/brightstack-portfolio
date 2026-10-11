@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sift Neural OS v7.0 — Autonomous Talent Intelligence Suite</title>
-<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/sift-neural-os-v7.html">
+<link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/sift-screening-pipeline.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sift Neural OS v7.0 — Autonomous Talent Intelligence Suite">
@@ -14,7 +14,7 @@
 <style>
   :root {
     --bg: #06080d; --surface: #0f131f; --surface-sunken: #171d2d; --line: #20283d;
-    --ink: #f8fafc; --ink-muted: #8a99af; --ink-faint: #56657d;
+    --ink: #f8fafc; --ink-muted: #8a99af; --ink-faint: #7787a1;
     --accent: #6366f1; --accent-soft: rgba(99,102,241,0.18);
     --strong: #10b981; --strong-soft: rgba(16,185,129,0.18);
     --consider: #f59e0b; --consider-soft: rgba(245,158,11,0.18);
@@ -44,14 +44,14 @@
   .nav-controls { display: flex; align-items: center; gap: 14px; }
   .view-toggle { display: flex; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 2px; }
   .view-toggle button { border: none; background: transparent; color: var(--ink-muted); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 999px; cursor: pointer; }
-  .view-toggle button.active { background: var(--accent); color: #fff; }
+  .view-toggle button.active { background: #5e61f1; color: #fff; }
   .theme-btn { background: var(--surface-sunken); border: 1px solid var(--line); color: var(--ink); padding: 8px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; }
 
   .view { display: none; padding: 40px 36px 80px; }
   .view.active { display: block; }
   .wrap { max-width: 1320px; margin: 0 auto; }
 
-  .hero-eyebrow { font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .hero-eyebrow { font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; color: #686bf1; font-weight: 700; }
   .hero-title { font-family: 'Manrope', sans-serif; font-size: 38px; line-height: 1.15; margin: 12px 0 12px; font-weight: 800; letter-spacing: -0.5px; max-width: 720px; }
   .hero-desc { color: var(--ink-muted); font-size: 16px; line-height: 1.65; max-width: 700px; margin-bottom: 32px; }
 
@@ -85,7 +85,7 @@
 
   .add-row { display: flex; gap: 8px; margin-top: 12px; }
   .add-row button { background: var(--surface-sunken); color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 0 16px; font-weight: 600; font-size: 12.5px; cursor: pointer; }
-  .add-row button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .add-row button.primary { background: #5e61f1; color: #fff; border-color: var(--accent); }
 
   .candidate-list { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; }
   .candidate-chip { display: flex; align-items: center; justify-content: space-between; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: 9px; padding: 10px 14px; font-size: 12.5px; }
@@ -93,7 +93,7 @@
   .candidate-chip button { background: none; border: none; color: var(--weak); cursor: pointer; font-size: 12px; font-weight: 700; }
 
   .run-btn {
-    width: 100%; margin-top: 20px; background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    width: 100%; margin-top: 20px; background: #5e61f1; color: #fff; border: none; border-radius: 10px;
     padding: 14px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif;
     display: flex; align-items: center; justify-content: center; gap: 9px; box-shadow: 0 10px 25px -5px rgba(99,102,241,0.4);
   }
@@ -154,6 +154,11 @@
   .modal-section ul { margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
 
   .footnote { max-width: 1320px; margin: 40px auto 0; padding: 20px 36px 0; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 12px; line-height: 1.7; }
+/* Small screens: keep content within the viewport. */
+@media (max-width: 600px) {
+  .topnav { flex-wrap: wrap; gap: 12px; padding: 18px 20px; }
+  .nav-controls { flex-wrap: wrap; }
+}
 </style>
 <meta name="description" content="Screen candidate resumes and evaluate competencies with Sift Neural OS, an AI talent intelligence demo by BrightStack Co.">
 </head>
@@ -177,6 +182,7 @@
 </div>
 
 <!-- STUDIO VIEW -->
+<main>
 <div class="view active" id="view-studio">
   <div class="wrap">
     <div class="hero-eyebrow">Enterprise Talent Intelligence Suite</div>
@@ -200,7 +206,7 @@
       <div class="panel">
         <div class="panel-title">1. Role Requirements & Criteria</div>
         <div class="panel-hint">Paste job description or core competencies.</div>
-        <textarea id="roleInput">Senior Backend Engineer — Remote.
+        <textarea id="roleInput" aria-label="Role requirements and criteria">Senior Backend Engineer — Remote.
 Must-haves: 5+ years building production APIs, strong proficiency in Node.js or Python, distributed systems & message queues (Kafka/RabbitMQ), on-call ownership. Nice-to-have: Fintech/payments background, junior mentorship experience.</textarea>
         <div class="example-row">
           <div class="example-chip" onclick="loadRole(1)">Backend Engineer</div>
@@ -271,6 +277,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
 </div>
 
 <!-- Comparison Floating Bar -->
+</main>
 <div class="compare-bar" id="compareBar">
   <span id="compareCount" style="font-weight:700; font-size:13px;">0 candidates selected for comparison</span>
   <button class="add-row primary" style="padding:8px 16px; border-radius:8px; border:none; cursor:pointer;" onclick="openComparisonModal()">Compare Side-by-Side →</button>

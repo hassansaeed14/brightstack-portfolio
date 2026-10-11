@@ -202,7 +202,7 @@
   <a href="index.html" class="back-link">← Portfolio Hub</a>
 </header>
 
-<div class="wrap">
+<div class="wrap" role="main">
   <div class="eyebrow">// Ultimate Web Audio Workstation & Sampler</div>
   <h1>Cadence Pro — DAW, Sequencer & Audio Importer</h1>
   <p class="lede">Upload any beat or audio sample (.mp3/.wav), loop it as a backing stem, and layer custom synthesized percussion, basslines, and melodies directly on top with zero latency.</p>
@@ -233,7 +233,7 @@
           <span class="ctrl-arrow" onclick="changeSwing(5)">+</span>
         </div>
 
-        <select class="preset-select" id="presetSelect" onchange="loadPreset(this.value)">
+        <select class="preset-select" id="presetSelect" aria-label="Preset" onchange="loadPreset(this.value)">
           <option value="cyberpunk">Cyberpunk Acid</option>
           <option value="techno">Industrial Techno</option>
           <option value="trap">Trap Banger</option>
@@ -273,15 +273,15 @@
     <div class="fx-rack">
       <div class="fx-group">
         <div class="fx-control">
-          <label>Filter Cutoff: <span id="cutoffVal">18000</span>Hz</label>
+          <label for="cutoffRange">Filter Cutoff: <span id="cutoffVal">18000</span>Hz</label>
           <input type="range" id="cutoffRange" min="200" max="20000" step="100" value="18000" oninput="updateFilterCutoff(this.value)">
         </div>
         <div class="fx-control">
-          <label>Delay Feedback: <span id="delayVal">25</span>%</label>
+          <label for="delayRange">Delay Feedback: <span id="delayVal">25</span>%</label>
           <input type="range" id="delayRange" min="0" max="80" step="1" value="25" oninput="updateDelay(this.value)">
         </div>
         <div class="fx-control">
-          <label>Reverb Space: <span id="reverbVal">15</span>%</label>
+          <label for="reverbRange">Reverb Space: <span id="reverbVal">15</span>%</label>
           <input type="range" id="reverbRange" min="0" max="100" step="1" value="15" oninput="updateReverb(this.value)">
         </div>
       </div>
@@ -404,15 +404,15 @@
         <div class="track-controls-row">
           <div class="track-ctrl-group">
             <span>VOL</span>
-            <input type="range" min="0" max="1" step="0.05" value="${trackVol[ti]}" oninput="trackVol[ti]=parseFloat(this.value)">
+            <input type="range" aria-label="${track.name} volume" min="0" max="1" step="0.05" value="${trackVol[ti]}" oninput="trackVol[ti]=parseFloat(this.value)">
           </div>
           <div class="track-ctrl-group">
             <span>PAN</span>
-            <input type="range" min="-1" max="1" step="0.1" value="${trackPan[ti]}" oninput="trackPan[ti]=parseFloat(this.value)">
+            <input type="range" aria-label="${track.name} pan" min="-1" max="1" step="0.1" value="${trackPan[ti]}" oninput="trackPan[ti]=parseFloat(this.value)">
           </div>
           <div class="track-ctrl-group">
             <span>PTCH</span>
-            <input type="range" min="-12" max="12" step="1" value="${trackPitch[ti]}" oninput="trackPitch[ti]=parseInt(this.value)">
+            <input type="range" aria-label="${track.name} pitch" min="-12" max="12" step="1" value="${trackPitch[ti]}" oninput="trackPitch[ti]=parseInt(this.value)">
           </div>
         </div>
       `;
