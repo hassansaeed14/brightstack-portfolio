@@ -316,16 +316,19 @@
   </div>
 </div>
 
-<!-- 3D Card Tilt Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<!-- 3D Card Tilt Effect (bundled from npm; skipped when the visitor prefers reduced motion) -->
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    VanillaTilt.init(document.querySelectorAll(".gallery-item, .about-grid, .estimator-container"), {
+      max: 1.5,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.03,
+    });
+  }
+</script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".gallery-item, .about-grid, .estimator-container"), {
-    max: 1.5,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.03,
-  });
-
   function filterGallery(category, e){
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     e.target.classList.add('active');

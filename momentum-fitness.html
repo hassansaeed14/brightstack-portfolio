@@ -105,6 +105,25 @@
   .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; }
   .back-link:hover { border-color: var(--cyan); }
   .concept-bar { margin-top: auto; flex-shrink: 0; background: rgba(2,4,8,0.98); border-top: 1px solid var(--line); color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; text-align: center; padding: 12px 24px; }
+  /* Narrow screens: the sidebar becomes a compact top bar with a menu button, so the main area gets the full width. */
+  .nav-toggle { display: none; }
+  .schedule-board:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 12px; }
+  @media (max-width: 900px) {
+    .app { flex-direction: column; }
+    aside { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+    aside .brand { padding: 12px 16px; border-bottom: none; }
+    .nav-toggle { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-raised); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; cursor: pointer; }
+    aside .nav-menu, aside .user-stats { display: none; }
+    aside.open .nav-menu { display: flex; padding: 4px 16px 14px; }
+    aside.open .user-stats { display: block; margin-top: 0; padding: 14px 16px; }
+    header { height: auto; min-height: 64px; padding: 10px 16px; flex-wrap: wrap; gap: 10px; }
+    .page-title { font-size: 17px; }
+    .btn-primary { padding: 10px 16px; }
+    .content-wrap { padding: 20px 16px; }
+    .card { padding: 20px; }
+    /* Keep the concept label clear of the floating "Portfolio Hub" button (fixed 20px from the bottom). */
+    .concept-bar { padding-bottom: 76px; }
+  }
 </style>
 <meta name="description" content="Explore class schedules, coaching rosters, and biometric macro calculators at Momentum Apex. A concept demo by BrightStack Co.">
 <meta property="og:title" content="Momentum Apex Ultimate — Elite Strength &amp;amp; Conditioning Studio">
@@ -127,9 +146,10 @@
         <div class="brand-name">Momentum Apex</div>
         <div class="brand-sub">Ultimate Studio OS</div>
       </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sideNav">☰ Menu</button>
     </div>
     
-    <div class="nav-menu">
+    <div class="nav-menu" id="sideNav">
       <a class="nav-item active" onclick="switchView('timetable', this)">⚡ Operational Schedule</a>
       <a class="nav-item" onclick="switchView('calculator', this)">📊 Biometric Macro Engine</a>
       <a class="nav-item" onclick="switchView('faculty', this)">🎯 Elite Coaching Roster</a>
@@ -159,7 +179,7 @@
         <div class="card">
           <h3 aria-level="2">Live Class Architecture</h3>
           <p class="sub">// Select any active time slot below to secure your reservation.</p>
-          <div class="schedule-board">
+          <div class="schedule-board" tabindex="0" role="region" aria-label="Weekly class timetable (scrolls sideways)">
             <div class="schedule-grid">
               <div class="sched-cell"></div>
               <div class="sched-cell sched-head">Mon</div>
@@ -306,7 +326,14 @@
 </div>
 
 <script>
+  // Narrow screens: the menu button shows and hides the navigation.
+  const sideBar = document.querySelector('aside'), navToggle = document.getElementById('navToggle');
+  function setMenu(open){ sideBar.classList.toggle('open', open); navToggle.setAttribute('aria-expanded', String(open)); }
+  navToggle.addEventListener('click', () => setMenu(!sideBar.classList.contains('open')));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sideBar.classList.contains('open')) { setMenu(false); navToggle.focus(); } });
+
   function switchView(viewId, el){
+    setMenu(false);
     document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     
