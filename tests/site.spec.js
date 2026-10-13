@@ -145,6 +145,7 @@ test.describe('home page', () => {
       { href: 'mailto:19hsnkhan@gmail.com?subject=Project%20enquiry%20%E2%80%94%20BrightStack', target: null, rel: null },
       { href: "https://wa.me/923175091910?text=Hi%20BrightStack%2C%20I'd%20like%20to%20talk%20about%20a%20project.", target: '_blank', rel: 'noopener' },
       { href: 'https://www.fiverr.com/brightstackco', target: '_blank', rel: 'noopener' },
+      { href: 'https://www.linkedin.com/in/hassan-saeed-30a845394', target: '_blank', rel: 'noopener noreferrer' },
     ])
     expect(decodeURIComponent(links[0].href.split('subject=')[1])).toBe('Project enquiry — BrightStack')
   })
