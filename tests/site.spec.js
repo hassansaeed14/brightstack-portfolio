@@ -59,6 +59,19 @@ test('every canonical URL points at its own page', () => {
   }
 })
 
+// Tablet widths, where layouts switch between their phone and desktop versions.
+for (const page of ['index.html', 'chai-khana/index.html']) {
+  for (const width of [768, 1024]) {
+    test(`${page} does not scroll sideways at ${width}px`, async ({ page: p }) => {
+      await p.setViewportSize({ width, height: 900 })
+      await p.goto(page, { waitUntil: 'load' })
+      await p.waitForTimeout(800)
+      const { scrollWidth, clientWidth } = await p.evaluate(() => ({ scrollWidth: document.documentElement.scrollWidth, clientWidth: document.documentElement.clientWidth }))
+      expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 1)
+    })
+  }
+}
+
 test.describe('home page', () => {
   // The scroll tests wait on the page's state instead of fixed pauses: for smooth scrolling (Lenis) to be ready,
   // then for each scroll to land or settle. While other workers render the WebGL pages, loading the home page and
@@ -66,11 +79,13 @@ test.describe('home page', () => {
   const SCROLL_WAIT = 30_000
   const SCROLL_TEST_TIMEOUT = 90_000
   const waitForSmoothScroll = page => expect(page.locator('html')).toHaveClass(/(^|\s)lenis(\s|$)/, { timeout: SCROLL_WAIT })
+  // Settled means the position has stopped changing and Lenis has finished handling the scroll (it removes
+  // its lenis-scrolling class), so its idea of the scroll position matches the page's.
   const waitForScrollToSettle = async page => {
     let last = NaN
     await expect.poll(async () => {
-      const y = await page.evaluate(() => scrollY)
-      const settled = y === last
+      const { y, lenisBusy } = await page.evaluate(() => ({ y: scrollY, lenisBusy: document.documentElement.classList.contains('lenis-scrolling') }))
+      const settled = y === last && !lenisBusy
       last = y
       return settled
     }, { intervals: [250], timeout: SCROLL_WAIT }).toBe(true)
@@ -124,7 +139,12 @@ test.describe('home page', () => {
     await page.evaluate(() => scrollTo(0, 0))
     await waitForScrollToSettle(page)
     await expect(heading).not.toBeInViewport()
-    await page.getByRole('link', { name: /Start a conversation/ }).click()
+    // Bring the button into view and let that scroll settle before clicking. Clicking in the same frame as the
+    // jump to the button starts the smooth scroll from a stale position, and it stops short of #contact.
+    const cta = page.getByRole('link', { name: /Start a conversation/ })
+    await cta.scrollIntoViewIfNeeded()
+    await waitForScrollToSettle(page)
+    await cta.click()
     await expect(heading).toBeInViewport({ timeout: SCROLL_WAIT })
   })
 
@@ -148,6 +168,33 @@ test.describe('home page', () => {
       { href: 'https://www.linkedin.com/in/hassan-saeed-30a845394', target: '_blank', rel: 'noopener noreferrer' },
     ])
     expect(decodeURIComponent(links[0].href.split('subject=')[1])).toBe('Project enquiry — BrightStack')
+  })
+
+  test('contact card values fit their cards at 1440px without splitting a word', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto('index.html', { waitUntil: 'load' })
+    await page.evaluate(() => document.fonts.ready)
+    const values = await page.$$eval('#contact .contact-card strong', ss => ss.map(s => {
+      const height = () => s.getBoundingClientRect().height
+      const wrapped = height()
+      // One line of this text, for counting lines.
+      s.style.whiteSpace = 'nowrap'
+      const oneLine = height()
+      // Without emergency breaks a word can only wrap at normal break points (spaces, hyphens), so if the
+      // height or width changes, the card was relying on splitting a word.
+      s.style.whiteSpace = ''
+      s.style.overflowWrap = 'normal'
+      const splitsWord = height() !== wrapped || s.scrollWidth > s.clientWidth
+      s.style.overflowWrap = ''
+      return { text: s.textContent, lines: Math.round(wrapped / oneLine), splitsWord }
+    }))
+    expect(values).toHaveLength(4)
+    for (const v of values) {
+      expect(v.lines, v.text).toBeLessThanOrEqual(2)
+      expect(v.splitsWord, v.text).toBe(false)
+    }
+    expect(values.find(v => v.text.includes('@gmail.com')).lines).toBe(1)
+    expect(values.find(v => v.text.includes('fiverr.com')).lines).toBe(1)
   })
 })
 
