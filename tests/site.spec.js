@@ -306,3 +306,67 @@ test('churn model page loads Python only when training starts', async ({ page })
   expect(pyodide).toEqual([])
   await expect(page.locator('#trainBtn')).toBeEnabled()
 })
+
+test.describe('home page 3D loading', () => {
+  const SCENE_CODE = /\/assets\/(three|stack3d|bg3d)-[^/]*\.js$/
+  // Resource timings for the 3D chunks, on the same clock as first-contentful-paint.
+  const sceneTimings = page => page.evaluate(src => {
+    const re = new RegExp(src)
+    return {
+      fcp: performance.getEntriesByName('first-contentful-paint')[0]?.startTime ?? null,
+      chunks: performance.getEntriesByType('resource').filter(r => re.test(new URL(r.name).pathname)).map(r => ({ path: new URL(r.name).pathname, start: r.startTime })),
+    }
+  }, SCENE_CODE.source)
+
+  test('does not request three.js before the first paint, and still loads the scenes afterwards', async ({ page }) => {
+    test.setTimeout(60_000)
+    await page.goto('index.html', { waitUntil: 'load' })
+    await expect.poll(async () => (await sceneTimings(page)).chunks.filter(c => /three-/.test(c.path)).length, { timeout: 30_000 }).toBeGreaterThan(0)
+    const { fcp, chunks } = await sceneTimings(page)
+    expect(fcp).not.toBeNull()
+    for (const c of chunks) expect(c.start, c.path).toBeGreaterThan(fcp)
+  })
+
+  // On real screens the stack sits on the first screen (in the hero on desktop, under the hero text on
+  // phones), so it starts right after the page has loaded. A very short window puts it more than the
+  // 200px preload margin below the fold, which shows that its code waits until it is scrolled near.
+  test("#stack3d's code loads only after scrolling to it", async ({ page }) => {
+    test.setTimeout(60_000)
+    await page.setViewportSize({ width: 390, height: 260 })
+    const requested = []
+    page.on('request', r => { const path = new URL(r.url()).pathname; if (SCENE_CODE.test(path)) requested.push(path) })
+    await page.goto('index.html', { waitUntil: 'load' })
+    // The background scene starting means the page has loaded and gone idle, which is when the stack could start too.
+    await expect.poll(() => requested.some(p => /bg3d-/.test(p)), { timeout: 30_000 }).toBe(true)
+    await page.waitForTimeout(1000)
+    expect(requested.filter(p => /stack3d-/.test(p))).toEqual([])
+    await page.evaluate(() => document.getElementById('stack3d').scrollIntoView({ block: 'center' }))
+    await expect.poll(() => requested.some(p => /stack3d-/.test(p)), { timeout: 15_000 }).toBe(true)
+  })
+})
+
+// These pages used to load vanilla-tilt from cdnjs; they now bundle it, so the effect can't break if the CDN is down.
+for (const name of ['ai-inquiry-router', 'atlas-knowledge-copilot', 'aviary-case-study', 'booking-system-demo', 'cadence-beatmaker',
+  'cartel-shop', 'churn-risk-model', 'ember-oak-ai-assistant', 'forge-agent-orchestration', 'kindred-wireframes', 'loop-wireframes', 'nexus-ops-agent']) {
+  test(`${name}.html tilts its cards without cdnjs`, async ({ page }) => {
+    const cdn = [], errors = []
+    page.on('request', r => { if (r.url().includes('cdnjs.cloudflare.com')) cdn.push(r.url()) })
+    page.on('pageerror', e => errors.push(e.message))
+    await page.route(/cdnjs\.cloudflare\.com/, route => route.abort())
+    await page.goto(`${name}.html`, { waitUntil: 'load' })
+    await expect.poll(() => page.evaluate(() => [...document.querySelectorAll('*')].filter(e => e.vanillaTilt).length)).toBeGreaterThan(0)
+    expect(cdn).toEqual([])
+    expect(errors).toEqual([])
+  })
+}
+
+test('Chai Khana lazy-loads every image except the hero, and gives each one its size', async ({ page }) => {
+  await page.goto('chai-khana/index.html', { waitUntil: 'domcontentloaded' })
+  const images = await page.$$eval('img', imgs => imgs.map(i => ({ src: i.getAttribute('src'), loading: i.getAttribute('loading'), decoding: i.getAttribute('decoding'), width: i.getAttribute('width'), height: i.getAttribute('height') })))
+  expect(images.length).toBeGreaterThan(0)
+  for (const i of images) expect(i, i.src).toMatchObject({ loading: 'lazy', decoding: 'async', width: expect.stringMatching(/^\d+$/), height: expect.stringMatching(/^\d+$/) })
+  // The hero is the first section's CSS background: preloaded with high priority instead of lazy-loaded.
+  const heroUrl = await page.$eval('section', s => getComputedStyle(s).backgroundImage.match(/url\("([^"]+)"\)/)?.[1])
+  const preload = await page.$eval('link[rel="preload"][as="image"]', l => ({ href: l.href, priority: l.getAttribute('fetchpriority') }))
+  expect(preload).toEqual({ href: heroUrl, priority: 'high' })
+})

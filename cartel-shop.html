@@ -391,15 +391,16 @@
 </div>
 
 <!-- 3D Card Hover Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
   VanillaTilt.init(document.querySelectorAll(".feature-box"), {
     max: 4,
     speed: 400,
     glare: true,
     "max-glare": 0.05,
   });
-
+</script>
+<script>
   let currentCurrency = 'USD';
   const FX = { USD: { sym: '$', rate: 1 }, EUR: { sym: '€', rate: 0.92 }, GBP: { sym: '£', rate: 0.78 } };
   let discountApplied = false;

@@ -271,15 +271,16 @@
 <footer>Built by BrightStack Co. · Real Python, Real Gradient Descent, Zero Server Overhead.</footer>
 
 <!-- 3D Card Hover Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
   VanillaTilt.init(document.querySelectorAll(".lab-panel, .chart-card, .stat-box, .inference-card"), {
     max: 2,
     speed: 400,
     glare: true,
     "max-glare": 0.03,
   });
-
+</script>
+<script>
   let pyodide = null;
   let modelWeights = { w: [0,0], b: 0, minMax: { eng: [0,10], delay: [0,30] } };
 

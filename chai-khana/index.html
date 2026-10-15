@@ -63,6 +63,8 @@
     }
   </style>
 
+  <!-- The hero background image: fetched early, ahead of other images -->
+  <link rel="preload" as="image" href="assets/karak-chai-and-aloo-paratha-on-brass-plate.webp" type="image/webp" fetchpriority="high">
   <!-- Tailwind CSS (compiled at build time from tailwind.css and tailwind.config.js) -->
   <link rel="stylesheet" href="./tailwind.css">
 
@@ -148,7 +150,7 @@
 
   <!-- Hero Section -->
   <main>
-  <section class="relative h-[90vh] flex items-center justify-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(43, 27, 18, 0.4), rgba(43, 27, 18, 0.95)), url('assets/karak-chai-and-aloo-paratha-on-brass-plate.jpg');">
+  <section class="relative h-[90vh] flex items-center justify-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(43, 27, 18, 0.4), rgba(43, 27, 18, 0.95)), url('assets/karak-chai-and-aloo-paratha-on-brass-plate.webp');">
     <!-- Three.js Canvas Container -->
     <div id="hero-canvas-container" class="absolute inset-0 pointer-events-none z-10"></div>
 
@@ -190,7 +192,7 @@
         <div class="bg-primary/50 border border-gold/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-gold/50 transition-all duration-300 tilt-card shadow-2xl reveal">
           <div>
             <div class="relative h-48 sm:h-64 rounded-2xl overflow-hidden mb-6">
-              <img loading="lazy" decoding="async" src="assets/karak-chai-and-aloo-paratha-on-brass-plate.jpg" alt="Student Deal" class="w-full h-full object-cover">
+              <img loading="lazy" decoding="async" src="assets/karak-chai-and-aloo-paratha-on-brass-plate.webp" width="1408" height="768" alt="Student Deal" class="w-full h-full object-cover">
               <span class="absolute top-4 right-4 bg-gold text-primary font-black px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Save Big</span>
             </div>
             <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mb-2">Student Deal</h3>
@@ -212,7 +214,7 @@
         <div class="bg-primary/50 border border-gold/20 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-gold/50 transition-all duration-300 tilt-card shadow-2xl reveal">
           <div>
             <div class="relative h-48 sm:h-64 rounded-2xl overflow-hidden mb-6">
-              <img loading="lazy" decoding="async" src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.webp" alt="Family Deal" class="w-full h-full object-cover">
+              <img loading="lazy" decoding="async" src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.webp" width="1600" height="1068" alt="Family Deal" class="w-full h-full object-cover">
               <span class="absolute top-4 right-4 bg-gold text-primary font-black px-4 py-1.5 rounded-full text-sm uppercase tracking-wider">Best Seller</span>
             </div>
             <h3 class="font-serif text-2xl sm:text-3xl font-bold text-cream mb-2">Family Deal</h3>
@@ -258,7 +260,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/doodh-patti-tea-in-traditional-cup.jpg" alt="Doodh Patti" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/doodh-patti-tea-in-traditional-cup.jpg" width="960" height="1280" alt="Doodh Patti" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
@@ -275,7 +277,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/karak-chai-in-glass.webp" alt="Karak Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/karak-chai-in-glass.webp" width="1024" height="683" alt="Karak Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
@@ -292,7 +294,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/pink-kashmiri-chai-with-pistachio-garnish.jpg" alt="Kashmiri Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/pink-kashmiri-chai-with-pistachio-garnish.jpg" width="1200" height="1200" alt="Kashmiri Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
@@ -309,7 +311,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/elaichi-chai-in-clay-cup.webp" alt="Elaichi Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/elaichi-chai-in-clay-cup.webp" width="1000" height="560" alt="Elaichi Chai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
@@ -326,7 +328,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="chai">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/green-tea-with-mint.webp" alt="Green Tea" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/green-tea-with-mint.webp" width="800" height="800" alt="Green Tea" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Chai</span>
@@ -344,7 +346,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/crispy-stuffed-aloo-paratha-with-butter.jpg" alt="Aloo Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/crispy-stuffed-aloo-paratha-with-butter.jpg" width="1152" height="1536" alt="Aloo Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
@@ -361,7 +363,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/cheesy-chicken-paratha-slice-pulling-cheese.png" alt="Chicken Cheese Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/cheesy-chicken-paratha-slice-pulling-cheese.webp" width="640" height="640" alt="Chicken Cheese Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
@@ -378,7 +380,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/nutella-paratha-roll-with-chocolate-drizzle.jpg" alt="Nutella Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/nutella-paratha-roll-with-chocolate-drizzle.jpg" width="474" height="266" alt="Nutella Paratha" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
@@ -395,7 +397,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="breakfast">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/anda-paratha-rolls-with-chutney.webp" alt="Anda Paratha Roll" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/anda-paratha-rolls-with-chutney.webp" width="636" height="1080" alt="Anda Paratha Roll" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Breakfast</span>
@@ -413,7 +415,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/crispy-zinger-burger-with-lettuce-and-mayo.webp" alt="Zinger Burger" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/crispy-zinger-burger-with-lettuce-and-mayo.webp" width="1600" height="1067" alt="Zinger Burger" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
@@ -430,7 +432,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/club-sandwiches-with-fries.webp" alt="Club Sandwich" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/club-sandwiches-with-fries.webp" width="1300" height="953" alt="Club Sandwich" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
@@ -447,7 +449,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/loaded-fries-with-melted-cheese-and-chicken.webp" alt="Loaded Fries" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/loaded-fries-with-melted-cheese-and-chicken.webp" width="758" height="505" alt="Loaded Fries" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
@@ -464,7 +466,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="fastfood">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/chicken-shawarma-wrap-halved.webp" alt="Chicken Shawarma" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/chicken-shawarma-wrap-halved.webp" width="1300" height="957" alt="Chicken Shawarma" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Fast Food</span>
@@ -482,7 +484,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/two-warm-gulab-jamuns-in-syrup.webp" alt="Gulab Jamun" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/two-warm-gulab-jamuns-in-syrup.webp" width="800" height="436" alt="Gulab Jamun" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
@@ -499,7 +501,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/kheer-in-clay-bowl.webp" alt="Kheer in a clay bowl" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/kheer-in-clay-bowl.webp" width="474" height="533" alt="Kheer in a clay bowl" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
@@ -516,7 +518,7 @@
         <div class="menu-item-card bg-darker border border-gold/10 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-gold/40 transition-all duration-300 tilt-card shadow-lg reveal" data-category="desserts">
           <div>
             <div class="h-48 overflow-hidden">
-              <img loading="lazy" decoding="async" src="assets/chocolate-lava-cake.webp" alt="Chocolate Lava Cake" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+              <img loading="lazy" decoding="async" src="assets/chocolate-lava-cake.webp" width="800" height="534" alt="Chocolate Lava Cake" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
             </div>
             <div class="p-5">
               <span class="text-xs text-gold font-semibold tracking-wider uppercase">Desserts</span>
@@ -596,42 +598,42 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/modern-desi-cafe-at-night-cozy-lighting.jpg" alt="Café at night" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/modern-desi-cafe-at-night-cozy-lighting.jpg" width="736" height="1308" alt="Café at night" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Café at Night</p>
           </div>
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/pouring-karak-chai-through-strainer.webp" alt="Chai being poured" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/pouring-karak-chai-through-strainer.webp" width="800" height="534" alt="Chai being poured" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Fresh Brewed Karak</p>
           </div>
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/golden-parathas-cooking-on-tawa.webp" alt="Parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/golden-parathas-cooking-on-tawa.webp" width="1600" height="1067" alt="Parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Crispy Parathas</p>
           </div>
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.webp" alt="Chai served with parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/four-cups-of-tea-with-parathas-and-loaded-fries.webp" width="1600" height="1068" alt="Chai served with parathas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Shared Moments</p>
           </div>
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/karak-chai-and-aloo-paratha-on-brass-plate.jpg" alt="Karak chai in a clay kulhad" class="w-full h-full object-cover object-right group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/karak-chai-and-aloo-paratha-on-brass-plate.webp" width="1408" height="768" alt="Karak chai in a clay kulhad" class="w-full h-full object-cover object-right group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Traditional Kulhad</p>
           </div>
         </div>
 
         <div class="relative overflow-hidden rounded-2xl aspect-square group shadow-lg reveal">
-          <img loading="lazy" decoding="async" src="assets/modern-cafe-kitchen-counter-with-espresso-machine-.jpg" alt="Our counter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <img loading="lazy" decoding="async" src="assets/modern-cafe-kitchen-counter-with-espresso-machine-.jpg" width="626" height="417" alt="Our counter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
             <p class="font-serif text-xl font-bold text-cream">Our Counter</p>
           </div>

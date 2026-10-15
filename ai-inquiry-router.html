@@ -387,10 +387,11 @@
 <footer>Demo project by BrightStack Co. — diagnostic routing pipeline engineered for high-performance automation.</footer>
 
 <!-- Vanilla Tilt Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
   VanillaTilt.init(document.querySelectorAll(".example-card, .metric-card, .step, .arch-node"), { max: 5, speed: 400, glare: true, "max-glare": 0.08 });
-
+</script>
+<script>
   function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.textContent = msg;

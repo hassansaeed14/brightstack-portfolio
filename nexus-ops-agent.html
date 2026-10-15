@@ -709,8 +709,8 @@ function injectOrder(){
 seedLog();
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
   VanillaTilt.init(document.querySelectorAll(".input-panel, .trace-panel, .final-answer, .stat-card, .runs-panel, .tool-usage-panel, .mem-card, .sandbox-card"), {
     max: 2,
     speed: 400,

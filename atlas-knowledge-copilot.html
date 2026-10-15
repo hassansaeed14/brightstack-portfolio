@@ -288,7 +288,13 @@
 </div>
 
 <!-- 3D Card Effect Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script type="module">
+  import 'vanilla-tilt';
+  // renderDocList() has already made the doc cards, so the [data-tilt] auto-start picked them up with default
+  // settings. Restart them so initTilt() gives them the page's settings, as when the library loaded first.
+  document.querySelectorAll('.doc-card').forEach(el => el.vanillaTilt && el.vanillaTilt.destroy());
+  initTilt();
+</script>
 <script>
 function initTilt() {
   if (window.VanillaTilt) {

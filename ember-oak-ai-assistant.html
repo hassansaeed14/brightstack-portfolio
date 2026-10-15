@@ -268,15 +268,16 @@
 </div>
 
 <!-- 3D Card Hover Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
   VanillaTilt.init(document.querySelectorAll(".stat-card, .leads-panel, .widget"), {
     max: 3,
     speed: 400,
     glare: true,
     "max-glare": 0.04,
   });
-
+</script>
+<script>
   let conversations = [];
   let currentId = null;
   let messages = [];

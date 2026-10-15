@@ -334,15 +334,16 @@
 </div>
 
 <!-- 3D Tilt Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-<script>
+<script type="module">
+  import VanillaTilt from 'vanilla-tilt';
   VanillaTilt.init(document.querySelectorAll(".inspector-pane, .phone"), {
     max: 2,
     speed: 400,
     glare: true,
     "max-glare": 0.03,
   });
-
+</script>
+<script>
   let cardIndex = 0;
   let startX = 0, currentX = 0, dragging = false;
   const topCard = document.getElementById('topCard');
