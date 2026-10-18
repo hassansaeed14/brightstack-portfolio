@@ -145,7 +145,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;color:v
   </section>
 
   <div class="stats">
-    <div class="st"><b>4</b><span>Projects</span></div>
+    <div class="st"><b>5</b><span>Projects</span></div>
     <div class="st"><b>1</b><span>Live external API</span></div>
     <div class="st"><b>2</b><span>Auth-gated apps</span></div>
     <div class="st"><b>100%</b><span>Clickable, not mockups</span></div>
@@ -251,11 +251,28 @@ function loom(el){
   }
   paint();
 }
+function kharcha(el){
+  // Sample entries from Kharcha itself; amounts formatted the way Kharcha shows them (Rs 8,450.50).
+  var whole=new Intl.NumberFormat('en-PK',{maximumFractionDigits:0}),paisa=new Intl.NumberFormat('en-PK',{minimumFractionDigits:2,maximumFractionDigits:2});
+  function rs(n){return 'Rs '+(Math.round(n*100)%100===0?whole:paisa).format(n)}
+  var rows=[['Invoice','Website design work',45000,'unpaid'],['Rent','Monthly office rent',60000,'paid'],['Utilities','Electricity bill',8450.5,'paid'],['Supplies','Printer paper and toner',3200,'unpaid']],show='all';
+  function paint(){
+    var paid=0,unpaid=0;rows.forEach(function(r){if(r[3]=='paid')paid+=r[2];else unpaid+=r[2]});
+    el.innerHTML='<div class="kp" style="grid-template-columns:1fr 1fr"><div><b>'+rs(paid)+'</b><small>Paid</small></div><div><b>'+rs(unpaid)+'</b><small>Unpaid</small></div></div>'+
+    '<div class="days">'+['all','paid','unpaid'].map(function(f){return '<button class="'+(f==show?'on':'')+'" data-f="'+f+'">'+f[0].toUpperCase()+f.slice(1)+'</button>'}).join('')+'</div>'+
+    rows.map(function(r,i){return show!='all'&&r[3]!=show?'':'<div class="tr" style="grid-template-columns:1fr auto 82px"><span>'+r[1]+'<br><small class="mono" style="color:var(--muted)">'+r[0]+'</small></span><span class="mono">'+rs(r[2])+'</span><button class="bd '+(r[3]=='paid'?'paid':'pending')+'" data-i="'+i+'" title="Click to switch paid / unpaid">'+r[3].toUpperCase()+'</button></div>'}).join('')+
+    '<p class="note">Click a status to switch it, or filter by status. Sample data. The full app adds search, categories and CSV export, and keeps your entries in this browser.</p>';
+    el.querySelectorAll('[data-f]').forEach(function(b){b.onclick=function(){show=b.dataset.f;paint()}});
+    el.querySelectorAll('[data-i]').forEach(function(b){b.onclick=function(){var r=rows[b.dataset.i];r[3]=r[3]=='paid'?'unpaid':'paid';paint()}});
+  }
+  paint();
+}
 var P=[
  {n:'Flowdesk',t:'Standard',tag:'dashboard · auth-gated',c:'#3b82f6',h:'webapp-dashboard-demo.html',d:'Order and invoice dashboard behind a sign-in screen: KPIs, recent-orders table with paid, pending and overdue states.',f:flowdesk},
  {n:'Glow Studio',t:'Standard',tag:'scheduling · real logic',c:'#06b6d4',h:'booking-system-demo.html',d:'Salon booking with genuine availability logic: pick a date, see taken slots, book one, get a confirmation.',f:glow},
  {n:'Nexora',t:'Premium',tag:'flagship · live API',c:'#8b5cf6',h:'nexora-flagship-project.html',d:'Agency client platform with a rule-based client health engine, live currency API and its own design system.',f:nexora},
- {n:'Loom',t:'Premium',tag:'canvas · executable',c:'#f59e0b',h:'loom-workflow-builder.html',d:'Visual workflow builder: wire trigger, logic and action nodes, then run the chain with real branching.',f:loom}];
+ {n:'Loom',t:'Premium',tag:'canvas · executable',c:'#f59e0b',h:'loom-workflow-builder.html',d:'Visual workflow builder: wire trigger, logic and action nodes, then run the chain with real branching.',f:loom},
+ {n:'Kharcha',t:'Basic',tag:'single screen · PKR',c:'#10b981',h:'expense-tracker.html',d:'Expense and invoice tracker on a single screen: amounts in PKR, paid and unpaid status, filters and CSV export. Entries stay in your browser\'s local storage, and it works on a phone.',f:kharcha}];
 var tabs=$('tabs'),cur=-1;
 P.forEach(function(p,i){var b=document.createElement('button');b.className='tab';b.style.setProperty('--c',p.c);b.setAttribute('role','tab');
   b.innerHTML='<span class="t">'+p.t+'</span><b>'+p.n+'</b><small>'+p.tag+'</small>';b.onclick=function(){pick(i)};tabs.appendChild(b)});

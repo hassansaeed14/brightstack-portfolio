@@ -111,6 +111,8 @@
   
   .app-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
   .app-title{font-size:22px;font-family:'Instrument Serif',serif;font-weight:400;}
+  /* Phones: let the prototype column shrink to the screen, with less padding, and wrap the app header so its button stays on screen. */
+  @media(max-width:760px){.proto{grid-template-columns:minmax(0,1fr);}.screen-stage{padding:24px 16px;}.app-header{flex-wrap:wrap;gap:12px;}}
   .app-sub{color:var(--muted);font-size:12.5px;margin-top:2px;}
   
   .invoice-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);}

@@ -46,7 +46,43 @@ for (const page of PAGES) {
       const { scrollWidth, clientWidth } = await p.evaluate(() => ({ scrollWidth: document.documentElement.scrollWidth, clientWidth: document.documentElement.clientWidth }))
       expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 1)
     })
+
+    // The test above misses pages that hide their own sideways scroll (overflow: hidden on html/body), where
+    // content past the edge simply can't be reached. This checks the visible buttons, links and headings instead.
+    test('keeps its buttons, links and headings on screen on a phone', async ({ page: p }) => {
+      await p.setViewportSize({ width: 390, height: 844 })
+      await p.goto(page, { waitUntil: 'load' })
+      await p.waitForTimeout(800)
+      expect(await p.evaluate(offScreenRight)).toEqual([])
+    })
+
+    test('makes no compliance or clinical claims in its visible text', async ({ page: p }) => {
+      await p.goto(page, { waitUntil: 'domcontentloaded' })
+      const text = await p.evaluate(() => document.body.innerText)
+      expect(text.match(/SOC ?2|GDPR|HIPAA|HL7|Quantum-Resistant/gi) ?? []).toEqual([])
+    })
   })
+}
+
+// Visible buttons, links and headings whose right edge is more than 4px past the viewport. Things that can be
+// reached by scrolling their own box, and closed off-canvas drawers (a fixed or transformed box parked wholly
+// past the right edge), don't count.
+function offScreenRight() {
+  const vw = document.documentElement.clientWidth, out = []
+  for (const el of document.querySelectorAll('button, a, h1, h2, h3, h4, h5, h6, [role="heading"], [role="button"]')) {
+    if (!el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })) continue
+    const r = el.getBoundingClientRect()
+    if (r.width <= 1 || r.height <= 1) continue
+    let clipRight = Infinity, parked = false
+    for (let a = el.parentElement; a && a !== document.body && a !== document.documentElement; a = a.parentElement) {
+      const cs = getComputedStyle(a), ar = a.getBoundingClientRect()
+      if (cs.overflowX !== 'visible') clipRight = Math.min(clipRight, ar.right)
+      if ((cs.position === 'fixed' || cs.transform !== 'none') && ar.left >= vw - 1) parked = true
+    }
+    if (parked || r.left >= clipRight) continue
+    if (r.right > vw + 4) out.push(`${el.tagName.toLowerCase()} "${(el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40)}" ends at ${Math.round(r.right)}px`)
+  }
+  return out
 }
 
 test('every canonical URL points at its own page', () => {
@@ -369,4 +405,64 @@ test('Chai Khana lazy-loads every image except the hero, and gives each one its 
   const heroUrl = await page.$eval('section', s => getComputedStyle(s).backgroundImage.match(/url\("([^"]+)"\)/)?.[1])
   const preload = await page.$eval('link[rel="preload"][as="image"]', l => ({ href: l.href, priority: l.getAttribute('fetchpriority') }))
   expect(preload).toEqual({ href: heroUrl, priority: 'high' })
+})
+
+test('the booking calendar opens on the current month and still pages through months', async ({ page }) => {
+  await page.goto('booking-system-demo.html', { waitUntil: 'load' })
+  // The browser's own clock, so the test agrees with the page whatever the date or time zone.
+  const monthLabel = offset => page.evaluate(offset => { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + offset); return d.toLocaleString('en-US', { month: 'long' }) + ' ' + d.getFullYear() }, offset)
+  await expect(page.locator('#calMonth')).toHaveText(await monthLabel(0))
+  await expect(page.locator('#calGrid .has-booking')).toHaveCount(5) // the demo bookings
+  await page.locator('.cal-nav button').last().click()
+  await expect(page.locator('#calMonth')).toHaveText(await monthLabel(1))
+  await page.locator('.cal-nav button').first().click()
+  await page.locator('.cal-nav button').first().click()
+  await expect(page.locator('#calMonth')).toHaveText(await monthLabel(-1))
+})
+
+test.describe('phone menus on the app-style demos', () => {
+  // Presses Tab until the element has focus, so the test only uses the keyboard.
+  const tabTo = async (page, locator) => {
+    for (let i = 0; i < 30; i++) {
+      await page.keyboard.press('Tab')
+      if (await locator.evaluate(el => el === document.activeElement)) return
+    }
+    throw new Error('could not reach the element with Tab')
+  }
+
+  for (const { file, nav, item, done } of [
+    { file: 'nexora-flagship-project.html', nav: '#sideNav', item: 'Live Forex', done: page => expect(page.locator('#view-forex')).toBeVisible() },
+    { file: 'loop-wireframes.html', nav: '#sideNav', item: 'Focus Pomodoro', done: page => expect(page.locator('#view-pomodoro')).toBeVisible() },
+    { file: 'loom-workflow-builder.html', nav: '#nodePalette', item: 'Webhook Trigger', done: (page, before) => expect(page.locator('#nodesLayer .node')).toHaveCount(before + 1) },
+  ]) {
+    test(`${file}: the Menu button opens and closes the menu with the keyboard at 390px`, async ({ page }) => {
+      await page.setViewportSize({ width: 390, height: 844 })
+      await page.goto(file, { waitUntil: 'load' })
+      const menu = page.getByRole('button', { name: 'Menu' })
+      await expect(menu).toHaveAttribute('aria-controls', nav.slice(1))
+      await expect(page.locator(nav)).toBeHidden()
+
+      await tabTo(page, menu)
+      await page.keyboard.press('Enter')
+      await expect(menu).toHaveAttribute('aria-expanded', 'true')
+      await expect(page.locator(nav)).toBeVisible()
+
+      await page.keyboard.press('Escape')
+      await expect(menu).toHaveAttribute('aria-expanded', 'false')
+      await expect(page.locator(nav)).toBeHidden()
+      await expect(menu).toBeFocused()
+
+      // Open with Space, pick an item with Enter: the menu closes and focus goes back to the Menu button.
+      await page.keyboard.press('Space')
+      await expect(page.locator(nav)).toBeVisible()
+      const before = await page.locator('#nodesLayer .node').count()
+      const choice = page.locator(nav).getByRole('button', { name: item })
+      await tabTo(page, choice)
+      await page.keyboard.press('Enter')
+      await done(page, before)
+      await expect(page.locator(nav)).toBeHidden()
+      await expect(menu).toHaveAttribute('aria-expanded', 'false')
+      await expect(menu).toBeFocused()
+    })
+  }
 })

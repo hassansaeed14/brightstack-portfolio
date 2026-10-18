@@ -58,6 +58,8 @@
   .nav-menu { padding: 22px 16px; display: flex; flex-direction: column; gap: 6px; }
   .nav-item { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; text-decoration: none; border: 1px solid transparent; font-family: 'JetBrains Mono', monospace; }
   .nav-item:hover, .nav-item.active { background: var(--surface-raised); color: #fff; border-color: var(--line); }
+  button.nav-item { width: 100%; background: none; text-align: left; }
+  .nav-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; color: #fff; }
 
   .user-stats { margin-top: auto; padding: 22px; border-top: 1px solid var(--line); background: rgba(0,0,0,0.4); }
   .stat-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; color: var(--muted); }
@@ -121,6 +123,27 @@
 
   .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; }
   .back-link:hover { border-color: var(--gold); }
+  /* Narrow screens: the sidebar becomes a compact top bar with a menu button, so the main area gets the full width. */
+  .nav-toggle { display: none; }
+  @media (max-width: 900px) {
+    /* Reserve a strip at the bottom for the floating "Portfolio Hub" button (fixed 20px from the bottom, about 42px tall),
+       so it never covers the content or the open menu. */
+    .app { flex-direction: column; padding-bottom: 72px; }
+    aside { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+    aside.open { flex-shrink: 1; min-height: 0; overflow-y: auto; }
+    aside .brand { padding: 12px 16px; border-bottom: none; }
+    .nav-toggle { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-raised); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .nav-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    aside .nav-menu, aside .user-stats { display: none; }
+    aside.open .nav-menu { display: flex; padding: 4px 16px 14px; }
+    aside.open .user-stats { display: block; margin-top: 0; padding: 14px 16px; }
+    header { height: auto; min-height: 64px; padding: 10px 16px; flex-wrap: wrap; gap: 10px; }
+    .page-title { font-size: 17px; }
+    .btn-primary { padding: 10px 16px; }
+    .content-wrap { padding: 20px 16px; }
+    .card { padding: 20px; }
+    .modal { width: auto; max-width: calc(100vw - 32px); padding: 24px; }
+  }
 </style>
 <meta name="description" content="Manage Kanban sprints, live currency exchange, and client invoicing with Nexora ERP, a concept demo by BrightStack Co.">
 </head>
@@ -136,14 +159,15 @@
         <div class="brand-name">Nexora Apex</div>
         <div class="brand-sub">Neural Enterprise OS</div>
       </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sideNav">☰ Menu</button>
     </div>
     
-    <div class="nav-menu">
-      <a class="nav-item active" onclick="switchView('kanban', this)">🚀 Active Sprints &amp; Kanban</a>
-      <a class="nav-item" onclick="switchView('forex', this)">💱 Live Forex &amp; Invoicing</a>
-      <a class="nav-item" onclick="switchView('diagnostics', this)">📊 Client Health Diagnostics</a>
-      <a class="nav-item" onclick="switchView('settings', this)">⚙ Enterprise Protocols</a>
-    </div>
+    <nav class="nav-menu" id="sideNav" aria-label="Workspace sections">
+      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-kanban" onclick="switchView('kanban', this)">🚀 Active Sprints &amp; Kanban</button>
+      <button type="button" class="nav-item" aria-controls="view-forex" onclick="switchView('forex', this)">💱 Live Forex &amp; Invoicing</button>
+      <button type="button" class="nav-item" aria-controls="view-diagnostics" onclick="switchView('diagnostics', this)">📊 Client Health Diagnostics</button>
+      <button type="button" class="nav-item" aria-controls="view-settings" onclick="switchView('settings', this)">⚙ Enterprise Protocols</button>
+    </nav>
 
     <div class="user-stats">
       <div class="stat-row"><span>Active Tier</span><span>ENTERPRISE OS</span></div>
@@ -331,12 +355,23 @@
 
 <!-- Scripts -->
 <script>
+  // Narrow screens: the menu button shows and hides the navigation.
+  const sideBar = document.querySelector('aside'), navToggle = document.getElementById('navToggle');
+  function setMenu(open){ sideBar.classList.toggle('open', open); navToggle.setAttribute('aria-expanded', String(open)); }
+  navToggle.addEventListener('click', () => setMenu(!sideBar.classList.contains('open')));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sideBar.classList.contains('open')) { setMenu(false); navToggle.focus(); } });
+
   function switchView(viewId, el){
+    // On narrow screens closing the menu hides the button that had focus, so hand focus back to the menu button.
+    const menuWasOpen = sideBar.classList.contains('open');
+    setMenu(false);
+    if (menuWasOpen && navToggle.offsetParent) navToggle.focus();
     document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(i => { i.classList.remove('active'); i.removeAttribute('aria-current'); });
     
     document.getElementById('view-' + viewId).classList.add('active');
     el.classList.add('active');
+    el.setAttribute('aria-current', 'page');
 
     const titles = {
       kanban: 'Active Sprints & Kanban Board',

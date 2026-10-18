@@ -165,6 +165,33 @@
   .log-row { padding: 11px 36px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; gap: 16px; }
   .log-row .tag { color: var(--cyan); flex-shrink: 0; font-weight: 700; }
   .log-row .msg { color: var(--muted); white-space: pre-wrap; }
+
+  /* The node palette wrapper adds no box of its own on desktop, so the sidebar lays out exactly as before. */
+  .sb-palette { display: contents; }
+  .nav-toggle { display: none; }
+  /* Narrow screens: the sidebar becomes a compact top bar with a menu button that opens the node palette.
+     The canvas keeps scrolling inside its own box; the toolbar wraps so its buttons stay on screen. */
+  @media (max-width: 900px) {
+    .app { flex-direction: column; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+    .sidebar.open { flex-shrink: 1; min-height: 0; max-height: 60vh; overflow-y: auto; }
+    .sb-brand { padding: 12px 16px; border-bottom: none; }
+    .nav-toggle { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .nav-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .sb-palette { display: none; }
+    .sidebar.open .sb-palette { display: block; }
+    .sb-section { padding: 8px 16px 4px; }
+    .sb-footer { padding: 12px 16px 16px; }
+    .main { min-height: 0; }
+    .toolbar { height: auto; padding: 10px 16px; flex-wrap: wrap; gap: 10px; }
+    .tb-title { font-size: 15px; }
+    .tb-actions { flex-wrap: wrap; }
+    .inspector { top: 0; width: 100%; padding: 24px 16px; }
+    /* Sits above the fixed "Back to Portfolio Hub" link (22px from the bottom, about 44px tall). */
+    .log-toggle { right: 16px; bottom: 80px; }
+    .log-drawer-head { padding: 14px 16px; }
+    .log-row { padding: 10px 16px; }
+  }
 </style>
 <meta name="description" content="Build and execute multi-agent AI pipelines on an interactive canvas. An orchestration concept demo by BrightStack Co.">
 </head>
@@ -180,8 +207,10 @@
         <div class="sb-brand-name" role="heading" aria-level="1">Loom Studio Apex</div>
         <div class="sb-brand-sub">// Enterprise AI Suite</div>
       </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nodePalette">☰ Menu</button>
     </div>
 
+    <div class="sb-palette" id="nodePalette" role="group" aria-label="Add nodes">
     <div class="sb-section">
       <div class="sb-section-title">Triggers</div>
       <button class="sb-node-btn" onclick="addNode('trigger')"><span class="sb-node-dot" style="background:var(--cyan)"></span>Webhook Trigger</button>
@@ -203,6 +232,7 @@
 
     <div class="sb-footer">
       <div class="sb-hint">// Apex ProTip: Drag nodes freely. Connect bottom output port to top input port to route execution flow.</div>
+    </div>
     </div>
   </div>
 
@@ -243,6 +273,15 @@
 </div>
 
 <script>
+  // Narrow screens: the menu button shows and hides the node palette; adding a node closes it again.
+  const sideBar = document.querySelector('.sidebar'), navToggle = document.getElementById('navToggle');
+  function setMenu(open){ sideBar.classList.toggle('open', open); navToggle.setAttribute('aria-expanded', String(open)); }
+  navToggle.addEventListener('click', () => setMenu(!sideBar.classList.contains('open')));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sideBar.classList.contains('open')) { setMenu(false); navToggle.focus(); } });
+  document.getElementById('nodePalette').addEventListener('click', e => {
+    if (e.target.closest('.sb-node-btn') && sideBar.classList.contains('open')) { setMenu(false); navToggle.focus(); }
+  });
+
   const NODE_META = {
     trigger: { color: 'var(--cyan)', label: 'Trigger Event' },
     ai: { color: 'var(--purple)', label: 'AI Agent Node' },

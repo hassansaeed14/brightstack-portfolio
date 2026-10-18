@@ -162,7 +162,7 @@
 
     <div class="cal-nav">
       <button onclick="shiftMonth(-1)">‹</button>
-      <div class="cal-month" id="calMonth">March 2026</div>
+      <div class="cal-month" id="calMonth">&nbsp;</div>
       <button onclick="shiftMonth(1)">›</button>
     </div>
     <div class="cal-grid" id="calGrid"></div>
@@ -209,8 +209,10 @@
 </script>
 <script>
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  let currentMonth = 2; // March
-  let currentYear = 2026;
+  // The calendar opens on the current month (the demo bookings below are shown in every month).
+  const today = new Date();
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
   let selectedDay = null;
   let selectedSlot = null;
 

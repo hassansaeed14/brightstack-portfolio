@@ -144,7 +144,7 @@
   <div class="meta-row">
     <span class="pill"><strong>Architecture</strong> — Metabolic Cyber-OS v10</span>
     <span class="pill"><strong>Telemetry</strong> — Lactate, HRV & Myoelectric</span>
-    <span class="pill"><strong>Security</strong> — Quantum-Resistant Vault</span>
+    <span class="pill"><strong>Security</strong> — Local data vault (demo)</span>
   </div>
 
   <!-- Bio-Cybernetic Readiness Bar -->
@@ -235,7 +235,7 @@
 
       <div class="action-row">
         <button class="sys-btn" onclick="triggerLactateScan()">Run Lactate Threshold Scan</button>
-        <button class="sys-btn-alt" onclick="exportClinicalReport()">Export HL7 Clinical Report</button>
+        <button class="sys-btn-alt" onclick="exportClinicalReport()">Export session summary</button>
       </div>
     </div>
   </div>
@@ -261,12 +261,12 @@
     </div>
     <div class="feat-card">
       <div class="feat-num">04 / 25</div>
-      <div class="feat-title">Quantum-Resistant Bio-Vault</div>
+      <div class="feat-title">Local bio-data vault</div>
       <p class="feat-desc">Secures sensitive health telemetry entirely on-device with zero-knowledge cryptographic encryption.</p>
     </div>
     <div class="feat-card">
       <div class="feat-num">05 / 25</div>
-      <div class="feat-title">HL7 & Clinical PDF Export</div>
+      <div class="feat-title">Session summary export</div>
       <p class="feat-desc">Compiles structured physiological data summaries directly formatted for physician and therapist review.</p>
     </div>
     <div class="feat-card">
@@ -326,7 +326,7 @@
   }
 
   function exportClinicalReport(){
-    alert(`📄 Surge HL7 & Clinical PDF telemetry report compiled successfully for physician review.`);
+    document.getElementById('consoleTerminal').textContent = 'Surge session summary created (demo).';
   }
 </script>
 </body>

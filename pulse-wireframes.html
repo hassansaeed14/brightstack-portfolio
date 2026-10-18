@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Pulse Neural OS v5.0 — Advanced Biofeedback & Wellness Suite">
-<meta property="og:description" content="Next-generation enterprise mental wellness platform with live EEG brainwave visualizers, clinical PDF export, and co-meditation rooms.">
+<meta property="og:description" content="Next-generation enterprise mental wellness platform with live EEG brainwave visualizers, wellness summaries, and co-meditation rooms.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -128,7 +128,7 @@
   </div>
 
   <h1>Pulse Neural OS v5.0</h1>
-  <p class="lede">An elite biofeedback mental wellness platform featuring live EEG brainwave telemetry, clinical PDF health reporting, circadian lighting adaptation, and real-time co-meditation rooms.</p>
+  <p class="lede">An elite biofeedback mental wellness platform featuring live EEG brainwave telemetry, wellness summaries, circadian lighting adaptation, and real-time co-meditation rooms.</p>
 
   <div class="meta-row">
     <span class="pill"><strong>Architecture</strong> — Full Neural Suite</span>
@@ -146,7 +146,7 @@
   </div>
 
   <div class="section-label">Interactive Neural OS Simulator</div>
-  <div class="section-sub">Test drive live modules including EEG brainwave streams, co-meditation synchronization, and clinical report generation.</div>
+  <div class="section-sub">Test drive live modules including EEG brainwave streams, co-meditation synchronization, and wellness summaries.</div>
 
   <div class="workspace">
     <!-- Phone Mockup Frame -->
@@ -219,7 +219,7 @@
     <!-- Control Area -->
     <div class="control-area">
       <h3>Neural OS Control Console</h3>
-      <p>Activate advanced biofeedback subsystems, simulate EEG brainwave tracking, or generate official clinical reports for medical professionals.</p>
+      <p>Activate advanced biofeedback subsystems, simulate EEG brainwave tracking, or generate a wellness summary (demo, not medical advice).</p>
 
       <div class="module-pills">
         <div class="mpill active" onclick="setConsoleMode('eeg', this)">EEG Neurofeedback</div>
@@ -235,7 +235,7 @@
       </div>
 
       <div class="action-row">
-        <button class="sys-btn" onclick="openClinicalReport()">Generate Clinical PDF Report</button>
+        <button class="sys-btn" onclick="openClinicalReport()">Generate wellness summary</button>
         <button class="sys-btn-alt" onclick="triggerCoMeditation()">Join Global Co-Med Room</button>
       </div>
     </div>
@@ -257,7 +257,7 @@
     </div>
     <div class="feat-card">
       <div class="feat-num">03 / 25</div>
-      <div class="feat-title">Clinical-Grade PDF Export</div>
+      <div class="feat-title">Wellness summary export</div>
       <p class="feat-desc">Compiles long-term HRV improvement and panic frequency graphs into structured summaries for therapists.</p>
     </div>
     <div class="feat-card">
@@ -287,11 +287,11 @@
 <!-- Clinical Report Modal -->
 <div class="modal-overlay" id="clinicalModal">
   <div class="modal">
-    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; color:var(--ink); margin-bottom:4px;">Clinical Telemetry Summary</h3>
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; color:var(--ink); margin-bottom:4px;">Wellness Summary</h3>
     <p style="font-size:12.5px; color:var(--muted); margin-bottom:0;">Generated for Medical & Therapeutic Review</p>
     
     <div class="report-sheet">
-      PULSE NEURAL HEALTH CLINICAL REPORT<br>
+      PULSE WELLNESS SUMMARY (DEMO)<br>
       ----------------------------------------<br>
       Patient ID: #NEURAL-8842-PK<br>
       Assessment Period: Last 30 Days<br>
@@ -301,7 +301,7 @@
       > Acute Panic Events Logged: 0 (Stabilized)<br>
       > Cortisol Stress Index: Low-Normal Range<br>
       ----------------------------------------<br>
-      <em>Certified Secure & HIPAA Aligned Data Stream.</em>
+      <em>Demo data only — not medical advice.</em>
     </div>
 
     <button class="sys-btn" style="width:100%;" onclick="closeClinicalReport()">Close Report</button>
