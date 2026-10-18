@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Inquiry Router: BrightStack AI Diagnostics</title>
+<title>Inquiry Router · sorts customer messages | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/ai-inquiry-router.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Smart Inquiry Router — BrightStack AI Diagnostics">
-<meta property="og:description" content="Interactive diagnostic ticket router by Hassan Saeed at BrightStack Co.">
+<meta property="og:title" content="Inquiry Router · sorts customer messages">
+<meta property="og:description" content="Sorts customer messages into billing, technical or general and flags the urgent ones. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Inquiry Router · sorts customer messages">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -231,7 +232,7 @@
     .arch-arrow { transform: rotate(90deg); text-align: center; }
   }
 </style>
-<meta name="description" content="Test an AI smart inquiry router that automatically triages and categorizes customer messages. A concept demo by BrightStack Co.">
+<meta name="description" content="Try Inquiry Router, which sorts customer messages by topic and urgency. A concept demo by BrightStack Co.">
 </head>
 <body>
 
@@ -243,15 +244,15 @@
 <main>
 <section class="hero">
   <div class="tag">// DIAGNOSTIC ROUTER DEMO</div>
-  <h1>Smart inquiry router auto-categorize customer messages before a human touches them</h1>
-  <p>Paste or type any customer message below. The diagnostic engine instantly evaluates keyword weights, flags urgency triggers, and calculates routing probability in real-time.</p>
+  <h1>Inquiry Router</h1>
+  <p>Sorts customer messages into billing, technical or general before a person reads them. Paste or type a message below. The router weighs keywords, flags urgent phrases and picks a queue.</p>
 </section>
 
 <div class="app">
   <div class="panel" data-tilt data-tilt-max="4" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.08">
     <div class="panel-header-row">
       <div class="panel-label">$ live_diagnostic_stream</div>
-      <div class="live-badge">⚡ Live Debounced Engine</div>
+      <div class="live-badge">⚡ Updates as you type</div>
     </div>
     
     <textarea id="inputText" placeholder="Type or paste a message to test live classification..." oninput="debounceClassify()">Hi, I was charged twice for my subscription this month and I need this fixed urgently, my card is being overcharged and I can't afford it.</textarea>
@@ -298,12 +299,12 @@
       </div>
       <div class="step" data-tilt data-tilt-max="4" data-tilt-speed="400">
         <div class="n">02</div>
-        <h3>Instant telemetry</h3>
+        <h3>Instant scoring</h3>
         <p>Category, urgency, and routing tags are computed in under 50ms without manual triage.</p>
       </div>
       <div class="step" data-tilt data-tilt-max="4" data-tilt-speed="400">
         <div class="n">03</div>
-        <h3>Automated dispatch</h3>
+        <h3>Routing</h3>
         <p>Billing tickets route to accounts, technical bugs to engineering, urgent flags bypass queues.</p>
       </div>
     </div>
@@ -311,8 +312,8 @@
 </div>
 
 <section class="section">
-  <h2>Try preset telemetry examples</h2>
-  <p class="lede">Click any message card below to instantly inject it into the diagnostic engine above.</p>
+  <h2>Try an example</h2>
+  <p class="lede">Click a message below to load it into the router above.</p>
   <div class="examples-grid">
     <div class="example-card" data-tilt data-tilt-max="5" data-tilt-speed="400" onclick="loadExample(`My card was charged three times for one order, please refund the extra two charges immediately.`)">
       <div class="ex-text">"My card was charged three times for one order, please refund the extra two charges immediately."</div>
@@ -355,12 +356,12 @@
 </section>
 
 <section class="section">
-  <h2>Pipeline architecture</h2>
-  <p class="lede">A lightweight, transparent processing stream designed for absolute predictability and fast debugging.</p>
+  <h2>How it works</h2>
+  <p class="lede">A small rule-based pipeline that is easy to follow and debug.</p>
   <div class="arch-flow">
     <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Text input</div><div class="n-sub">raw message normalization</div></div>
     <div class="arch-arrow">→</div>
-    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Keyword matrix</div><div class="n-sub">weighted term scoring</div></div>
+    <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Keyword scoring</div><div class="n-sub">weighted term scoring</div></div>
     <div class="arch-arrow">→</div>
     <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Urgency trigger</div><div class="n-sub">flag phrase detection</div></div>
     <div class="arch-arrow">→</div>
@@ -368,7 +369,7 @@
     <div class="arch-arrow">→</div>
     <div class="arch-node" data-tilt data-tilt-max="4" data-tilt-speed="400"><div class="n-title">Queue dispatch</div><div class="n-sub">category + urgency routing</div></div>
   </div>
-  <p class="lede" style="margin-bottom:0;">Built as an inspectable rule-based classifier for transparent demonstration. For enterprise scale, this identical pipeline schema can easily interface with fine-tuned transformer models once historical dataset volume permits.</p>
+  <p class="lede" style="margin-bottom:0;">It is a rule-based classifier, so every decision can be traced. With enough labelled history, the same steps could use a trained model instead.</p>
 </section>
 
 <section class="section">
@@ -384,7 +385,7 @@
 </main>
 <div id="toast">Evaluation report copied to clipboard</div>
 
-<footer>Demo project by BrightStack Co. — diagnostic routing pipeline engineered for high-performance automation.</footer>
+<footer>A demo project by BrightStack Co.</footer>
 
 <!-- Vanilla Tilt Library -->
 <script type="module">
@@ -477,7 +478,7 @@
     const latency = document.getElementById('latencyVal').textContent;
     
     const reportObj = {
-      engine: "BrightStack AI Diagnostic Pipeline v2.4",
+      engine: "BrightStack Inquiry Router",
       timestamp: new Date().toISOString(),
       classification: {
         category: cat,

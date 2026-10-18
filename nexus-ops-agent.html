@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexus — Autonomous Operations Agent v3.0</title>
+<title>Nexus · order support bot | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/nexus-ops-agent.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nexus — Autonomous Operations Agent">
-<meta property="og:description" content="An interactive portfolio project featuring agent telemetry, memory vector vault, and live sandbox environment.">
+<meta property="og:title" content="Nexus · order support bot">
+<meta property="og:description" content="An order support bot demo that looks up orders, checks stock and works out refunds. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nexus · order support bot">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -167,7 +168,7 @@
 
   .footnote{max-width:1220px; margin:40px auto 0; padding:16px 32px 0; border-top:1px solid var(--line); color:var(--text-faint); font-size:12px; line-height:1.7; font-family:'JetBrains Mono',monospace;}
 </style>
-<meta name="description" content="Simulate autonomous order lookups, inventory checks, and refund workflows with Nexus, a concept demo by BrightStack Co.">
+<meta name="description" content="Try order lookups, stock checks and refunds with Nexus, an order support bot demo by BrightStack Co.">
 </head>
 <body>
 <div class="scan"></div>
@@ -177,14 +178,13 @@
     <div class="brand-mark"><span></span></div>
     <div>
       <div class="brand-name">Nexus</div>
-      <div class="brand-sub">// Autonomous Ops Agent</div>
     </div>
   </div>
   <div class="view-toggle">
-    <button class="active" onclick="switchView('run')" id="btn-run">Agent Console</button>
-    <button onclick="switchView('log')" id="btn-log">Operations Log</button>
-    <button onclick="switchView('memory')" id="btn-memory">Memory & RAG Vault</button>
-    <button onclick="switchView('sandbox')" id="btn-sandbox">Live Sandbox</button>
+    <button class="active" onclick="switchView('run')" id="btn-run">Ask the Bot</button>
+    <button onclick="switchView('log')" id="btn-log">History</button>
+    <button onclick="switchView('memory')" id="btn-memory">What It Knows</button>
+    <button onclick="switchView('sandbox')" id="btn-sandbox">Test Orders</button>
   </div>
 </div>
 
@@ -192,9 +192,9 @@
 <main>
 <div class="view active" id="view-run">
   <div class="wrap">
-    <div class="hero-eyebrow">// AI Automation Case Study v3.0</div>
-    <h1 class="hero-title">An agent that decides, executes, and resolves customer operations autonomously.</h1>
-    <p class="hero-desc">Local operations-agent simulation for Ember & Oak. Demonstrates order lookup, real-time inventory queries, automated refund calculations, ticketing, and scheduling without exposing production credentials.</p>
+    <div class="hero-eyebrow">// AI automation case study</div>
+    <h1 class="hero-title">A bot that looks up orders, checks stock and handles refunds.</h1>
+    <p class="hero-desc">A simulated support bot for Ember & Oak. It looks up orders, checks stock, works out refunds, opens tickets and books callbacks, all without touching real systems.</p>
 
     <div class="tools-strip">
       <span class="tool-badge">lookup_order()</span>
@@ -229,7 +229,7 @@
     </div>
 
     <div class="final-answer" id="finalAnswer">
-      <div class="final-answer-eyebrow">// Autonomous Agent Response</div>
+      <div class="final-answer-eyebrow">// Bot reply</div>
       <div class="final-answer-body" id="finalAnswerBody"></div>
     </div>
   </div>
@@ -241,20 +241,20 @@
     <div class="cal-head">
       <div>
         <div class="cal-title">Operations Log</div>
-        <div class="cal-sub">// Execution telemetry & tool invocation telemetry</div>
+        <div class="cal-sub">// What the bot did on each run</div>
       </div>
     </div>
 
     <div class="stat-row">
       <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Resolved Requests</div></div>
       <div class="stat-card"><div class="stat-num" id="statSteps">—</div><div class="stat-label">Avg. Tool Calls / Run</div></div>
-      <div class="stat-card"><div class="stat-num" id="statAutonomy">100%</div><div class="stat-label">Autonomous Resolution</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAutonomy">100%</div><div class="stat-label">Resolved by the Bot</div></div>
       <div class="stat-card"><div class="stat-num">~6min</div><div class="stat-label">Saved Per Ticket</div></div>
     </div>
 
     <div class="two-col">
       <div class="runs-panel">
-        <div class="runs-panel-head">Recent Telemetry Runs</div>
+        <div class="runs-panel-head">Recent Runs</div>
         <table>
           <thead><tr><th>Query Payload</th><th>Tool Pipeline</th></tr></thead>
           <tbody id="runsTable"></tbody>
@@ -275,7 +275,7 @@
     <div class="cal-head">
       <div>
         <div class="cal-title">Vector Memory & RAG Vault</div>
-        <div class="cal-sub">// Active contextual embeddings & policy rule store</div>
+        <div class="cal-sub">// What the bot knows: policies and recent context</div>
       </div>
     </div>
 
@@ -310,7 +310,7 @@
     <div class="cal-head">
       <div>
         <div class="cal-title">Live Sandbox Environment</div>
-        <div class="cal-sub">// Inject custom mock orders & test agent functions dynamically</div>
+        <div class="cal-sub">// Add your own test orders</div>
       </div>
     </div>
 
@@ -356,7 +356,7 @@
 
 </main>
 <div class="footnote wrap">
-  // BrightStack Portfolio Demo — Nexus Autonomous Agent simulation. Mock execution architecture designed to demonstrate function calling and heuristic dispatch without external API dependency.
+  // A BrightStack demo. Nexus runs on mock data in your browser and calls no outside services.
 </div>
 
 <script>

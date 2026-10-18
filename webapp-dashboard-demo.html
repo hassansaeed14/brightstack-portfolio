@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flowdesk Enterprise 3D Order Management</title>
+<title>Flowdesk · orders &amp; invoices | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/webapp-dashboard-demo.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Flowdesk — Enterprise 3D Order Management">
-<meta property="og:description" content="An advanced interactive 3D portfolio project by Hassan Saeed at BrightStack Co.">
+<meta property="og:title" content="Flowdesk · orders &amp; invoices">
+<meta property="og:description" content="An orders and invoices dashboard behind a demo sign-in. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flowdesk · orders &amp; invoices">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -192,7 +193,7 @@
     .main { padding: 20px; }
   }
 </style>
-<meta name="description" content="Manage enterprise orders, customer profiles, and billing workflows in Flowdesk, an interactive demo by BrightStack Co.">
+<meta name="description" content="Track orders, customers and invoices in Flowdesk, a dashboard demo by BrightStack Co.">
 </head>
 <body>
 
@@ -209,7 +210,7 @@
       <div class="brand-mark">F</div>
       Flow<span>desk</span>
     </div>
-    <div class="login-sub">Secure 3D Enterprise Order & Invoice Management Portal.</div>
+    <div class="login-sub">Orders and invoices for a small business.</div>
     <div class="field">
       <label for="email-input">Email Address</label>
       <input type="email" value="admin@brightbeanroasters.com" id="email-input">
@@ -218,7 +219,7 @@
       <label for="pass-input">Password</label>
       <input type="password" value="••••••••" id="pass-input">
     </div>
-    <button class="login-btn" onclick="showDashboard()">Sign in to 3D portal</button>
+    <button class="login-btn" onclick="showDashboard()">Sign in</button>
     <div class="login-hint">Demo mode — click button to enter dashboard</div>
   </div>
 </div>
@@ -240,7 +241,7 @@
 
     <div class="main">
       <div class="topbar">
-        <h1 id="pageTitle">Command Center</h1>
+        <h1 id="pageTitle">Dashboard</h1>
         <div class="user-chip">Bright Bean Roasters · admin@brightbeanroasters.com</div>
       </div>
 
@@ -295,10 +296,10 @@
       </div>
 
       <!-- GENERIC VIEW FOR OTHER TABS -->
-      <div id="view-orders" class="view-content"><div class="panel"><div class="panel-head"><h2>All Orders Management</h2><button class="add-btn" onclick="openModal()">+ New order</button></div><div style="padding:40px; text-align:center; color:var(--muted);">Manage bulk shipments, fulfillment status, and delivery tracking here.</div></div></div>
-      <div id="view-invoices" class="view-content"><div class="panel"><div class="panel-head"><h2>Invoicing & Billing</h2><button class="add-btn">+ Create Invoice</button></div><div style="padding:40px; text-align:center; color:var(--muted);">Automated tax calculations, payment gateways, and reminders.</div></div></div>
-      <div id="view-customers" class="view-content"><div class="panel"><div class="panel-head"><h2>Customer Directory</h2><button class="add-btn">+ Add Customer</button></div><div style="padding:40px; text-align:center; color:var(--muted);">B2B client profiles, purchase history, and credit limits.</div></div></div>
-      <div id="view-settings" class="view-content"><div class="panel"><div class="panel-head"><h2>Workspace Settings</h2></div><div style="padding:40px; text-align:center; color:var(--muted);">Manage API keys, team permissions, and currency preferences.</div></div></div>
+      <div id="view-orders" class="view-content"><div class="panel"><div class="panel-head"><h2>All Orders</h2><button class="add-btn" onclick="openModal()">+ New order</button></div><div style="padding:40px; text-align:center; color:var(--muted);">Shipments, order status and delivery tracking would go here.</div></div></div>
+      <div id="view-invoices" class="view-content"><div class="panel"><div class="panel-head"><h2>Invoices</h2><button class="add-btn">+ Create Invoice</button></div><div style="padding:40px; text-align:center; color:var(--muted);">Tax, payments and reminders would go here.</div></div></div>
+      <div id="view-customers" class="view-content"><div class="panel"><div class="panel-head"><h2>Customers</h2><button class="add-btn">+ Add Customer</button></div><div style="padding:40px; text-align:center; color:var(--muted);">Customer profiles, order history and credit limits would go here.</div></div></div>
+      <div id="view-settings" class="view-content"><div class="panel"><div class="panel-head"><h2>Settings</h2></div><div style="padding:40px; text-align:center; color:var(--muted);">Team access and currency settings would go here.</div></div></div>
 
     </div>
   </div>
@@ -309,7 +310,7 @@
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
     <h3>Create New Order</h3>
-    <p>Enter the details for the new enterprise client order.</p>
+    <p>Enter the details for the new order.</p>
     <div class="field">
       <label for="newCust">Customer Name</label>
       <input type="text" id="newCust" placeholder="e.g. Chenab Corp">

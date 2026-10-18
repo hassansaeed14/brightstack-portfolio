@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexora Apex Neural Enterprise — Autonomous Agency ERP v26</title>
+<title>Nexora · agency dashboard | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/nexora-flagship-project.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nexora Apex Neural Enterprise — Autonomous Agency ERP">
-<meta property="og:description" content="Ultimate multi-tenant agency management platform with fully interactive kanban board, financial ledger, and diagnostics.">
+<meta property="og:title" content="Nexora · agency dashboard">
+<meta property="og:description" content="An agency dashboard demo with a drag-and-drop task board, a currency converter, an invoice generator and a client health check. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nexora · agency dashboard">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -124,6 +125,8 @@
   .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; }
   .back-link:hover { border-color: var(--gold); }
   /* Narrow screens: the sidebar becomes a compact top bar with a menu button, so the main area gets the full width. */
+  /* Desktop: keep the bottom of the sidebar clear for the fixed "Portfolio Hub" link, so it never covers sidebar text. */
+  @media (min-width: 901px) { aside { padding-bottom: 72px; } }
   .nav-toggle { display: none; }
   @media (max-width: 900px) {
     /* Reserve a strip at the bottom for the floating "Portfolio Hub" button (fixed 20px from the bottom, about 42px tall),
@@ -145,7 +148,7 @@
     .modal { width: auto; max-width: calc(100vw - 32px); padding: 24px; }
   }
 </style>
-<meta name="description" content="Manage Kanban sprints, live currency exchange, and client invoicing with Nexora ERP, a concept demo by BrightStack Co.">
+<meta name="description" content="Move tasks on a kanban board, convert currencies and draft client invoices in Nexora, a concept demo by BrightStack Co.">
 </head>
 <body>
 <div class="scanline"></div>
@@ -156,21 +159,20 @@
     <div class="brand">
       <div class="brand-mark"></div>
       <div>
-        <div class="brand-name">Nexora Apex</div>
-        <div class="brand-sub">Neural Enterprise OS</div>
+        <div class="brand-name">Nexora</div>
       </div>
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sideNav">☰ Menu</button>
     </div>
     
     <nav class="nav-menu" id="sideNav" aria-label="Workspace sections">
-      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-kanban" onclick="switchView('kanban', this)">🚀 Active Sprints &amp; Kanban</button>
-      <button type="button" class="nav-item" aria-controls="view-forex" onclick="switchView('forex', this)">💱 Live Forex &amp; Invoicing</button>
-      <button type="button" class="nav-item" aria-controls="view-diagnostics" onclick="switchView('diagnostics', this)">📊 Client Health Diagnostics</button>
-      <button type="button" class="nav-item" aria-controls="view-settings" onclick="switchView('settings', this)">⚙ Enterprise Protocols</button>
+      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-kanban" onclick="switchView('kanban', this)">🚀 Sprint Board</button>
+      <button type="button" class="nav-item" aria-controls="view-forex" onclick="switchView('forex', this)">💱 Currency &amp; Invoices</button>
+      <button type="button" class="nav-item" aria-controls="view-diagnostics" onclick="switchView('diagnostics', this)">📊 Client Health</button>
+      <button type="button" class="nav-item" aria-controls="view-settings" onclick="switchView('settings', this)">⚙ Settings</button>
     </nav>
 
     <div class="user-stats">
-      <div class="stat-row"><span>Active Tier</span><span>ENTERPRISE OS</span></div>
+      <div class="stat-row"><span>Active Tier</span><span>AGENCY</span></div>
       <div class="stat-row"><span>API Latency</span><span>14.2 ms</span></div>
       <div class="progress-bar"><div class="progress-fill"></div></div>
     </div>
@@ -179,9 +181,9 @@
   <!-- Main Area -->
   <div class="main">
     <header>
-      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Active Sprints &amp; Kanban Board</div>
+      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Sprint Board</div>
       <div class="header-actions">
-        <button class="btn-primary" onclick="openModal()">+ Create Project Sprint</button>
+        <button class="btn-primary" onclick="openModal()">+ New Task</button>
       </div>
     </header>
 
@@ -190,7 +192,7 @@
       <!-- VIEW 1: KANBAN -->
       <div id="view-kanban" class="view-panel active">
         <div class="card">
-          <h3 aria-level="2">Operational Sprint Workspace</h3>
+          <h3 aria-level="2">Sprint Board</h3>
           <p class="sub">// Drag and drop tasks across columns to update workflow status</p>
           <div class="kanban-grid">
             <div class="kanban-col" ondragover="allowDrop(event)" ondrop="dropTask(event, 'col-backlog')">
@@ -226,7 +228,7 @@
               <div class="kanban-dropzone" id="col-deployed">
                 <div class="kanban-task" draggable="true" ondragstart="dragStart(event)" id="task-5" style="border-color: var(--emerald);">
                   <h5 aria-level="4">Frankfurter Forex API Connector</h5>
-                  <span>Status: Verified &amp; Production Ready</span>
+                  <span>Status: Done</span>
                 </div>
               </div>
             </div>
@@ -262,14 +264,14 @@
               </select>
             </div>
             <div id="apiResult" style="background: rgba(0,0,0,0.5); border: 1px solid var(--line); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: var(--gold); margin-top: 10px;">
-              Calculating telemetry...
+              Calculating...
             </div>
           </div>
           <div class="card">
-            <h3 aria-level="2">Automated Invoice Generator</h3>
-            <p class="sub">// Instant client billing statement</p>
+            <h3 aria-level="2">Invoice Generator</h3>
+            <p class="sub">// Builds a simple bill with tax</p>
             <div class="field">
-              <label>Client Entity</label>
+              <label>Client</label>
               <input type="text" id="invClient" value="Nexus Global Corp">
             </div>
             <div class="field">
@@ -290,13 +292,13 @@
       <!-- VIEW 3: DIAGNOSTICS -->
       <div id="view-diagnostics" class="view-panel">
         <div class="card" style="max-width: 800px; margin: 0 auto;">
-          <h3 aria-level="2">Client Health Heuristics Matrix</h3>
-          <p class="sub">// Automated algorithmic risk assessment</p>
+          <h3 aria-level="2">Client Health Check</h3>
+          <p class="sub">// A simple rule-based score</p>
           <div class="field" style="margin-bottom: 24px;">
-            <label>Select Target Account</label>
+            <label>Client</label>
             <select id="clientSelect" onchange="scoreClient()">
               <option value="0">Nexus Global Corp</option>
-              <option value="1">Aether Neural Labs</option>
+              <option value="1">Aether Labs</option>
               <option value="2">Vanguard Global Systems</option>
             </select>
           </div>
@@ -308,20 +310,20 @@
       <!-- VIEW 4: SETTINGS -->
       <div id="view-settings" class="view-panel">
         <div class="card" style="max-width: 700px; margin: 0 auto;">
-          <h3 aria-level="2">Enterprise Security Protocols</h3>
-          <p class="sub">// System configuration and encryption parameters</p>
+          <h3 aria-level="2">Settings</h3>
+          <p class="sub">// Notification and security settings (demo only)</p>
           <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
               <div>
-                <h4 aria-level="3" style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Zero-Trust Encryption</h4>
-                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">AES-256 end-to-end telemetry vault</span>
+                <h4 aria-level="3" style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Encryption</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">A demo toggle. Nothing is stored.</span>
               </div>
               <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
               <div>
-                <h4 aria-level="3" style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Autonomous Churn Alerts</h4>
-                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Instant webhook broadcast on health drop</span>
+                <h4 aria-level="3" style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Churn Alerts</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Send an alert when a client's health score drops</span>
               </div>
               <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
             </div>
@@ -339,8 +341,8 @@
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button style="float:right; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;" onclick="closeModal()">✕</button>
-    <h3 aria-level="2">Provision Sprint Task</h3>
-    <p style="font-size: 12.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 20px;">// Add deliverable to active kanban backlog</p>
+    <h3 aria-level="2">New Task</h3>
+    <p style="font-size: 12.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 20px;">// Adds a task to the Backlog column</p>
     <div class="field">
       <label>Task Title</label>
       <input type="text" id="taskTitle" placeholder="e.g., GraphQL API Endpoint">
@@ -349,7 +351,7 @@
       <label>Client Assignee</label>
       <input type="text" id="taskClient" placeholder="e.g., Aether Labs">
     </div>
-    <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="createTask()">Deploy to Backlog</button>
+    <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="createTask()">Add to Backlog</button>
   </div>
 </div>
 
@@ -374,10 +376,10 @@
     el.setAttribute('aria-current', 'page');
 
     const titles = {
-      kanban: 'Active Sprints & Kanban Board',
-      forex: 'Live Forex Engine & Invoicing Core',
-      diagnostics: 'Client Health Heuristics Matrix',
-      settings: 'Enterprise Security Protocols'
+      kanban: 'Sprint Board',
+      forex: 'Currency & Invoices',
+      diagnostics: 'Client Health Check',
+      settings: 'Settings'
     };
     document.getElementById('headerTitle').textContent = titles[viewId];
   }
@@ -461,7 +463,7 @@
 
   const clients = [
     { name:'Nexus Global Corp', payment:98, engagement:94, satisfaction:96, response:92 },
-    { name:'Aether Neural Labs', payment:82, engagement:70, satisfaction:75, response:68 },
+    { name:'Aether Labs', payment:82, engagement:70, satisfaction:75, response:68 },
     { name:'Vanguard Global Systems', payment:99, engagement:98, satisfaction:99, response:95 }
   ];
 

@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Forge AI Core — Enterprise Multi-Agent Orchestration Engine</title>
+<title>Forge · research assistant | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/forge-agent-orchestration.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Forge AI Core — Enterprise Multi-Agent Orchestration Engine">
-<meta property="og:description" content="Autonomous multi-agent orchestration architecture by BrightStack Co.">
+<meta property="og:title" content="Forge · research assistant">
+<meta property="og:description" content="A research assistant demo: four AI steps research, plan, check the risks and write up an answer. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forge · research assistant">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -193,7 +194,7 @@
   .input-row > * { min-width: 0; }
 }
 </style>
-<meta name="description" content="Discover Forge AI, an autonomous multi-agent pipeline executing research, strategy, and risk analysis demo by BrightStack Co.">
+<meta name="description" content="Ask Forge a business question and watch four AI steps research, plan, check the risks and write the answer. A demo by BrightStack Co.">
 </head>
 <body>
 <div class="cyber-grid"></div>
@@ -202,25 +203,24 @@
   <div class="brand">
     <div class="brand-mark"></div>
     <div>
-      <div class="brand-name">Forge AI Core</div>
-      <div class="brand-sub">Multi-Agent Orchestration</div>
+      <div class="brand-name">Forge</div>
     </div>
   </div>
   <div class="view-toggle">
-    <button class="active" onclick="switchView('run')" id="btn-run">Execution Topology</button>
-    <button onclick="switchView('hist')" id="btn-hist">Telemetry Logs</button>
+    <button class="active" onclick="switchView('run')" id="btn-run">Ask a Question</button>
+    <button onclick="switchView('hist')" id="btn-hist">History</button>
   </div>
 </header>
 
 <!-- RUN VIEW -->
 <main>
 <div class="view active" id="view-run">
-  <div class="eyebrow">// Autonomous Multi-Agent Pipeline</div>
-  <h1>Four specialized models <span>collaborating on complex queries</span>.</h1>
-  <p class="hero-desc">An automated multi-stage neural pipeline. The Research Agent gathers intelligence telemetry, the Strategy Agent models commercial vectors, the Risk Agent stress-tests edge-case vulnerabilities, and the Executive Synthesizer compiles a decision briefing.</p>
+  <div class="eyebrow">// Research assistant</div>
+  <h1>Four AI steps <span>working on one question</span>.</h1>
+  <p class="hero-desc">The steps run one after another. The Research agent gathers facts, the Strategy agent suggests a plan, the Risk agent looks for problems, and the Editor writes a short brief.</p>
 
   <div class="input-panel">
-    <label>// Target Enterprise Strategy Inquiry</label>
+    <label>// Your question</label>
     <div class="input-row">
       <input type="text" id="questionInput" placeholder="Enter objective or strategy parameters..." value="Evaluate transition economics from custom service retainers to a productized flat-rate SaaS tier for an enterprise agency.">
       <button id="runBtn" onclick="runPipeline()">
@@ -244,8 +244,8 @@
 <div class="view" id="view-hist">
   <div class="dash-head">
     <div>
-      <div class="dash-title">Execution Telemetry Logs</div>
-      <div class="dash-sub">Immutable audit trail of all multi-agent neural workflow executions</div>
+      <div class="dash-title">History</div>
+      <div class="dash-sub">Every run so far</div>
     </div>
   </div>
 
@@ -257,12 +257,12 @@
   </div>
 
   <div class="runs-panel">
-    <div class="runs-panel-head">Historical Telemetry Records</div>
+    <div class="runs-panel-head">Past Runs</div>
     <table>
       <thead><tr><th>Strategy Inquiry Objective</th><th>Pipeline Specs</th><th>Execution Status</th><th>Action</th></tr></thead>
       <tbody id="runsTable"></tbody>
     </table>
-    <div class="empty-state" id="runsEmpty" style="display:none;">No telemetry records found — execute a workflow in the Topology tab.</div>
+    <div class="empty-state" id="runsEmpty" style="display:none;">No runs yet. Ask a question in the first tab.</div>
   </div>
 </div>
 
@@ -272,7 +272,7 @@
 </div>
 
 <div class="footer-nav" style="max-width:1280px; margin:60px auto 0; padding:24px 24px 0;">
-  <span>BrightStack Co. — Enterprise Multi-Agent Orchestration Engine</span>
+  <span>Forge is a concept demo by BrightStack Co.</span>
   <a href="index.html">← Back to portfolio hub</a>
 </div>
 

@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reprise Neural OS v5.0 — Enterprise AI Content Engine</title>
+<title>Reprise · post rewriter | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/reprise-content-engine.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Reprise Neural OS v5.0 — Enterprise AI Content Engine">
-<meta property="og:description" content="Next-gen AI content repurposing suite with brand voice fine-tuning, carousel slide generators, and predictive engagement scoring.">
+<meta property="og:title" content="Reprise · post rewriter">
+<meta property="og:description" content="Turns one long piece of writing into posts for X, LinkedIn, Instagram, TikTok and a newsletter. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reprise · post rewriter">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -135,7 +136,7 @@
   .nav-controls { flex-wrap: wrap; }
 }
 </style>
-<meta name="description" content="Transform long-form text into cross-platform social media posts using Reprise Neural OS, a concept demo by BrightStack Co.">
+<meta name="description" content="Turn long text into social media posts with Reprise, a concept demo by BrightStack Co.">
 </head>
 <body>
 
@@ -143,15 +144,14 @@
   <div class="brand">
     <div class="brand-mark"></div>
     <div>
-      <div class="brand-name">Reprise Neural OS</div>
-      <div class="brand-sub">Enterprise AI Marketing Suite</div>
+      <div class="brand-name">Reprise</div>
     </div>
   </div>
   <div class="nav-controls">
     <button class="theme-btn" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light Mode</span></button>
     <div class="view-toggle">
       <button class="active" onclick="switchView('studio')" id="btn-studio">Studio</button>
-      <button onclick="switchView('cal')" id="btn-cal">Calendar OS</button>
+      <button onclick="switchView('cal')" id="btn-cal">Calendar</button>
     </div>
   </div>
 </div>
@@ -160,17 +160,17 @@
 <main>
 <div class="view active" id="view-studio">
   <div class="wrap">
-    <div class="hero-eyebrow">Enterprise AI Content Engine</div>
-    <h1 class="hero-title">One source asset. Multi-channel neural distribution.</h1>
-    <p class="hero-desc">Paste transcripts, articles, or notes. Reprise automatically processes your brand voice persona, predicts engagement velocity, and generates platform-native X threads, LinkedIn posts, TikTok scripts, and carousels.</p>
+    <div class="hero-eyebrow">Post rewriter</div>
+    <h1 class="hero-title">Write it once. Post it everywhere.</h1>
+    <p class="hero-desc">Paste an article, a transcript or notes. Reprise rewrites it in the voice you pick as an X thread, a LinkedIn post, a TikTok script and a carousel.</p>
 
     <div class="studio-grid">
       <div class="panel">
-        <label>Source Content / Long-Form Asset</label>
+        <label>Your text</label>
         <textarea id="sourceInput" placeholder="Paste your blog post, podcast transcript, or whitepaper here...">Most people think productivity means doing more. It doesn't. Productivity means doing fewer things, more deliberately. In our study of 400 remote teams, the top performers weren't the ones with the longest hours — they were the ones with the shortest, most protected focus blocks. They said no to 3x more meetings than average teams. The lesson: your calendar is a values statement. What you protect on it is what you actually care about.</textarea>
 
         <div style="margin: 18px 0;">
-          <label>Active Channel Matrix</label>
+          <label>Channels</label>
           <div class="matrix-channels" id="matrixChannels">
             <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="X Thread"> X Thread</div>
             <div class="ch-pill active" onclick="toggleMatrix(this)"><input type="checkbox" checked aria-label="LinkedIn"> LinkedIn</div>
@@ -180,22 +180,22 @@
           </div>
         </div>
 
-        <label>AI Brand Voice Persona</label>
+        <label>Voice</label>
         <div class="tone-row" id="toneRow">
           <div class="tone-pill selected" data-tone="Confident and direct">Confident Founder</div>
           <div class="tone-pill" data-tone="Warm and conversational">Casual Creator</div>
           <div class="tone-pill" data-tone="Sharp and witty">Tech Thought Leader</div>
-          <div class="tone-pill" data-tone="Formal and authoritative">Enterprise Executive</div>
+          <div class="tone-pill" data-tone="Formal and authoritative">Executive</div>
         </div>
 
         <button class="generate-btn" id="genBtn" onclick="repurpose()">
           <span class="spinner" id="spinner"></span>
-          <span id="genLabel">Execute Neural Repurposing</span>
+          <span id="genLabel">Rewrite My Text</span>
         </button>
       </div>
 
       <div class="output-grid" id="outputGrid">
-        <div class="placeholder-state">Configure your channel matrix and source asset on the left, then click "Execute Neural Repurposing" to generate predictive multi-platform assets.</div>
+        <div class="placeholder-state">Pick your channels and paste your text on the left, then click "Rewrite My Text".</div>
       </div>
     </div>
   </div>
@@ -206,7 +206,7 @@
   <div class="wrap">
     <div class="cal-head">
       <div>
-        <div class="cal-title">Autonomous Content Calendar OS</div>
+        <div class="cal-title">Content Calendar</div>
         <div style="color:var(--text-faint); font-size:13px; margin-top:4px;">Scheduled queues across X, LinkedIn, TikTok, and Newsletter channels</div>
       </div>
     </div>
@@ -232,8 +232,8 @@
 </main>
 <div class="modal-overlay" id="carouselModal">
   <div class="modal">
-    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; margin-bottom:4px;">Visual Carousel Preview</h3>
-    <p style="font-size:12px; color:var(--text-muted); margin-bottom:0;">Auto-generated slide deck breakdown for LinkedIn / Instagram</p>
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:20px; margin-bottom:4px;">Carousel Preview</h3>
+    <p style="font-size:12px; color:var(--text-muted); margin-bottom:0;">Slides for LinkedIn or Instagram</p>
     
     <div class="carousel-slide" id="slideText">
       Slide 1: Productivity isn't doing more. It's doing less, deliberately.
@@ -250,7 +250,7 @@
 </div>
 
 <div class="footnote wrap">
-  BrightStack Co. — Enterprise AI Content Suite v5.0. All rights reserved. Built with local neural execution models and zero-knowledge vault architecture.
+  Reprise is a concept demo by BrightStack Co. The posts are put together in your browser, from your text.
 </div>
 
 <script>
@@ -316,7 +316,7 @@
     const btn = document.getElementById('genBtn');
     btn.disabled = true;
     document.getElementById('spinner').classList.add('show');
-    document.getElementById('genLabel').textContent = 'Executing Neural Repurposing...';
+    document.getElementById('genLabel').textContent = 'Rewriting...';
 
     await new Promise(r => setTimeout(r, 900));
 
@@ -326,7 +326,7 @@
 
     btn.disabled = false;
     document.getElementById('spinner').classList.remove('show');
-    document.getElementById('genLabel').textContent = 'Execute Neural Repurposing';
+    document.getElementById('genLabel').textContent = 'Rewrite My Text';
   }
 
   let activeCarouselSlides = [];

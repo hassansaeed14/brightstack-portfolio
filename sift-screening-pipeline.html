@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sift Neural OS v7.0 — Autonomous Talent Intelligence Suite</title>
+<title>Sift · resume screening | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/sift-screening-pipeline.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Sift Neural OS v7.0 — Autonomous Talent Intelligence Suite">
-<meta property="og:description" content="Next-gen enterprise AI recruitment platform with AI Copilot natural language search, predictive performance scoring, and side-by-side comparison.">
+<meta property="og:title" content="Sift · resume screening">
+<meta property="og:description" content="Screens a batch of resumes against a job description and sorts candidates into stages. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sift · resume screening">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -165,7 +166,7 @@
   .nav-controls { flex-wrap: wrap; }
 }
 </style>
-<meta name="description" content="Screen candidate resumes and evaluate competencies with Sift Neural OS, an AI talent intelligence demo by BrightStack Co.">
+<meta name="description" content="Screen resumes against a job description with Sift, a demo by BrightStack Co.">
 </head>
 <body>
 
@@ -173,8 +174,7 @@
   <div class="brand">
     <div class="brand-mark"></div>
     <div>
-      <div class="brand-name">Sift Neural OS v7.0</div>
-      <div class="brand-sub">Autonomous Talent Intelligence</div>
+      <div class="brand-name">Sift</div>
     </div>
   </div>
   <div class="nav-controls">
@@ -190,9 +190,9 @@
 <main>
 <div class="view active" id="view-studio">
   <div class="wrap">
-    <div class="hero-eyebrow">Enterprise Talent Intelligence Suite</div>
+    <div class="hero-eyebrow">Resume screening</div>
     <h1 class="hero-title">Structured screening with a blind-review mode.</h1>
-    <p class="hero-desc">Configure role requirements, toggle blind-screening protection, and batch-screen resumes using semantic vector matching. Automatically sorts candidates into actionable pipeline stages.</p>
+    <p class="hero-desc">Set the role's requirements, switch on blind review if you want it, and screen a batch of resumes. Sift sorts the candidates into stages.</p>
 
     <!-- Toolbar Options -->
     <div class="toolbar">
@@ -232,7 +232,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
 
         <button class="run-btn" id="runBtn" onclick="runScreening()">
           <span class="spinner" id="spinner"></span>
-          <span id="runLabel">Execute Neural Screening Batch</span>
+          <span id="runLabel">Screen Resumes</span>
         </button>
         <div class="status-banner" id="statusBanner"></div>
       </div>
@@ -254,7 +254,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
     <div class="copilot-bar">
       <span style="font-size:16px;">🤖</span>
       <input type="text" id="copilotQuery" placeholder="Ask AI Copilot (e.g., 'Show candidates with Kafka experience' or 'Score > 85')..." oninput="filterPipeline(this.value)">
-      <span class="copilot-badge">AI Copilot v7</span>
+      <span class="copilot-badge">Assistant</span>
     </div>
 
     <div class="stat-row">
@@ -294,7 +294,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
 </div>
 
 <div class="footnote wrap">
-  BrightStack Co. — Sift Neural OS v7.0. Enterprise Talent Intelligence & Recruitment Suite. All rights reserved.
+  Sift is a concept demo by BrightStack Co.
 </div>
 
 <script>
@@ -403,7 +403,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
     const btn = document.getElementById('runBtn');
     btn.disabled = true;
     document.getElementById('spinner').classList.add('show');
-    document.getElementById('runLabel').textContent = 'Executing Neural Screening...';
+    document.getElementById('runLabel').textContent = 'Screening...';
 
     await new Promise(r => setTimeout(r, 900));
 
@@ -416,7 +416,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
 
     btn.disabled = false;
     document.getElementById('spinner').classList.remove('show');
-    document.getElementById('runLabel').textContent = 'Execute Neural Screening Batch';
+    document.getElementById('runLabel').textContent = 'Screen Resumes';
   }
 
   function showStatus(msg, tier){
@@ -574,7 +574,7 @@ Must-haves: 5+ years building production APIs, strong proficiency in Node.js or 
       <div class="modal-head">
         <div>
           <div class="modal-name">${displayName}</div>
-          <div style="color:${color}; font-weight:700; font-size:13px; margin-top:4px;">Neural Fit Score: ${s.score}/100</div>
+          <div style="color:${color}; font-weight:700; font-size:13px; margin-top:4px;">Fit Score: ${s.score}/100</div>
         </div>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>

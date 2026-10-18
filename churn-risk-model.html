@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Churn Model Lab Pro — Live Python ML & Inference Engine</title>
+<title>Churn Model · customer churn predictor | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/churn-risk-model.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Churn Model Lab Pro — Live Python ML & Inference Engine">
-<meta property="og:description" content="Enterprise logistic regression machine learning lab executing live in browser via WebAssembly.">
+<meta property="og:title" content="Churn Model · customer churn predictor">
+<meta property="og:description" content="Trains a small logistic regression model in your browser (Python via WebAssembly) to predict which customers might leave. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Churn Model · customer churn predictor">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -149,10 +150,10 @@
 
 <main>
 <section class="hero">
-  <div class="eyebrow">// Enterprise ML Engine · WebAssembly Runtime</div>
-  <h1>Churn Model Lab Pro — Live Python ML & Inference</h1>
+  <div class="eyebrow">// Python in the browser · WebAssembly</div>
+  <h1>Churn Model</h1>
   <p>A native CPython runtime executed directly inside your browser via Pyodide. Features raw batch gradient descent with logistic regression trained live from scratch—zero server overhead and zero pre-compiled weights.</p>
-  <p class="note">// Telemetry Dataset: 180 enterprise accounts across engagement score and payment latency vectors.</p>
+  <p class="note">// Dataset: 180 made-up customer accounts, each with an engagement score and a payment delay.</p>
 </section>
 
 <section class="lab-wrap">
@@ -259,12 +260,12 @@
   <summary>View Technical Architecture & Mathematical Spec</summary>
   <p>This module mounts a standalone Python environment inside the client browser, executing compiled C code via WASM. It proves that client-side applications can handle rigorous mathematical computations locally without offloading tasks to remote compute clusters.</p>
   <ul>
-    <li><strong>Data Pipeline:</strong> 180 synthetic enterprise customer rows generated across two parameters (engagement score, payment latency).</li>
+    <li><strong>Data Pipeline:</strong> 180 synthetic customer rows with two features: engagement score and payment delay.</li>
     <li><strong>Normalization:</strong> Min-max feature scaling applied prior to train/test set splitting (80/20 ratio).</li>
     <li><strong>Optimization:</strong> Batch gradient descent calculated iteratively using fundamental math primitives (`math.log`, `math.exp`).</li>
     <li><strong>Live Execution:</strong> Parameter updates trigger immediate recompilation and forward/backward passes on unseen validation data.</li>
   </ul>
-  <p style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--cyan);">// Note: Engineered as a transparent, verifiable machine learning demonstration rather than a black-box enterprise pipeline.</p>
+  <p style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--cyan);">// Note: built to be easy to inspect, not as a production system.</p>
 </details>
 
 </main>

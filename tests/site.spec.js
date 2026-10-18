@@ -236,10 +236,10 @@ test.describe('home page', () => {
 
 test.describe('Momentum', () => {
   const VIEWS = [
-    { button: 'Operational Schedule', panel: '#view-timetable' },
-    { button: 'Biometric Macro Engine', panel: '#view-calculator' },
-    { button: 'Elite Coaching Roster', panel: '#view-faculty' },
-    { button: 'System Parameters', panel: '#view-protocols' },
+    { button: 'Class Timetable', panel: '#view-timetable' },
+    { button: 'Calorie Calculator', panel: '#view-calculator' },
+    { button: 'Coaches', panel: '#view-faculty' },
+    { button: 'Settings', panel: '#view-protocols' },
   ]
   const navButton = (page, name) => page.locator('#sideNav').getByRole('button', { name })
   const viewport = width => ({ width, height: width === 390 ? 844 : 900 })
@@ -431,8 +431,8 @@ test.describe('phone menus on the app-style demos', () => {
   }
 
   for (const { file, nav, item, done } of [
-    { file: 'nexora-flagship-project.html', nav: '#sideNav', item: 'Live Forex', done: page => expect(page.locator('#view-forex')).toBeVisible() },
-    { file: 'loop-wireframes.html', nav: '#sideNav', item: 'Focus Pomodoro', done: page => expect(page.locator('#view-pomodoro')).toBeVisible() },
+    { file: 'nexora-flagship-project.html', nav: '#sideNav', item: 'Currency & Invoices', done: page => expect(page.locator('#view-forex')).toBeVisible() },
+    { file: 'loop-wireframes.html', nav: '#sideNav', item: 'Focus Timer', done: page => expect(page.locator('#view-pomodoro')).toBeVisible() },
     { file: 'loom-workflow-builder.html', nav: '#nodePalette', item: 'Webhook Trigger', done: (page, before) => expect(page.locator('#nodesLayer .node')).toHaveCount(before + 1) },
   ]) {
     test(`${file}: the Menu button opens and closes the menu with the keyboard at 390px`, async ({ page }) => {
@@ -463,6 +463,69 @@ test.describe('phone menus on the app-style demos', () => {
       await expect(page.locator(nav)).toBeHidden()
       await expect(menu).toHaveAttribute('aria-expanded', 'false')
       await expect(menu).toBeFocused()
+    })
+  }
+})
+
+// Each project has one plain name. It must read the same on its own page (title, social titles and the logo
+// or main heading), on its collection page and, where it is listed, on the homepage.
+test.describe('project names match everywhere', () => {
+  const PROJECTS = [
+    ['booking-system-demo.html', 'Glow Studio', 'salon booking', '.brand'],
+    ['nexora-flagship-project.html', 'Nexora', 'agency dashboard', '.brand-name'],
+    ['momentum-fitness.html', 'Momentum', 'gym website', '.brand-name'],
+    ['larkspur-photography.html', 'Larkspur', "photographer's site", '.brand-name'],
+    ['webapp-dashboard-demo.html', 'Flowdesk', 'orders & invoices', '.side-logo'],
+    ['loom-workflow-builder.html', 'Loom', 'workflow builder', '.sb-brand-name'],
+    ['loop-wireframes.html', 'Loop', 'habit tracker', '.brand-name'],
+    ['kindred-wireframes.html', 'Aether', 'dating app', '.brand-name'],
+    ['cartel-shop.html', 'Cartel', 'online shop', '.brand-logo'],
+    ['cadence-beatmaker.html', 'Cadence', 'beat maker', 'header .brand'],
+    ['pulse-wireframes.html', 'Pulse', 'breathing app', 'h1'],
+    ['surge-prototype.html', 'Surge', 'workout tracker', 'h1'],
+    ['reprise-content-engine.html', 'Reprise', 'post rewriter', '.brand-name'],
+    ['sift-screening-pipeline.html', 'Sift', 'resume screening', '.brand-name'],
+    ['vantage-autonomous-agent.html', 'Vantage', 'support helpdesk', '.brand-name'],
+    ['forge-agent-orchestration.html', 'Forge', 'research assistant', '.brand-name'],
+    ['ember-oak-ai-assistant.html', 'Ember & Oak', 'sales chat', '.brand-name'],
+    ['nexus-ops-agent.html', 'Nexus', 'order support bot', '.brand-name'],
+    ['churn-risk-model.html', 'Churn Model', 'customer churn predictor', 'h1'],
+    ['ai-inquiry-router.html', 'Inquiry Router', 'sorts customer messages', 'h1'],
+    ['noor-bakehouse.html', 'Noor Bakehouse', 'bakery website', '.logo'],
+  ]
+  // Collection pages list their projects in inline data: {n:'Name', …, h:'file.html'} or ['Name', 'tier', 'file.html', …].
+  const COLLECTIONS = ['web-apps-collection.html', 'web-design-collection.html', 'uiux-collection.html', 'ai-automation-collection.html']
+  const listed = {}
+  for (const c of COLLECTIONS) {
+    const src = readFileSync(c, 'utf8')
+    for (const m of src.matchAll(/\{n:'([^']+)'[^}]*?h:'([^']+\.html)'/g)) (listed[m[2]] ??= []).push(`${c}: ${m[1]}`)
+    for (const m of src.matchAll(/\[\s*'([^']+)',\s*'[a-z]+',\s*'([^']+\.html)'/g)) (listed[m[2]] ??= []).push(`${c}: ${m[1]}`)
+  }
+  const home = readFileSync('index.html', 'utf8')
+
+  for (const [file, name, desc, brand] of PROJECTS) {
+    test(`${name} (${file})`, async ({ page }) => {
+      const full = `${name} · ${desc}`
+      await page.goto(file, { waitUntil: 'domcontentloaded' })
+      expect(await page.title()).toBe(`${full} | BrightStack Co.`)
+      expect(await page.getAttribute('meta[property="og:title"]', 'content')).toBe(full)
+      expect(await page.getAttribute('meta[name="twitter:title"]', 'content')).toBe(full)
+      // The logo text, without a decorative letter mark (Flowdesk's "F" tile sits inside its logo).
+      const logo = await page.locator(brand).first().evaluate(el => { const c = el.cloneNode(true); c.querySelectorAll('.brand-mark').forEach(m => m.remove()); return c.textContent })
+      expect(logo.replace(/\s+/g, ' ').trim()).toBe(name)
+
+      // Its collection card.
+      const entries = listed[file] ?? []
+      expect(entries.length, `${file} is on a collection page`).toBeGreaterThan(0)
+      for (const e of entries) expect(e.split(': ').slice(1).join(': '), e).toBe(name)
+
+      // The homepage, where the project is listed (featured rows and the quick-jump list).
+      if (home.includes(`href="${file}"`) || home.includes(`h: '${file}'`)) {
+        await page.goto('index.html', { waitUntil: 'domcontentloaded' })
+        await expect(page.locator(`a.project-row[href="${file}"] .p-title`)).toHaveText(full)
+        const jump = home.match(new RegExp(`t: '([^']+)', s: 'project', h: '${file.replace('.', '\\.')}'`))?.[1]
+        expect(jump).toBe(full)
+      }
     })
   }
 })

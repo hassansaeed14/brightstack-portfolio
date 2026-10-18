@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vantage Neural OS v3.0 — Autonomous Multi-Agent Command Center</title>
+<title>Vantage · support helpdesk | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/vantage-autonomous-agent.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vantage Neural OS v3.0 — Autonomous Multi-Agent Command Center">
-<meta property="og:description" content="Ultimate enterprise autonomous agent platform with multi-model swarm routing, human-in-the-loop gates, and live token telemetry.">
+<meta property="og:title" content="Vantage · support helpdesk">
+<meta property="og:description" content="A support helpdesk demo where an AI agent works through a customer request step by step, and a person can step in. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vantage · support helpdesk">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -149,7 +150,7 @@
   .toolbar select { max-width: 100%; }
 }
 </style>
-<meta name="description" content="Orchestrate multi-model AI agent swarms to resolve customer inquiries in Vantage Neural OS, a demo by BrightStack Co.">
+<meta name="description" content="Watch an AI agent work through customer requests in Vantage, a support helpdesk demo by BrightStack Co.">
 </head>
 <body>
 
@@ -157,14 +158,13 @@
   <div class="brand">
     <div class="brand-mark"></div>
     <div>
-      <div class="brand-name">Vantage Neural OS</div>
-      <div class="brand-sub">Autonomous Command Center v3.0</div>
+      <div class="brand-name">Vantage</div>
     </div>
   </div>
   <div class="nav-controls">
     <div class="view-toggle">
-      <button class="active" onclick="switchView('console')" id="btn-console">Mission Control</button>
-      <button onclick="switchView('log')" id="btn-log">Mission Log</button>
+      <button class="active" onclick="switchView('console')" id="btn-console">Helpdesk</button>
+      <button onclick="switchView('log')" id="btn-log">History</button>
     </div>
   </div>
 </div>
@@ -173,18 +173,18 @@
 <main>
 <div class="view active" id="view-console">
   <div class="wrap">
-    <div class="hero-eyebrow">Enterprise Autonomous Multi-Agent Swarm</div>
-    <h1 class="hero-title">Orchestrate intelligent agent swarms with multi-model routing and real-time telemetry.</h1>
-    <p class="hero-desc">Vantage Neural OS v3.0 deploys specialized sub-agents across operational tools with deterministic guardrails, PII redaction, and human-in-the-loop intervention gates.</p>
+    <div class="hero-eyebrow">Support helpdesk</div>
+    <h1 class="hero-title">An AI agent that works through support requests, one step at a time.</h1>
+    <p class="hero-desc">Vantage looks things up with small tools, masks personal details, and lets a person approve or stop a step. Everything here is simulated.</p>
 
     <!-- Toolbar Options -->
     <div class="toolbar">
       <div class="toolbar-group">
-        <span>Model Swarm Engine:</span>
-        <select id="modelSelector" aria-label="Model swarm engine">
-          <option value="reasoning-model">Reasoning Model (Advanced Reasoning)</option>
-          <option value="fast-model">Fast Model (High-Speed Tool Dispatch)</option>
-          <option value="local-model">Local Model (Zero-Knowledge Local Enclave)</option>
+        <span>Model:</span>
+        <select id="modelSelector" aria-label="Model">
+          <option value="reasoning-model">Reasoning Model</option>
+          <option value="fast-model">Fast Model</option>
+          <option value="local-model">Local Model</option>
         </select>
       </div>
       <div class="toolbar-group" style="color:var(--text-faint); font-size:12px;">
@@ -194,7 +194,7 @@
 
     <div class="console-grid">
       <div class="goal-panel">
-        <label for="goalInput">Autonomous Goal Directive</label>
+        <label for="goalInput">Customer request</label>
         <textarea id="goalInput">A VIP customer states order ORD-1077 (Steel Travel Mug) hasn't shipped and needs it for a weekend trip. Investigate, verify against company policy, execute expedited resolution, and log audit trail.</textarea>
         <div class="example-row">
           <button class="example-chip" onclick="setGoal(1)">Process wrong-color item refund on ORD-1103 strictly following return policy</button>
@@ -203,7 +203,7 @@
         </div>
         <button class="run-btn" id="runBtn" onclick="runAgent()">
           <span class="spinner" id="spinner"></span>
-          <span id="runLabel">Deploy Autonomous Swarm</span>
+          <span id="runLabel">Run the Agent</span>
         </button>
         <div class="status-line" id="statusLine" style="margin-top:14px; font-size:11.5px; color:var(--text-faint); font-family:'JetBrains Mono';"></div>
       </div>
@@ -213,12 +213,12 @@
           <div class="stream-head">
             <div class="stream-head-left">
               <div class="stream-dot"></div>
-              <div class="stream-title">swarm_telemetry.stream</div>
+              <div class="stream-title">agent_steps.log</div>
             </div>
             <div style="font-size:11px; color:var(--text-faint); font-family:'JetBrains Mono';" id="tokenCounter">Tokens: 0 | Latency: 0ms</div>
           </div>
           <div class="stream-body" id="streamBody">
-            <div class="stream-empty" id="streamEmpty">Deploy the autonomous swarm to view real-time ReAct loops, sub-agent reasoning, and tool observations here.</div>
+            <div class="stream-empty" id="streamEmpty">Run the agent to see each step, what it looked up and what it found.</div>
           </div>
         </div>
         <div class="outcome-card" id="outcomeCard"></div>
@@ -232,14 +232,14 @@
   <div class="wrap">
     <div class="cal-head">
       <div>
-        <div class="cal-title">Autonomous Mission Log</div>
-        <div class="cal-sub">Complete historical telemetry of all agent swarm executions and resolution confidence scores.</div>
+        <div class="cal-title">History</div>
+        <div class="cal-sub">Every run so far, with the agent's confidence score.</div>
       </div>
     </div>
 
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Missions</div></div>
-      <div class="stat-card"><div class="stat-num" id="statResolved" style="color:var(--green)">0</div><div class="stat-label">Autonomously Resolved</div></div>
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Runs</div></div>
+      <div class="stat-card"><div class="stat-num" id="statResolved" style="color:var(--green)">0</div><div class="stat-label">Resolved Without Help</div></div>
       <div class="stat-card"><div class="stat-num" id="statConf">—</div><div class="stat-label">Avg. Self-Confidence</div></div>
       <div class="stat-card"><div class="stat-num" id="statSteps">—</div><div class="stat-label">Avg. Swarm Steps</div></div>
     </div>
@@ -253,14 +253,14 @@
         <thead><tr><th>Goal Directive</th><th>Outcome</th><th>Confidence</th><th>Steps</th></tr></thead>
         <tbody id="runsTable"></tbody>
       </table>
-      <div class="empty-state" id="runsEmpty" style="display:none;">No missions recorded yet — deploy an agent from Mission Control.</div>
+      <div class="empty-state" id="runsEmpty" style="display:none;">No runs yet. Run the agent from the Helpdesk tab.</div>
     </div>
   </div>
 </div>
 
 </main>
 <div class="footnote wrap">
-  BrightStack Co. — Vantage Neural OS v3.0. Autonomous Multi-Agent Command Center. All rights reserved.
+  Vantage is a concept demo by BrightStack Co.
 </div>
 
 <script>
@@ -374,7 +374,7 @@
 
     if(!window._stepCount || window._stepCount === 0){
       window._stepCount = 1;
-      return {reasoning: "Initializing autonomous swarm via selected model router. Dispatching policy auditor sub-agent.", tool: "search_knowledge_base", input: {query: wantsRefund ? "refund policy" : "shipping delay policy"}};
+      return {reasoning: "Starting with the selected model. Checking company policy first.", tool: "search_knowledge_base", input: {query: wantsRefund ? "refund policy" : "shipping delay policy"}};
     } else if(window._stepCount === 1 && orderId){
       window._stepCount = 2;
       return {reasoning: `Policy audit verified. Dispatching logistics sub-agent to query secure order database for ${orderId}.`, tool: "lookup_order", input: {order_id: orderId}};
@@ -386,7 +386,7 @@
       return {reasoning: "Executing compliance guardrail check and calculating authorized refund amount.", tool: "calculate_refund", input: {order_id: orderId, reason: "Customer return request"}};
     } else if(window._stepCount <= 4){
       window._stepCount = 5;
-      return {reasoning: "Drafting verified customer communication and logging secure internal audit ticket.", tool: "create_ticket", input: {subject: orderId ? ("Resolved: " + orderId) : "Autonomous Mission Logged", priority: "normal"}};
+      return {reasoning: "Drafting verified customer communication and logging secure internal audit ticket.", tool: "create_ticket", input: {subject: orderId ? ("Resolved: " + orderId) : "Request logged", priority: "normal"}};
     } else {
       window._stepCount = 0;
       return {
@@ -395,7 +395,7 @@
         input: {
           resolved: true,
           confidence: 98,
-          summary: `Autonomous multi-agent mission successfully completed end-to-end: policy validated, system telemetry inspected, deterministic tool actions executed, and secure audit trail recorded.`,
+          summary: `Done. The agent checked the policy, looked up the order, took the allowed actions and logged a ticket.`,
           escalate: false,
           escalation_reason: ""
         }
@@ -447,14 +447,14 @@
       }
 
       if(!outcome){
-        outcome = {resolved: true, confidence: 95, summary: "Mission executed and verified successfully by autonomous orchestration swarm.", escalate: false};
+        outcome = {resolved: true, confidence: 95, summary: "Done. The agent resolved the request.", escalate: false};
         addEntry('reflect', 'Mission Complete', '✓', outcome.summary);
       }
 
       const card = document.getElementById('outcomeCard');
       card.className = 'outcome-card show ' + (outcome.escalate ? 'escalated' : 'resolved');
       card.innerHTML = `
-        <div class="outcome-status ${outcome.escalate ? 'escalated':'resolved'}">${outcome.escalate ? 'Escalated to Human' : 'Autonomously Resolved'}</div>
+        <div class="outcome-status ${outcome.escalate ? 'escalated':'resolved'}">${outcome.escalate ? 'Escalated to Human' : 'Resolved Without Help'}</div>
         <div class="outcome-summary">${escapeHtml(outcome.summary || '')}</div>
         <div class="outcome-conf">
           <span>Confidence: <strong>${outcome.confidence}%</strong></span>
@@ -470,7 +470,7 @@
 
     btn.disabled = false;
     document.getElementById('spinner').classList.remove('show');
-    document.getElementById('runLabel').textContent = 'Deploy Autonomous Swarm';
+    document.getElementById('runLabel').textContent = 'Run the Agent';
   }
 
   function seedLog(){

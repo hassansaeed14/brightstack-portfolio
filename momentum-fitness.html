@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Momentum Apex Ultimate — Elite Strength &amp; Conditioning Studio</title>
+<title>Momentum · gym website | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/momentum-fitness.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -108,6 +108,8 @@
   .back-link:hover { border-color: var(--cyan); }
   .concept-bar { margin-top: auto; flex-shrink: 0; background: rgba(2,4,8,0.98); border-top: 1px solid var(--line); color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.6; text-align: center; padding: 12px 24px; }
   /* Narrow screens: the sidebar becomes a compact top bar with a menu button, so the main area gets the full width. */
+  /* Desktop: keep the bottom of the sidebar clear for the fixed "Portfolio Hub" link, so it never covers sidebar text. */
+  @media (min-width: 901px) { aside { padding-bottom: 72px; } }
   .nav-toggle { display: none; }
   .schedule-board:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 12px; }
   @media (max-width: 900px) {
@@ -128,13 +130,14 @@
     .card { padding: 20px; }
   }
 </style>
-<meta name="description" content="Explore class schedules, coaching rosters, and biometric macro calculators at Momentum Apex. A concept demo by BrightStack Co.">
-<meta property="og:title" content="Momentum Apex Ultimate — Elite Strength &amp;amp; Conditioning Studio">
-<meta property="og:description" content="Explore class schedules, coaching rosters, and biometric macro calculators at Momentum Apex. A concept demo by BrightStack Co.">
+<meta name="description" content="See the class timetable, meet the coaches and work out your daily calories at Momentum, a gym website concept by BrightStack Co.">
+<meta property="og:title" content="Momentum · gym website">
+<meta property="og:description" content="See the class timetable, meet the coaches and work out your daily calories at Momentum, a gym website concept by BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Momentum · gym website">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 </head>
 <body>
@@ -146,22 +149,21 @@
     <div class="brand">
       <div class="brand-mark"></div>
       <div>
-        <div class="brand-name">Momentum Apex</div>
-        <div class="brand-sub">Ultimate Studio OS</div>
+        <div class="brand-name">Momentum</div>
       </div>
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sideNav">☰ Menu</button>
     </div>
     
     <nav class="nav-menu" id="sideNav" aria-label="Studio sections">
-      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-timetable" onclick="switchView('timetable', this)">⚡ Operational Schedule</button>
-      <button type="button" class="nav-item" aria-controls="view-calculator" onclick="switchView('calculator', this)">📊 Biometric Macro Engine</button>
-      <button type="button" class="nav-item" aria-controls="view-faculty" onclick="switchView('faculty', this)">🎯 Elite Coaching Roster</button>
-      <button type="button" class="nav-item" aria-controls="view-protocols" onclick="switchView('protocols', this)">⚙ System Parameters</button>
+      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-timetable" onclick="switchView('timetable', this)">⚡ Class Timetable</button>
+      <button type="button" class="nav-item" aria-controls="view-calculator" onclick="switchView('calculator', this)">📊 Calorie Calculator</button>
+      <button type="button" class="nav-item" aria-controls="view-faculty" onclick="switchView('faculty', this)">🎯 Coaches</button>
+      <button type="button" class="nav-item" aria-controls="view-protocols" onclick="switchView('protocols', this)">⚙ Settings</button>
     </nav>
 
     <div class="user-stats">
-      <div class="stat-row"><span>Status</span><span>ACTIVE NODE</span></div>
-      <div class="stat-row"><span>Load Index</span><span>98.6% OPTIMAL</span></div>
+      <div class="stat-row"><span>Status</span><span>OPEN TODAY</span></div>
+      <div class="stat-row"><span>Classes full</span><span>98.6%</span></div>
       <div class="progress-bar"><div class="progress-fill"></div></div>
     </div>
   </aside>
@@ -169,7 +171,7 @@
   <!-- Main Area -->
   <div class="main">
     <header>
-      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Operational Weekly Timetable</div>
+      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Weekly Timetable</div>
       <div class="header-actions">
         <button class="btn-primary" onclick="openModal('Complimentary Assessment')">Book Free Assessment</button>
       </div>
@@ -180,8 +182,8 @@
       <!-- VIEW 1: SCHEDULE -->
       <div id="view-timetable" class="view-panel active">
         <div class="card">
-          <h3 aria-level="2">Live Class Architecture</h3>
-          <p class="sub">// Select any active time slot below to secure your reservation.</p>
+          <h3 aria-level="2">This Week's Classes</h3>
+          <p class="sub">// Tap a class to book a spot.</p>
           <div class="schedule-board" tabindex="0" role="region" aria-label="Weekly class timetable (scrolls sideways)">
             <div class="schedule-grid">
               <div class="sched-cell"></div>
@@ -218,8 +220,8 @@
       <!-- VIEW 2: CALCULATOR -->
       <div id="view-calculator" class="view-panel">
         <div class="card">
-          <h3 aria-level="2">Biometric Caloric &amp; Macro Engine</h3>
-          <p class="sub">// Real-time nutritional target computation for high-output athletes.</p>
+          <h3 aria-level="2">Calorie &amp; Protein Calculator</h3>
+          <p class="sub">// A rough daily estimate from your weight, height and training.</p>
           <div class="calc-grid">
             <div>
               <div class="field">
@@ -235,7 +237,7 @@
                 <select id="calcIntensity" onchange="computeMacros()">
                   <option value="1.3">Moderate (3x / week)</option>
                   <option value="1.55" selected>High (5x / week)</option>
-                  <option value="1.75">Elite (Daily Double Sessions)</option>
+                  <option value="1.75">Very high (twice a day)</option>
                 </select>
               </div>
             </div>
@@ -251,26 +253,26 @@
       <!-- VIEW 3: FACULTY -->
       <div id="view-faculty" class="view-panel">
         <div class="card">
-          <h3 aria-level="2">Elite Coaching Faculty</h3>
-          <p class="sub">// Uncompromising technical standards and direct supervision.</p>
+          <h3 aria-level="2">Our Coaches</h3>
+          <p class="sub">// Small groups, coached closely.</p>
           <div class="trainer-grid">
             <div class="trainer-card">
               <div class="trainer-avatar">BA</div>
               <h3 aria-level="2">Bilal Ahmed</h3>
-              <span class="trainer-tag">Strength &amp; Olympic Kinematics</span>
-              <p>Directs primary barbell blocks emphasizing technical mastery before load progression.</p>
+              <span class="trainer-tag">Strength &amp; Olympic Lifting</span>
+              <p>Leads the barbell classes. Technique first, then weight.</p>
             </div>
             <div class="trainer-card">
               <div class="trainer-avatar">SK</div>
               <h3 aria-level="2">Sara Khalid</h3>
               <span class="trainer-tag">Metabolic Conditioning Lead</span>
-              <p>Engineers energy systems training calibrated against daily biometric recovery metrics.</p>
+              <p>Runs the conditioning classes and adjusts them to how rested you are.</p>
             </div>
             <div class="trainer-card">
               <div class="trainer-avatar">UT</div>
               <h3 aria-level="2">Usman Tariq</h3>
               <span class="trainer-tag">Joint Mechanics &amp; Recovery</span>
-              <p>Directs joint mechanics, active tissue release, and orthopedic injury prevention protocols.</p>
+              <p>Works on mobility and stretching, and on avoiding injuries.</p>
             </div>
           </div>
         </div>
@@ -279,8 +281,8 @@
       <!-- VIEW 4: PROTOCOLS -->
       <div id="view-protocols" class="view-panel">
         <div class="card" style="max-width: 700px; margin: 0 auto;">
-          <h3 aria-level="2">Studio Protocols &amp; Preferences</h3>
-          <p class="sub">// Configure operational notifications and security parameters</p>
+          <h3 aria-level="2">Settings</h3>
+          <p class="sub">// Reminders and syncing (demo only)</p>
           <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
               <div>
@@ -291,8 +293,8 @@
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-raised); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px;">
               <div>
-                <h4 aria-level="3" id="prefSync" style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Biometric Data Sync</h4>
-                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Automatic wear-band integration</span>
+                <h4 aria-level="3" id="prefSync" style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 2px;">Fitness Band Sync</h4>
+                <span style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">Sync workouts from a fitness band</span>
               </div>
               <input aria-labelledby="prefSync" type="checkbox" checked style="accent-color: var(--cyan); width: 20px; height: 20px; cursor: pointer;">
             </div>
@@ -314,10 +316,10 @@
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button style="float:right; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;" onclick="closeModal()">✕</button>
-    <h3 aria-level="2" id="modalTitle">Secure Session Slot</h3>
-    <p id="modalDesc">// Provision training slot in system</p>
+    <h3 aria-level="2" id="modalTitle">Book a Session</h3>
+    <p id="modalDesc">// Leave your name and number</p>
     <div class="field">
-      <label for="athleteName">Athlete Name</label>
+      <label for="athleteName">Your Name</label>
       <input type="text" id="athleteName" placeholder="e.g., Hassan Saeed">
     </div>
     <div class="field">
@@ -348,10 +350,10 @@
     el.setAttribute('aria-current', 'page');
 
     const titles = {
-      timetable: 'Operational Weekly Timetable',
-      calculator: 'Biometric Caloric & Macro Engine',
-      faculty: 'Elite Coaching Faculty Roster',
-      protocols: 'Studio System Parameters'
+      timetable: 'Weekly Timetable',
+      calculator: 'Calorie & Protein Calculator',
+      faculty: 'Our Coaches',
+      protocols: 'Settings'
     };
     document.getElementById('headerTitle').textContent = titles[viewId];
   }
@@ -381,10 +383,10 @@
   function confirmBooking(){
     const name = document.getElementById('athleteName').value.trim();
     if(!name){
-      alert('Please enter your athlete name.');
+      alert('Please enter your name.');
       return;
     }
-    alert(`Success, ${name}! Your session has been officially logged in Momentum Apex.`);
+    alert(`Thanks, ${name}! Your session is booked (demo).`);
     closeModal();
     document.getElementById('athleteName').value = '';
     document.getElementById('athletePhone').value = '';

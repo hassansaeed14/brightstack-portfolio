@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loop Apex Quantum v3.1 — Enterprise Habit & Neural Focus Suite</title>
+<title>Loop · habit tracker | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loop-wireframes.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Loop Apex Quantum v3.1 — Enterprise Habit &amp; Neural Focus Suite">
-<meta property="og:description" content="Ultimate interactive habit orchestrator and focus matrix by BrightStack Co.">
+<meta property="og:title" content="Loop · habit tracker">
+<meta property="og:description" content="A habit tracker with a daily checklist, a focus timer and streaks. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loop · habit tracker">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -127,6 +128,8 @@
   .back-link { position: fixed; bottom: 20px; left: 20px; background: var(--surface); color: #fff; border: 1px solid var(--line); padding: 11px 20px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none; z-index: 99; backdrop-filter: blur(10px); }
   .back-link:hover { border-color: var(--gold); }
   /* Narrow screens: the sidebar becomes a compact top bar with a menu button, so the main area gets the full width. */
+  /* Desktop: keep the bottom of the sidebar clear for the fixed "Portfolio Hub" link, so it never covers sidebar text. */
+  @media (min-width: 901px) { aside { padding-bottom: 72px; } }
   .nav-toggle { display: none; }
   @media (max-width: 900px) {
     /* Reserve a strip at the bottom for the floating "Portfolio Hub" button (fixed 20px from the bottom, about 42px tall),
@@ -148,7 +151,7 @@
     .modal { width: auto; max-width: calc(100vw - 32px); padding: 24px; }
   }
 </style>
-<meta name="description" content="Track daily habits, Pomodoro sessions, and neural focus streaks with Loop Apex, a concept prototype by BrightStack Co.">
+<meta name="description" content="Track daily habits, focus sessions and streaks with Loop, a concept prototype by BrightStack Co.">
 </head>
 <body>
 <div class="scan"></div>
@@ -159,22 +162,21 @@
     <div class="brand">
       <div class="brand-mark"></div>
       <div>
-        <div class="brand-name">Loop Quantum</div>
-        <div class="brand-sub">Enterprise Suite</div>
+        <div class="brand-name">Loop</div>
       </div>
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sideNav">☰ Menu</button>
     </div>
     
     <nav class="nav-menu" id="sideNav" aria-label="App sections">
-      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-dashboard" onclick="switchView('dashboard', this)">⚡ Neural Dashboard</button>
-      <button type="button" class="nav-item" aria-controls="view-pomodoro" onclick="switchView('pomodoro', this)">⏳ Focus Pomodoro</button>
-      <button type="button" class="nav-item" aria-controls="view-matrix" onclick="switchView('matrix', this)">📊 Momentum Matrix</button>
-      <button type="button" class="nav-item" aria-controls="view-protocols" onclick="switchView('protocols', this)">⚙ System Protocols</button>
+      <button type="button" class="nav-item active" aria-current="page" aria-controls="view-dashboard" onclick="switchView('dashboard', this)">⚡ Today</button>
+      <button type="button" class="nav-item" aria-controls="view-pomodoro" onclick="switchView('pomodoro', this)">⏳ Focus Timer</button>
+      <button type="button" class="nav-item" aria-controls="view-matrix" onclick="switchView('matrix', this)">📊 Progress</button>
+      <button type="button" class="nav-item" aria-controls="view-protocols" onclick="switchView('protocols', this)">⚙ Settings</button>
     </nav>
 
     <div class="user-stats">
-      <div class="stat-row"><span>Apex Rank</span><span>ELITE LVL 15</span></div>
-      <div class="stat-row"><span>Neural XP</span><span>3,420 / 4,000</span></div>
+      <div class="stat-row"><span>Level</span><span>15</span></div>
+      <div class="stat-row"><span>XP</span><span>3,420 / 4,000</span></div>
       <div class="progress-bar"><div class="progress-fill"></div></div>
     </div>
   </aside>
@@ -182,9 +184,9 @@
   <!-- Main Content -->
   <div class="main">
     <header>
-      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Executive Neural & Habit Command Center</div>
+      <div class="page-title" id="headerTitle" role="heading" aria-level="1">Today's Habits</div>
       <div class="header-actions">
-        <button class="btn-primary" onclick="openModal()">+ New Habit Protocol</button>
+        <button class="btn-primary" onclick="openModal()">+ New Habit</button>
       </div>
     </header>
 
@@ -194,26 +196,26 @@
       <div id="view-dashboard" class="view-panel active">
         <div class="dash-grid">
           <div class="card">
-            <h3 aria-level="2">Daily Execution Queue</h3>
-            <p class="sub">// Active protocols scheduled for today</p>
+            <h3 aria-level="2">Today's Habits</h3>
+            <p class="sub">// What's on for today</p>
             <div class="habit-list" id="habitList">
               <div class="habit-item">
                 <div class="habit-info">
-                  <h4 aria-level="3">Deep Work Architecture</h4>
+                  <h4 aria-level="3">Deep Work</h4>
                   <span>08:00 AM · 90 Minutes Focus</span>
                 </div>
                 <div class="checkbox completed" onclick="toggleCheck(this)">✓</div>
               </div>
               <div class="habit-item">
                 <div class="habit-info">
-                  <h4 aria-level="3">Hydration Protocol</h4>
+                  <h4 aria-level="3">Drink Water</h4>
                   <span>3.5 Liters Daily Target</span>
                 </div>
                 <div class="checkbox completed" onclick="toggleCheck(this)">✓</div>
               </div>
               <div class="habit-item">
                 <div class="habit-info">
-                  <h4 aria-level="3">Algorithmic Problem Solving</h4>
+                  <h4 aria-level="3">Practice Problems</h4>
                   <span>LeetCode / System Design</span>
                 </div>
                 <div class="checkbox" onclick="toggleCheck(this)"></div>
@@ -222,14 +224,14 @@
           </div>
 
           <div class="card">
-            <h3 aria-level="2">Streak Momentum</h3>
+            <h3 aria-level="2">Streak</h3>
             <p class="sub">// Consistency metrics</p>
             <div style="text-align: center; padding: 20px 0;">
               <div style="font-size: 46px; font-weight: 800; color: var(--gold); font-family: 'Plus Jakarta Sans', sans-serif;">21 Days</div>
-              <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px;">ACTIVE UNBROKEN STREAK</div>
+              <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px;">CURRENT STREAK</div>
             </div>
             <div style="margin-top: 20px;">
-              <div style="font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 8px;">30-Day Activity Matrix</div>
+              <div style="font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 8px;">Last 30 Days</div>
               <div class="heatmap-grid" id="heatmap"></div>
             </div>
           </div>
@@ -239,10 +241,10 @@
       <!-- VIEW 2: POMODORO -->
       <div id="view-pomodoro" class="view-panel">
         <div class="card" style="max-width: 600px; margin: 0 auto;">
-          <h3 aria-level="2">Dedicated Focus Session</h3>
-          <p class="sub">// Time-boxing module for deep engineering</p>
+          <h3 aria-level="2">Focus Session</h3>
+          <p class="sub">// 25 minutes on, then a break</p>
           <div class="pomodoro-box">
-            <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;" id="timerStatus">STATUS: READY FOR DEEP WORK</div>
+            <div style="font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;" id="timerStatus">READY</div>
             <div class="timer-display" id="timerDisplay">25:00</div>
             <div class="timer-controls">
               <button class="btn-sub" onclick="startTimer()">Start Focus</button>
@@ -256,15 +258,15 @@
       <!-- VIEW 3: MOMENTUM MATRIX -->
       <div id="view-matrix" class="view-panel">
         <div class="card">
-          <h3 aria-level="2">Advanced Momentum Analytics</h3>
-          <p class="sub">// Long-term behavioral consistency tracking</p>
+          <h3 aria-level="2">Progress</h3>
+          <p class="sub">// How you've done over time</p>
           <div style="padding: 20px 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 13px;">
-            > Total Execution Hours: 142.5 hrs<br>
+            > Total focus time: 142.5 hrs<br>
             > Average Daily Completion: 92.4%<br>
-            > Peak Performance Window: 08:00 AM – 11:30 AM
+            > Best time of day: 08:00 AM – 11:30 AM
           </div>
           <div style="margin-top: 20px;">
-            <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 12px;">Full-Year Compliance Heatmap Matrix</div>
+            <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 12px;">This Year</div>
             <div class="heatmap-grid" id="heatmapFull" style="grid-template-columns: repeat(28, 1fr);"></div>
           </div>
         </div>
@@ -273,20 +275,20 @@
       <!-- VIEW 4: SYSTEM PROTOCOLS -->
       <div id="view-protocols" class="view-panel">
         <div class="card" style="max-width: 700px; margin: 0 auto;">
-          <h3 aria-level="2">System Habit Protocols & Settings</h3>
-          <p class="sub">// Configure execution parameters and notifications</p>
+          <h3 aria-level="2">Settings</h3>
+          <p class="sub">// Reminders and focus mode</p>
           <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
             <div class="habit-item">
               <div class="habit-info">
-                <h4 aria-level="3">Quantum Notifications</h4>
+                <h4 aria-level="3">Reminders</h4>
                 <span>Receive push alerts before scheduled sessions</span>
               </div>
               <input type="checkbox" checked style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
             </div>
             <div class="habit-item">
               <div class="habit-info">
-                <h4 aria-level="3">Strict Focus Lockdown</h4>
-                <span>Block distracting web protocols during deep work</span>
+                <h4 aria-level="3">Focus Mode</h4>
+                <span>Block distracting sites while you focus</span>
               </div>
               <input type="checkbox" style="accent-color: var(--gold); width: 20px; height: 20px; cursor: pointer;">
             </div>
@@ -301,7 +303,7 @@
 <!-- Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <h3 aria-level="2">Create Habit Protocol</h3>
+    <h3 aria-level="2">New Habit</h3>
     <div class="field">
       <label>Habit Name</label>
       <input type="text" id="newHabitName" placeholder="e.g., Read 30 pages">
@@ -311,7 +313,7 @@
       <input type="text" id="newHabitTime" placeholder="e.g., 07:00 AM · Daily">
     </div>
     <div style="display: flex; gap: 10px; margin-top: 24px;">
-      <button class="btn-primary" style="flex: 1;" onclick="createHabit()">Deploy Protocol</button>
+      <button class="btn-primary" style="flex: 1;" onclick="createHabit()">Add Habit</button>
       <button class="btn-primary" style="flex: 1; background: var(--surface-raised); color: #fff; border: 1px solid var(--line);" onclick="closeModal()">Cancel</button>
     </div>
   </div>
@@ -376,10 +378,10 @@
     el.setAttribute('aria-current', 'page');
 
     const titles = {
-      dashboard: 'Executive Neural & Habit Command Center',
-      pomodoro: 'Dedicated Focus Session Studio',
-      matrix: 'Momentum Analytics & Behavioral Matrix',
-      protocols: 'System Protocols & Habit Parameters'
+      dashboard: "Today's Habits",
+      pomodoro: 'Focus Timer',
+      matrix: 'Progress',
+      protocols: 'Settings'
     };
     document.getElementById('headerTitle').textContent = titles[viewId];
   }
@@ -407,7 +409,7 @@
       } else {
         clearInterval(timerInterval);
         isRunning = false;
-        alert('Focus session complete! Take a neural break.');
+        alert('Focus session complete! Take a short break.');
       }
     }, 1000);
   }
@@ -423,7 +425,7 @@
     isRunning = false;
     timeLeft = 25 * 60;
     updateTimerDisplay();
-    document.getElementById('timerStatus').textContent = 'STATUS: READY FOR DEEP WORK';
+    document.getElementById('timerStatus').textContent = 'READY';
   }
 
   function toggleCheck(el){

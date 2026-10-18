@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vanguard Studio — Kinetic Reservation Matrix</title>
+<title>Glow Studio · salon booking | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/booking-system-demo.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vanguard Studio — Kinetic Reservation Matrix">
-<meta property="og:description" content="High-performance appointment scheduling architecture by BrightStack Co.">
+<meta property="og:title" content="Glow Studio · salon booking">
+<meta property="og:description" content="A salon booking demo: pick a date, see the free slots and book one. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glow Studio · salon booking">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -146,13 +147,13 @@
 
   footer { padding: 36px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 48px; font-family: 'JetBrains Mono', monospace; backdrop-filter: blur(16px); }
 </style>
-<meta name="description" content="Experience Vanguard Studio's interactive appointment scheduling and reservation matrix, a concept demo by BrightStack Co.">
+<meta name="description" content="Pick a date, see which slots are free and book one at Glow Studio, a salon booking demo by BrightStack Co.">
 </head>
 <body>
 <div class="grid-bg"></div>
 
 <header>
-  <div class="brand" role="heading" aria-level="1">Vanguard <span>Studio</span></div>
+  <div class="brand" role="heading" aria-level="1">Glow <span>Studio</span></div>
   <a href="index.html" class="back-link">← Portfolio Hub</a>
 </header>
 
@@ -179,7 +180,7 @@
   </div>
 
   <div class="card" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.05">
-    <div class="card-title">Daily Telemetry</div>
+    <div class="card-title">Today</div>
     <div class="stat-row">
       <div class="stat-mini"><div class="v">6</div><div class="l">Bookings</div></div>
       <div class="stat-mini"><div class="v">$840</div><div class="l">Revenue</div></div>
@@ -187,15 +188,15 @@
 
     <div class="card-title" style="font-size:15px; margin-bottom:14px;">Active Queue</div>
     <div class="appt-list">
-      <div class="appt-item"><div><div class="appt-name">Ayesha Malik</div><div class="appt-service">Neural Styling</div></div><div class="appt-time">10:00 AM</div></div>
-      <div class="appt-item"><div><div class="appt-name">Fatima Noor</div><div class="appt-service">Bio-Facial</div></div><div class="appt-time">11:30 AM</div></div>
+      <div class="appt-item"><div><div class="appt-name">Ayesha Malik</div><div class="appt-service">Hair Styling</div></div><div class="appt-time">10:00 AM</div></div>
+      <div class="appt-item"><div><div class="appt-name">Fatima Noor</div><div class="appt-service">Facial</div></div><div class="appt-time">11:30 AM</div></div>
       <div class="appt-item"><div><div class="appt-name">Sana Raza</div><div class="appt-service">Aesthetic Care</div></div><div class="appt-time">1:00 PM</div></div>
-      <div class="appt-item"><div><div class="appt-name">Hira Ahmed</div><div class="appt-service">Color Matrix</div></div><div class="appt-time">2:30 PM</div></div>
+      <div class="appt-item"><div><div class="appt-name">Hira Ahmed</div><div class="appt-service">Hair Color</div></div><div class="appt-time">2:30 PM</div></div>
     </div>
   </div>
 </div>
 
-<footer>Vanguard Studio — Engineered by BrightStack Co.</footer>
+<footer>Glow Studio. A demo by BrightStack Co.</footer>
 
 <!-- 3D Card Hover Effect Library -->
 <script type="module">
@@ -286,7 +287,7 @@
 
   function confirmBooking(){
     document.getElementById('confirmText').textContent =
-      'Slot successfully reserved for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '. Dispatch telemetry logged successfully.';
+      'Slot successfully reserved for ' + months[currentMonth] + ' ' + selectedDay + ', ' + currentYear + ' at ' + selectedSlot + '.';
     document.getElementById('confirmBox').classList.add('show');
   }
 

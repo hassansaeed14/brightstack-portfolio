@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ember & Oak — Enterprise AI Concierge & Lead Analytics Suite</title>
+<title>Ember &amp; Oak · sales chat | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/ember-oak-ai-assistant.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Ember &amp; Oak — Enterprise AI Concierge &amp; Lead Analytics Suite">
-<meta property="og:description" content="Next-generation enterprise concierge architecture by BrightStack Co.">
+<meta property="og:title" content="Ember &amp; Oak · sales chat">
+<meta property="og:description" content="A sales chat demo for a coffee roaster. It answers questions and scores how ready each customer is to buy. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ember &amp; Oak · sales chat">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -176,7 +177,7 @@
   header { flex-wrap: wrap; gap: 12px; }
 }
 </style>
-<meta name="description" content="Test an autonomous customer concierge that qualifies sales leads in real time. A concept demo by BrightStack Co.">
+<meta name="description" content="Chat with a coffee roaster's assistant that answers questions and scores sales leads. A concept demo by BrightStack Co.">
 </head>
 <body>
 <div class="cyber-grid"></div>
@@ -186,12 +187,11 @@
     <div class="brand-mark"></div>
     <div>
       <div class="brand-name">Ember & Oak</div>
-      <div class="brand-sub">Enterprise AI Concierge</div>
     </div>
   </div>
   <div class="view-toggle">
-    <button class="active" onclick="switchView('chat')" id="btn-chat">Live Chat Simulation</button>
-    <button onclick="switchView('dash')" id="btn-dash">Lead Analytics Dashboard</button>
+    <button class="active" onclick="switchView('chat')" id="btn-chat">Chat</button>
+    <button onclick="switchView('dash')" id="btn-dash">Leads</button>
   </div>
 </header>
 
@@ -200,9 +200,9 @@
 <div class="view active" id="view-chat">
   <div class="chat-grid">
     <div>
-      <div class="eyebrow">// Conversational AI & Telemetry</div>
-      <h1>Autonomous concierge for <span>commercial lead qualification</span>.</h1>
-      <p class="hero-desc">An interactive simulation handling customer inquiries regarding roast profiles, bulk wholesale logistics, and subscription tiers while dynamically calculating commercial intent scores in real-time.</p>
+      <div class="eyebrow">// Sales chat</div>
+      <h1>A sales chat that <span>spots likely buyers</span>.</h1>
+      <p class="hero-desc">A simulated chat that answers questions about roasts, wholesale orders and subscriptions, and scores how likely each customer is to buy.</p>
 
       <div class="intent-legend">
         <div><span class="dot" style="background:var(--emerald)"></span>Cold Prospect (0–33)</div>
@@ -239,8 +239,8 @@
 <div class="view" id="view-dash">
   <div class="dash-head">
     <div>
-      <div class="dash-title">Lead Qualification Telemetry</div>
-      <div class="dash-sub">Automated pipeline tracking commercial intent and extracting contact credentials</div>
+      <div class="dash-title">Leads</div>
+      <div class="dash-sub">How ready each customer is to buy, and the contact details they shared</div>
     </div>
   </div>
 
@@ -257,13 +257,13 @@
       <thead><tr><th>Contact Identifier</th><th>Commercial Interest</th><th>Intent Score Gauge</th><th>Session Timestamp</th></tr></thead>
       <tbody id="leadsTable"></tbody>
     </table>
-    <div class="empty-state" id="emptyState" style="display:none;">No lead telemetry logged — initiate a live interaction in the chat simulation tab.</div>
+    <div class="empty-state" id="emptyState" style="display:none;">No leads yet. Start a conversation in the Chat tab.</div>
   </div>
 </div>
 
 </main>
 <div class="footer-nav" style="max-width:1280px; margin:60px auto 0; padding:24px 24px 0;">
-  <span>BrightStack Co. · Enterprise AI Concierge Architecture</span>
+  <span>Ember &amp; Oak is a concept demo by BrightStack Co.</span>
   <a href="index.html">← Back to portfolio hub</a>
 </div>
 

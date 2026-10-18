@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surge Neural Fit Enterprise Bio-Cybernetic & Metabolic Fitness OS</title>
+<title>Surge · workout tracker | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/surge-prototype.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Surge Neural Fit v10.0 — Enterprise Bio-Cybernetic & Metabolic Fitness OS">
-<meta property="og:description" content="Ultimate enterprise fitness platform with real-time blood lactate tracking, 3D muscle heatmaps, and autonomous injury prevention.">
+<meta property="og:title" content="Surge · workout tracker">
+<meta property="og:description" content="A workout tracker concept that logs sets, heart rate and recovery. All data in the demo is made up. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Surge · workout tracker">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -128,36 +129,36 @@
   .footer-nav a { color: var(--indigo); text-decoration: none; font-weight: 600; font-size: 14px; }
   .brand { color: var(--muted); font-size: 13px; }
 </style>
-<meta name="description" content="Test drive live workout telemetry, lactate threshold analysis, and muscle tracking in this Surge demo by BrightStack Co.">
+<meta name="description" content="Tap through a workout, heart rate and recovery screens in Surge, a workout tracker concept by BrightStack Co.">
 </head>
 <body>
 <div class="wrap" role="main">
 
   <div class="topnav">
-    <div class="eyebrow">Enterprise Health-Tech · Surge Neural OS v10.0</div>
+    <div class="eyebrow">Workout tracker · UI/UX concept</div>
     <button class="theme-toggle" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light Mode</span></button>
   </div>
 
-  <h1>Surge Neural Fit v10.0</h1>
-  <p class="lede">An elite bio-cybernetic and metabolic fitness platform featuring real-time blood lactate threshold tracking, 3D muscle activation heatmaps, and autonomous injury prevention.</p>
+  <h1>Surge</h1>
+  <p class="lede">A workout tracker that logs sets, heart rate and recovery. All data here is made up for the demo.</p>
 
   <div class="meta-row">
-    <span class="pill"><strong>Architecture</strong> — Metabolic Cyber-OS v10</span>
-    <span class="pill"><strong>Telemetry</strong> — Lactate, HRV & Myoelectric</span>
-    <span class="pill"><strong>Security</strong> — Local data vault (demo)</span>
+    <span class="pill"><strong>Screens</strong>: three tappable screens</span>
+    <span class="pill"><strong>Data</strong>: simulated heart rate and lactate</span>
+    <span class="pill"><strong>Security</strong>: local data vault (demo)</span>
   </div>
 
   <!-- Bio-Cybernetic Readiness Bar -->
   <div class="recovery-bar">
     <div>
-      <div class="rec-title">⚡ Peak Metabolic Efficiency (95%)</div>
-      <div class="rec-sub">Blood lactate clearance: Optimal. Myoelectric recovery index: 98.4%.</div>
+      <div class="rec-title">⚡ Recovered and ready (95%)</div>
+      <div class="rec-sub">Recovery looks good today. These are demo numbers.</div>
     </div>
     <button class="rec-btn" onclick="triggerRegen()">Calibrate Sensors</button>
   </div>
 
-  <div class="section-label">Interactive Fitness OS Simulator</div>
-  <div class="section-sub">Test drive live workout telemetry, blood lactate tracking, and 3D muscle heatmaps below.</div>
+  <div class="section-label">Try the app</div>
+  <div class="section-sub">Tap through the three screens: today's stats, the workout and the body data.</div>
 
   <div class="workspace">
     <!-- Phone Mockup Frame -->
@@ -165,7 +166,7 @@
       <div class="phone-screen">
         <!-- View 1: Today Metabolic Score -->
         <div class="app-view active" id="appView-0">
-          <div class="v-header"><div><div class="v-greet">Metabolic Index</div><div class="v-name">Sunday</div></div><div class="v-avatar"></div></div>
+          <div class="v-header"><div><div class="v-greet">Today</div><div class="v-name">Sunday</div></div><div class="v-avatar"></div></div>
           <div class="ring-hero">
             <div class="hero-ring">
               <svg viewBox="0 0 150 150"><circle class="track" cx="75" cy="75" r="60"></circle><circle class="fill" cx="75" cy="75" r="60"></circle></svg>
@@ -180,7 +181,7 @@
           <div style="margin-top:auto;" class="tabbar">
             <div class="tab active" onclick="switchTab(0)">Today</div>
             <div class="tab" onclick="switchTab(1)">Workout</div>
-            <div class="tab" onclick="switchTab(2)">Telemetry</div>
+            <div class="tab" onclick="switchTab(2)">Data</div>
           </div>
         </div>
 
@@ -193,13 +194,13 @@
           <div style="margin-top:auto;" class="tabbar">
             <div class="tab" onclick="switchTab(0)">Today</div>
             <div class="tab active" onclick="switchTab(1)">Workout</div>
-            <div class="tab" onclick="switchTab(2)">Telemetry</div>
+            <div class="tab" onclick="switchTab(2)">Data</div>
           </div>
         </div>
 
         <!-- View 3: Live Telemetry -->
         <div class="app-view" id="appView-2">
-          <div class="v-header"><div><div class="v-greet">Bio-Telemetry</div><div class="v-name">Lactate & Muscles</div></div></div>
+          <div class="v-header"><div><div class="v-greet">Body Data</div><div class="v-name">Lactate & Muscles</div></div></div>
           <div style="background:var(--surface-sunken); border:1px solid var(--line); border-radius:10px; padding:12px; font-family:'JetBrains Mono'; font-size:11.5px; color:var(--green);">
             > Blood Lactate: 2.1 mmol/L<br>
             > Muscle Strain: Quads (High)<br>
@@ -209,7 +210,7 @@
           <div style="margin-top:auto;" class="tabbar">
             <div class="tab" onclick="switchTab(0)">Today</div>
             <div class="tab" onclick="switchTab(1)">Workout</div>
-            <div class="tab active" onclick="switchTab(2)">Telemetry</div>
+            <div class="tab active" onclick="switchTab(2)">Data</div>
           </div>
         </div>
       </div>
@@ -217,20 +218,20 @@
 
     <!-- Control Console -->
     <div class="control-area">
-      <h3>Metabolic OS Control Console</h3>
-      <p>Simulate real-time blood lactate threshold tracking, explore 3D muscle heatmaps, or activate autonomous injury prevention protocols.</p>
+      <h3>Demo controls</h3>
+      <p>Switch on a module, run a pretend lactate scan, or export a session summary.</p>
 
       <div class="feature-pills">
         <div class="fpill active" onclick="setMode('lactate', this)">Blood Lactate Sensor</div>
         <div class="fpill" onclick="setMode('muscle', this)">3D Muscle Heatmap</div>
-        <div class="fpill" onclick="setMode('injury', this)">Injury Prevention AI</div>
-        <div class="fpill" onclick="setMode('vault', this)">Quantum Bio-Vault</div>
+        <div class="fpill" onclick="setMode('injury', this)">Injury warnings</div>
+        <div class="fpill" onclick="setMode('vault', this)">Local data vault</div>
       </div>
 
       <div class="console-box" id="consoleTerminal">
-        [SYSTEM ONLINE] — Surge Neural Fit v10.0 initialized.<br>
-        > Cybernetic sensors calibrated.<br>
-        > Select an elite module to execute live telemetry.
+        Surge demo ready.<br>
+        > Using made-up sensor data.<br>
+        > Pick a module above.
       </div>
 
       <div class="action-row">
@@ -240,44 +241,44 @@
     </div>
   </div>
 
-  <div class="section-label">Comprehensive Ecosystem Architecture</div>
-  <div class="section-sub">All 25 major and elite expert-level innovations integrated into the production fitness platform.</div>
+  <div class="section-label">What the concept covers</div>
+  <div class="section-sub">Six ideas the concept explores. None of them is a working product.</div>
 
   <div class="grid-25">
     <div class="feat-card">
-      <div class="feat-num">01 / 25</div>
-      <div class="feat-title">Blood Lactate Threshold Tracker</div>
-      <p class="feat-desc">Monitors acid-base balance and metabolic acidosis limits in real-time during intense exertion.</p>
+      <div class="feat-num">01 / 06</div>
+      <div class="feat-title">Lactate tracking</div>
+      <p class="feat-desc">Estimates when you're close to your limit during hard efforts. Simulated here.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-num">02 / 25</div>
-      <div class="feat-title">3D Muscle Activation Heatmaps</div>
-      <p class="feat-desc">Visualizes primary and secondary muscle fiber recruitment dynamically during complex lifting circuits.</p>
+      <div class="feat-num">02 / 06</div>
+      <div class="feat-title">Muscle heatmap</div>
+      <p class="feat-desc">Shows which muscles a lift is working.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-num">03 / 25</div>
-      <div class="feat-title">Autonomous Injury Prevention AI</div>
-      <p class="feat-desc">Analyzes biomechanical asymmetry and joint stress patterns to proactively mitigate overtraining injuries.</p>
+      <div class="feat-num">03 / 06</div>
+      <div class="feat-title">Injury warnings</div>
+      <p class="feat-desc">Flags signs of overtraining before they turn into an injury.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-num">04 / 25</div>
+      <div class="feat-num">04 / 06</div>
       <div class="feat-title">Local bio-data vault</div>
-      <p class="feat-desc">Secures sensitive health telemetry entirely on-device with zero-knowledge cryptographic encryption.</p>
+      <p class="feat-desc">The idea is to keep health data on the phone only.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-num">05 / 25</div>
+      <div class="feat-num">05 / 06</div>
       <div class="feat-title">Session summary export</div>
-      <p class="feat-desc">Compiles structured physiological data summaries directly formatted for physician and therapist review.</p>
+      <p class="feat-desc">Puts a session into a short summary you can save.</p>
     </div>
     <div class="feat-card">
-      <div class="feat-num">06 / 25</div>
-      <div class="feat-title">Global Virtual Pacing Rooms</div>
-      <p class="feat-desc">Connects distributed athletes in synchronized training chambers with real-time wattage leaderboards.</p>
+      <div class="feat-num">06 / 06</div>
+      <div class="feat-title">Group pacing rooms</div>
+      <p class="feat-desc">Train alongside other people, with a shared leaderboard.</p>
     </div>
   </div>
 
   <div class="footer-nav">
-    <span class="brand">BrightStack Co. — UI/UX Enterprise Tier</span>
+    <span class="brand">A UI/UX concept by BrightStack Co.</span>
     <a href="index.html">← Back to portfolio overview</a>
   </div>
 
@@ -312,7 +313,7 @@
     } else if(mode === 'injury'){
       document.getElementById('consoleTerminal').innerHTML = `[MODULE] Injury Prevention AI active.<br>> Biomechanical symmetry verified. Risk index: 0.02 (Safe).`;
     } else if(mode === 'vault'){
-      document.getElementById('consoleTerminal').innerHTML = `[MODULE] Quantum Bio-Vault active.<br>> Zero-knowledge local client encryption verified.`;
+      document.getElementById('consoleTerminal').innerHTML = `[MODULE] Local data vault (demo).<br>> Nothing here is real health data.`;
     }
   }
 

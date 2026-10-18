@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loom Studio Apex — Enterprise Multi-Agent AI Visual Orchestration Suite</title>
+<title>Loom · workflow builder | BrightStack Co.</title>
 <link rel="canonical" href="https://hassansaeed14.github.io/brightstack-portfolio/loom-workflow-builder.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Loom Studio Apex — Enterprise Multi-Agent AI Visual Orchestration Suite">
-<meta property="og:description" content="State-of-the-art visual AI node-graph canvas and debugging studio by BrightStack Co.">
+<meta property="og:title" content="Loom · workflow builder">
+<meta property="og:description" content="A visual workflow builder: connect nodes on a canvas and run them. By BrightStack Co.">
 <meta property="og:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loom · workflow builder">
 <meta name="twitter:image" content="https://hassansaeed14.github.io/brightstack-portfolio/og-card.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -168,6 +169,10 @@
 
   /* The node palette wrapper adds no box of its own on desktop, so the sidebar lays out exactly as before. */
   .sb-palette { display: contents; }
+  /* Desktop: keep the bottom of the sidebar clear for the fixed "Portfolio Hub" link, so it never covers sidebar text. */
+  @media (min-width: 901px) { .sidebar { padding-bottom: 76px; } }
+  /* Short desktop screens: slightly tighter palette spacing, so the tip at the bottom still clears that link. */
+  @media (min-width: 901px) and (max-height: 800px) { .sb-section { padding-top: 12px; padding-bottom: 6px; } }
   .nav-toggle { display: none; }
   /* Narrow screens: the sidebar becomes a compact top bar with a menu button that opens the node palette.
      The canvas keeps scrolling inside its own box; the toolbar wraps so its buttons stay on screen. */
@@ -193,7 +198,7 @@
     .log-row { padding: 10px 16px; }
   }
 </style>
-<meta name="description" content="Build and execute multi-agent AI pipelines on an interactive canvas. An orchestration concept demo by BrightStack Co.">
+<meta name="description" content="Connect trigger, AI, logic and action nodes on a canvas, then run the workflow. A concept demo by BrightStack Co.">
 </head>
 <body>
 <div class="scan"></div>
@@ -204,8 +209,7 @@
     <div class="sb-brand">
       <div class="sb-mark"></div>
       <div>
-        <div class="sb-brand-name" role="heading" aria-level="1">Loom Studio Apex</div>
-        <div class="sb-brand-sub">// Enterprise AI Suite</div>
+        <div class="sb-brand-name" role="heading" aria-level="1">Loom</div>
       </div>
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nodePalette">☰ Menu</button>
     </div>
@@ -231,7 +235,7 @@
     </div>
 
     <div class="sb-footer">
-      <div class="sb-hint">// Apex ProTip: Drag nodes freely. Connect bottom output port to top input port to route execution flow.</div>
+      <div class="sb-hint">// Tip: drag nodes anywhere. Connect a node's bottom port to another node's top port to set the order.</div>
     </div>
     </div>
   </div>
@@ -240,8 +244,8 @@
   <div class="main">
     <div class="toolbar">
       <div>
-        <div class="tb-title">Autonomous Customer Support AI Triage Pipeline</div>
-        <div class="tb-sub">// Enterprise Multi-Agent Orchestration Canvas</div>
+        <div class="tb-title">Customer Support Triage Workflow</div>
+        <div class="tb-sub">// Sorts incoming support emails and drafts replies</div>
       </div>
       <div class="tb-actions">
         <button class="btn-ghost" onclick="resetView()">Reset Canvas</button>
@@ -259,10 +263,10 @@
       </div>
     </div>
 
-    <button class="log-toggle" id="logToggle" onclick="toggleLog()">☰ Execution Telemetry <span class="badge" id="logBadge">0</span></button>
+    <button class="log-toggle" id="logToggle" onclick="toggleLog()">☰ Run Log <span class="badge" id="logBadge">0</span></button>
     <div class="log-drawer" id="logDrawer">
       <div class="log-drawer-head">
-        <div class="log-drawer-title">$ apex_pipeline_execution.log</div>
+        <div class="log-drawer-title">$ workflow_run.log</div>
         <button class="insp-close" onclick="toggleLog()">✕</button>
       </div>
       <div class="log-drawer-body" id="logBody"></div>
