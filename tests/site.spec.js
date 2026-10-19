@@ -206,6 +206,84 @@ test.describe('home page', () => {
     expect(decodeURIComponent(links[0].href.split('subject=')[1])).toBe('Project enquiry — BrightStack')
   })
 
+  // Scrolls the About section into view (once smooth scrolling is ready, so it can't undo the jump) until its
+  // reveal animation has started, then lets the transition finish.
+  const showAbout = async page => {
+    await waitForSmoothScroll(page)
+    await expect.poll(async () => page.evaluate(() => {
+      const a = document.getElementById('about')
+      a.scrollIntoView({ block: 'start', behavior: 'instant' })
+      return a.classList.contains('visible')
+    }), { intervals: [300], timeout: SCROLL_WAIT }).toBe(true)
+    await page.waitForTimeout(1200)
+  }
+
+  test('the About section has its heading, the four steps and all ten skills', async ({ page }) => {
+    await page.goto('index.html', { waitUntil: 'domcontentloaded' })
+    const about = page.locator('#about')
+    await expect(about.getByRole('heading', { level: 2 })).toHaveText('A small studio that designs and builds.')
+    await expect(about.locator('.contact-k')).toHaveText('// ABOUT')
+    await expect(about.locator('.about-step')).toHaveText([
+      /^01\s*Talk\s*You tell us what you need\. We agree on the scope and the price before any work starts\.$/,
+      /^02\s*Design\s*We plan the layout and the look in Figma, and you approve it\.$/,
+      /^03\s*Build\s*We build the site or app and share progress as we go\.$/,
+      /^04\s*Launch\s*Final changes, then it goes live and we hand it over\.$/,
+    ])
+    await expect(about.locator('.about-skills li')).toHaveText(['Full stack web development', 'JavaScript', 'HTML5', 'CSS3', 'Web design',
+      'API integration', 'UI & UX design', 'Machine learning', 'AI development', 'Figma'])
+    // It sits between the featured projects and the "Let's build something" box.
+    const order = await page.evaluate(() => [...document.querySelectorAll('main > section')].map(s => s.id || (s.querySelector('.cta') ? 'cta' : '')))
+    expect(order.indexOf('about')).toBe(order.indexOf('projects') + 1)
+    expect(order.indexOf('cta')).toBe(order.indexOf('about') + 1)
+  })
+
+  test('the nav "About" link reaches the About section and is marked active there', async ({ page }) => {
+    test.setTimeout(SCROLL_TEST_TIMEOUT)
+    await page.goto('index.html', { waitUntil: 'load' })
+    await waitForSmoothScroll(page)
+    await page.click('nav a[href="#about"]')
+    await expect(page.locator('#aboutTitle')).toBeInViewport({ timeout: SCROLL_WAIT })
+    await expect(page.locator('nav a[href="#about"]')).toHaveClass(/(^|\s)act(\s|$)/, { timeout: SCROLL_WAIT })
+  })
+
+  test('the phone menu "About" link reaches the About section', async ({ page }) => {
+    test.setTimeout(SCROLL_TEST_TIMEOUT)
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('index.html', { waitUntil: 'load' })
+    await waitForSmoothScroll(page)
+    await page.getByRole('button', { name: 'Open navigation' }).click()
+    await page.click('nav a[href="#about"]')
+    await expect(page.locator('#aboutTitle')).toBeInViewport({ timeout: SCROLL_WAIT })
+  })
+
+  for (const width of [320, 390, 768, 1024, 1440]) {
+    test(`the About section and the nav fit at ${width}px with nothing cut off`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 })
+      await page.goto('index.html', { waitUntil: 'load' })
+      await page.evaluate(() => document.fonts.ready)
+      await showAbout(page)
+      const r = await page.evaluate(() => {
+        const vw = document.documentElement.clientWidth, cut = []
+        for (const el of document.querySelectorAll('#about *, #navbar a, #navbar button')) {
+          if (!el.checkVisibility({ checkVisibilityCSS: true })) continue
+          const b = el.getBoundingClientRect()
+          if (b.width > 1 && (b.right > vw + 1 || b.left < -1)) cut.push(`${el.tagName.toLowerCase()} "${el.textContent.trim().slice(0, 30)}"`)
+        }
+        return { scrollWidth: document.documentElement.scrollWidth, vw, cut }
+      })
+      expect(r.scrollWidth).toBeLessThanOrEqual(r.vw + 1)
+      expect(r.cut).toEqual([])
+    })
+  }
+
+  test('the About section has no serious accessibility issues', async ({ page }) => {
+    test.setTimeout(ACCESSIBILITY_TIMEOUT)
+    await page.goto('index.html', { waitUntil: 'load' })
+    await showAbout(page) // colours are measured at full opacity, after the reveal
+    const { violations } = await new AxeBuilder({ page }).include('#about').withTags(['wcag2a', 'wcag2aa']).analyze()
+    expect(violations.filter(v => v.impact === 'serious' || v.impact === 'critical').map(v => `${v.id}: ${v.nodes.map(n => n.target.join(' ')).join(', ')}`)).toEqual([])
+  })
+
   test('contact card values fit their cards at 1440px without splitting a word', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto('index.html', { waitUntil: 'load' })

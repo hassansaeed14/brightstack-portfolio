@@ -227,6 +227,8 @@ nav a.act{color:var(--text)}nav a.act::after{width:100%!important}
 .cur.on{opacity:1}.cur.big{width:58px;height:58px;margin:-29px 0 0 -29px;background:rgba(0,229,255,.08)}
 
 @media(max-width:1000px){header{width:calc(100% - 28px);top:12px}nav{gap:17px}.hero,.section,.projects-list-section{padding-left:30px;padding-right:30px}.spline-stage{right:-160px;width:68%}.hero-content{width:62%}}
+/* Narrow desktops (769-1000px): a slightly tighter nav, so the "Start a project" button stays on screen. */
+@media(min-width:769px) and (max-width:1000px){nav{gap:10px}nav a,.kbtn{font-size:11px}.nav-cta{padding:8px 12px}}
 @media(max-width:768px){
 header{height:62px;padding:0 12px 0 15px}.brand{font-size:16px}
 nav{display:none;position:absolute;top:70px;left:0;right:0;padding:18px;flex-direction:column;align-items:stretch;gap:18px;border:1px solid var(--border);border-radius:16px;background:rgba(3,5,8,.96);backdrop-filter:blur(25px)}
@@ -256,6 +258,17 @@ main{overflow-x:clip}
 .contact-card .cgo{margin-top:auto;font-size:13px;font-weight:600;color:var(--muted);transition:color .25s}
 .contact-card:hover .cgo,.contact-card:focus-visible .cgo{color:var(--text)}
 @media(max-width:768px){.contact-grid{grid-template-columns:1fr}.contact-card{min-height:0;padding:22px}}
+/* About */
+.about-h{font-size:clamp(20px,2vw,24px);font-weight:700;letter-spacing:-.02em;margin:0 0 18px}
+.about-steps{list-style:none;margin:0 0 56px;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.about-step{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--border);border-radius:var(--r-md);background:linear-gradient(180deg,var(--surface2),var(--surface))}
+.about-step .ck{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--cyan)}
+.about-step strong{font-size:18px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
+.about-step p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.about-skills{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.about-skills li{padding:9px 16px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+@media(max-width:1199px){.about-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:768px){.about-steps{grid-template-columns:1fr;margin-bottom:44px}.about-step{padding:22px}}
 </style>
 <meta property="og:title" content="BrightStack Co. — Creative Digital Studio">
 <meta property="og:description" content="BrightStack Co. creates digital products, websites, web applications, UI/UX experiences and intelligent automation systems.">
@@ -281,10 +294,11 @@ setTimeout(function(){if(document.readyState==='complete')fin();else addEventLis
     <a href="ask-brightstack.html">Ask BrightStack</a>
     <a href="#collections">Collections</a>
     <a href="#projects">Projects</a>
+    <a href="#about">About</a>
     <a href="#contact">Contact</a>
     <span id="authNavSlot"><a href="signin.html">Sign in</a></span>
     <button class="kbtn" id="kbtn" aria-label="Open quick jump (Ctrl K)">Search <b>⌘K</b></button>
-    <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="nav-cta mag">Hire Me</a>
+    <a href="https://www.fiverr.com/brightstackco" target="_blank" rel="noopener" class="nav-cta mag">Start a project</a>
   </nav>
   <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
 </header>
@@ -370,6 +384,33 @@ setTimeout(function(){if(document.readyState==='complete')fin();else addEventLis
         <span class="p-arrow">↗</span>
       </a>
     </div>
+  </section>
+
+  <section class="section reveal" id="about" aria-labelledby="aboutTitle">
+    <div class="sec-h">
+      <div><span class="contact-k">// ABOUT</span><h2 id="aboutTitle">A small studio that designs and builds.</h2></div>
+      <p>BrightStack Co. is a digital studio based in Mansehra, Pakistan, working since 2024. We design and build websites, web apps, UI/UX and practical AI tools, from the first sketch to the live site.</p>
+    </div>
+    <h3 class="about-h">How we work</h3>
+    <ol class="about-steps">
+      <li class="about-step"><span class="ck">01</span><strong>Talk</strong><p>You tell us what you need. We agree on the scope and the price before any work starts.</p></li>
+      <li class="about-step"><span class="ck">02</span><strong>Design</strong><p>We plan the layout and the look in Figma, and you approve it.</p></li>
+      <li class="about-step"><span class="ck">03</span><strong>Build</strong><p>We build the site or app and share progress as we go.</p></li>
+      <li class="about-step"><span class="ck">04</span><strong>Launch</strong><p>Final changes, then it goes live and we hand it over.</p></li>
+    </ol>
+    <h3 class="about-h">Skills</h3>
+    <ul class="about-skills">
+      <li>Full stack web development</li>
+      <li>JavaScript</li>
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>Web design</li>
+      <li>API integration</li>
+      <li>UI &amp; UX design</li>
+      <li>Machine learning</li>
+      <li>AI development</li>
+      <li>Figma</li>
+    </ul>
   </section>
 
   <section class="section reveal">
@@ -629,9 +670,9 @@ if(fine && !reduce){
 (function(){
   const tt = document.getElementById('totop'); tt.onclick = () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   addEventListener('scroll', () => tt.classList.toggle('show', scrollY > 700), { passive: true });
-  const links = { collections: document.querySelector('nav a[href="#collections"]'), projects: document.querySelector('nav a[href="#projects"]'), contact: document.querySelector('nav a[href="#contact"]') };
+  const links = { collections: document.querySelector('nav a[href="#collections"]'), projects: document.querySelector('nav a[href="#projects"]'), about: document.querySelector('nav a[href="#about"]'), contact: document.querySelector('nav a[href="#contact"]') };
   const spy = new IntersectionObserver(es => es.forEach(e => { const l = links[e.target.id]; if(l) l.classList.toggle('act', e.isIntersecting); }), { rootMargin: '-35% 0px -45% 0px' });
-  ['collections', 'projects', 'contact'].forEach(id => spy.observe(document.getElementById(id)));
+  ['collections', 'projects', 'about', 'contact'].forEach(id => spy.observe(document.getElementById(id)));
 })();
 
 const LINKS = [
@@ -644,6 +685,7 @@ const LINKS = [
   { t: 'Glow Studio · salon booking', s: 'project', h: 'booking-system-demo.html' },
   { t: 'Noor Bakehouse · bakery website', s: 'project', h: 'noor-bakehouse.html' },
   { t: 'Chai Khana — Desi Tea Café & Eatery', s: 'project', h: 'chai-khana/index.html' },
+  { t: 'About', s: 'section', h: '#about' },
   { t: 'Ask BrightStack', s: 'page', h: 'ask-brightstack.html' },
   { t: 'Hire me on Fiverr', s: 'external', h: 'https://www.fiverr.com/brightstackco' }
 ];
@@ -662,6 +704,7 @@ const LINKS = [
   document.getElementById('kbtn').onclick = open;
   inp.addEventListener('input', filter);
   pal.addEventListener('click', e => { if(e.target === pal) close(); });
+  ls.addEventListener('click', e => { const a = e.target.closest('a'); if(a && a.getAttribute('href')[0] === '#') close(); });
   ls.addEventListener('mousemove', e => { const a = e.target.closest('a'); if(a && +a.dataset.i !== sel){ sel = +a.dataset.i; draw(); } });
   addEventListener('keydown', e => {
     const k = e.key.toLowerCase();
@@ -670,7 +713,7 @@ const LINKS = [
     if(k === 'escape') close();
     else if(k === 'arrowdown'){ e.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); draw(); }
     else if(k === 'arrowup'){ e.preventDefault(); sel = Math.max(0, sel - 1); draw(); }
-    else if(k === 'enter' && shown[sel]){ const l = shown[sel]; if(l.s === 'external') window.open(l.h, '_blank', 'noopener'); else location.href = l.h; }
+    else if(k === 'enter' && shown[sel]){ const l = shown[sel]; if(l.s === 'external') window.open(l.h, '_blank', 'noopener'); else { if(l.h[0] === '#') close(); location.href = l.h; } }
   });
 })();
 
